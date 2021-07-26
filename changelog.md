@@ -10,6 +10,8 @@
 - Payment Limits APIs
 - Add new payment error codes
 - Fix sync provider accounts API query parameter
+- Update Host API version to v2.15
+- Add Associated PayIDs to account response
 
 ### 3.9.0
 
@@ -31,6 +33,7 @@
 - Add external_id to User model
 - Remove addresses from UserKYC model
 - Update address fields in User model
+- Update Host API version to v2.14
 
 ### 3.8.0
 
