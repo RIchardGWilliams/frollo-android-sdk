@@ -20,6 +20,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import us.frollo.frollosdk.extensions.fromJson
+import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeature
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureDetail
@@ -319,6 +320,12 @@ internal class Converters {
 
     @TypeConverter
     fun stringFromListOfCDRProductInformation(value: List<CDRProductInformation>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringFromListOfUserPayIdAccountResponse(value: List<UserPayIdAccountResponse>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringToListOfUserPayIdAccountResponse(value: String?): List<UserPayIdAccountResponse>? = if (value == null) null else gson.fromJson<List<UserPayIdAccountResponse>>(value)
 
     // Transaction
 

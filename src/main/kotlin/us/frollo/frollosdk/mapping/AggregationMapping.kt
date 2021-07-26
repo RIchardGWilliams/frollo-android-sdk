@@ -135,7 +135,8 @@ internal fun AccountResponse.toAccount(): Account =
         externalId = externalId ?: "",
         features = features,
         productsAvailable = productsAvailable ?: false,
-        cdrProduct = cdrProduct
+        cdrProduct = cdrProduct,
+        payIds = payIds
     )
 
 internal fun TransactionResponse.toTransaction(): Transaction =

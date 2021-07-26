@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.model.api.aggregation.accounts
 
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAttributes
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeature
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
@@ -63,5 +64,6 @@ internal data class AccountResponse(
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("features") val features: List<AccountFeature>?,
     @SerializedName("products_available") val productsAvailable: Boolean?,
-    @SerializedName("product") val cdrProduct: CDRProduct?
+    @SerializedName("product") val cdrProduct: CDRProduct?,
+    @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?,
 )
