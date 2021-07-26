@@ -61,6 +61,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBa
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitPeriod
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
@@ -1126,6 +1127,14 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals(2, first?.cdrProduct?.cdrProductInformations?.size)
             assertEquals("Benefits", first?.cdrProduct?.cdrProductInformations?.first()?.name)
             assertEquals("Free ATMs", first?.cdrProduct?.cdrProductInformations?.first()?.value)
+
+            assertEquals(2, first?.payIds?.size)
+            assertEquals(PayIDType.EMAIL, first?.payIds?.get(0)?.type)
+            assertNull(first?.payIds?.get(0)?.status)
+            assertEquals("abc+123@gmail.com", first?.payIds?.get(0)?.payId)
+            assertEquals("David", first?.payIds?.get(0)?.name)
+            assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.createdAt)
+            assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.updatedAt)
 
             signal.countDown()
         }

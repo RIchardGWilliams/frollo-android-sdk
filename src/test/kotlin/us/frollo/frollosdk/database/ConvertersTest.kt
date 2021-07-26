@@ -22,6 +22,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureType
@@ -89,6 +90,7 @@ import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
 import us.frollo.frollosdk.model.coredata.user.UserStatus
+import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.testAccountFeatureDetailsData
 import us.frollo.frollosdk.model.testAccountFeaturesData
 import us.frollo.frollosdk.model.testCDRPermissionData
@@ -737,6 +739,40 @@ class ConvertersTest {
         assertEquals("BPAY", str)
 
         assertEquals("UNKNOWN", Converters.instance.stringFromAccountFeatureSubType(null))
+    }
+
+    @Test
+    fun testStringToListOfUserPayIdAccountResponse() {
+        val json = "[{\"type\": \"mobile\",\"payid\": \"+61411111111\",\"payid_name\": \"Frollo\",\"payid_status\": \"ACTIVE\",\"created_at\": \"2021-01-28T05:24:40.597Z\",\"updated_at\": \"2021-01-28T05:24:40.597Z\"},{\"type\": \"email\",\"payid\": \"user@example.com\",\"payid_name\": \"Frollo\",\"payid_status\": \"DEREGISTERED\",\"created_at\": \"2021-02-28T05:24:40.597Z\",\"updated_at\": \"2021-02-28T05:24:40.597Z\"}]"
+        val info = Converters.instance.stringToListOfUserPayIdAccountResponse(json)
+        assertNotNull(info)
+        assertTrue(info?.size == 2)
+
+        assertEquals(PayIDType.MOBILE, info?.get(0)?.type)
+        assertEquals(UserPayIdAccountStatus.ACTIVE, info?.get(0)?.status)
+        assertEquals("+61411111111", info?.get(0)?.payId)
+        assertEquals("Frollo", info?.get(0)?.name)
+        assertEquals("2021-01-28T05:24:40.597Z", info?.get(0)?.createdAt)
+        assertEquals("2021-01-28T05:24:40.597Z", info?.get(0)?.updatedAt)
+
+        assertEquals(PayIDType.EMAIL, info?.get(1)?.type)
+        assertEquals(UserPayIdAccountStatus.DEREGISTERED, info?.get(1)?.status)
+        assertEquals("user@example.com", info?.get(1)?.payId)
+        assertEquals("Frollo", info?.get(1)?.name)
+        assertEquals("2021-02-28T05:24:40.597Z", info?.get(1)?.createdAt)
+        assertEquals("2021-02-28T05:24:40.597Z", info?.get(1)?.updatedAt)
+
+        assertNull(Converters.instance.stringToListOfUserPayIdAccountResponse(null))
+    }
+
+    @Test
+    fun testStringFromListOfUserPayIdAccountResponse() {
+        val info = listOf(
+            UserPayIdAccountResponse("+61411111111", UserPayIdAccountStatus.ACTIVE, PayIDType.MOBILE, "Frollo", "2021-01-28T05:24:40.597Z", "2021-01-28T05:24:40.597Z", null),
+            UserPayIdAccountResponse("user@example.com", UserPayIdAccountStatus.DEREGISTERED, PayIDType.EMAIL, "Frollo", "2021-02-28T05:24:40.597Z", "2021-02-28T05:24:40.597Z", null)
+        )
+        val json = Converters.instance.stringFromListOfUserPayIdAccountResponse(info)
+        assertEquals("[{\"payid\":\"+61411111111\",\"payid_status\":\"ACTIVE\",\"type\":\"mobile\",\"payid_name\":\"Frollo\",\"created_at\":\"2021-01-28T05:24:40.597Z\",\"updated_at\":\"2021-01-28T05:24:40.597Z\"},{\"payid\":\"user@example.com\",\"payid_status\":\"DEREGISTERED\",\"type\":\"email\",\"payid_name\":\"Frollo\",\"created_at\":\"2021-02-28T05:24:40.597Z\",\"updated_at\":\"2021-02-28T05:24:40.597Z\"}]", json)
     }
 
     @Test

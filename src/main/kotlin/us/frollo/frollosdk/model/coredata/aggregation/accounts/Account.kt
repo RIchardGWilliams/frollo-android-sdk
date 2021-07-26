@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
+import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.RefreshStatus
 import java.math.BigDecimal
 
@@ -165,6 +166,9 @@ data class Account(
     @ColumnInfo(name = "products_available") val productsAvailable: Boolean,
 
     /** CDR Product (optional) */
-    @Embedded(prefix = "cdr_p_") val cdrProduct: CDRProduct?
+    @Embedded(prefix = "cdr_p_") val cdrProduct: CDRProduct?,
+
+    /** Associated payIDs (optional) */
+    @ColumnInfo(name = "payids") val payIds: List<UserPayIdAccountResponse>?
 
 ) : IAdapterModel

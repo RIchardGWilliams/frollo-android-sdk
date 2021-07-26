@@ -15,10 +15,10 @@ enum class PayIDType {
     @SerializedName("email") EMAIL,
 
     /** PayID type is org identifier*/
-    @SerializedName("org_identifier") ORGANISATION_ID,
+    @SerializedName("business_name") ORGANISATION_ID,
 
     /** PayID type is ABN */
-    @SerializedName("abn") ABN;
+    @SerializedName("business_id") ABN;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters

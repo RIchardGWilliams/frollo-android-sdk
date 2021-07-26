@@ -28,18 +28,21 @@ data class UserPayIdAccountResponse(
     /** The value of the payId */
     @SerializedName("payid") val payId: String,
 
-    /** Current status of the PayID */
-    @SerializedName("payid_status") val status: UserPayIdAccountStatus,
+    /** Current status of the PayID (Optional) */
+    @SerializedName("payid_status") val status: UserPayIdAccountStatus?,
 
-    /** The creditor PayID identifier type. */
+    /** The creditor PayID identifier type */
     @SerializedName("type") val type: PayIDType,
 
-    /** The name of the payID; shown to external parties */
-    @SerializedName("payid_name") val name: String,
+    /** The name of the payID; shown to external parties (Optional) */
+    @SerializedName("payid_name") val name: String?,
 
-    /** The date and time the payID was registered */
+    /** The date and time the payID was registered (Optional) */
     @SerializedName("created_at") val createdAt: String?,
 
-    /** The date and time the payID was updated */
-    @SerializedName("updated_at") val updatedAt: String?
+    /** The date and time the payID was updated (Optional) */
+    @SerializedName("updated_at") val updatedAt: String?,
+
+    /** The last resolution date and time of the payID (Optional) */
+    @SerializedName("last_resolution_at") val lastResolutionAt: String?
 )
