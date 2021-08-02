@@ -54,6 +54,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantType
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshStatus
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
 import us.frollo.frollosdk.model.coredata.aggregation.providers.ProviderStatus
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
@@ -224,6 +225,10 @@ class AggregationTest : BaseAndroidTest() {
             val models = testObserver.value().data
             assertNotNull(models)
             assertEquals(50, models?.size)
+
+            assertEquals(AggregatorType.YODLEE, models?.get(0)?.aggregatorType)
+            assertEquals(AggregatorType.VOLT_BAAP, models?.get(1)?.aggregatorType)
+            assertEquals(AggregatorType.UNKNOWN, models?.last()?.aggregatorType)
 
             signal.countDown()
         }
@@ -1136,6 +1141,12 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.createdAt)
             assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.updatedAt)
 
+            assertEquals(AggregatorType.VOLT_BAAP, models?.get(0)?.aggregatorType)
+            assertEquals(AggregatorType.YODLEE, models?.get(1)?.aggregatorType)
+            assertEquals(AggregatorType.DEMO, models?.get(2)?.aggregatorType)
+            assertEquals(AggregatorType.CDR, models?.get(3)?.aggregatorType)
+            assertEquals(AggregatorType.UNKNOWN, models?.get(4)?.aggregatorType)
+
             signal.countDown()
         }
 
@@ -1196,6 +1207,7 @@ class AggregationTest : BaseAndroidTest() {
             val model = testObserver.value().data
             assertNotNull(model)
             assertEquals(542L, model?.accountId)
+            assertEquals(AggregatorType.VOLT_BAAP, model?.aggregatorType)
 
             signal.countDown()
         }

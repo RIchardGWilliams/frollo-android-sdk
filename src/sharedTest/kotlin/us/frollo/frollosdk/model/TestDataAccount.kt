@@ -36,6 +36,8 @@ import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRe
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshStatus
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshSubStatus
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.RefreshStatus
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
+import us.frollo.frollosdk.testutils.randomElement
 import us.frollo.frollosdk.testutils.randomNumber
 import us.frollo.frollosdk.testutils.randomString
 import us.frollo.frollosdk.testutils.randomUUID
@@ -94,7 +96,7 @@ internal fun testAccountResponseData(accountId: Long? = null, providerAccountId:
         totalCashLimit = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         totalCreditLine = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         accountNumber = randomUUID(),
-        aggregator = randomUUID(),
+        aggregatorType = AggregatorType.values().randomElement(),
         bsb = randomUUID(),
         interestTotal = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         endDate = randomUUID(),

@@ -1,5 +1,6 @@
 [{
     "id": 542,
+    "aggregator": "volt_baap",
     "provider_account_id": 867,
     "external_id": "AF79E472-4137-44DD-9E96-166E1862A6D2",
     "provider_name": "ME Bank (demo)",
@@ -138,7 +139,7 @@
   }]
 }, {
     "id": 543,
-    "aggregator": "demo",
+    "aggregator": "yodlee",
     "aggregator_id": 543,
     "provider_account_id": 623,
     "external_id": "AF70E472-4137-44DD-9E96-166E1862A6D2",
@@ -207,7 +208,7 @@
     "product": {}
 }, {
     "id": 937,
-    "aggregator": "demo",
+    "aggregator": "cdr",
     "aggregator_id": 879,
     "provider_account_id": 975,
     "external_id": "AF79E472-4237-44DD-9E96-166E1862A6D2",
@@ -237,7 +238,7 @@
     "products_available" : false
 }, {
     "id": 938,
-    "aggregator": "demo",
+    "aggregator": "gibberish",
     "aggregator_id": 880,
     "provider_account_id": 975,
     "external_id": "AF79E472-4137-44DD-9E97-166E1862A6D2",

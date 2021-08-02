@@ -1,5 +1,6 @@
 {
 	"id": 542,
+	"aggregator": "volt_baap",
 	"provider_account_id": 867,
 	"provider_name": "ME Bank (demo)",
 	"account_name": "Personal Account",

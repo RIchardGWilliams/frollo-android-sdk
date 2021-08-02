@@ -31,6 +31,30 @@ enum class AggregatorType {
     /** Demo */
     @SerializedName("demo") DEMO,
 
+    /** Finpower */
+    @SerializedName("finpower") FINPOWER,
+
+    /** Frollo Score */
+    @SerializedName("frollo_score") FROLLO_SCORE,
+
+    /** Manual */
+    @SerializedName("manual") MANUAL,
+
+    /** Pioneer Credit Score */
+    @SerializedName("pioneer_credit_score") PIONEER_CREDIT_SCORE,
+
+    /** Pionner Credit Solutions */
+    @SerializedName("pioneer_solutions") PIONEER_SOLUTIONS,
+
+    /** Temenos T24 */
+    @SerializedName("temenos") TEMENOS,
+
+    /** VMA */
+    @SerializedName("vma") VMA,
+
+    /** Volt BAAP */
+    @SerializedName("volt_baap") VOLT_BAAP,
+
     /** Unknown aggregator */
     @SerializedName("unknown") UNKNOWN;
 
