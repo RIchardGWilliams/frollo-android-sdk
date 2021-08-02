@@ -26,6 +26,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.HolderProfile
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.RefreshStatus
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import java.math.BigDecimal
 
 internal data class AccountResponse(
@@ -36,7 +37,7 @@ internal data class AccountResponse(
     @SerializedName("nick_name") val nickName: String?,
     @SerializedName("provider_account_id") val providerAccountId: Long,
     @SerializedName("provider_name") val providerName: String,
-    @SerializedName("aggregator") val aggregator: String?,
+    @SerializedName("aggregator") val aggregatorType: AggregatorType?,
     @SerializedName("holder_profile") val holderProfile: HolderProfile?,
     @SerializedName("account_status") val accountStatus: AccountStatus,
     @SerializedName("account_attributes") val attributes: AccountAttributes,
@@ -65,5 +66,5 @@ internal data class AccountResponse(
     @SerializedName("features") val features: List<AccountFeature>?,
     @SerializedName("products_available") val productsAvailable: Boolean?,
     @SerializedName("product") val cdrProduct: CDRProduct?,
-    @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?,
+    @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?
 )

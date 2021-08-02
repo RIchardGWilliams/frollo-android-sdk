@@ -24,6 +24,7 @@ import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.RefreshStatus
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import java.math.BigDecimal
 
 // Declaring the ColumnInfo allows for the renaming of variables without
@@ -62,8 +63,8 @@ data class Account(
     /** Name of the provider convenience property (optional) */
     @ColumnInfo(name = "provider_name") val providerName: String,
 
-    /** Aggregator (optional) */
-    @ColumnInfo(name = "aggregator") val aggregator: String?,
+    /** Specifies the aggregator with which this Account get its data from (optional) */
+    @ColumnInfo(name = "aggregator") val aggregatorType: AggregatorType?,
 
     /** ID of the aggregator */
     @Deprecated("Please use externalId")

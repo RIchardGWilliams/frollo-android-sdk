@@ -22,7 +22,7 @@
 	"popular": false,
 	"container_names": ["bank", "credit_card", "loan"],
 	"login_url": "https://onlinebanking.nationwide.co.uk/AccessManagement/Login",
-    "aggregator_type": "yodlee",
+    "aggregator_type": "volt_baap",
     "permissions": [
       "account_details",
       "transaction_details"
@@ -738,5 +738,5 @@
       "account_details",
       "transaction_details"
     ],
-    "aggregator_type": "yodlee"
+    "aggregator_type": "gibbersih"
 }]
