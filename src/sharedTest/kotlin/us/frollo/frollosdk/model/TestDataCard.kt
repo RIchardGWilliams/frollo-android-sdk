@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.cards.CardResponse
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 import us.frollo.frollosdk.model.coredata.cards.CardDesignType
 import us.frollo.frollosdk.model.coredata.cards.CardIssuer
 import us.frollo.frollosdk.model.coredata.cards.CardStatus
@@ -44,6 +45,7 @@ internal fun testCardResponseData(
         createdDate = "2019-01-02",
         cancelledDate = "2019-11-02",
         expiryDate = "2019-12-02",
-        pinSetDate = "2019-12-03"
+        pinSetDate = "2019-12-03",
+        digitalWallets = listOf(DigitalWallet.GOOGLE_PAY, DigitalWallet.APPLE_PAY)
     )
 }

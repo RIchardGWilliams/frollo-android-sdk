@@ -34,5 +34,6 @@ internal fun CardResponse.toCard(): Card =
         cardholderName = cardholderName,
         type = type,
         issuer = issuer,
-        pinSetDate = pinSetDate
+        pinSetDate = pinSetDate,
+        digitalWallets = digitalWallets
     )

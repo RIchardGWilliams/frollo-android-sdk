@@ -14,6 +14,7 @@
 - Add Associated PayIDs to account response
 - Added new card statuses
 - Add reference and rejected reason to transaction and additional transaction statuses
+- Add support for digital wallets in cards
 
 ### 3.9.0
 

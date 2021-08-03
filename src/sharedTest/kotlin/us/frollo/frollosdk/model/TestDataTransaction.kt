@@ -64,7 +64,9 @@ internal fun testTransactionResponseData(
         transactionDate = transactionDate ?: "2019-01-01",
         userTags = userTags,
         externalId = randomString(8),
-        goalId = randomNumber().toLong()
+        goalId = randomNumber().toLong(),
+        reference = "",
+        reason = ""
     )
 }
 

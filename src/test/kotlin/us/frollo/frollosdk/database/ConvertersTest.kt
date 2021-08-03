@@ -22,6 +22,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
@@ -272,6 +273,21 @@ class ConvertersTest {
         )
         val json = Converters.instance.stringFromListOfRegisterStep(steps)
         assertEquals("[{\"key\":\"kyc\",\"index\":0,\"required\":true,\"completed\":true},{\"key\":\"survey\",\"index\":1,\"required\":true,\"completed\":false}]", json)
+    }
+
+    @Test
+    fun testStringFromDigitalWallet() {
+        val str = Converters.instance.stringFromListOfDigitalWallet(listOf(DigitalWallet.GOOGLE_PAY, DigitalWallet.SAMSUNG_PAY))
+        assertEquals("[\"google_pay\",\"samsung_pay\"]", str)
+
+        assertEquals(null, Converters.instance.stringFromListOfDigitalWallet(null))
+    }
+    @Test
+    fun testStringToDigitalWallets() {
+        val list = Converters.instance.stringToListOfDigitalWallet("[\"google_pay\",\"samsung_pay\"]")
+        assertEquals(listOf(DigitalWallet.GOOGLE_PAY, DigitalWallet.SAMSUNG_PAY), list)
+
+        assertEquals(null, Converters.instance.stringToListOfDigitalWallet(null))
     }
 
     @Test

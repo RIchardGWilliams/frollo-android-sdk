@@ -35,6 +35,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.mapping.toAccount
 import us.frollo.frollosdk.mapping.toCard
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 import us.frollo.frollosdk.model.coredata.cards.CardDesignType
 import us.frollo.frollosdk.model.coredata.cards.CardIssuer
 import us.frollo.frollosdk.model.coredata.cards.CardLockOrReplaceReason
@@ -116,7 +117,7 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId"
 
         val body = readStringFromJson(app, R.raw.card_by_id)
-        mockServer.setDispatcher(object : Dispatcher() {
+        mockServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest?): MockResponse {
                 if (request?.trimmedPath == requestPath) {
                     return MockResponse()
@@ -125,7 +126,7 @@ class CardsTest : BaseAndroidTest() {
                 }
                 return MockResponse().setResponseCode(404)
             }
-        })
+        }
 
         cards.refreshCard(cardId = cardId) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -137,6 +138,8 @@ class CardsTest : BaseAndroidTest() {
             assertNotNull(testObserver.value())
             assertEquals(cardId, testObserver.value()?.cardId)
             assertEquals(5182L, testObserver.value()?.accountId)
+            assertEquals(DigitalWallet.GOOGLE_PAY, testObserver.value()?.digitalWallets?.get(1))
+            assertEquals(2, testObserver.value()?.digitalWallets?.size)
 
             signal.countDown()
         }
@@ -210,6 +213,8 @@ class CardsTest : BaseAndroidTest() {
             assertEquals("1234", testObserver.value()?.first()?.panLastDigits)
             assertEquals("mm/YY", testObserver.value()?.first()?.expiryDate)
             assertEquals("Joe Blow", testObserver.value()?.first()?.cardholderName)
+            assertEquals(DigitalWallet.GOOGLE_PAY, testObserver.value()?.first()?.digitalWallets?.get(1))
+            assertEquals(2, testObserver.value()?.first()?.digitalWallets?.size)
             assertEquals(CardIssuer.VISA, testObserver.value()?.first()?.issuer)
 
             signal.countDown()
@@ -329,7 +334,7 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId"
 
         val body = readStringFromJson(app, R.raw.card_by_id)
-        mockServer.setDispatcher(object : Dispatcher() {
+        mockServer.dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest?): MockResponse {
                 if (request?.trimmedPath == requestPath) {
                     return MockResponse()
@@ -338,7 +343,7 @@ class CardsTest : BaseAndroidTest() {
                 }
                 return MockResponse().setResponseCode(404)
             }
-        })
+        }
 
         val card = testCardResponseData(cardId = cardId).toCard()
 
