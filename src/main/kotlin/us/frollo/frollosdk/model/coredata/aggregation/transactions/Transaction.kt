@@ -96,7 +96,13 @@ data class Transaction(
     @ColumnInfo(name = "external_id") val externalId: String,
 
     /** Goal ID associated with the transaction */
-    @ColumnInfo(name = "goal_id") var goalId: Long?
+    @ColumnInfo(name = "goal_id") var goalId: Long?,
+
+    /** Reference for transaction (Optional) */
+    @ColumnInfo(name = "reference") val reference: String?,
+
+    /** Reason of cancelled or rejected transaction (Optional) */
+    @ColumnInfo(name = "reason") val reason: String?
 
 ) : IAdapterModel {
 

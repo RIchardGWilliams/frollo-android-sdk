@@ -519,6 +519,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 3) Alter user table - add columns - external_id, residential_address_*, mailing_address_*, previous_address_* & drop columns - address, mailing_address
                 // 4) New table - addresses
                 // 5) Alter account table - add new column payids
+                // 6) Alter transaction_model table - add new column reference, reason
 
                 database.execSQL("CREATE TABLE IF NOT EXISTS `payday` (`status` TEXT NOT NULL, `frequency` TEXT NOT NULL, `next_date` TEXT, `previous_date` TEXT, `payday_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
 
@@ -539,6 +540,9 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_addresses_address_id` ON `addresses` (`address_id`)")
 
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `payids` TEXT")
+
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `reference` TEXT")
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `reason` TEXT")
             }
         }
     }
