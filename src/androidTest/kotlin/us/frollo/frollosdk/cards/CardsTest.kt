@@ -35,6 +35,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.mapping.toAccount
 import us.frollo.frollosdk.mapping.toCard
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 import us.frollo.frollosdk.model.coredata.cards.CardDesignType
 import us.frollo.frollosdk.model.coredata.cards.CardIssuer
 import us.frollo.frollosdk.model.coredata.cards.CardLockOrReplaceReason
@@ -210,6 +211,7 @@ class CardsTest : BaseAndroidTest() {
             assertEquals("1234", testObserver.value()?.first()?.panLastDigits)
             assertEquals("mm/YY", testObserver.value()?.first()?.expiryDate)
             assertEquals("Joe Blow", testObserver.value()?.first()?.cardholderName)
+            assertEquals(DigitalWallet.GOOGLE_PAY, testObserver.value()?.first()?.digitalWallets?.get(1))
             assertEquals(CardIssuer.VISA, testObserver.value()?.first()?.issuer)
 
             signal.countDown()

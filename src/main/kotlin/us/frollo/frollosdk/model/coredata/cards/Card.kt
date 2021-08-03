@@ -21,6 +21,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 
 // Declaring the ColumnInfo allows for the renaming of variables without
 // implementing a database migration, as the column name would not change.
@@ -85,6 +86,9 @@ data class Card(
 
     /** Issuer of the card */
     @ColumnInfo(name = "issuer") val issuer: CardIssuer?,
+
+    /** Issuer of the card */
+    @ColumnInfo(name = "digital_wallets") val digitalWallets: List<DigitalWallet>?,
 
     /**
      * Date on which the pin was set (Optional)

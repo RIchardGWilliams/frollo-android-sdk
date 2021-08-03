@@ -36,5 +36,6 @@ internal data class CardResponse(
     @SerializedName("cardholder_name") val cardholderName: String?,
     @SerializedName("type") val type: CardType?,
     @SerializedName("issuer") val issuer: CardIssuer?,
+    @SerializedName("digital_wallets") val digitalWallets: List<DigitalWallet>?,
     @SerializedName("pin_set_at") val pinSetDate: String? // Eg: 2011-12-03T10:15:30+01:00
 )

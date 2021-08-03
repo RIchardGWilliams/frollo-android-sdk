@@ -20,6 +20,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import us.frollo.frollosdk.extensions.fromJson
+import us.frollo.frollosdk.model.api.cards.DigitalWallet
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeature
@@ -535,6 +536,12 @@ internal class Converters {
     }
 
     // Card
+
+    @TypeConverter
+    fun stringToListOfDigitalWallet(value: String?): List<DigitalWallet>? = if (value == null) null else gson.fromJson<List<DigitalWallet>>(value)
+
+    @TypeConverter
+    fun stringFromListOfDigitalWallet(value: List<DigitalWallet>?): String? = if (value == null) null else gson.toJson(value)
 
     @TypeConverter
     fun stringToCardStatus(value: String?): CardStatus? = if (value == null) CardStatus.PENDING else CardStatus.valueOf(value)
