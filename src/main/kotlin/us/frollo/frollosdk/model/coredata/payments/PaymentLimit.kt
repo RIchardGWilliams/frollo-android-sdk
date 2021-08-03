@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.model.coredata.payments
 
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.IAdapterModel
 import java.math.BigDecimal
 
 /**
@@ -35,4 +36,4 @@ data class PaymentLimit(
 
     /** Consumed amount for the period (Optional) */
     @SerializedName("consumed_amount") val consumedAmount: BigDecimal?
-)
+) : IAdapterModel
