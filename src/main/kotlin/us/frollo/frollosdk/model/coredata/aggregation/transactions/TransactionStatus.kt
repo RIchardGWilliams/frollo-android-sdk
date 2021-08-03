@@ -29,7 +29,13 @@ enum class TransactionStatus {
     @SerializedName("posted") POSTED,
 
     /** Scheduled. Transaction is scheduled for the future */
-    @SerializedName("scheduled") SCHEDULED;
+    @SerializedName("scheduled") SCHEDULED,
+
+    /** Cancelled. Transaction is cancelled */
+    @SerializedName("cancelled") CANCELLED,
+
+    /** Rejected. Transaction is rejected */
+    @SerializedName("rejected") REJECTED;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters
