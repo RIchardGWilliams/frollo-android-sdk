@@ -197,7 +197,7 @@ class CardsTest : BaseAndroidTest() {
 
             testObserver.awaitValue()
             assertNotNull(testObserver.value())
-            assertEquals(2, testObserver.value()?.size)
+            assertEquals(4, testObserver.value()?.size)
             assertEquals(123L, testObserver.value()?.first()?.cardId)
             assertEquals(542L, testObserver.value()?.first()?.accountId)
             assertEquals(CardStatus.ACTIVE, testObserver.value()?.first()?.status)
@@ -208,7 +208,7 @@ class CardsTest : BaseAndroidTest() {
             assertEquals("Everyday Debit Card", testObserver.value()?.first()?.name)
             assertEquals("Splurge Card", testObserver.value()?.first()?.nickName)
             assertEquals("1234", testObserver.value()?.first()?.panLastDigits)
-            assertEquals("02/24", testObserver.value()?.first()?.expiryDate)
+            assertEquals("mm/YY", testObserver.value()?.first()?.expiryDate)
             assertEquals("Joe Blow", testObserver.value()?.first()?.cardholderName)
             assertEquals(CardIssuer.VISA, testObserver.value()?.first()?.issuer)
 

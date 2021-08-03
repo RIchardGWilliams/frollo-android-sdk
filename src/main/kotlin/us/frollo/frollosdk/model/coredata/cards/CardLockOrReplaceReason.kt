@@ -16,9 +16,11 @@
 
 package us.frollo.frollosdk.model.coredata.cards
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
+@Keep
 /** Reason types for card lock or replace */
 enum class CardLockOrReplaceReason {
 

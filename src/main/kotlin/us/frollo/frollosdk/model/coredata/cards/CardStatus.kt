@@ -18,7 +18,6 @@ package us.frollo.frollosdk.model.coredata.cards
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
-
 /** Status indicating the current state of the card. */
 enum class CardStatus {
 
@@ -27,6 +26,15 @@ enum class CardStatus {
 
     /** The card is pending activation */
     @SerializedName("pending") PENDING,
+
+    /**  The card is permanently blocked and can not be used*/
+    @SerializedName("blocked") BLOCKED,
+
+    /**  The card is expired and can't be used*/
+    @SerializedName("expired") EXPIRED,
+
+    /**  The card is locked by the card issuer*/
+    @SerializedName("issuer_locked")ISSUER_LOCKED,
 
     /** The card is locked/frozen */
     @SerializedName("locked") LOCKED;
