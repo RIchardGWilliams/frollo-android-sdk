@@ -277,15 +277,15 @@ class ConvertersTest {
 
     @Test
     fun testStringFromDigitalWallet() {
-        val str = Converters.instance.stringFromListOfDigitalWallet(listOf(DigitalWallet.GOOGLE_PAY))
-        assertEquals("[\"google_pay\"]", str)
+        val str = Converters.instance.stringFromListOfDigitalWallet(listOf(DigitalWallet.GOOGLE_PAY, DigitalWallet.SAMSUNG_PAY))
+        assertEquals("[\"google_pay\",\"samsung_pay\"]", str)
 
         assertEquals(null, Converters.instance.stringFromListOfDigitalWallet(null))
     }
     @Test
     fun testStringToDigitalWallets() {
-        val frequency = Converters.instance.stringToListOfDigitalWallet("[\"google_pay\"]")
-        assertEquals(listOf(DigitalWallet.GOOGLE_PAY), frequency)
+        val list = Converters.instance.stringToListOfDigitalWallet("[\"google_pay\",\"samsung_pay\"]")
+        assertEquals(listOf(DigitalWallet.GOOGLE_PAY, DigitalWallet.SAMSUNG_PAY), list)
 
         assertEquals(null, Converters.instance.stringToListOfDigitalWallet(null))
     }

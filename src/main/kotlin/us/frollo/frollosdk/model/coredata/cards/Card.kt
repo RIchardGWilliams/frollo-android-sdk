@@ -87,7 +87,7 @@ data class Card(
     /** Issuer of the card */
     @ColumnInfo(name = "issuer") val issuer: CardIssuer?,
 
-    /** Issuer of the card */
+    /** A List of [DigitalWallet] supported by the card. (Optional) */
     @ColumnInfo(name = "digital_wallets") val digitalWallets: List<DigitalWallet>?,
 
     /**

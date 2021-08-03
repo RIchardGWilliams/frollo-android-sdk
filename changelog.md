@@ -12,6 +12,8 @@
 - Fix sync provider accounts API query parameter
 - Update Host API version to v2.15
 - Add Associated PayIDs to account response
+- Add support for digital wallets in cards
+
 
 ### 3.9.0
 

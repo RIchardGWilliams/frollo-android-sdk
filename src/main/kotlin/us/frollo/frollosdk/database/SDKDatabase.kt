@@ -539,6 +539,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_addresses_address_id` ON `addresses` (`address_id`)")
 
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `payids` TEXT")
+                database.execSQL("ALTER TABLE `card` ADD COLUMN `digital_wallets` TEXT")
             }
         }
     }
