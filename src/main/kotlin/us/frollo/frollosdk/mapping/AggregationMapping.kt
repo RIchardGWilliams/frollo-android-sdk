@@ -158,7 +158,9 @@ internal fun TransactionResponse.toTransaction(): Transaction =
         transactionDate = transactionDate,
         userTags = userTags,
         externalId = externalId ?: "",
-        goalId = goalId
+        goalId = goalId,
+        reference = reference,
+        reason = reason
     )
 
 internal fun TransactionsSummaryResponse.toTransactionsSummary(): TransactionsSummary =
