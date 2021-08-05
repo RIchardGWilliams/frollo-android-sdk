@@ -64,6 +64,10 @@ enum class APIErrorCode(val rawValue: String) {
     @SerializedName("F1015") PAYMENT_INVALID_AMOUNT("F1015"),
     /** Payment validation - Character limit exceeded */
     @SerializedName("F1016") PAYMENT_CHARACTER_LIMIT_EXCEEDED("F1016"),
+    /** PayID validation - Other */
+    @SerializedName("F1017") PAYID_VALIDATION_OTHER("F1017"),
+    /** PayID validation - registration */
+    @SerializedName("F1018") PAYID_VALIDATION_REGISTRATION("F1018"),
     /** Payment validation - BPAY Other */
     @SerializedName("F1020") PAYMENT_INVALID_BPAY("F1020"),
     /** Payment validation - BPAY Biller Code */
@@ -78,6 +82,10 @@ enum class APIErrorCode(val rawValue: String) {
     @SerializedName("F1032") PAYMENT_INVALID_ACCOUNT("F1032"),
     /** Transfer validation - Other */
     @SerializedName("F1040") PAYMENT_INVALID_TRANSFER("F1040"),
+    /** Card validation - Other  */
+    @SerializedName("F1050") CARD_VALIDATION_OTHER("F1050"),
+    /** Card validation - Activation */
+    @SerializedName("F1051") CARD_VALIDATION_ACTIVATION("F1051"),
 
     // 401 Not authenticated
     /** Invalid Access Token */

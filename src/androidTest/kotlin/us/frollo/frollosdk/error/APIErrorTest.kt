@@ -452,6 +452,16 @@ class APIErrorTest {
     }
 
     @Test
+    fun testAPIErrorPayIdValidationOther() {
+        validatePaymentErrors(R.raw.error_payid_validation_other, APIErrorCode.PAYID_VALIDATION_OTHER)
+    }
+
+    @Test
+    fun testAPIErrorPayIdValidationRegistration() {
+        validatePaymentErrors(R.raw.error_payid_validation_registration, APIErrorCode.PAYID_VALIDATION_REGISTRATION)
+    }
+
+    @Test
     fun testAPIErrorPaymentInsufficientFunds() {
         validatePaymentErrors(R.raw.error_payment_insufficient_funds, APIErrorCode.PAYMENT_INSUFFICIENT_FUNDS)
     }
@@ -504,6 +514,16 @@ class APIErrorTest {
     @Test
     fun testAPIErrorPaymentInvalidTransfer() {
         validatePaymentErrors(R.raw.error_payment_invalid_transfer, APIErrorCode.PAYMENT_INVALID_TRANSFER)
+    }
+
+    @Test
+    fun testAPIErrorCardValidationOther() {
+        validatePaymentErrors(R.raw.error_card_validation_other, APIErrorCode.CARD_VALIDATION_OTHER)
+    }
+
+    @Test
+    fun testAPIErrorCardValidationActivation() {
+        validatePaymentErrors(R.raw.error_card_validation_activation, APIErrorCode.CARD_VALIDATION_ACTIVATION)
     }
 
     @Test
