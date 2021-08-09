@@ -68,6 +68,8 @@ enum class APIErrorCode(val rawValue: String) {
     @SerializedName("F1017") PAYID_VALIDATION_OTHER("F1017"),
     /** PayID validation - registration */
     @SerializedName("F1018") PAYID_VALIDATION_REGISTRATION("F1018"),
+    /** PayID lookup */
+    @SerializedName("F1019") PAYID_LOOKUP("F1019"),
     /** Payment validation - BPAY Other */
     @SerializedName("F1020") PAYMENT_INVALID_BPAY("F1020"),
     /** Payment validation - BPAY Biller Code */
