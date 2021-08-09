@@ -462,6 +462,11 @@ class APIErrorTest {
     }
 
     @Test
+    fun testAPIErrorPayIdLookup() {
+        validatePaymentErrors(R.raw.error_payid_lookup, APIErrorCode.PAYID_LOOKUP)
+    }
+
+    @Test
     fun testAPIErrorPaymentInsufficientFunds() {
         validatePaymentErrors(R.raw.error_payment_insufficient_funds, APIErrorCode.PAYMENT_INSUFFICIENT_FUNDS)
     }
