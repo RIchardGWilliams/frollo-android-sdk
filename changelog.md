@@ -4,6 +4,7 @@
 
 #### Changes
 
+- Updated to support JDK 11
 - Updated koin version to 3.0.1
 - Removed jCenter dependency and added aar files temporarily in libs folder
 - Verify BPay
