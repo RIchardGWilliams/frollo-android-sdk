@@ -22,9 +22,8 @@ android {
         // TODO: Make sure to test release version after obfuscation, especially serializable classes
         release {
             debuggable false
-            //minifyEnabled true
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //consumerProguardFiles 'lib-proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable true
