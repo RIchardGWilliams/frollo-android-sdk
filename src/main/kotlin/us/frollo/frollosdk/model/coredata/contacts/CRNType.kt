@@ -13,7 +13,10 @@ enum class CRNType {
     @SerializedName("variable_crn") VARIABLE,
 
     /** Intelligent */
-    @SerializedName("intelligent_crn") INTELLIGENT;
+    @SerializedName("intelligent_crn") INTELLIGENT,
+
+    /** Variable */
+    @SerializedName("unknown") UNKNOWN;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters

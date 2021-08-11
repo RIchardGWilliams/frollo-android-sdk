@@ -194,7 +194,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * @param billerCode Biller Code of the BPAY contact
      * @param crn CRN of the BPAY contact
      * @param billerName Biller Name of the BPAY contact
-     * @param crnType Type of the Biller's CRN; defaulted to Fixed CRN. refer to [CRNType]
+     * @param crnType Type of the Biller's CRN; defaulted to UNKNOWN CRN. refer to [CRNType]
      * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
      */
     fun createBPayContact(
@@ -204,7 +204,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         billerCode: String,
         crn: String,
         billerName: String,
-        crnType: CRNType = CRNType.FIXED,
+        crnType: CRNType = CRNType.UNKNOWN,
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
@@ -388,7 +388,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * @param billerCode Biller Code of the BPAY contact
      * @param crn CRN of the BPAY contact
      * @param billerName Biller Name of the BPAY contact
-     * @param crnType Type of the Biller's CRN; defaulted to Fixed CRN. refer to [CRNType]
+     * @param crnType Type of the Biller's CRN; defaulted to UNKNOWN CRN. refer to [CRNType]
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun updateBPayContact(
@@ -399,7 +399,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         billerCode: String,
         crn: String,
         billerName: String,
-        crnType: CRNType = CRNType.FIXED,
+        crnType: CRNType = CRNType.UNKNOWN,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
