@@ -4250,11 +4250,13 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals(PaymentLimitType.TRANSACTION, models?.first()?.type)
             assertEquals(PaymentLimitPeriod.SINGULAR, models?.first()?.period)
             assertEquals("20000.00", models?.first()?.limitAmount?.toString())
+            assertEquals("517000", models?.first()?.excludedBSBs?.first())
 
             assertEquals(PaymentLimitType.NPP, models?.get(1)?.type)
             assertEquals(PaymentLimitPeriod.DAILY, models?.get(1)?.period)
             assertEquals("1000.00", models?.get(1)?.limitAmount?.toString())
             assertEquals("93.47", models?.get(1)?.consumedAmount?.toString())
+            assertNull(models?.get(1)?.excludedBSBs)
 
             signal.countDown()
         }
