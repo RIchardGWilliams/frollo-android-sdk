@@ -2,7 +2,8 @@
 	{
 		"type": "transaction",
 		"period": "singular",
-		"limit_amount": "20000.00"
+		"limit_amount": "20000.00",
+		"excluded_bsbs": ["517000"]
 	},
 	{
 		"type": "npp",

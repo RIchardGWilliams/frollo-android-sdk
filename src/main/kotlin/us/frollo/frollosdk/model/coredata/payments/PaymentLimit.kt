@@ -35,5 +35,8 @@ data class PaymentLimit(
     @SerializedName("limit_amount") val limitAmount: BigDecimal,
 
     /** Consumed amount for the period (Optional) */
-    @SerializedName("consumed_amount") val consumedAmount: BigDecimal?
+    @SerializedName("consumed_amount") val consumedAmount: BigDecimal?,
+
+    /** List of BSBs of destination accounts to be excluded for limit check (Optional) */
+    @SerializedName("excluded_bsbs") val excludedBSBs: List<String>?,
 ) : IAdapterModel
