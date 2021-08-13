@@ -16,7 +16,6 @@
 
 package us.frollo.frollosdk.network.api
 
-import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -46,22 +45,6 @@ internal interface StatementsAPI {
         @Query("order")orderType: OrderType? = null
     ): Call<StatementResponse>
 
-    @GET(URL_STATEMENTS)
-    fun fetchStatementsRx(
-        @Query("account_ids")accountIds: String,
-        @Query("type")statementType: StatementType? = null,
-        @Query("from_date")fromDate: String? = null, // 2021-01-01
-        @Query("to_date")toDate: String? = null, // 2021-01-01
-        @Query("before")before: Int? = null,
-        @Query("after")after: Int? = null,
-        @Query("size")size: Int? = null,
-        @Query("sort")statementSortBy: StatementSortBy? = null,
-        @Query("order")orderType: OrderType? = null
-    ): Single<StatementResponse>
-
     @GET(URL_STATEMENT_DOWNLOAD)
     fun fetchStatement(@Path("reference_id")referenceId: String): Call<ResponseBody>
-
-    @GET(URL_STATEMENT_DOWNLOAD)
-    fun downloadStatementRx(@Path("reference_id")referenceId: String): Single<ResponseBody>
 }
