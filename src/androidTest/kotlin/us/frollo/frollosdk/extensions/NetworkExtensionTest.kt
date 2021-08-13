@@ -20,7 +20,7 @@ import android.app.Application
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.mockwebserver.Dispatcher
@@ -64,7 +64,8 @@ import javax.net.ssl.SSLException
 
 class NetworkExtensionTest {
 
-    private val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
+    private val app =
+        InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
 
     private lateinit var mockServer: MockWebServer
     private lateinit var testAPI: TestAPI
@@ -107,16 +108,18 @@ class NetworkExtensionTest {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TestAPI.URL_TEST) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody("{}")
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TestAPI.URL_TEST) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody("{}")
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         testAPI.testData().enqueue { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -139,16 +142,18 @@ class NetworkExtensionTest {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TestAPI.URL_TEST) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody("{}")
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TestAPI.URL_TEST) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody("{}")
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         testAPI.testData().enqueue { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
@@ -173,7 +178,11 @@ class NetworkExtensionTest {
 
         val signal = CountDownLatch(1)
 
-        mockServer.enqueue(MockResponse().apply { socketPolicy = SocketPolicy.DISCONNECT_AFTER_REQUEST })
+        mockServer.enqueue(
+            MockResponse().apply {
+                socketPolicy = SocketPolicy.DISCONNECT_AFTER_REQUEST
+            }
+        )
 
         testAPI.testData().enqueue { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
@@ -193,9 +202,13 @@ class NetworkExtensionTest {
     fun testHandleFailureDataError() {
         initSetup()
 
-        val errorMessage = DataError(DataErrorType.API, DataErrorSubType.MISSING_ACCESS_TOKEN).toJson()
+        val errorMessage =
+            DataError(DataErrorType.API, DataErrorSubType.MISSING_ACCESS_TOKEN).toJson()
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(IOException(errorMessage))) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(IOException(errorMessage))
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is DataError)
@@ -211,11 +224,14 @@ class NetworkExtensionTest {
         initSetup()
 
         val errorBody = ResponseBody.create(
-            MediaType.parse("application/json"),
+            "application/json".toMediaTypeOrNull(),
             readStringFromJson(app, R.raw.error_invalid_access_token)
         )
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(Response.error(401, errorBody))) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(Response.error(401, errorBody))
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is APIError)
@@ -229,7 +245,12 @@ class NetworkExtensionTest {
     fun testHandleFailureGenericError() {
         initSetup()
 
-        val apiResponse = ApiResponse<Void>(Response.error(401, ResponseBody.create(MediaType.parse("text"), "error")))
+        val apiResponse = ApiResponse<Void>(
+            Response.error(
+                401,
+                ResponseBody.create("text".toMediaTypeOrNull(), "error")
+            )
+        )
         apiResponse.code = null
 
         handleFailure(ErrorResponseType.NORMAL, apiResponse) { result ->
@@ -246,7 +267,11 @@ class NetworkExtensionTest {
     fun testHandleFailureNetworkErrorIOException() {
         initSetup()
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(SocketTimeoutException("timeout")), SocketTimeoutException("timeout")) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(SocketTimeoutException("timeout")),
+            SocketTimeoutException("timeout")
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is NetworkError)
@@ -261,7 +286,11 @@ class NetworkExtensionTest {
     fun testHandleFailureNetworkErrorSSLException() {
         initSetup()
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(SSLException("SSL Error")), SSLException("SSL Error")) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(SSLException("SSL Error")),
+            SSLException("SSL Error")
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is NetworkError)
@@ -276,7 +305,11 @@ class NetworkExtensionTest {
     fun testHandleFailureNetworkErrorGeneralSecurityException() {
         initSetup()
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(CertPathValidatorException("Certificate Error")), CertPathValidatorException("Certificate Error")) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(CertPathValidatorException("Certificate Error")),
+            CertPathValidatorException("Certificate Error")
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is NetworkError)
@@ -291,7 +324,11 @@ class NetworkExtensionTest {
     fun testHandleFailureNetworkErrorOtherException() {
         initSetup()
 
-        handleFailure<Void>(ErrorResponseType.NORMAL, ApiResponse(IllegalStateException("Conversion Error")), IllegalStateException("Conversion Error")) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.NORMAL,
+            ApiResponse(IllegalStateException("Conversion Error")),
+            IllegalStateException("Conversion Error")
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is NetworkError)
@@ -307,11 +344,14 @@ class NetworkExtensionTest {
         initSetup()
 
         val errorBody = ResponseBody.create(
-            MediaType.parse("application/json"),
+            "application/json".toMediaTypeOrNull(),
             readStringFromJson(app, R.raw.error_oauth2_invalid_client)
         )
 
-        handleFailure<Void>(ErrorResponseType.OAUTH2, ApiResponse(Response.error(401, errorBody))) { result ->
+        handleFailure<Void>(
+            ErrorResponseType.OAUTH2,
+            ApiResponse(Response.error(401, errorBody))
+        ) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertTrue(result.error is OAuth2Error)

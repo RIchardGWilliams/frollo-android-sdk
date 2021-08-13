@@ -19,7 +19,7 @@ package us.frollo.frollosdk.model.api.statements
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 
-data class StatementResponse(
+internal data class StatementResponse(
     @SerializedName("data")val statements: List<Statement>,
     @SerializedName("paging")val paging: PaginatedResponse.Paging
 )

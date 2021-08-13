@@ -16,10 +16,14 @@
 
 package us.frollo.frollosdk.statements
 
-import java.io.InputStream
+import okhttp3.ResponseBody
+import us.frollo.frollosdk.base.PaginatedResultWithData
+import us.frollo.frollosdk.base.PaginationInfo
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.logging.Log
+import us.frollo.frollosdk.model.api.statements.Statement
 import us.frollo.frollosdk.model.api.statements.StatementResponse
 import us.frollo.frollosdk.model.api.statements.StatementSortBy
 import us.frollo.frollosdk.model.api.statements.StatementType
@@ -48,9 +52,9 @@ class Statements(network: NetworkService) {
      * @param size:Int,
      * @param sortBy: [StatementSortBy]
      * @param orderType: [OrderType]
-     * @param completion: OnFrolloSDKCompletionListener<Resource<StatementResponse>>? = null
+     * @param completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>? = null
      */
-    fun refreshStatements(
+    fun fetchStatements(
         accountIds: List<Long>,
         statementType: StatementType? = null,
         fromDate: String? = null, // 2021-01-01
@@ -60,16 +64,39 @@ class Statements(network: NetworkService) {
         size: Int? = null,
         sortBy: StatementSortBy? = null,
         orderType: OrderType? = null,
-        completion: OnFrolloSDKCompletionListener<Resource<StatementResponse>>? = null
+        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>? = null
     ) {
         statementsAPI.fetchStatements(
             accountIds.joinToString(","), statementType, fromDate, toDate,
             before, after, size, sortBy, orderType
         ).enqueue { resource ->
-            completion?.invoke(resource)
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleStatementsResponse(resource.data, completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#fetchManagedProducts", resource.error?.localizedDescription)
+                    completion?.invoke(PaginatedResultWithData.Error(resource.error))
+                }
+            }
         }
     }
 
+    private fun handleStatementsResponse(
+        response: StatementResponse?,
+        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>?
+    ) {
+        completion?.invoke(
+            PaginatedResultWithData.Success(
+                paginationInfo = PaginationInfo(
+                    after = response?.paging?.cursors?.after?.toLong(),
+                    before = response?.paging?.cursors?.before?.toLong(),
+                    total = response?.paging?.total
+                ),
+                data = response?.statements
+            )
+        )
+    }
 
     /**
      * Download a specific statement from the host
@@ -78,9 +105,17 @@ class Statements(network: NetworkService) {
      *
      * @return Single<InputStream> inputStream of file
      */
-    fun refreshStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<InputStream?>? = null) {
+    fun fetchStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>?>? = null) {
         statementsAPI.fetchStatement(referenceId).enqueue { resource ->
-            completion?.invoke(resource.data?.byteStream())
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    completion?.invoke(resource)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#downloadStatement", resource.error?.localizedDescription)
+                    completion?.invoke(resource)
+                }
+            }
         }
     }
 }

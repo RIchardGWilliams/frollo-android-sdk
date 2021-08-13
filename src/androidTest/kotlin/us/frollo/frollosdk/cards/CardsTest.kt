@@ -118,8 +118,8 @@ class CardsTest : BaseAndroidTest() {
 
         val body = readStringFromJson(app, R.raw.card_by_id)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == requestPath) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -181,16 +181,18 @@ class CardsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.cards_get)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CardsAPI.URL_CARDS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CardsAPI.URL_CARDS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         cards.refreshCards { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -257,16 +259,18 @@ class CardsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.card_create)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CardsAPI.URL_CARDS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CardsAPI.URL_CARDS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         cards.createCard(
             accountId = 325,
@@ -335,8 +339,8 @@ class CardsTest : BaseAndroidTest() {
 
         val body = readStringFromJson(app, R.raw.card_by_id)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == requestPath) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -405,16 +409,18 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId/pin"
 
         val body = readStringFromJson(app, R.raw.card_set_pin)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val card = testCardResponseData(cardId = cardId, status = CardStatus.PENDING).toCard()
 
@@ -482,16 +488,18 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId/activate"
 
         val body = readStringFromJson(app, R.raw.card_activate)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val card = testCardResponseData(cardId = cardId, status = CardStatus.PENDING).toCard()
 
@@ -551,16 +559,18 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId/lock"
 
         val body = readStringFromJson(app, R.raw.card_lock)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val card = testCardResponseData(cardId = cardId, status = CardStatus.ACTIVE).toCard()
 
@@ -620,16 +630,18 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId/unlock"
 
         val body = readStringFromJson(app, R.raw.card_unlock)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val card = testCardResponseData(cardId = cardId, status = CardStatus.LOCKED).toCard()
 
@@ -689,19 +701,21 @@ class CardsTest : BaseAndroidTest() {
         val requestPath = "cards/$cardId/replace"
 
         val body = readStringFromJson(app, R.raw.card_replace_refresh)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(204)
-                } else if (request?.trimmedPath == CardsAPI.URL_CARDS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    } else if (request.trimmedPath == CardsAPI.URL_CARDS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val card = testCardResponseData(cardId = cardId, status = CardStatus.ACTIVE).toCard()
 
@@ -766,16 +780,18 @@ class CardsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.card_public_key)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CardsAPI.URL_CARD_PUBLIC_KEY) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CardsAPI.URL_CARD_PUBLIC_KEY) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         cards.getPublicKey { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)

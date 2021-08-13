@@ -21,22 +21,23 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
-import us.frollo.frollosdk.base.Resource
+import us.frollo.frollosdk.base.PaginatedResultWithData
+import us.frollo.frollosdk.base.PaginationInfo
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.model.api.statements.Statement
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
 import us.frollo.frollosdk.testutils.trimmedPath
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-class StatementManagementTest : BaseAndroidTest() {
+class StatementsTest : BaseAndroidTest() {
 
     override fun initSetup() {
         super.initSetup()
@@ -57,8 +58,8 @@ class StatementManagementTest : BaseAndroidTest() {
 
         val body = readStringFromJson(app, R.raw.statements_valid)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == requestPath) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -67,16 +68,13 @@ class StatementManagementTest : BaseAndroidTest() {
             }
         }
 
-        statementsManagement.refreshStatements(listOf(1)) { resource ->
-            assertEquals(Resource.Status.SUCCESS, resource.status)
-            assertNull(resource.error)
+        statements.fetchStatements(listOf(1)) { resource ->
 
-            val data = resource.data
-
+            val response = resource as PaginatedResultWithData.Success<PaginationInfo, List<Statement>>
+            val data = response.data
             assertNotNull(data)
-            val statement = data?.statements?.get(0)
+            val statement = data?.get(0)
             assertNotNull(statement)
-
             assertEquals(statement?.id, 1L)
             assertEquals(statement?.referenceId, "D20210805621541522003")
             assertEquals(statement?.accountId, 2047L)
@@ -88,7 +86,7 @@ class StatementManagementTest : BaseAndroidTest() {
         }
 
         val request = mockServer.takeRequest()
-        assertEquals("$requestPath", request.trimmedPath)
+        assertEquals(requestPath, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -103,9 +101,9 @@ class StatementManagementTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        statementsManagement.refreshStatements(listOf(1)) { resource ->
-            assertEquals(Resource.Status.ERROR, resource.status)
-            assertNotNull(resource.error)
+        statements.fetchStatements(listOf(1)) { resource ->
+            val response = resource as PaginatedResultWithData.Error
+            assertNotNull(response)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
 

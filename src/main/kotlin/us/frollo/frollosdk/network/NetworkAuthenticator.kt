@@ -39,12 +39,12 @@ import us.frollo.frollosdk.network.NetworkHelper.Companion.HEADER_AUTHORIZATION
  */
 internal class NetworkAuthenticator(private val network: NetworkService) : Authenticator {
 
-    override fun authenticate(route: Route?, response: Response?): Request? {
+    override fun authenticate(route: Route?, response: Response): Request? {
 
         var newRequest: Request? = null
 
         response?.clonedBodyString?.let { body ->
-            val apiError = APIError(response.code(), body)
+            val apiError = APIError(response.code, body)
 
             when (apiError.type) {
                 APIErrorType.INVALID_ACCESS_TOKEN -> {
@@ -54,14 +54,14 @@ internal class NetworkAuthenticator(private val network: NetworkService) : Authe
                         // Check if the request is using updated access token.
                         // If yes run refresh token flow
                         // Otherwise just run it once again with updated access token.
-                        val authorization = response.request().header(HEADER_AUTHORIZATION)
+                        val authorization = response.request.header(HEADER_AUTHORIZATION)
                         if (accessToken != null && authorization == "Bearer $accessToken") {
                             network.authenticationCallback?.accessTokenExpired()
                         }
 
                         val newAccessToken = network.accessTokenProvider?.accessToken?.token
                         if (newAccessToken != null) {
-                            newRequest = response.request().newBuilder()
+                            newRequest = response.request.newBuilder()
                                 .header(HEADER_AUTHORIZATION, "Bearer $newAccessToken")
                                 .build()
                         }

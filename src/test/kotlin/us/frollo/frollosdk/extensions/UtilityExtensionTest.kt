@@ -18,7 +18,7 @@ package us.frollo.frollosdk.extensions
 
 import com.google.gson.Gson
 import okhttp3.HttpUrl
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Protocol
 import okhttp3.Request
 import okhttp3.Response
@@ -52,7 +52,7 @@ class UtilityExtensionTest {
             .request(mRequest)
             .protocol(Protocol.HTTP_1_1)
             .code(401)
-            .body(ResponseBody.create(MediaType.parse("text"), "Unauthorized"))
+            .body(ResponseBody.create("text".toMediaTypeOrNull(), "Unauthorized"))
             .message("Unauthorized Error")
     }
 

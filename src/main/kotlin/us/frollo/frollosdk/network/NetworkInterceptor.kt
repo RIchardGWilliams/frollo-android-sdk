@@ -50,7 +50,7 @@ internal class NetworkInterceptor(private val network: NetworkService, private v
         var response = chain.proceed(request)
 
         // TODO: Review 429 Rate Limiting
-        if (!response.isSuccessful && response.code() == 429) {
+        if (!response.isSuccessful && response.code == 429) {
             Log.e("$TAG#intercept", "Error Response 429: Too many requests. Backoff!")
 
             // wait & retry
@@ -75,7 +75,7 @@ internal class NetworkInterceptor(private val network: NetworkService, private v
         val builder = originalRequest.newBuilder()
 
         try {
-            if (originalRequest.url().host() == Uri.parse(network.oAuth2Helper.config.serverUrl).host) { // Precautionary check to not append headers for any external requests
+            if (originalRequest.url.host == Uri.parse(network.oAuth2Helper.config.serverUrl).host) { // Precautionary check to not append headers for any external requests
                 addAuthorizationHeader(originalRequest, builder)
                 helper.addAdditionalHeaders(builder)
             }
@@ -89,13 +89,13 @@ internal class NetworkInterceptor(private val network: NetworkService, private v
     }
 
     private fun addAuthorizationHeader(request: Request, builder: Request.Builder) {
-        val url = request.url().toString()
-        if (request.headers().get(HEADER_AUTHORIZATION) == null &&
+        val url = request.url.toString()
+        if (request.headers.get(HEADER_AUTHORIZATION) == null &&
             url.contains(URL_MIGRATE_USER)
         ) {
 
             appendRefreshToken(builder)
-        } else if (request.headers().get(HEADER_AUTHORIZATION) == null &&
+        } else if (request.headers.get(HEADER_AUTHORIZATION) == null &&
             !url.contains(URL_REGISTER) &&
             !url.contains(URL_PASSWORD_RESET)
         ) {

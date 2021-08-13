@@ -91,7 +91,7 @@ abstract class BaseAndroidTest {
     lateinit var cards: Cards
     lateinit var paydays: Paydays
     lateinit var addressManagement: AddressManagement
-    lateinit var statementsManagement: Statements
+    lateinit var statements: Statements
     lateinit var appInfo: AppInfo
 
     val scopes = listOf("offline_access", "openid", "email")
@@ -149,7 +149,7 @@ abstract class BaseAndroidTest {
         cards = Cards(network, database)
         paydays = Paydays(network, database)
         addressManagement = AddressManagement(network, database)
-        statementsManagement = Statements(network)
+        statements = Statements(network)
 
         AndroidThreeTen.init(app)
     }

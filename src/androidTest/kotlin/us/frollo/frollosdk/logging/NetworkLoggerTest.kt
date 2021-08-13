@@ -44,15 +44,17 @@ class NetworkLoggerTest : BaseAndroidTest() {
     fun testLogging() {
         initSetup()
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == DeviceAPI.URL_LOG) {
-                    return MockResponse()
-                        .setResponseCode(201)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == DeviceAPI.URL_LOG) {
+                        return MockResponse()
+                            .setResponseCode(201)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val logger = NetworkLogger(network, deviceId = randomUUID(), deviceName = randomString(12), deviceType = randomString(12))
         logger.writeMessage("Test Message", LogLevel.ERROR)

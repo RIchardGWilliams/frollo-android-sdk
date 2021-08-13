@@ -60,16 +60,18 @@ class SurveysTest : BaseAndroidTest() {
         val surveyKey = "FINANCIAL_WELLBEING"
 
         val body = readStringFromJson(app, R.raw.survey_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "user/surveys/$surveyKey") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "user/surveys/$surveyKey") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         surveys.fetchSurvey(surveyKey = surveyKey) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -129,16 +131,18 @@ class SurveysTest : BaseAndroidTest() {
         val latest = true
 
         val body = readStringFromJson(app, R.raw.survey_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "user/surveys/$surveyKey?latest=$latest") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "user/surveys/$surveyKey?latest=$latest") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         surveys.fetchSurvey(surveyKey = surveyKey, latest = latest) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -172,16 +176,18 @@ class SurveysTest : BaseAndroidTest() {
         val testSurvey = testSurveyData()
 
         val body = readStringFromJson(app, R.raw.survey_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == SurveysAPI.URL_SURVEYS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == SurveysAPI.URL_SURVEYS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         surveys.submitSurvey(survey = testSurvey) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
