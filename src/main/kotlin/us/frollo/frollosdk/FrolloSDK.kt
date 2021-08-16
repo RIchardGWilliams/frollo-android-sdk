@@ -68,6 +68,7 @@ import us.frollo.frollosdk.paydays.Paydays
 import us.frollo.frollosdk.payments.Payments
 import us.frollo.frollosdk.preferences.Preferences
 import us.frollo.frollosdk.reports.Reports
+import us.frollo.frollosdk.statements.Statements
 import us.frollo.frollosdk.surveys.Surveys
 import us.frollo.frollosdk.user.UserManagement
 import us.frollo.frollosdk.version.Version
@@ -198,6 +199,12 @@ object FrolloSDK {
         get() = _paydays ?: throw IllegalAccessException(SDK_NOT_SETUP)
 
     /**
+     * Statements - Managing all aspects of statements. See [Statements] for details
+     */
+    val statements: Statements
+        get() = _statements ?: throw IllegalAccessException(SDK_NOT_SETUP)
+
+    /**
      * Log Manager - Manages logging to the host. See [LogManager] for details
      */
     val logger: LogManager
@@ -228,6 +235,7 @@ object FrolloSDK {
     private var _managedProducts: ManagedProducts? = null
     private var _cards: Cards? = null
     private var _paydays: Paydays? = null
+    private var _statements: Statements? = null
     private var _addressManagement: AddressManagement? = null
     private lateinit var keyStore: Keystore
     private lateinit var preferences: Preferences
@@ -369,6 +377,9 @@ object FrolloSDK {
 
             // 27. Setup Address Management
             _addressManagement = AddressManagement(network, database)
+
+            // 28. Setup statements
+            _statements = Statements(network)
 
             if (version.migrationNeeded()) {
                 version.migrateVersion()

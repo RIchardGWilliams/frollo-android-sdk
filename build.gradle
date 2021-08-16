@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka-android'
-
 apply from: "ktlint.gradle"
 
 configurations.all{
@@ -130,8 +129,6 @@ android {
         }
     }*/
 }
-
-
 
 buildscript {
 
