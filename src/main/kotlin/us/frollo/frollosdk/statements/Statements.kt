@@ -22,16 +22,17 @@ import us.frollo.frollosdk.base.PaginationInfo
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.fetchStatements
 import us.frollo.frollosdk.logging.Log
+import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.api.statements.Statement
-import us.frollo.frollosdk.model.api.statements.StatementResponse
 import us.frollo.frollosdk.model.api.statements.StatementSortBy
 import us.frollo.frollosdk.model.api.statements.StatementType
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.StatementsAPI
 
-/** Manages all aspects of Addresses */
+/** Manages all aspects of Statements */
 class Statements(network: NetworkService) {
 
     companion object {
@@ -41,18 +42,18 @@ class Statements(network: NetworkService) {
     private val statementsAPI: StatementsAPI = network.create(StatementsAPI::class.java)
 
     /**
-     * Refresh statements list from host
+     * Fetch list of statements from host
      *
-     * @param accountIds:List<Long> list of account ids to get statement for
-     * @param statementType: [StatementType],
-     * @param fromDate:String,//2021-01-01
-     * @param toDate:String,//2021-01-01
-     * @param before:Int,
-     * @param after:Int,
-     * @param size:Int,
-     * @param sortBy: [StatementSortBy]
-     * @param orderType: [OrderType]
-     * @param completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>? = null
+     * @param accountIds List<Long> list of account ids to get statement for
+     * @param statementType type of statement [StatementType] (optional)
+     * @param fromDate start date of statement format yyyy-MM-dd (optional)
+     * @param toDate end date of statement format yyyy-MM-dd (optional),//2021-01-01(optional)
+     * @param before ID of statement to fetch list of statements before (optional); used for pagination
+     * @param after ID of statement to fetch list of statements after (optional); used for pagination
+     * @param size Batch size of statements to returned by API (optional)
+     * @param sortBy  sort statements by [StatementSortBy] (optional)
+     * @param orderType: order statements by [OrderType] (optional)
+     * @param completion: Completion handler with optional error if the request fails and list of [Statement] with pagination information if succeeds
      */
     fun fetchStatements(
         accountIds: List<Long>,
@@ -64,36 +65,43 @@ class Statements(network: NetworkService) {
         size: Int? = null,
         sortBy: StatementSortBy? = null,
         orderType: OrderType? = null,
-        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>? = null
+        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>
     ) {
         statementsAPI.fetchStatements(
-            accountIds.joinToString(","), statementType, fromDate, toDate,
-            before, after, size, sortBy, orderType
+            accountIds = accountIds,
+            statementType = statementType,
+            fromDate = fromDate,
+            toDate = toDate,
+            before = before,
+            after = after,
+            size = size,
+            statementSortBy = sortBy,
+            orderType = orderType
         ).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     handleStatementsResponse(resource.data, completion)
                 }
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#fetchManagedProducts", resource.error?.localizedDescription)
-                    completion?.invoke(PaginatedResultWithData.Error(resource.error))
+                    Log.e("$TAG#fetchStatements", resource.error?.localizedDescription)
+                    completion.invoke(PaginatedResultWithData.Error(resource.error))
                 }
             }
         }
     }
 
     private fun handleStatementsResponse(
-        response: StatementResponse?,
-        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>?
+        response: PaginatedResponse<Statement>?,
+        completion: OnFrolloSDKCompletionListener<PaginatedResultWithData<PaginationInfo, List<Statement>>>
     ) {
-        completion?.invoke(
+        completion.invoke(
             PaginatedResultWithData.Success(
                 paginationInfo = PaginationInfo(
                     after = response?.paging?.cursors?.after?.toLong(),
                     before = response?.paging?.cursors?.before?.toLong(),
                     total = response?.paging?.total
                 ),
-                data = response?.statements
+                data = response?.data
             )
         )
     }
@@ -103,17 +111,17 @@ class Statements(network: NetworkService) {
      *
      * @param referenceId of statement to download
      *
-     * @return Single<InputStream> inputStream of file
+     * @param completion: Completion handler with optional error if the request fails and statement PDF body if succeeds
      */
-    fun fetchStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>?>? = null) {
+    fun fetchStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>?>) {
         statementsAPI.fetchStatement(referenceId).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    completion?.invoke(resource)
+                    completion.invoke(resource)
                 }
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#downloadStatement", resource.error?.localizedDescription)
-                    completion?.invoke(resource)
+                    Log.e("$TAG#fetchStatement", resource.error?.localizedDescription)
+                    completion.invoke(resource)
                 }
             }
         }

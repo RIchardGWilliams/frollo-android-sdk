@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.extensions
 
 import retrofit2.Call
+import retrofit2.http.Query
 import us.frollo.frollosdk.model.api.address.AddressAutocomplete
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
@@ -32,6 +33,9 @@ import us.frollo.frollosdk.model.api.images.ImageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
+import us.frollo.frollosdk.model.api.statements.Statement
+import us.frollo.frollosdk.model.api.statements.StatementSortBy
+import us.frollo.frollosdk.model.api.statements.StatementType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
@@ -46,6 +50,7 @@ import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
+import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.coredata.surveys.Survey
 import us.frollo.frollosdk.network.api.AddressAPI
 import us.frollo.frollosdk.network.api.AggregationAPI
@@ -57,6 +62,7 @@ import us.frollo.frollosdk.network.api.GoalsAPI
 import us.frollo.frollosdk.network.api.ImagesAPI
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
 import us.frollo.frollosdk.network.api.ReportsAPI
+import us.frollo.frollosdk.network.api.StatementsAPI
 import us.frollo.frollosdk.network.api.SurveysAPI
 
 // Aggregation
@@ -341,4 +347,30 @@ internal fun AggregationAPI.refreshProviderAccounts(providerAccountIds: LongArra
     val queryMap = mutableMapOf<String, String>()
     queryMap["provideraccount_ids"] = providerAccountIds.joinToString(",")
     return refreshProviderAccounts(queryMap)
+}
+
+internal fun StatementsAPI.fetchStatements(
+    accountIds: List<Long>,
+    @Query("type")statementType: StatementType? = null,
+    @Query("from_date")fromDate: String? = null, // 2021-01-01
+    @Query("to_date")toDate: String? = null, // 2021-01-01
+    @Query("before")before: Int? = null,
+    @Query("after")after: Int? = null,
+    @Query("size")size: Int? = null,
+    @Query("sort")statementSortBy: StatementSortBy? = null,
+    @Query("order")orderType: OrderType? = null
+): Call<PaginatedResponse<Statement>> {
+    val queryMap = mutableMapOf<String, String>()
+    queryMap["account_ids"] = accountIds.joinToString(",")
+    statementType?.let {
+        queryMap["type"] = it.toString()
+    }
+    fromDate?.let { queryMap["from_date"] = it }
+    toDate?.let { queryMap["to_date"] = it }
+    before?.let { queryMap["before"] = it.toString() }
+    after?.let { queryMap["after"] = it.toString() }
+    size?.let { queryMap["size"] = it.toString() }
+    statementSortBy?.let { queryMap["sort"] = it.toString() }
+    orderType?.let { queryMap["order"] = it.toString() }
+    return fetchStatements(queryMap)
 }

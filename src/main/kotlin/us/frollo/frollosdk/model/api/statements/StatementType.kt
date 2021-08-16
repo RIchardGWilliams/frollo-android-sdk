@@ -21,9 +21,12 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 @Keep
+/** The type of statement */
 enum class StatementType {
 
+    /** Periodic */
     @SerializedName("periodic")PERIODIC,
+    /** Close */
     @SerializedName("close")CLOSE;
 
     /** Enum to serialized string */

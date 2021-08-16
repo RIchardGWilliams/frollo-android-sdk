@@ -16,21 +16,30 @@
 
 package us.frollo.frollosdk.statements
 
+import com.google.gson.Gson
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
 import us.frollo.frollosdk.base.PaginatedResultWithData
 import us.frollo.frollosdk.base.PaginationInfo
+import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.extensions.fromJson
 import us.frollo.frollosdk.model.api.statements.Statement
+import us.frollo.frollosdk.model.api.statements.StatementSortBy
+import us.frollo.frollosdk.model.api.statements.StatementType
+import us.frollo.frollosdk.model.coredata.shared.OrderType
+import us.frollo.frollosdk.model.coredata.user.User
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
 import us.frollo.frollosdk.testutils.trimmedPath
@@ -49,12 +58,12 @@ class StatementsTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshStatements() {
+    fun testFetchStatements() {
         initSetup()
 
         val signal = CountDownLatch(1)
 
-        val requestPath = "statements?account_ids=1"
+        val requestPath = "statements?account_ids=1&type=periodic&from_date=2021-01-01&to_date=2021-01-01&before=1&after=2&size=4&sort=account_number&order=asc"
 
         val body = readStringFromJson(app, R.raw.statements_valid)
         mockServer.dispatcher = object : Dispatcher() {
@@ -68,7 +77,7 @@ class StatementsTest : BaseAndroidTest() {
             }
         }
 
-        statements.fetchStatements(listOf(1)) { resource ->
+        statements.fetchStatements(listOf(1), StatementType.PERIODIC, "2021-01-01", "2021-01-01", 1, 2, 4, StatementSortBy.ACCOUNT_NUMBER, OrderType.ASC) { resource ->
 
             val response = resource as PaginatedResultWithData.Success<PaginationInfo, List<Statement>>
             val data = response.data
@@ -94,7 +103,7 @@ class StatementsTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshStatementFailsIfLoggedOut() {
+    fun testFetchStatementsFailsIfLoggedOut() {
         initSetup()
 
         val signal = CountDownLatch(1)
@@ -109,6 +118,48 @@ class StatementsTest : BaseAndroidTest() {
 
             signal.countDown()
         }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchStatement() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.user_details_complete)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "statements/1") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        statements.fetchStatement("1") { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource?.status)
+            Assert.assertNull(resource?.error)
+
+            assertNotNull(resource?.data)
+            val bodyString = resource?.data?.string()?.replace("\n", "")
+            bodyString?.let {
+                val user: User? = Gson().fromJson(it)
+                assertEquals("jacob@frollo.us", user?.email)
+            }
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("statements/1", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 

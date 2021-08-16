@@ -23,7 +23,12 @@ data class Statement(
     @SerializedName("account_id") val accountId: Long,
     @SerializedName("reference_id") val referenceId: String,
     @SerializedName("type") val type: StatementType,
-    @SerializedName("start_date") val startDate: String, // Eg: 2021-01-01
-    @SerializedName("end_date") val endDate: String?, // Eg: 2021-01-01
-    @SerializedName("issued_date") val issuedDate: String? // 2021-01-01
-)
+    @SerializedName("start_date") val startDate: String, // yyyy-MM-dd
+    @SerializedName("end_date") val endDate: String?, // yyyy-MM-dd
+    @SerializedName("issued_date") val issuedDate: String? // yyyy-MM-dd
+) {
+    companion object {
+        /** Date format for dates associated with Statement */
+        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
+    }
+}

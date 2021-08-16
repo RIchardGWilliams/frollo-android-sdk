@@ -16,14 +16,20 @@
 
 package us.frollo.frollosdk.model.api.statements
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
+@Keep
 enum class StatementSortBy {
 
+    /** Sort statements by statement start date*/
     @SerializedName("period_start_date") PERIOD_START_DATE,
+    /** Sort statements by statement end date*/
     @SerializedName("period_end_date")PERIOD_END_DATE,
+    /** Sort statements by account number */
     @SerializedName("account_number")ACCOUNT_NUMBER,
+    /** Sort statements by statement type [StatementType]*/
     @SerializedName("type")TYPE;
 
     /** Enum to serialized string */

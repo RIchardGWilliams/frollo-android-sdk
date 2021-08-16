@@ -20,11 +20,9 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
-import us.frollo.frollosdk.model.api.statements.StatementResponse
-import us.frollo.frollosdk.model.api.statements.StatementSortBy
-import us.frollo.frollosdk.model.api.statements.StatementType
-import us.frollo.frollosdk.model.coredata.shared.OrderType
+import retrofit2.http.QueryMap
+import us.frollo.frollosdk.model.api.shared.PaginatedResponse
+import us.frollo.frollosdk.model.api.statements.Statement
 
 internal interface StatementsAPI {
     companion object {
@@ -33,17 +31,7 @@ internal interface StatementsAPI {
     }
 
     @GET(URL_STATEMENTS)
-    fun fetchStatements(
-        @Query("account_ids")accountIds: String,
-        @Query("type")statementType: StatementType? = null,
-        @Query("from_date")fromDate: String? = null, // 2021-01-01
-        @Query("to_date")toDate: String? = null, // 2021-01-01
-        @Query("before")before: Int? = null,
-        @Query("after")after: Int? = null,
-        @Query("size")size: Int? = null,
-        @Query("sort")statementSortBy: StatementSortBy? = null,
-        @Query("order")orderType: OrderType? = null
-    ): Call<StatementResponse>
+    fun fetchStatements(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<Statement>>
 
     @GET(URL_STATEMENT_DOWNLOAD)
     fun fetchStatement(@Path("reference_id")referenceId: String): Call<ResponseBody>
