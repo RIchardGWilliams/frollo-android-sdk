@@ -177,16 +177,18 @@ class BillsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.bill_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val date = LocalDate.now().plusDays(1).toString(Bill.DATE_FORMAT_PATTERN)
 
@@ -244,16 +246,18 @@ class BillsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.bill_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val date = LocalDate.now().plusDays(1).toString(Bill.DATE_FORMAT_PATTERN)
 
@@ -290,15 +294,17 @@ class BillsTest : BaseAndroidTest() {
 
         val requestPath = "bills/$billId"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(204)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.bills().insert(testBillResponseData(billId).toBill())
 
@@ -358,16 +364,18 @@ class BillsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.bills_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         bills.refreshBills { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -423,16 +431,18 @@ class BillsTest : BaseAndroidTest() {
         val requestPath = "bills/$billId"
 
         val body = readStringFromJson(app, R.raw.bill_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         bills.refreshBill(billId) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -490,16 +500,18 @@ class BillsTest : BaseAndroidTest() {
         val requestPath = "bills/$billId"
 
         val body = readStringFromJson(app, R.raw.bill_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val bill = testBillResponseData(billId = 12345).toBill()
 
@@ -556,20 +568,22 @@ class BillsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(2)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.bills_valid))
-                } else if (request?.trimmedPath == AggregationAPI.URL_ACCOUNTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.accounts_valid))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.bills_valid))
+                    } else if (request.trimmedPath == AggregationAPI.URL_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.accounts_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshAccounts { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -604,20 +618,22 @@ class BillsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(2)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.bills_valid))
-                } else if (request?.trimmedPath?.contains(AggregationAPI.URL_MERCHANTS) == true) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.bills_valid))
+                    } else if (request.trimmedPath?.contains(AggregationAPI.URL_MERCHANTS) == true) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshMerchantsWithPagination { result ->
             assertTrue(result is PaginatedResult.Success)
@@ -653,20 +669,22 @@ class BillsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(2)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.bills_valid))
-                } else if (request?.trimmedPath == AggregationAPI.URL_TRANSACTION_CATEGORIES) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.transaction_categories_valid))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.bills_valid))
+                    } else if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_CATEGORIES) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.transaction_categories_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransactionCategories { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -870,15 +888,17 @@ class BillsTest : BaseAndroidTest() {
 
         val requestPath = "bills/payments/$billPaymentId"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(204)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.billPayments().insert(testBillPaymentResponseData(billPaymentId = billPaymentId).toBillPayment())
 
@@ -942,16 +962,18 @@ class BillsTest : BaseAndroidTest() {
         val requestPath = "${BillsAPI.URL_BILL_PAYMENTS}?from_date=$fromDate&to_date=$toDate"
 
         val body = readStringFromJson(app, R.raw.bill_payments_2018_12_01_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         bills.refreshBillPayments(fromDate = fromDate, toDate = toDate) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1007,16 +1029,18 @@ class BillsTest : BaseAndroidTest() {
         val requestPath = "bills/payments/$billPaymentId"
 
         val body = readStringFromJson(app, R.raw.bill_payment_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val billPayment = testBillPaymentResponseData(billPaymentId = 12345).toBillPayment()
 
@@ -1077,20 +1101,22 @@ class BillsTest : BaseAndroidTest() {
         val toDate = "2021-12-02"
         val requestPath = "${BillsAPI.URL_BILL_PAYMENTS}?from_date=$fromDate&to_date=$toDate"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.bill_payments_2018_12_01_valid))
-                } else if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.bills_valid))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.bill_payments_2018_12_01_valid))
+                    } else if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.bills_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         bills.refreshBills { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1126,16 +1152,18 @@ class BillsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.bills_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BillsAPI.URL_BILLS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BillsAPI.URL_BILLS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.bills().insert(testBillResponseData(billId = 123, accountId = 345, merchantId = 678, transactionCategoryId = 567).toBill())
         database.billPayments().insert(testBillPaymentResponseData(billPaymentId = 456, billId = 123, date = "2019-01-01").toBillPayment())

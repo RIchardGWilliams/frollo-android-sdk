@@ -205,16 +205,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.providers_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDERS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDERS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProviders { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -269,20 +271,22 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal1 = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDERS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.providers_valid))
-                } else if (request?.trimmedPath == "aggregation/providers/614") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.provider_id_614))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDERS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.providers_valid))
+                    } else if (request.trimmedPath == "aggregation/providers/614") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.provider_id_614))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProvider(614L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -334,16 +338,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.provider_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/providers/12345") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/providers/12345") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProvider(12345L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -547,16 +553,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.provider_accounts_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProviderAccounts { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -587,16 +595,18 @@ class AggregationTest : BaseAndroidTest() {
 
         val refreshBody = readStringFromJson(app, R.raw.provider_accounts_valid)
         val syncBody = readStringFromJson(app, R.raw.provider_accounts_valid_sync)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath?.contains(AggregationAPI.URL_PROVIDER_ACCOUNTS) == true) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(if (request.method == "PUT") syncBody else refreshBody)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath?.contains(AggregationAPI.URL_PROVIDER_ACCOUNTS) == true) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(if (request.method == "PUT") syncBody else refreshBody)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProviderAccounts {
             assertEquals(Result.Status.SUCCESS, it.status)
@@ -653,16 +663,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.provider_account_id_123)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/provideraccounts/123") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/provideraccounts/123") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProviderAccount(123L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -714,16 +726,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.provider_account_id_123)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.createProviderAccount(providerId = 4078, loginForm = loginFormFilledData()) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -776,15 +790,17 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/provideraccounts/12345") {
-                    return MockResponse()
-                        .setResponseCode(204)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/provideraccounts/12345") {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data = testProviderAccountResponseData(providerAccountId = 12345)
         database.providerAccounts().insert(data.toProviderAccount())
@@ -838,16 +854,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.provider_account_id_123)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/provideraccounts/123") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/provideraccounts/123") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.updateProviderAccount(loginForm = loginFormFilledData(), providerAccountId = 123) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -897,20 +915,22 @@ class AggregationTest : BaseAndroidTest() {
     fun testProviderAccountsFetchMissingProviders() {
         initSetup()
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.provider_accounts_valid))
-                } else if (request?.trimmedPath == "aggregation/providers/12345") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.provider_id_12345))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.provider_accounts_valid))
+                    } else if (request.trimmedPath == "aggregation/providers/12345") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.provider_id_12345))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshProviderAccounts { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1087,16 +1107,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.accounts_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_ACCOUNTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshAccounts { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1187,16 +1209,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.account_id_542)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/accounts/542") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/accounts/542") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshAccount(542L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1249,16 +1273,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.account_id_542)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/accounts/542") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/accounts/542") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.updateAccount(
             accountId = 542,
@@ -1327,16 +1353,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.account_id_542)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/accounts/542") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/accounts/542") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.updateAccount(
             accountId = 542,
@@ -1386,16 +1414,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.accounts().insert(testAccountResponseData(accountId = 2149, providerAccountId = 345, included = false).toAccount())
         database.accounts().insert(testAccountResponseData(accountId = 2150, providerAccountId = 346, included = true).toAccount())
@@ -1651,16 +1681,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_id_194630)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/transactions/194630") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/194630") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransaction(194630L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1712,16 +1744,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransactionsWithPagination { result ->
             assertTrue(result is PaginatedResult.Success)
@@ -1775,20 +1809,22 @@ class AggregationTest : BaseAndroidTest() {
         val requestPath1 = "${AggregationAPI.URL_TRANSACTIONS}?from_date=$fromDate&to_date=$toDate"
         val requestPath2 = "${AggregationAPI.URL_TRANSACTIONS}?from_date=$fromDate&to_date=$toDate&after=1564138032_160746"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath1) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.transactions_page_1))
-                } else if (request?.trimmedPath == requestPath2) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.transactions_page_2))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.transactions_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.transactions_page_2))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data1 = testTransactionResponseData(transactionId = 164438, transactionDate = "2019-11-11", description = TransactionDescription(original = "Updating transaction"))
         val data2 = testTransactionResponseData(transactionId = 600, transactionDate = "2019-08-12", description = TransactionDescription(original = "Deleting transaction"))
@@ -1863,8 +1899,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_same_day_pagination_1)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -1905,8 +1941,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body2 = readStringFromJson(app, R.raw.transactions_same_day_pagination_2)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body2)
@@ -1949,8 +1985,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body2 = readStringFromJson(app, R.raw.transactions_same_day_pagination_3)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_4") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_4") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body2)
@@ -1990,8 +2026,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_1)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2033,8 +2069,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_2)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2080,8 +2116,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_3)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2120,8 +2156,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_1)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2167,8 +2203,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_2)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2219,8 +2255,8 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_3)
         mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
                     return MockResponse()
                         .setResponseCode(200)
                         .setBody(body)
@@ -2254,16 +2290,18 @@ class AggregationTest : BaseAndroidTest() {
 
         val requestPath = "${AggregationAPI.URL_TRANSACTIONS}?transaction_ids=1%2C2%2C3%2C4%2C5"
         val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransactions(longArrayOf(1, 2, 3, 4, 5)) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -2315,16 +2353,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_id_194630_excluded)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/transactions/194630") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/194630") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val transaction = testTransactionResponseData(transactionId = 194630, included = true).toTransaction()
         database.transactions().insert(transaction)
@@ -2384,16 +2424,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_id_194630)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/transactions/194630") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/194630") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val transaction = testTransactionResponseData(transactionId = 194630, categoryId = 123).toTransaction()
         database.transactions().insert(transaction)
@@ -2453,16 +2495,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_id_194630)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/transactions/194630") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/194630") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val transaction = testTransactionResponseData().toTransaction()
 
@@ -2520,16 +2564,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_summary_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS_SUMMARY}?from_date=2018-06-01&to_date=2018-08-08") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS_SUMMARY}?from_date=2018-06-01&to_date=2018-08-08") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchTransactionsSummary(fromDate = "2018-06-01", toDate = "2018-08-08") { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -2579,16 +2625,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_summary_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS_SUMMARY}?transaction_ids=1%2C2%2C3%2C4%2C5") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS_SUMMARY}?transaction_ids=1%2C2%2C3%2C4%2C5") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchTransactionsSummary(transactionIds = longArrayOf(1, 2, 3, 4, 5)) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -2640,16 +2688,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_update_tag)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchTagsForTransaction(transactionId = 12345) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -2697,15 +2747,17 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
-                    return MockResponse()
-                        .setResponseCode(200)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagfive"))
         database.transactions().insert(data.toTransaction())
@@ -2786,15 +2838,17 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
-                    return MockResponse()
-                        .setResponseCode(200)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo", "tagfive"))
         database.transactions().insert(data.toTransaction())
@@ -2919,16 +2973,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_user_tags)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_USER_TAGS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_USER_TAGS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransactionUserTags { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -2980,16 +3036,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transactions_user_tags)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath!!.contains(AggregationAPI.URL_SUGGESTED_TAGS)) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath!!.contains(AggregationAPI.URL_SUGGESTED_TAGS)) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchTransactionSuggestedTags("ca") {
             assertEquals(Resource.Status.SUCCESS, it.status)
@@ -3074,16 +3132,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_categories_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_TRANSACTION_CATEGORIES) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_CATEGORIES) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshTransactionCategories { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -3172,20 +3232,22 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
-                } else if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
+                    } else if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val merchantIds = longArrayOf(
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -3229,20 +3291,22 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
-                } else if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
+                    } else if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         // Insert some stale merchants
         val data1 = testMerchantResponseData(merchantId = 61)
@@ -3308,28 +3372,30 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal1 = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=500") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_500_chunk_1))
-                } else if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=500&size=500") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_500_chunk_2))
-                } else if (request?.trimmedPath?.contains("${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=1%2C2%2C3") == true) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_1_to_500))
-                } else if (request?.trimmedPath?.contains("${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=501%2C502%2C503") == true) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_500_to_664))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=500") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_500_chunk_1))
+                    } else if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=500&size=500") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_500_chunk_2))
+                    } else if (request.trimmedPath?.contains("${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=1%2C2%2C3") == true) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_1_to_500))
+                    } else if (request.trimmedPath?.contains("${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=501%2C502%2C503") == true) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_500_to_664))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshMerchantsWithPagination(batchSize = 500) { result1 ->
             assertTrue(result1 is PaginatedResult.Success)
@@ -3387,16 +3453,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.merchant_id_197)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "aggregation/merchants/197") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/merchants/197") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshMerchant(197L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -3425,20 +3493,22 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
-                } else if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_1))
+                    } else if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?after=50&size=50&merchant_ids=1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C10%2C11%2C12%2C13%2C14%2C15%2C16%2C17%2C18%2C19%2C20%2C21%2C22%2C23%2C24%2C25%2C26%2C27%2C28%2C29%2C30%2C31%2C32%2C33%2C34%2C35%2C36%2C37%2C38%2C39%2C40%2C41%2C42%2C43%2C44%2C45%2C46%2C47%2C48%2C49%2C50%2C51%2C52%2C53%2C54%2C55%2C56%2C57%2C58%2C59%2C60") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.merchants_valid_size_50_chunk_2))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val merchantIds = longArrayOf(
             1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
@@ -3503,16 +3573,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.merchants_by_id)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=22%2C30%2C31%2C106%2C691") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AggregationAPI.URL_MERCHANTS}?size=500&merchant_ids=22%2C30%2C31%2C106%2C691") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshMerchantsByIds(longArrayOf(22, 30, 31, 106, 691)) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -3564,16 +3636,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.providers_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == AggregationAPI.URL_PROVIDERS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDERS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
@@ -3767,16 +3841,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.consents_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CdrAPI.URL_CDR_CONSENTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CdrAPI.URL_CDR_CONSENTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshConsents { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -3828,16 +3904,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.consent_id_353)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "cdr/consents/353") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "cdr/consents/353") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshConsent(353L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -3890,16 +3968,18 @@ class AggregationTest : BaseAndroidTest() {
 
         val refreshBody = readStringFromJson(app, R.raw.consents_valid)
         val submitBody = readStringFromJson(app, R.raw.consent_created)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CdrAPI.URL_CDR_CONSENTS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(if (request.method == "POST") submitBody else refreshBody)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CdrAPI.URL_CDR_CONSENTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(if (request.method == "POST") submitBody else refreshBody)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.submitConsent(testConsentCreateFormData()) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -3953,16 +4033,18 @@ class AggregationTest : BaseAndroidTest() {
 
         val refreshBody = readStringFromJson(app, R.raw.consent_fetched)
         val updateBody = readStringFromJson(app, R.raw.consent_updated)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "cdr/consents/39") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(if (request.method == "PUT") updateBody else refreshBody)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "cdr/consents/39") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(if (request.method == "PUT") updateBody else refreshBody)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshConsent(consentId = 39) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -4027,16 +4109,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.products_account_id_542)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "${CdrAPI.URL_CDR_PRODUCTS}?account_id=542") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${CdrAPI.URL_CDR_PRODUCTS}?account_id=542") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchCDRProducts(accountId = 542) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -4089,16 +4173,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.product_id_65)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "cdr/products/65") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "cdr/products/65") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchCDRProduct(productId = 65) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -4162,16 +4248,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.cdr_configuration)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == CdrAPI.URL_CDR_CONFIG) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == CdrAPI.URL_CDR_CONFIG) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.refreshCDRConfiguration { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -4230,16 +4318,18 @@ class AggregationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.payment_limits)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         aggregation.fetchAccountPaymentLimits(accountId) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)

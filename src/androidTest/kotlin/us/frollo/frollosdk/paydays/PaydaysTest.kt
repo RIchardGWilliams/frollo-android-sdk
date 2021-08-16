@@ -83,16 +83,18 @@ class PaydaysTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.payday)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == PaydayAPI.URL_PAYDAY) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == PaydayAPI.URL_PAYDAY) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         paydays.refreshPayday { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -148,16 +150,18 @@ class PaydaysTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.payday)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == PaydayAPI.URL_PAYDAY) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == PaydayAPI.URL_PAYDAY) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data = testPaydayResponseData(frequency = PaydayFrequency.WEEKLY).toPayday()
 

@@ -68,16 +68,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.loginUser("user@frollo.us", "password", scopes) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -105,16 +107,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.loginUser("user@frollo.us", "wrong_password", scopes) { result ->
             assertEquals(Result.Status.ERROR, result.status)
@@ -148,16 +152,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.loggedIn = true
 
@@ -196,16 +202,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val json = readStringFromJson(app, R.raw.authorization_code_valid)
         val intent = Intent().putExtra("net.openid.appauth.AuthorizationResponse", json)
@@ -264,17 +272,19 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
         preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
 
-        mockRevokeTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == REVOKE_TOKEN_URL) {
-                    tokenRevoked = true
-                    signal.countDown()
-                    return MockResponse()
-                        .setResponseCode(204)
+        mockRevokeTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == REVOKE_TOKEN_URL) {
+                        tokenRevoked = true
+                        signal.countDown()
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.logout {
             signal.countDown()
@@ -298,16 +308,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.error_suspended_device)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.loggedIn = true
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
@@ -345,16 +357,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
 
-        mockRevokeTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockRevokeTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.refreshTokens { result ->
             assertEquals(Result.Status.ERROR, result.status)
@@ -378,16 +392,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.exchangeAuthorizationCode(code = randomString(32), codeVerifier = randomString(32), scopes = scopes) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -415,16 +431,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         oAuth2Authentication.exchangeAuthorizationCode(code = randomString(32), codeVerifier = randomString(32), scopes = scopes) { result ->
             assertEquals(Result.Status.ERROR, result.status)
@@ -454,16 +472,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.loggedIn = true
 
@@ -490,16 +510,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val legacyToken = randomString(32)
 
@@ -529,16 +551,18 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_grant))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_grant))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val legacyToken = randomString(32)
 

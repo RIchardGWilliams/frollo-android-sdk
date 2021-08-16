@@ -40,7 +40,7 @@ class NetworkServiceTest : BaseAndroidTest() {
                 .build()
         )
         assertNotNull(request)
-        assertEquals("http://api.example.com/", request.url().toString())
+        assertEquals("http://api.example.com/", request.url.toString())
 
         tearDown()
     }

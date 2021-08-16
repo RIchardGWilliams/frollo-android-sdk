@@ -179,16 +179,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.messages_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == MessagesAPI.URL_MESSAGES) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.refreshMessages { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -248,16 +250,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.messages_invalid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == MessagesAPI.URL_MESSAGES) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.refreshMessages { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -295,16 +299,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.message_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "messages/12345") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "messages/12345") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.refreshMessage(12345L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -356,16 +362,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.messages_unread)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == MessagesAPI.URL_UNREAD) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == MessagesAPI.URL_UNREAD) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.refreshUnreadMessages { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -428,16 +436,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.message_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "messages/12345") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "messages/12345") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.updateMessage(12345L, true, true) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -489,16 +499,18 @@ class MessagesTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.message_id_12345)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "messages/12345") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "messages/12345") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         messages.handleMessageNotification(testMessageNotificationPayload()) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)

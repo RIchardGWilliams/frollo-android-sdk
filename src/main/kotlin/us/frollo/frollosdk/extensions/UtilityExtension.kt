@@ -69,7 +69,7 @@ internal fun Enum<*>.serializedName(): String? {
 /* Network Extensions */
 internal val Response.clonedBodyString: String?
     get() {
-        val source = this.body()?.source()
+        val source = this.body?.source()
         source?.request(Long.MAX_VALUE) // Request the entire body.
         val buffer = source?.buffer
 

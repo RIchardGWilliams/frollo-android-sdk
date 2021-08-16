@@ -117,7 +117,7 @@ class NetworkService internal constructor(
 
         // Keep a reference to the dispatcher for host service so we can remove requests on reset
         if (!isTokenEndpoint)
-            dispatcher = httpClient.dispatcher()
+            dispatcher = httpClient.dispatcher
 
         val builder = Retrofit.Builder()
             .client(httpClient)

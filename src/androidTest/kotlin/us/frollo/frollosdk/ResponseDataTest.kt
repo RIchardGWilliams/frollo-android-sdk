@@ -53,16 +53,18 @@ class ResponseDataTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.user_details_complete)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == "api/v2/cdr/consents/1234/confirmation") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "api/v2/cdr/consents/1234/confirmation") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val url = "http://${mockServer.hostName}:${mockServer.port}/api/v2/cdr/consents/1234/confirmation"
         FrolloSDK.downloadResponseData(url) { resource ->
@@ -80,7 +82,7 @@ class ResponseDataTest : BaseAndroidTest() {
         }
 
         val request = mockServer.takeRequest()
-        assertEquals("api/v2/cdr/consents/1234/confirmation", request?.trimmedPath)
+        assertEquals("api/v2/cdr/consents/1234/confirmation", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 

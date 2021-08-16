@@ -35,7 +35,7 @@ import okhttp3.Route
  */
 internal class TokenAuthenticator(private val network: NetworkService) : Authenticator {
 
-    override fun authenticate(route: Route?, response: Response?): Request? {
+    override fun authenticate(route: Route?, response: Response): Request? {
 
         // ForceLogout on any 401 from Authorization Server
         network.tokenInvalidated()

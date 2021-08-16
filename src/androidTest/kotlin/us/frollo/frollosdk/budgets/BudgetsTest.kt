@@ -303,16 +303,18 @@ class BudgetsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.budget_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath?.contains(BudgetsAPI.URL_BUDGETS) == true) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath?.contains(BudgetsAPI.URL_BUDGETS) == true) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgets { resource ->
             val testObserver = budgets.fetchBudgets(current = true).test()
@@ -340,16 +342,18 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath = "budgets?current=true"
 
         val body = readStringFromJson(app, R.raw.budget_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgets(true) { resource ->
             val testObserver = budgets.fetchBudgets(current = true).test()
@@ -423,16 +427,18 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath = "budgets/$budgetId"
 
         val body = readStringFromJson(app, R.raw.budget_id_6)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudget(budgetId) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -481,16 +487,18 @@ class BudgetsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.budget_id_6)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BudgetsAPI.URL_BUDGETS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BudgetsAPI.URL_BUDGETS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.createBudgetCategoryBudget(
             BudgetFrequency.MONTHLY, BigDecimal(1000), BudgetCategory.LIVING, null,
@@ -525,16 +533,18 @@ class BudgetsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.budget_id_7)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BudgetsAPI.URL_BUDGETS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BudgetsAPI.URL_BUDGETS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.createMerchantBudget(
             BudgetFrequency.MONTHLY, BigDecimal(1000), 7, null,
@@ -569,16 +579,18 @@ class BudgetsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
         val body = readStringFromJson(app, R.raw.budget_id_8)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BudgetsAPI.URL_BUDGETS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BudgetsAPI.URL_BUDGETS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.createCategoryBudget(
             BudgetFrequency.MONTHLY, BigDecimal(1000), 8L, null,
@@ -639,16 +651,18 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath = "budgets/$budgetId"
 
         val body = readStringFromJson(app, R.raw.budget_id_6)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val budget = testBudgetResponseData(budgetId, status = BudgetStatus.UNSTARTED, trackingStatus = BudgetTrackingStatus.EQUAL).toBudget()
 
@@ -706,15 +720,17 @@ class BudgetsTest : BaseAndroidTest() {
 
         val requestPath = "budgets/$budgetId"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(204)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.budgets().insert(testBudgetResponseData(budgetId).toBudget())
 
@@ -846,24 +862,26 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath2 = "${BudgetsAPI.URL_BUDGET_PERIODS}?from_date=$fromDate&to_date=$toDate&after=1612137600_3706&status=$status"
         val requestPath3 = "${BudgetsAPI.URL_BUDGET_PERIODS}?from_date=$fromDate&to_date=$toDate&after=1619827200_3724&status=$status"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath1) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_page_1))
-                } else if (request?.trimmedPath == requestPath2) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_page_2))
-                } else if (request?.trimmedPath == requestPath3) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_page_3))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_page_2))
+                    } else if (request.trimmedPath == requestPath3) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_page_3))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data1 = testBudgetResponseData(budgetId = 701, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "65", status = BudgetStatus.ACTIVE)
         val data2 = testBudgetResponseData(budgetId = 702, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "64", status = BudgetStatus.ACTIVE)
@@ -1003,20 +1021,22 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath1 = "${BudgetsAPI.URL_BUDGETS}/$budgetId/periods?from_date=$fromDate&to_date=$toDate"
         val requestPath2 = "${BudgetsAPI.URL_BUDGETS}/$budgetId/periods?from_date=$fromDate&to_date=$toDate&after=1612137600_3706"
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath1) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_by_budget_id_page_1))
-                } else if (request?.trimmedPath == requestPath2) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_by_budget_id_page_2))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_by_budget_id_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_by_budget_id_page_2))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         val data1 = testBudgetResponseData(budgetId = 703, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "63", status = BudgetStatus.ACTIVE)
         val data2 = testBudgetResponseData(budgetId = 704, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "62", status = BudgetStatus.ACTIVE)
@@ -1129,16 +1149,18 @@ class BudgetsTest : BaseAndroidTest() {
         val requestPath = "budgets/$budgetId/periods/$periodId"
 
         val body = readStringFromJson(app, R.raw.budget_period_id_85)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgetPeriod(budgetId = budgetId, periodId = periodId) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1185,20 +1207,22 @@ class BudgetsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(2)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BudgetsAPI.URL_BUDGET_PERIODS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_periods_daily))
-                } else if (request?.trimmedPath == BudgetsAPI.URL_BUDGETS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.budget_valid))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BudgetsAPI.URL_BUDGET_PERIODS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_daily))
+                    } else if (request.trimmedPath == BudgetsAPI.URL_BUDGETS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgets { resource ->
             assertEquals(Result.Status.SUCCESS, resource.status)
@@ -1244,16 +1268,18 @@ class BudgetsTest : BaseAndroidTest() {
         database.budgets().insertAll(*periods.map { it.toBudget() }.toList().toTypedArray())
 
         val body = readStringFromJson(app, R.raw.budget_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgets { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1292,16 +1318,18 @@ class BudgetsTest : BaseAndroidTest() {
         database.budgets().insertAll(*periods.map { it.toBudget() }.toList().toTypedArray())
 
         val body = readStringFromJson(app, R.raw.budget_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == requestPath) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         budgets.refreshBudgets(budgetType = BudgetType.BUDGET_CATEGORY) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
@@ -1329,16 +1357,18 @@ class BudgetsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.budget_valid)
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == BudgetsAPI.URL_BUDGETS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == BudgetsAPI.URL_BUDGETS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         database.budgets().insert(testBudgetResponseData(budgetId = 7).toBudget())
         database.budgetPeriods().insert(testBudgetPeriodResponseData(budgetPeriodId = 456, budgetId = 7).toBudgetPeriod())

@@ -78,15 +78,17 @@ class EventsTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == EventsAPI.URL_EVENT) {
-                    return MockResponse()
-                        .setResponseCode(201)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == EventsAPI.URL_EVENT) {
+                        return MockResponse()
+                            .setResponseCode(201)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         events.triggerEvent("TEST_EVENT", 15) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)

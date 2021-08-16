@@ -58,27 +58,31 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.user_details_complete))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -108,36 +112,40 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            var failedOnce = false
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                var failedOnce = false
 
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    if (failedOnce) {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        if (failedOnce) {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                        } else {
+                            failedOnce = true
+                            return MockResponse()
+                                .setResponseCode(401)
+                                .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                        }
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
                         return MockResponse()
                             .setResponseCode(200)
-                            .setBody(readStringFromJson(app, R.raw.user_details_complete))
-                    } else {
-                        failedOnce = true
-                        return MockResponse()
-                            .setResponseCode(401)
-                            .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
                     }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
-
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -167,27 +175,31 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -219,36 +231,40 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            var userRequestCount = 0
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                var userRequestCount = 0
 
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    if (userRequestCount < 3) {
-                        userRequestCount++
-                        return MockResponse()
-                            .setResponseCode(401)
-                            .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
-                    } else {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        if (userRequestCount < 3) {
+                            userRequestCount++
+                            return MockResponse()
+                                .setResponseCode(401)
+                                .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                        } else {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                        }
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
                         return MockResponse()
                             .setResponseCode(200)
-                            .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
                     }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
-
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -278,13 +294,15 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                return MockResponse()
-                    .setResponseCode(401)
-                    .setBody(readStringFromJson(app, R.raw.error_invalid_refresh_token))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return MockResponse()
+                        .setResponseCode(401)
+                        .setBody(readStringFromJson(app, R.raw.error_invalid_refresh_token))
+                }
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -314,36 +332,40 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(3)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            var userRequestCount = 0
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                var userRequestCount = 0
 
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    if (userRequestCount < 3) {
-                        userRequestCount++
-                        return MockResponse()
-                            .setResponseCode(401)
-                            .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
-                    } else {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        if (userRequestCount < 3) {
+                            userRequestCount++
+                            return MockResponse()
+                                .setResponseCode(401)
+                                .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                        } else {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                        }
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
                         return MockResponse()
                             .setResponseCode(200)
-                            .setBody(readStringFromJson(app, R.raw.user_details_complete))
+                            .setBody(readStringFromJson(app, R.raw.token_valid))
                     }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
-
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(readStringFromJson(app, R.raw.token_valid))
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -391,27 +413,31 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(3)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_invalid_access_token))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
-        mockTokenServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == TOKEN_URL) {
-                    return MockResponse()
-                        .setResponseCode(401)
-                        .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+        mockTokenServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == TOKEN_URL) {
+                        return MockResponse()
+                            .setResponseCode(401)
+                            .setBody(readStringFromJson(app, R.raw.error_oauth2_invalid_client))
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -453,13 +479,15 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                return MockResponse()
-                    .setResponseCode(401)
-                    .setBody(readStringFromJson(app, R.raw.error_payment_invalid_otp))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return MockResponse()
+                        .setResponseCode(401)
+                        .setBody(readStringFromJson(app, R.raw.error_payment_invalid_otp))
+                }
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
@@ -506,13 +534,15 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                return MockResponse()
-                    .setResponseCode(401)
-                    .setBody(readStringFromJson(app, R.raw.error_payment_missing_otp))
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return MockResponse()
+                        .setResponseCode(401)
+                        .setBody(readStringFromJson(app, R.raw.error_payment_missing_otp))
+                }
             }
-        })
+            )
 
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")

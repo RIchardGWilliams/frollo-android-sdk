@@ -17,6 +17,10 @@
 - Add reference and rejected reason to transaction and additional transaction statuses
 - Add support for digital wallets in cards
 
+#### Features
+- Statements
+
+
 ### 3.9.0
 
 #### Features

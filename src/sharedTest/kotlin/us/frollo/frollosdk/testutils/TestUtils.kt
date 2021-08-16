@@ -86,8 +86,8 @@ fun wait(seconds: Int) {
     Thread.sleep(seconds * 1000L)
 }
 
-val RecordedRequest.trimmedPath: String
-    get() = path.replace(Regex("^/+"), "")
+val RecordedRequest.trimmedPath: String?
+    get() = path?.replace(Regex("^/+"), "")
 
 fun String.getDateTIme(): LocalDateTime? {
     try {

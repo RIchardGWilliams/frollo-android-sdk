@@ -121,6 +121,7 @@ class FrolloSDKAndroidUnitTest {
             assertNotNull(FrolloSDK.cards)
             assertNotNull(FrolloSDK.paydays)
             assertNotNull(FrolloSDK.addressManagement)
+            assertNotNull(FrolloSDK.statements)
         }
     }
 
@@ -334,6 +335,17 @@ class FrolloSDKAndroidUnitTest {
     }
 
     @Test
+    fun testSDKStatementsThrowsErrorBeforeSetup() {
+        assertFalse(FrolloSDK.isSetup)
+
+        try {
+            FrolloSDK.statements
+        } catch (e: IllegalAccessException) {
+            assertEquals(FrolloSDK.SDK_NOT_SETUP, e.localizedMessage)
+        }
+    }
+
+    @Test
     fun testPauseScheduledRefresh() {
         FrolloSDK.context = app
         FrolloSDK.setup(testSDKConfig()) { result ->
@@ -361,17 +373,17 @@ class FrolloSDKAndroidUnitTest {
     fun testRefreshData() {
         /*initSetup()
 
-        mockServer.setDispatcher(object: Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == UserAPI.URL_LOGIN) {
+        mockServer.dispatcher = (object: Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == UserAPI.URL_LOGIN) {
                     return MockResponse()
                             .setResponseCode(200)
                             .setBody(readStringFromJson(app, R.raw.user_details_complete))
-                } else if (request?.trimmedPath == UserAPI.URL_USER_DETAILS) {
+                } else if (request.trimmedPath == UserAPI.URL_USER_DETAILS) {
                     return MockResponse()
                             .setResponseCode(200)
                             .setBody(readStringFromJson(app, R.raw.user_details_complete))
-                } else if (request?.trimmedPath == MessagesAPI.URL_UNREAD) {
+                } else if (request.trimmedPath == MessagesAPI.URL_UNREAD) {
                     return MockResponse()
                             .setResponseCode(200)
                             .setBody(readStringFromJson(app, R.raw.messages_unread))

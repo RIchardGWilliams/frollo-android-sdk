@@ -134,15 +134,17 @@ class LogTest : BaseAndroidTest() {
         initSetup()
         Log.logLevel = LogLevel.ERROR
 
-        mockServer.setDispatcher(object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest?): MockResponse {
-                if (request?.trimmedPath == DeviceAPI.URL_LOG) {
-                    return MockResponse()
-                        .setResponseCode(201)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == DeviceAPI.URL_LOG) {
+                        return MockResponse()
+                            .setResponseCode(201)
+                    }
+                    return MockResponse().setResponseCode(404)
                 }
-                return MockResponse().setResponseCode(404)
             }
-        })
+            )
 
         Log.e("Tag", "Test Message 1")
         Log.e("Tag", "Test Message 2")
