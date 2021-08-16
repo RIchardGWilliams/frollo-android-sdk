@@ -20,10 +20,10 @@ import com.google.gson.Gson
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
@@ -79,7 +79,11 @@ class StatementsTest : BaseAndroidTest() {
 
         statements.fetchStatements(listOf(1), StatementType.PERIODIC, "2021-01-01", "2021-01-01", 1, 2, 4, StatementSortBy.ACCOUNT_NUMBER, OrderType.ASC) { resource ->
 
+            assertTrue(resource is PaginatedResultWithData.Success)
             val response = resource as PaginatedResultWithData.Success<PaginationInfo, List<Statement>>
+
+            assertEquals(null, resource.paginationInfo?.before)
+            assertEquals(100L, resource.paginationInfo?.after)
             val data = response.data
             assertNotNull(data)
             val statement = data?.get(0)
@@ -145,11 +149,11 @@ class StatementsTest : BaseAndroidTest() {
             )
 
         statements.fetchStatement("1") { resource ->
-            assertEquals(Resource.Status.SUCCESS, resource?.status)
-            Assert.assertNull(resource?.error)
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
 
-            assertNotNull(resource?.data)
-            val bodyString = resource?.data?.string()?.replace("\n", "")
+            assertNotNull(resource.data)
+            val bodyString = resource.data?.string()?.replace("\n", "")
             bodyString?.let {
                 val user: User? = Gson().fromJson(it)
                 assertEquals("jacob@frollo.us", user?.email)
@@ -160,6 +164,27 @@ class StatementsTest : BaseAndroidTest() {
 
         val request = mockServer.takeRequest()
         assertEquals("statements/1", request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchStatementFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        statements.fetchStatement("asd") { resource ->
+            assertNotNull(resource)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+
+            signal.countDown()
+        }
 
         signal.await(3, TimeUnit.SECONDS)
 

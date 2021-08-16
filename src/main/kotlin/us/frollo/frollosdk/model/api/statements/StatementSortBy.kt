@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 @Keep
+/** The order by which the statements should be sorted while fetching the statement list */
 enum class StatementSortBy {
 
     /** Sort statements by statement start date*/

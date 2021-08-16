@@ -16,7 +16,10 @@
 - Added new card statuses
 - Add reference and rejected reason to transaction and additional transaction statuses
 - Add support for digital wallets in cards
-- Add statements in FrolloSDK
+
+#### Features
+- Statements
+
 
 ### 3.9.0
 

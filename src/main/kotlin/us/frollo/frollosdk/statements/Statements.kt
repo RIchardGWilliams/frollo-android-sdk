@@ -46,8 +46,8 @@ class Statements(network: NetworkService) {
      *
      * @param accountIds List<Long> list of account ids to get statement for
      * @param statementType type of statement [StatementType] (optional)
-     * @param fromDate start date of statement format yyyy-MM-dd (optional)
-     * @param toDate end date of statement format yyyy-MM-dd (optional),//2021-01-01(optional)
+     * @param fromDate start date of statement format yyyy-MM-dd (optional). Please use [Statement.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param toDate end date of statement format yyyy-MM-dd (optional). Please use [Statement.DATE_FORMAT_PATTERN] for the format pattern.
      * @param before ID of statement to fetch list of statements before (optional); used for pagination
      * @param after ID of statement to fetch list of statements after (optional); used for pagination
      * @param size Batch size of statements to returned by API (optional)
@@ -113,7 +113,7 @@ class Statements(network: NetworkService) {
      *
      * @param completion: Completion handler with optional error if the request fails and statement PDF body if succeeds
      */
-    fun fetchStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>?>) {
+    fun fetchStatement(referenceId: String, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>>) {
         statementsAPI.fetchStatement(referenceId).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
