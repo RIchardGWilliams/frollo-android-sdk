@@ -34,7 +34,7 @@ enum class CardLockOrReplaceReason {
     @SerializedName("stolen") STOLEN,
 
     /** Damaged card */
-    @SerializedName("damaged") DAMAGED,
+    @SerializedName("damage") DAMAGED,
 
     /** Non receipt of card */
     @SerializedName("non_receipt") NON_RECEIPT;
