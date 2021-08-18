@@ -24,8 +24,8 @@ data class Statement(
     @SerializedName("reference_id") val referenceId: String,
     @SerializedName("type") val type: StatementType,
     @SerializedName("start_date") val startDate: String, // yyyy-MM-dd
-    @SerializedName("end_date") val endDate: String?, // yyyy-MM-dd
-    @SerializedName("issued_date") val issuedDate: String? // yyyy-MM-dd
+    @SerializedName("end_date") val endDate: String, // yyyy-MM-dd
+    @SerializedName("issued_date") val issuedDate: String // yyyy-MM-dd
 ) {
     companion object {
         /** Date format for dates associated with Statement */
