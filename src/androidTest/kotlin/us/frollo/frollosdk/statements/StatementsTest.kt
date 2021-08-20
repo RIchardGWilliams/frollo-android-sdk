@@ -114,7 +114,7 @@ class StatementsTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        statements.fetchStatements(listOf(1)) { resource ->
+        statements.fetchStatements(listOf(1), fromDate = "2020-01-01") { resource ->
             val response = resource as PaginatedResultWithData.Error
             assertNotNull(response)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
