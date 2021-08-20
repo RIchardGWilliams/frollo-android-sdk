@@ -352,7 +352,7 @@ internal fun AggregationAPI.refreshProviderAccounts(providerAccountIds: LongArra
 internal fun StatementsAPI.fetchStatements(
     accountIds: List<Long>,
     @Query("type")statementType: StatementType? = null,
-    @Query("from_date")fromDate: String? = null, // 2021-01-01
+    @Query("from_date")fromDate: String, // 2021-01-01
     @Query("to_date")toDate: String? = null, // 2021-01-01
     @Query("before")before: Int? = null,
     @Query("after")after: Int? = null,
@@ -365,7 +365,7 @@ internal fun StatementsAPI.fetchStatements(
     statementType?.let {
         queryMap["type"] = it.toString()
     }
-    fromDate?.let { queryMap["from_date"] = it }
+    queryMap["from_date"] = fromDate
     toDate?.let { queryMap["to_date"] = it }
     before?.let { queryMap["before"] = it.toString() }
     after?.let { queryMap["after"] = it.toString() }

@@ -46,7 +46,7 @@ class Statements(network: NetworkService) {
      *
      * @param accountIds List<Long> list of account ids to get statement for
      * @param statementType type of statement [StatementType] (optional)
-     * @param fromDate start date of statement format yyyy-MM-dd (optional). Please use [Statement.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param fromDate start date of statement format yyyy-MM-dd. Please use [Statement.DATE_FORMAT_PATTERN] for the format pattern.
      * @param toDate end date of statement format yyyy-MM-dd (optional). Please use [Statement.DATE_FORMAT_PATTERN] for the format pattern.
      * @param before ID of statement to fetch list of statements before (optional); used for pagination
      * @param after ID of statement to fetch list of statements after (optional); used for pagination
@@ -58,7 +58,7 @@ class Statements(network: NetworkService) {
     fun fetchStatements(
         accountIds: List<Long>,
         statementType: StatementType? = null,
-        fromDate: String? = null, // 2021-01-01
+        fromDate: String, // 2021-01-01
         toDate: String? = null, // 2021-01-01
         before: Int? = null,
         after: Int? = null,
