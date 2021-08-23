@@ -2,6 +2,9 @@
 
 ### 3.10.0
 
+#### Features
+- Statements
+
 #### Changes
 
 - Updated to support JDK 11
@@ -16,10 +19,7 @@
 - Added new card statuses
 - Add reference and rejected reason to transaction and additional transaction statuses
 - Add support for digital wallets in cards
-
-#### Features
-- Statements
-
+- Add Session ID in Header
 
 ### 3.9.0
 
