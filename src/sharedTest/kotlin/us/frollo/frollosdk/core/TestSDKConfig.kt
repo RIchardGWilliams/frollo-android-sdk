@@ -19,6 +19,8 @@ package us.frollo.frollosdk.core
 import us.frollo.frollosdk.authentication.AccessTokenProvider
 import us.frollo.frollosdk.authentication.AuthenticationCallback
 import us.frollo.frollosdk.authentication.AuthenticationType
+import us.frollo.frollosdk.network.SessionIDProvider
+import us.frollo.frollosdk.testutils.randomUUID
 
 internal fun testSDKConfig(
     clientId: String? = null,
@@ -36,7 +38,8 @@ internal fun testSDKConfig(
             revokeTokenURL = revokeTokenURL ?: "https://id.example.com/oauth/revoke/"
         ),
         clientId = clientId ?: "abc123",
-        serverUrl = serverUrl ?: "https://api.example.com/"
+        serverUrl = serverUrl ?: "https://api.example.com/",
+        sessionIdProvider = MockSessionIDProvider()
     )
 
 internal fun testSDKCustomConfig(
@@ -50,3 +53,7 @@ internal fun testSDKCustomConfig(
         clientId = clientId ?: "abc123",
         serverUrl = serverUrl ?: "https://api.example.com/"
     )
+
+internal class MockSessionIDProvider : SessionIDProvider {
+    override var sessionId: String? = randomUUID()
+}

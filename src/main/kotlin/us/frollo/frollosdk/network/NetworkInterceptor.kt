@@ -77,7 +77,7 @@ internal class NetworkInterceptor(private val network: NetworkService, private v
         try {
             if (originalRequest.url.host == Uri.parse(network.oAuth2Helper.config.serverUrl).host) { // Precautionary check to not append headers for any external requests
                 addAuthorizationHeader(originalRequest, builder)
-                helper.addAdditionalHeaders(builder)
+                helper.addAdditionalHeaders(builder, sessionId = network.oAuth2Helper.config.sessionIdProvider?.sessionId)
             }
         } catch (error: DataError) {
             if (error.type == DataErrorType.AUTHENTICATION && error.subType == DataErrorSubType.MISSING_REFRESH_TOKEN)

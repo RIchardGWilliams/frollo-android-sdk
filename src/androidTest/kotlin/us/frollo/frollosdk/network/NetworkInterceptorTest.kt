@@ -81,6 +81,7 @@ class NetworkInterceptorTest : BaseAndroidTest() {
         assertNotNull(request.getHeader("X-Device-Version"))
         assertNotNull(request.getHeader("X-Software-Version"))
         assertNotNull(request.getHeader("User-Agent"))
+        assertEquals(network.oAuth2Helper.config.sessionIdProvider?.sessionId, request.getHeader("X-Session-Id"))
 
         tearDown()
     }

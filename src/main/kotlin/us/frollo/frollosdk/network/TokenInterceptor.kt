@@ -19,10 +19,11 @@ package us.frollo.frollosdk.network
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import us.frollo.frollosdk.core.FrolloSDKConfiguration
 import us.frollo.frollosdk.logging.Log
 import java.io.IOException
 
-internal class TokenInterceptor(private val helper: NetworkHelper) : Interceptor {
+internal class TokenInterceptor(private val helper: NetworkHelper, private val config: FrolloSDKConfiguration) : Interceptor {
 
     companion object {
         private const val TAG = "TokenInterceptor"
@@ -59,7 +60,7 @@ internal class TokenInterceptor(private val helper: NetworkHelper) : Interceptor
 
     private fun adaptRequest(originalRequest: Request): Request {
         val builder = originalRequest.newBuilder()
-        helper.addAdditionalHeaders(builder)
+        helper.addAdditionalHeaders(builder, sessionId = config.sessionIdProvider?.sessionId)
         return builder.build()
     }
 }
