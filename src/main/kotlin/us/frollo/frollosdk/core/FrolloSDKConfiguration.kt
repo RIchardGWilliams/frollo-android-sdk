@@ -32,6 +32,7 @@ import us.frollo.frollosdk.network.SessionIDProvider
  * @param clientId OAuth2 Client identifier. The unique identifier of the application implementing the SDK
  * @param serverUrl Base URL of the Frollo API this SDK should point to
  * @param sessionIdProvider Data source to provide client session ID
+ * @param databaseNamePrefix Prefix for the name of the database
  * @param logLevel Level of logging for debug and error messages. Default is [LogLevel.ERROR]
  */
 data class FrolloSDKConfiguration(
@@ -39,6 +40,7 @@ data class FrolloSDKConfiguration(
     val clientId: String,
     val serverUrl: String,
     val sessionIdProvider: SessionIDProvider? = null,
+    val databaseNamePrefix: String? = null,
     val logLevel: LogLevel = LogLevel.ERROR
 ) {
 

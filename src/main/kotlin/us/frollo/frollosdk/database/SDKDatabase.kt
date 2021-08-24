@@ -127,19 +127,20 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun addresses(): AddressDao
 
     companion object {
-        private const val DATABASE_NAME = "frollosdk-db"
+        private const val DEFAULT_DATABASE_NAME = "frollosdk-db" // WARNING: DO NOT USE this directly anywhere as the actual DB name is derived by appending the DB name prefix.
 
         @Volatile
         private var instance: SDKDatabase? = null // Singleton instantiation
 
-        internal fun getInstance(context: Context): SDKDatabase {
+        internal fun getInstance(context: Context, dbNamePrefix: String? = null): SDKDatabase {
             return instance ?: synchronized(this) {
-                instance ?: create(context).also { instance = it }
+                instance ?: create(context, dbNamePrefix).also { instance = it }
             }
         }
 
-        private fun create(context: Context): SDKDatabase =
-            Room.databaseBuilder(context, SDKDatabase::class.java, DATABASE_NAME)
+        private fun create(context: Context, dbNamePrefix: String? = null): SDKDatabase {
+            val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
+            return Room.databaseBuilder(context, SDKDatabase::class.java, dbName)
                 .allowMainThreadQueries() // Needed for some tests
                 // .fallbackToDestructiveMigration()
                 .addMigrations(
@@ -158,6 +159,7 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_12_13
                 )
                 .build()
+        }
 
         // Copy-paste of auto-generated SQLs from room schema json file
         // located in sandbox code after building under frollo-android-sdk/schemas/$version.json
