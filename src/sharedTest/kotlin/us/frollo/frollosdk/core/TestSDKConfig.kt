@@ -55,5 +55,5 @@ internal fun testSDKCustomConfig(
     )
 
 internal class MockSessionIDProvider : SessionIDProvider {
-    override var sessionId: String? = randomUUID()
+    override val sessionId: String = randomUUID()
 }

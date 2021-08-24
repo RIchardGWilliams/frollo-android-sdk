@@ -24,5 +24,5 @@ interface SessionIDProvider {
     /**
      * Heuristic Session ID
      */
-    var sessionId: String?
+    val sessionId: String?
 }
