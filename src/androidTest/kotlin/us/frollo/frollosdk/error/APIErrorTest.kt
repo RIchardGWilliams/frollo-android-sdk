@@ -532,6 +532,16 @@ class APIErrorTest {
     }
 
     @Test
+    fun testAPIErrorContactValidation() {
+        validatePaymentErrors(R.raw.error_contact_validation, APIErrorCode.CONTACT_VALIDATION)
+    }
+
+    @Test
+    fun testAPIErrorContactUpdate() {
+        validatePaymentErrors(R.raw.error_contact_update, APIErrorCode.CONTACT_UPDATE)
+    }
+
+    @Test
     fun testAPIErrorPaymentOther() {
         validatePaymentErrors(R.raw.error_payment_other, APIErrorCode.PAYMENT_OTHER_ERROR)
     }
