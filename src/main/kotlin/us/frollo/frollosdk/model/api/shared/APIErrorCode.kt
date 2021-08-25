@@ -88,6 +88,10 @@ enum class APIErrorCode(val rawValue: String) {
     @SerializedName("F1050") CARD_VALIDATION_OTHER("F1050"),
     /** Card validation - Activation */
     @SerializedName("F1051") CARD_VALIDATION_ACTIVATION("F1051"),
+    /** Contact validation - Invalid data */
+    @SerializedName("F1070") CONTACT_VALIDATION("F1070"),
+    /** Contact validation - Contact update */
+    @SerializedName("F1071") CONTACT_UPDATE("F1071"),
 
     // 401 Not authenticated
     /** Invalid Access Token */
