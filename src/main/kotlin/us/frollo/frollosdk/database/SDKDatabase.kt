@@ -96,7 +96,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Payday::class,
         Address::class
     ],
-    version = 13, exportSchema = true
+    version = 14, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -156,7 +156,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_9_10,
                     MIGRATION_10_11,
                     MIGRATION_11_12,
-                    MIGRATION_12_13
+                    MIGRATION_12_13,
+                    MIGRATION_13_14
                 )
                 .build()
         }
@@ -520,9 +521,6 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 2) Alter cdr_configuration table - add column permissions
                 // 3) Alter user table - add columns - external_id, residential_address_*, mailing_address_*, previous_address_* & drop columns - address, mailing_address
                 // 4) New table - addresses
-                // 5) Alter account table - add new column payids
-                // 6) Alter transaction_model table - add new column reference, reason
-                // 7) Alter cards table - add digital wallet column
 
                 database.execSQL("CREATE TABLE IF NOT EXISTS `payday` (`status` TEXT NOT NULL, `frequency` TEXT NOT NULL, `next_date` TEXT, `previous_date` TEXT, `payday_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
 
@@ -541,12 +539,48 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 database.execSQL("CREATE TABLE IF NOT EXISTS `addresses` (`address_id` INTEGER NOT NULL, `building_name` TEXT, `unit_number` TEXT, `street_number` TEXT, `street_name` TEXT, `street_type` TEXT, `suburb` TEXT, `town` TEXT, `region` TEXT, `state` TEXT, `country` TEXT, `postal_code` TEXT, `long_form` TEXT, PRIMARY KEY(`address_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_addresses_address_id` ON `addresses` (`address_id`)")
+            }
+        }
 
-                database.execSQL("ALTER TABLE `account` ADD COLUMN `payids` TEXT")
+        private val MIGRATION_13_14: Migration = object : Migration(13, 14) {
+            override fun migrate(database: SupportSQLiteDatabase) {
 
-                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `reference` TEXT")
-                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `reason` TEXT")
-                database.execSQL("ALTER TABLE `card` ADD COLUMN `digital_wallets` TEXT")
+                /** NOTE:
+                 * There is one issue in this DB migration. By mistake the changes 1,2,3 below
+                 * were made part of MIGRATION_12_13 for few 3.10.0 SDK builds and few Volt internal
+                 * releases were also had this. Hence the only way now is - if a user migrates from
+                 * 13 to 14 we have to Delete & Re-create 3 tables - account, transaction_model & cards
+                 */
+
+                // New changes in this migration:
+                // 1) Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) account table - To add new column payids
+                // 2) Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - To add new column reference, reason
+                // 3) Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) cards table - To add digital wallet column
+
+                database.execSQL("DROP TABLE `account`")
+                database.execSQL("DROP INDEX IF EXISTS `index_account_account_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_account_provider_account_id`")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `account` (`account_id` INTEGER NOT NULL, `account_name` TEXT NOT NULL, `account_number` TEXT, `bsb` TEXT, `nick_name` TEXT, `provider_account_id` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `aggregator` TEXT, `aggregator_id` INTEGER NOT NULL, `account_status` TEXT NOT NULL, `included` INTEGER NOT NULL, `favourite` INTEGER NOT NULL, `hidden` INTEGER NOT NULL, `apr` TEXT, `interest_rate` TEXT, `last_payment_date` TEXT, `due_date` TEXT, `end_date` TEXT, `goal_ids` TEXT, `external_id` TEXT NOT NULL, `features` TEXT, `products_available` INTEGER NOT NULL, `payids` TEXT, `h_profile_name` TEXT, `attr_account_type` TEXT NOT NULL, `attr_account_sub_type` TEXT NOT NULL, `attr_account_group` TEXT NOT NULL, `attr_account_classification` TEXT, `r_status_status` TEXT, `r_status_sub_status` TEXT, `r_status_additional_status` TEXT, `r_status_last_refreshed` TEXT, `r_status_next_refresh` TEXT, `c_balance_amount` TEXT, `c_balance_currency` TEXT, `a_balance_amount` TEXT, `a_balance_currency` TEXT, `a_cash_amount` TEXT, `a_cash_currency` TEXT, `a_credit_amount` TEXT, `a_credit_currency` TEXT, `t_cash_amount` TEXT, `t_cash_currency` TEXT, `t_credit_amount` TEXT, `t_credit_currency` TEXT, `int_totalamount` TEXT, `int_totalcurrency` TEXT, `a_due_amount` TEXT, `a_due_currency` TEXT, `m_amount_amount` TEXT, `m_amount_currency` TEXT, `l_payment_amount` TEXT, `l_payment_currency` TEXT, `b_details_current_description` TEXT, `b_details_tiers` TEXT, `cdr_p_product_id` INTEGER, `cdr_p_product_name` TEXT, `cdr_p_product_details_page_url` TEXT, `cdr_p_key_information` TEXT, PRIMARY KEY(`account_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_account_account_id` ON `account` (`account_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_account_provider_account_id` ON `account` (`provider_account_id`)")
+
+                database.execSQL("DROP TABLE `transaction_model`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_transaction_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_account_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_category_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_merchant_id`")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_model` (`transaction_id` INTEGER NOT NULL, `base_type` TEXT NOT NULL, `status` TEXT NOT NULL, `transaction_date` TEXT NOT NULL, `post_date` TEXT, `budget_category` TEXT NOT NULL, `included` INTEGER NOT NULL, `memo` TEXT, `account_id` INTEGER NOT NULL, `category_id` INTEGER NOT NULL, `bill_id` INTEGER, `bill_payment_id` INTEGER, `user_tags` TEXT, `external_id` TEXT NOT NULL, `goal_id` INTEGER, `reference` TEXT, `reason` TEXT, `amount_amount` TEXT NOT NULL, `amount_currency` TEXT NOT NULL, `description_original` TEXT, `description_user` TEXT, `description_simple` TEXT, `merchant_id` INTEGER NOT NULL, `merchant_name` TEXT NOT NULL, `merchant_phone` TEXT, `merchant_website` TEXT, `merchant_location` TEXT, PRIMARY KEY(`transaction_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_transaction_id` ON `transaction_model` (`transaction_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_account_id` ON `transaction_model` (`account_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_category_id` ON `transaction_model` (`category_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_merchant_id` ON `transaction_model` (`merchant_id`)")
+
+                database.execSQL("DROP TABLE `card`")
+                database.execSQL("DROP INDEX IF EXISTS `index_card_card_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_card_account_id`")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `card` (`card_id` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `design_type` TEXT NOT NULL, `created_at` TEXT NOT NULL, `cancelled_at` TEXT, `name` TEXT, `nick_name` TEXT, `pan_last_digits` TEXT, `expiry_date` TEXT, `cardholder_name` TEXT, `type` TEXT, `issuer` TEXT, `digital_wallets` TEXT, `pin_set_at` TEXT, PRIMARY KEY(`card_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_card_id` ON `card` (`card_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_account_id` ON `card` (`account_id`)")
             }
         }
     }
