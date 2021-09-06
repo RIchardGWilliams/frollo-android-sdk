@@ -68,6 +68,7 @@ import us.frollo.frollosdk.paydays.Paydays
 import us.frollo.frollosdk.payments.Payments
 import us.frollo.frollosdk.preferences.Preferences
 import us.frollo.frollosdk.reports.Reports
+import us.frollo.frollosdk.servicestatus.ServiceStatusManagement
 import us.frollo.frollosdk.statements.Statements
 import us.frollo.frollosdk.surveys.Surveys
 import us.frollo.frollosdk.user.UserManagement
@@ -216,6 +217,12 @@ object FrolloSDK {
     val addressManagement: AddressManagement
         get() = _addressManagement ?: throw IllegalAccessException(SDK_NOT_SETUP)
 
+    /**
+     * Service Status Management - Managing all aspects of service status. See [ServiceStatusManagement] for details
+     */
+    val serviceStatusManagement: ServiceStatusManagement
+        get() = _serviceStatusManagement ?: throw IllegalAccessException(SDK_NOT_SETUP)
+
     private var _setup = false
     private var _logger: LogManager? = null
     private var _aggregation: Aggregation? = null
@@ -237,6 +244,7 @@ object FrolloSDK {
     private var _paydays: Paydays? = null
     private var _statements: Statements? = null
     private var _addressManagement: AddressManagement? = null
+    private var _serviceStatusManagement: ServiceStatusManagement? = null
     private lateinit var keyStore: Keystore
     private lateinit var preferences: Preferences
     private lateinit var version: Version
@@ -378,8 +386,11 @@ object FrolloSDK {
             // 27. Setup Address Management
             _addressManagement = AddressManagement(network, database)
 
-            // 28. Setup statements
+            // 28. Setup Statements
             _statements = Statements(network)
+
+            // 29. Setup Service Status Management
+            _serviceStatusManagement = ServiceStatusManagement(network, database)
 
             if (version.migrationNeeded()) {
                 version.migrateVersion()

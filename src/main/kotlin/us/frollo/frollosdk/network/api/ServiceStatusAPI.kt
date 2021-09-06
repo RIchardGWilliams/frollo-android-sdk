@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.network
+package us.frollo.frollosdk.network.api
 
-internal interface IApiProvider {
-    fun <T> create(service: Class<T>): T
-    fun <T> createAuth(service: Class<T>): T?
-    fun <T> createRevoke(service: Class<T>): T?
-    fun <T> createExternalNoAuth(service: Class<T>): T
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Url
+import us.frollo.frollosdk.model.api.servicestatus.ServiceOutageResponse
+import us.frollo.frollosdk.model.api.servicestatus.ServiceStatusResponse
+
+internal interface ServiceStatusAPI {
+
+    @GET
+    fun fetchServiceStatus(@Url url: String): Call<ServiceStatusResponse>
+
+    @GET
+    fun fetchServiceOutages(@Url url: String): Call<List<ServiceOutageResponse>>
 }

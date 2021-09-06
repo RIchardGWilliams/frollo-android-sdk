@@ -51,6 +51,7 @@ import us.frollo.frollosdk.model.coredata.goals.GoalTrackingType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.notifications.NotificationPayload
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.coredata.user.User
@@ -713,6 +714,16 @@ internal fun sqlForCards(status: CardStatus? = null, accountId: Long? = null): S
 
     status?.let { sqlQueryBuilder.appendSelection(selection = "status = '${ it.name }'") }
     accountId?.let { sqlQueryBuilder.appendSelection(selection = "account_id = $it") }
+
+    return sqlQueryBuilder.create()
+}
+
+internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, endDate: String): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("service_outage")
+
+    sqlQueryBuilder.appendSelection(selection = "type = '${ type.name }'")
+    sqlQueryBuilder.appendSelection(selection = "start_date = '$startDate'")
+    sqlQueryBuilder.appendSelection(selection = "end_date = '$endDate'")
 
     return sqlQueryBuilder.create()
 }

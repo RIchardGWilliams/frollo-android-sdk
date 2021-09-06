@@ -82,6 +82,7 @@ import us.frollo.frollosdk.model.coredata.payday.PaydayFrequency
 import us.frollo.frollosdk.model.coredata.payday.PaydayStatus
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.user.Attribution
 import us.frollo.frollosdk.model.coredata.user.FeatureFlag
@@ -1453,5 +1454,21 @@ class ConvertersTest {
         assertEquals("MONTHLY", str)
 
         assertEquals("UNKNOWN", Converters.instance.stringFromPaydayFrequency(null))
+    }
+
+    @Test
+    fun testStringToServiceOutageType() {
+        val frequency = Converters.instance.stringToServiceOutageType("OUTAGE")
+        assertEquals(ServiceOutageType.OUTAGE, frequency)
+
+        assertEquals(ServiceOutageType.INFO, Converters.instance.stringToServiceOutageType(null))
+    }
+
+    @Test
+    fun testStringFromServiceOutageType() {
+        val str = Converters.instance.stringFromServiceOutageType(ServiceOutageType.OUTAGE)
+        assertEquals("OUTAGE", str)
+
+        assertEquals("INFO", Converters.instance.stringFromServiceOutageType(null))
     }
 }

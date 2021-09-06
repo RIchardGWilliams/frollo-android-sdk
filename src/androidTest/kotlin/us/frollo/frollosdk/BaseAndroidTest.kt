@@ -49,6 +49,7 @@ import us.frollo.frollosdk.paydays.Paydays
 import us.frollo.frollosdk.payments.Payments
 import us.frollo.frollosdk.preferences.Preferences
 import us.frollo.frollosdk.reports.Reports
+import us.frollo.frollosdk.servicestatus.ServiceStatusManagement
 import us.frollo.frollosdk.statements.Statements
 import us.frollo.frollosdk.surveys.Surveys
 import us.frollo.frollosdk.user.UserManagement
@@ -92,6 +93,7 @@ abstract class BaseAndroidTest {
     lateinit var paydays: Paydays
     lateinit var addressManagement: AddressManagement
     lateinit var statements: Statements
+    lateinit var serviceStatusManagement: ServiceStatusManagement
     lateinit var appInfo: AppInfo
 
     val scopes = listOf("offline_access", "openid", "email")
@@ -150,6 +152,7 @@ abstract class BaseAndroidTest {
         paydays = Paydays(network, database)
         addressManagement = AddressManagement(network, database)
         statements = Statements(network)
+        serviceStatusManagement = ServiceStatusManagement(network, database)
 
         AndroidThreeTen.init(app)
     }

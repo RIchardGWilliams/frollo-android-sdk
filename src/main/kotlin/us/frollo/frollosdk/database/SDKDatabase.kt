@@ -42,6 +42,7 @@ import us.frollo.frollosdk.database.dao.PaydayDao
 import us.frollo.frollosdk.database.dao.ProviderAccountDao
 import us.frollo.frollosdk.database.dao.ProviderDao
 import us.frollo.frollosdk.database.dao.ReportAccountBalanceDao
+import us.frollo.frollosdk.database.dao.ServiceOutageDao
 import us.frollo.frollosdk.database.dao.TransactionCategoryDao
 import us.frollo.frollosdk.database.dao.TransactionDao
 import us.frollo.frollosdk.database.dao.TransactionUserTagsDao
@@ -68,6 +69,7 @@ import us.frollo.frollosdk.model.coredata.goals.GoalPeriod
 import us.frollo.frollosdk.model.coredata.images.Image
 import us.frollo.frollosdk.model.coredata.payday.Payday
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
+import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutage
 import us.frollo.frollosdk.model.coredata.user.User
 
 @Database(
@@ -94,9 +96,10 @@ import us.frollo.frollosdk.model.coredata.user.User
         Contact::class,
         Card::class,
         Payday::class,
-        Address::class
+        Address::class,
+        ServiceOutage::class
     ],
-    version = 14, exportSchema = true
+    version = 15, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -125,6 +128,7 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun cards(): CardDao
     internal abstract fun payday(): PaydayDao
     internal abstract fun addresses(): AddressDao
+    internal abstract fun serviceOutages(): ServiceOutageDao
 
     companion object {
         private const val DEFAULT_DATABASE_NAME = "frollosdk-db" // WARNING: DO NOT USE this directly anywhere as the actual DB name is derived by appending the DB name prefix.
@@ -157,7 +161,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_10_11,
                     MIGRATION_11_12,
                     MIGRATION_12_13,
-                    MIGRATION_13_14
+                    MIGRATION_13_14,
+                    MIGRATION_14_15
                 )
                 .build()
         }
@@ -581,6 +586,16 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `card` (`card_id` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `design_type` TEXT NOT NULL, `created_at` TEXT NOT NULL, `cancelled_at` TEXT, `name` TEXT, `nick_name` TEXT, `pan_last_digits` TEXT, `expiry_date` TEXT, `cardholder_name` TEXT, `type` TEXT, `issuer` TEXT, `digital_wallets` TEXT, `pin_set_at` TEXT, PRIMARY KEY(`card_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_card_id` ON `card` (`card_id`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_account_id` ON `card` (`account_id`)")
+            }
+        }
+
+        private val MIGRATION_14_15: Migration = object : Migration(14, 15) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // New changes in this migration:
+                // 1) New table - service_outage
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `service_outage` (`type` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `duration` INTEGER NOT NULL, `outage_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read` INTEGER NOT NULL, `message_title` TEXT NOT NULL, `message_summary` TEXT NOT NULL, `message_description` TEXT NOT NULL, `message_action` TEXT NOT NULL, `message_url` TEXT NOT NULL)")
             }
         }
     }
