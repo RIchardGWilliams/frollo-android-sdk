@@ -4,6 +4,7 @@
 
 #### Features
 - Statements
+- Service Status & Outage APIs
 
 #### Changes
 

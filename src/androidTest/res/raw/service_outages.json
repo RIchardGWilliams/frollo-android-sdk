@@ -1,0 +1,41 @@
+[
+	{
+		"start_date": "2021-09-03T12:02:12.505+10:00",
+		"end_date": "2021-09-04T12:02:12.505+10:00",
+		"duration": 86400,
+		"type": "info",
+		"message": {
+			"title": "VPS Information",
+			"summary": "Between Sat 19 June 12:30am-6:00am AEST, card features will be unavailable to use.",
+			"description": "Between Saturday 19 June 12:30am-6:00am AEST, scheduled maintenance will mean that you won't be able to use your Volt card. This includes activating your card, setting your PIN, making purchases, or withdrawing or checking your balance at ATMs.Once maintenance is complete, you'll be able to use all features as normal.",
+			"action": "More info",
+			"url": "https://www.voltbank.com.au/"
+		}
+	},
+	{
+		"start_date": "2021-09-03T12:02:12.505+10:00",
+		"end_date": "2021-09-04T12:02:12.505+10:00",
+		"duration": 86400,
+		"type": "warning",
+		"message": {
+			"title": "VPS Debit Cards Outage Planning",
+			"summary": "Between Sat 19 June 12:30am-6:00am AEST, card features will be unavailable to use.",
+			"description": "Between Saturday 19 June 12:30am-6:00am AEST, scheduled maintenance will mean that you won't be able to use your Volt card. This includes activating your card, setting your PIN, making purchases, or withdrawing or checking your balance at ATMs.Once maintenance is complete, you'll be able to use all features as normal.",
+			"action": "More info",
+			"url": "https://www.voltbank.com.au/"
+		}
+	},
+	{
+		"start_date": "2021-10-03T12:02:12.505+10:00",
+		"end_date": "2021-10-04T12:02:12.505+10:00",
+		"duration": 86400,
+		"type": "outage",
+		"message": {
+			"title": "VPS Debit Cards Outage",
+			"summary": "Between Sat 19 June 12:30am-6:00am AEST, card features will be unavailable to use.",
+			"description": "Between Saturday 19 June 12:30am-6:00am AEST, scheduled maintenance will mean that you won't be able to use your Volt card. This includes activating your card, setting your PIN, making purchases, or withdrawing or checking your balance at ATMs.Once maintenance is complete, you'll be able to use all features as normal.",
+			"action": "More info",
+			"url": "https://www.voltbank.com.au/"
+		}
+	}
+]

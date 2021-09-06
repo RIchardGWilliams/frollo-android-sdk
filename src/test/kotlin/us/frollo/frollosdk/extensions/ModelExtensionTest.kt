@@ -49,6 +49,7 @@ import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.testUserResponseData
@@ -522,5 +523,11 @@ class ModelExtensionTest {
 
         query = sqlForCards()
         assertEquals("SELECT  *  FROM card", query.sql)
+    }
+
+    @Test
+    fun testSQLForExistingOutage() {
+        val query = sqlForExistingOutage(type = ServiceOutageType.OUTAGE, startDate = "2011-12-03T10:15:30+01:00", endDate = "2011-12-04T10:15:30+01:00")
+        assertEquals("SELECT  *  FROM service_outage WHERE type = 'OUTAGE' AND start_date = '2011-12-03T10:15:30+01:00' AND end_date = '2011-12-04T10:15:30+01:00' ", query.sql)
     }
 }

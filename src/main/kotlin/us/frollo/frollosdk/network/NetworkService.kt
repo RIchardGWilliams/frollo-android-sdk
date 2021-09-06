@@ -66,6 +66,13 @@ class NetworkService internal constructor(
             else null
         }
     private var revokeTokenRetrofit: Retrofit? = null
+    private val externalNoAuthRetrofit = createRetrofit(
+        // Need to pass this as base URL cannot be empty for Retrofit initialization.
+        // But, this will be ignored anyways when we specify full URL in the Service API.
+        baseUrl = oAuth2Helper.config.serverUrl,
+        isTokenEndpoint = false,
+        needAuthentication = false
+    )
 
     internal var accessTokenProvider: AccessTokenProvider? = null
     internal var authenticationCallback: AuthenticationCallback? = null
@@ -81,43 +88,29 @@ class NetworkService internal constructor(
         }
     }
 
-    private fun createRetrofit(baseUrl: String, isTokenEndpoint: Boolean): Retrofit {
+    private fun createRetrofit(baseUrl: String, isTokenEndpoint: Boolean, needAuthentication: Boolean = true): Retrofit {
+        val httpClientBuilder = OkHttpClient.Builder()
+            .setTimeouts()
+            .addCertificatePinning()
+
+        if (needAuthentication) {
+            httpClientBuilder.addInterceptors(isTokenEndpoint)
+                .addAuthenticators(isTokenEndpoint)
+        }
+
+        val httpClient = httpClientBuilder.build()
+
+        // Keep a reference to the dispatcher for host service so we can remove requests on reset
+        if (!isTokenEndpoint && needAuthentication) {
+            dispatcher = httpClient.dispatcher
+        }
+
         val gson = GsonBuilder()
             .registerTypeAdapter(ContactResponse::class.java, ContactResponseDeserializer)
             .registerTypeAdapter(ContactCreateUpdateRequest::class.java, ContactRequestSerializer)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .enableComplexMapKeySerialization()
             .create()
-
-        val httpClientBuilder = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .addInterceptor(
-                if (isTokenEndpoint)
-                    tokenInterceptor
-                else
-                    serverInterceptor
-            )
-            .authenticator(
-                if (isTokenEndpoint)
-                    TokenAuthenticator(this)
-                else
-                    NetworkAuthenticator(this)
-            )
-
-        if (!BuildConfig.DEBUG && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            val certPinner = CertificatePinner.Builder()
-                .add(PINNING_PATTERN, PublicKey.ACTIVE)
-                .add(PINNING_PATTERN, PublicKey.BACKUP)
-                .build()
-            httpClientBuilder.certificatePinner(certPinner)
-        }
-        val httpClient = httpClientBuilder.build()
-
-        // Keep a reference to the dispatcher for host service so we can remove requests on reset
-        if (!isTokenEndpoint)
-            dispatcher = httpClient.dispatcher
 
         val builder = Retrofit.Builder()
             .client(httpClient)
@@ -131,6 +124,45 @@ class NetworkService internal constructor(
     override fun <T> create(service: Class<T>): T = apiRetrofit.create(service)
     override fun <T> createAuth(service: Class<T>): T? = authRetrofit?.create(service)
     override fun <T> createRevoke(service: Class<T>): T? = revokeTokenRetrofit?.create(service)
+    override fun <T> createExternalNoAuth(service: Class<T>): T = externalNoAuthRetrofit.create(service)
+
+    private fun OkHttpClient.Builder.addInterceptors(isTokenEndpoint: Boolean): OkHttpClient.Builder {
+        addInterceptor(
+            if (isTokenEndpoint)
+                tokenInterceptor
+            else
+                serverInterceptor
+        )
+        return this
+    }
+
+    private fun OkHttpClient.Builder.setTimeouts(): OkHttpClient.Builder {
+        connectTimeout(30, TimeUnit.SECONDS)
+        readTimeout(30, TimeUnit.SECONDS)
+        writeTimeout(30, TimeUnit.SECONDS)
+        return this
+    }
+
+    private fun OkHttpClient.Builder.addAuthenticators(isTokenEndpoint: Boolean): OkHttpClient.Builder {
+        authenticator(
+            if (isTokenEndpoint)
+                TokenAuthenticator(this@NetworkService)
+            else
+                NetworkAuthenticator(this@NetworkService)
+        )
+        return this
+    }
+
+    private fun OkHttpClient.Builder.addCertificatePinning(): OkHttpClient.Builder {
+        if (!BuildConfig.DEBUG && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            val certPinner = CertificatePinner.Builder()
+                .add(PINNING_PATTERN, PublicKey.ACTIVE)
+                .add(PINNING_PATTERN, PublicKey.BACKUP)
+                .build()
+            certificatePinner(certPinner)
+        }
+        return this
+    }
 
     internal fun authenticateRequest(request: Request): Request {
         return serverInterceptor.authenticateRequest(request)

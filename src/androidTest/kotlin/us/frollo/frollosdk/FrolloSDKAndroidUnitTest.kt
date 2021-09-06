@@ -122,6 +122,7 @@ class FrolloSDKAndroidUnitTest {
             assertNotNull(FrolloSDK.paydays)
             assertNotNull(FrolloSDK.addressManagement)
             assertNotNull(FrolloSDK.statements)
+            assertNotNull(FrolloSDK.serviceStatusManagement)
         }
     }
 
@@ -340,6 +341,17 @@ class FrolloSDKAndroidUnitTest {
 
         try {
             FrolloSDK.statements
+        } catch (e: IllegalAccessException) {
+            assertEquals(FrolloSDK.SDK_NOT_SETUP, e.localizedMessage)
+        }
+    }
+
+    @Test
+    fun testSDKServiceStatusManagementThrowsErrorBeforeSetup() {
+        assertFalse(FrolloSDK.isSetup)
+
+        try {
+            FrolloSDK.serviceStatusManagement
         } catch (e: IllegalAccessException) {
             assertEquals(FrolloSDK.SDK_NOT_SETUP, e.localizedMessage)
         }

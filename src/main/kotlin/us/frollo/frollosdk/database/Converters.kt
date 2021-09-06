@@ -77,6 +77,7 @@ import us.frollo.frollosdk.model.coredata.payday.PaydayFrequency
 import us.frollo.frollosdk.model.coredata.payday.PaydayStatus
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.user.Attribution
 import us.frollo.frollosdk.model.coredata.user.FeatureFlag
@@ -580,4 +581,12 @@ internal class Converters {
 
     @TypeConverter
     fun stringToPaydayFrequency(value: String?): PaydayFrequency = if (value == null) PaydayFrequency.UNKNOWN else PaydayFrequency.valueOf(value)
+
+    // Service Outage
+
+    @TypeConverter
+    fun stringFromServiceOutageType(value: ServiceOutageType?): String = value?.name ?: ServiceOutageType.INFO.name
+
+    @TypeConverter
+    fun stringToServiceOutageType(value: String?): ServiceOutageType = if (value == null) ServiceOutageType.INFO else ServiceOutageType.valueOf(value)
 }
