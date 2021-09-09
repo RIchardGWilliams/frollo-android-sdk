@@ -47,7 +47,7 @@ internal fun UserResponse.toUser() =
         features = features,
         foreignTax = foreignTax,
         taxResidency = taxResidency,
-        tfn = tfn,
-        tin = tin,
+        foreignTaxResidency = foreignTaxResidency,
+        tfnStatus = tfnStatus,
         externalId = externalId
     )

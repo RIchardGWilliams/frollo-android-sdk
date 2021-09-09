@@ -9,6 +9,7 @@
   "gender": "male",
   "date_of_birth": "1990-01-10",
   "tfn": "12345678",
+  "foreign_tax_residency": "US",
   "tax_residency": "AU",
   "foreign_tax": false,
   "tin": "12345",

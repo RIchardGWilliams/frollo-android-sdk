@@ -50,11 +50,13 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.OtpMethodType
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdOTPMethodType
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdStatus
 import us.frollo.frollosdk.model.testAddressResponseData
+import us.frollo.frollosdk.model.testUserAddressData
 import us.frollo.frollosdk.model.testUserResponseData
 import us.frollo.frollosdk.network.api.DeviceAPI
 import us.frollo.frollosdk.network.api.UserAPI
@@ -225,10 +227,10 @@ class UserManagementTest : BaseAndroidTest() {
             assertEquals("AUD", user?.primaryCurrency)
             assertEquals(Gender.MALE, user?.gender)
             assertEquals("1990-01-10", user?.dateOfBirth)
-            assertEquals("12345678", user?.tfn)
+            assertEquals(TFNStatus.RECEIVED, user?.tfnStatus)
             assertEquals("AU", user?.taxResidency)
             assertEquals(false, user?.foreignTax)
-            assertEquals("12345", user?.tin)
+            assertEquals("US", user?.foreignTaxResidency)
             assertEquals(0L, user?.residentialAddress?.addressId)
             assertEquals("Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia", user?.residentialAddress?.longForm)
             assertEquals(1L, user?.mailingAddress?.addressId)
@@ -288,7 +290,29 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(testUserResponseData().toUser()) { result ->
+        userManagement.updateUser(
+            firstName = "name",
+            email = "name@frollo.us",
+            primaryCurrency = "AUD",
+            attribution = Attribution(adGroup = randomString(8), campaign = randomString(8), creative = randomString(8), network = randomString(8)),
+            lastName = randomUUID(),
+            mobileNumber = "0411111111",
+            gender = Gender.MALE,
+            residentialAddress = testUserAddressData(),
+            mailingAddress = testUserAddressData(),
+            previousAddress = testUserAddressData(),
+            householdSize = 1,
+            householdType = HouseholdType.SINGLE,
+            occupation = Occupation.COMMUNITY_AND_PERSONAL_SERVICE_WORKERS,
+            industry = Industry.ELECTRICITY_GAS_WATER_AND_WASTE_SERVICES,
+            dateOfBirth = "1990-01-10",
+            driverLicense = "12345678",
+            foreignTax = false,
+            foreignTaxResidency = "US",
+            taxResidency = "AU",
+            tfn = "12345678",
+            tin = "111"
+        ) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -331,7 +355,29 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(testUserResponseData().toUser()) { result ->
+        userManagement.updateUser(
+            firstName = "name",
+            email = "name@frollo.us",
+            primaryCurrency = "AUD",
+            attribution = Attribution(adGroup = randomString(8), campaign = randomString(8), creative = randomString(8), network = randomString(8)),
+            lastName = randomUUID(),
+            mobileNumber = "0411111111",
+            gender = Gender.MALE,
+            residentialAddress = testUserAddressData(),
+            mailingAddress = testUserAddressData(),
+            previousAddress = testUserAddressData(),
+            householdSize = 1,
+            householdType = HouseholdType.SINGLE,
+            occupation = Occupation.COMMUNITY_AND_PERSONAL_SERVICE_WORKERS,
+            industry = Industry.ELECTRICITY_GAS_WATER_AND_WASTE_SERVICES,
+            dateOfBirth = "1990-01-10",
+            driverLicense = "12345678",
+            foreignTax = false,
+            foreignTaxResidency = "US",
+            taxResidency = "AU",
+            tfn = "12345678",
+            tin = "111"
+        ) { result ->
             assertFalse(oAuth2Authentication.loggedIn)
 
             assertEquals(Result.Status.ERROR, result.status)

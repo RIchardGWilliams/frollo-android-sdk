@@ -434,6 +434,11 @@ class APIErrorTest {
         assertNotNull(error.message)
     }
 
+    @Test
+    fun testAPIErrorForeignTaxResidencyRestricted() {
+        validatePaymentErrors(R.raw.error_foreign_tax_residency_restricted, APIErrorCode.FOREIGN_TAX_RESIDENCY_RESTRICTED)
+    }
+
     // Payment Errors
 
     @Test

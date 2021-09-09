@@ -24,6 +24,7 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserAddress
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 
@@ -54,7 +55,7 @@ internal data class UserResponse(
     @SerializedName("features") val features: List<FeatureFlag>?,
     @SerializedName("foreign_tax") val foreignTax: Boolean?,
     @SerializedName("tax_residency") val taxResidency: String?,
-    @SerializedName("tfn") val tfn: String?,
-    @SerializedName("tin") val tin: String?,
+    @SerializedName("foreign_tax_residency") val foreignTaxResidency: String?,
+    @SerializedName("tfn_status") val tfnStatus: TFNStatus?,
     @SerializedName("external_id") val externalId: String?
 )

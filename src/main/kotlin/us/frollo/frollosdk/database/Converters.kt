@@ -86,6 +86,7 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import java.math.BigDecimal
 
@@ -166,6 +167,12 @@ internal class Converters {
 
     @TypeConverter
     fun stringFromListOfRegisterStep(value: List<RegisterStep>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringToTFNStatus(value: String?): TFNStatus? = if (value == null) null else TFNStatus.valueOf(value)
+
+    @TypeConverter
+    fun stringFromTFNStatus(value: TFNStatus?): String? = value?.name
 
     // Message
     @TypeConverter

@@ -34,7 +34,6 @@ import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.notify
 import us.frollo.frollosdk.extensions.toString
-import us.frollo.frollosdk.extensions.updateRequest
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toUser
 import us.frollo.frollosdk.model.api.device.DeviceUpdateRequest
@@ -56,8 +55,13 @@ import us.frollo.frollosdk.model.api.user.payid.UserPayIdRemoveRequest
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdResponse
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.user.Attribution
+import us.frollo.frollosdk.model.coredata.user.Gender
+import us.frollo.frollosdk.model.coredata.user.HouseholdType
+import us.frollo.frollosdk.model.coredata.user.Industry
+import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.OtpMethodType
 import us.frollo.frollosdk.model.coredata.user.User
+import us.frollo.frollosdk.model.coredata.user.UserAddress
 import us.frollo.frollosdk.model.coredata.user.UserRelation
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdOTPMethodType
 import us.frollo.frollosdk.network.NetworkService
@@ -174,8 +178,56 @@ class UserManagement(
      * @param securityCode Verification Code / OTP for updating sensitive information
      * @param completion A completion handler once the API has returned and the cache has been updated. Returns any error that occurred during the process.
      */
-    fun updateUser(user: User, securityCode: String? = null, completion: OnFrolloSDKCompletionListener<Result>) {
-        userAPI.updateUser(user.updateRequest(), otp = securityCode).enqueue { resource ->
+    fun updateUser(
+        firstName: String? = null,
+        email: String? = null,
+        primaryCurrency: String? = null,
+        attribution: Attribution? = null,
+        lastName: String? = null,
+        mobileNumber: String? = null,
+        gender: Gender? = null,
+        residentialAddress: UserAddress? = null,
+        mailingAddress: UserAddress? = null,
+        previousAddress: UserAddress? = null,
+        householdSize: Int? = null,
+        householdType: HouseholdType? = null,
+        occupation: Occupation? = null,
+        industry: Industry? = null,
+        dateOfBirth: String? = null,
+        driverLicense: String? = null,
+        foreignTax: Boolean? = null,
+        taxResidency: String? = null,
+        foreignTaxResidency: String? = null,
+        tfn: String? = null,
+        tin: String? = null,
+        securityCode: String? = null,
+        completion: OnFrolloSDKCompletionListener<Result>
+    ) {
+        val request = UserUpdateRequest(
+            firstName = firstName,
+            email = email,
+            primaryCurrency = primaryCurrency,
+            attribution = attribution,
+            lastName = lastName,
+            mobileNumber = mobileNumber,
+            gender = gender,
+            residentialAddressId = residentialAddress?.addressId,
+            mailingAddressId = mailingAddress?.addressId,
+            previousAddressId = previousAddress?.addressId,
+            householdSize = householdSize,
+            householdType = householdType,
+            occupation = occupation,
+            industry = industry,
+            dateOfBirth = dateOfBirth,
+            driverLicense = driverLicense,
+            foreignTax = foreignTax,
+            taxResidency = taxResidency,
+            foreignTaxResidency = foreignTaxResidency,
+            tfn = tfn,
+            tin = tin
+        )
+
+        userAPI.updateUser(request, otp = securityCode).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#updateUser", resource.error?.localizedDescription)

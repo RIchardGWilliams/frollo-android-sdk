@@ -19,7 +19,6 @@ package us.frollo.frollosdk.extensions
 import android.os.Bundle
 import androidx.sqlite.db.SimpleSQLiteQuery
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
-import us.frollo.frollosdk.model.api.user.UserUpdateRequest
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
@@ -54,32 +53,7 @@ import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
-import us.frollo.frollosdk.model.coredata.user.User
 import us.frollo.frollosdk.notifications.NotificationPayloadNames
-
-internal fun User.updateRequest(): UserUpdateRequest =
-    UserUpdateRequest(
-        firstName = firstName,
-        email = email,
-        primaryCurrency = primaryCurrency,
-        attribution = attribution,
-        lastName = lastName,
-        mobileNumber = mobileNumber,
-        gender = gender,
-        residentialAddressId = residentialAddress?.addressId,
-        mailingAddressId = mailingAddress?.addressId,
-        previousAddressId = previousAddress?.addressId,
-        householdSize = householdSize,
-        householdType = householdType,
-        occupation = occupation,
-        industry = industry,
-        dateOfBirth = dateOfBirth,
-        driverLicense = driverLicense,
-        foreignTax = foreignTax,
-        taxResidency = taxResidency,
-        tfn = tfn,
-        tin = tin
-    )
 
 internal fun sqlForMessages(messageTypes: List<String>? = null, read: Boolean? = null, contentType: ContentType? = null): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("message")

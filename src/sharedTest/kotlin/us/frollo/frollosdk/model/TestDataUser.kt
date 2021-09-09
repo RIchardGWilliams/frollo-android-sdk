@@ -26,6 +26,7 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserAddress
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import us.frollo.frollosdk.testutils.randomNumber
@@ -67,8 +68,8 @@ internal fun testUserResponseData(
         driverLicense = "12345678",
         features = listOf(FeatureFlag(feature = "aggregation", enabled = true)),
         foreignTax = false,
-        tin = "12345",
-        tfn = "12345678",
+        foreignTaxResidency = "US",
+        tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
         externalId = "123456"
     )
@@ -101,8 +102,8 @@ internal fun UserResponse.testModifyUserResponseData(firstName: String): UserRes
         driverLicense = driverLicense,
         features = features,
         foreignTax = false,
-        tin = "12345",
-        tfn = "12345678",
+        foreignTaxResidency = "US",
+        tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
         externalId = "123456"
     )

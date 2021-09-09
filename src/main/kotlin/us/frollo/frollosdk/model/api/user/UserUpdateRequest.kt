@@ -42,6 +42,7 @@ internal data class UserUpdateRequest(
     @SerializedName("driver_license") val driverLicense: String? = null,
     @SerializedName("foreign_tax") val foreignTax: Boolean? = null,
     @SerializedName("tax_residency") val taxResidency: String? = null,
+    @SerializedName("foreign_tax_residency") val foreignTaxResidency: String? = null,
     @SerializedName("tfn") val tfn: String? = null,
     @SerializedName("tin") val tin: String? = null
 )
