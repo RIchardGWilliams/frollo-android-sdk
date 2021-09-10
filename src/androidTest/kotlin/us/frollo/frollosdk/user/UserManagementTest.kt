@@ -56,7 +56,7 @@ import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdOTPMethodType
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdStatus
 import us.frollo.frollosdk.model.testAddressResponseData
-import us.frollo.frollosdk.model.testUserAddressData
+import us.frollo.frollosdk.model.testUserRequestData
 import us.frollo.frollosdk.model.testUserResponseData
 import us.frollo.frollosdk.network.api.DeviceAPI
 import us.frollo.frollosdk.network.api.UserAPI
@@ -290,29 +290,7 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(
-            firstName = "name",
-            email = "name@frollo.us",
-            primaryCurrency = "AUD",
-            attribution = Attribution(adGroup = randomString(8), campaign = randomString(8), creative = randomString(8), network = randomString(8)),
-            lastName = randomUUID(),
-            mobileNumber = "0411111111",
-            gender = Gender.MALE,
-            residentialAddress = testUserAddressData(),
-            mailingAddress = testUserAddressData(),
-            previousAddress = testUserAddressData(),
-            householdSize = 1,
-            householdType = HouseholdType.SINGLE,
-            occupation = Occupation.COMMUNITY_AND_PERSONAL_SERVICE_WORKERS,
-            industry = Industry.ELECTRICITY_GAS_WATER_AND_WASTE_SERVICES,
-            dateOfBirth = "1990-01-10",
-            driverLicense = "12345678",
-            foreignTax = false,
-            foreignTaxResidency = "US",
-            taxResidency = "AU",
-            tfn = "12345678",
-            tin = "111"
-        ) { result ->
+        userManagement.updateUser(testUserRequestData()) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -355,29 +333,7 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(
-            firstName = "name",
-            email = "name@frollo.us",
-            primaryCurrency = "AUD",
-            attribution = Attribution(adGroup = randomString(8), campaign = randomString(8), creative = randomString(8), network = randomString(8)),
-            lastName = randomUUID(),
-            mobileNumber = "0411111111",
-            gender = Gender.MALE,
-            residentialAddress = testUserAddressData(),
-            mailingAddress = testUserAddressData(),
-            previousAddress = testUserAddressData(),
-            householdSize = 1,
-            householdType = HouseholdType.SINGLE,
-            occupation = Occupation.COMMUNITY_AND_PERSONAL_SERVICE_WORKERS,
-            industry = Industry.ELECTRICITY_GAS_WATER_AND_WASTE_SERVICES,
-            dateOfBirth = "1990-01-10",
-            driverLicense = "12345678",
-            foreignTax = false,
-            foreignTaxResidency = "US",
-            taxResidency = "AU",
-            tfn = "12345678",
-            tin = "111"
-        ) { result ->
+        userManagement.updateUser(testUserRequestData()) { result ->
             assertFalse(oAuth2Authentication.loggedIn)
 
             assertEquals(Result.Status.ERROR, result.status)
