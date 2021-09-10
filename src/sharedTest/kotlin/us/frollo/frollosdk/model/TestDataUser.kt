@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model
 import us.frollo.frollosdk.model.api.user.UserRegisterRequest
 import us.frollo.frollosdk.model.api.user.UserResetPasswordRequest
 import us.frollo.frollosdk.model.api.user.UserResponse
+import us.frollo.frollosdk.model.api.user.UserUpdateRequest
 import us.frollo.frollosdk.model.coredata.user.Attribution
 import us.frollo.frollosdk.model.coredata.user.FeatureFlag
 import us.frollo.frollosdk.model.coredata.user.Gender
@@ -26,6 +27,7 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserAddress
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import us.frollo.frollosdk.testutils.randomNumber
@@ -67,8 +69,8 @@ internal fun testUserResponseData(
         driverLicense = "12345678",
         features = listOf(FeatureFlag(feature = "aggregation", enabled = true)),
         foreignTax = false,
-        tin = "12345",
-        tfn = "12345678",
+        foreignTaxResidency = "US",
+        tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
         externalId = "123456"
     )
@@ -101,10 +103,37 @@ internal fun UserResponse.testModifyUserResponseData(firstName: String): UserRes
         driverLicense = driverLicense,
         features = features,
         foreignTax = false,
-        tin = "12345",
-        tfn = "12345678",
+        foreignTaxResidency = "US",
+        tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
         externalId = "123456"
+    )
+}
+
+internal fun testUserRequestData(): UserUpdateRequest {
+    val name = randomUUID()
+    return UserUpdateRequest(
+        firstName = name,
+        email = "$name@frollo.us",
+        primaryCurrency = "AUD",
+        attribution = Attribution(adGroup = randomString(8), campaign = randomString(8), creative = randomString(8), network = randomString(8)),
+        lastName = randomUUID(),
+        mobileNumber = "0411111111",
+        gender = Gender.MALE,
+        residentialAddressId = testUserAddressData().addressId,
+        mailingAddressId = testUserAddressData().addressId,
+        previousAddressId = testUserAddressData().addressId,
+        householdSize = 1,
+        householdType = HouseholdType.SINGLE,
+        occupation = Occupation.COMMUNITY_AND_PERSONAL_SERVICE_WORKERS,
+        industry = Industry.ELECTRICITY_GAS_WATER_AND_WASTE_SERVICES,
+        dateOfBirth = "1990-01-10",
+        driverLicense = "12345678",
+        foreignTax = false,
+        foreignTaxResidency = "US",
+        taxResidency = "AU",
+        tfn = "12345678",
+        tin = "111"
     )
 }
 

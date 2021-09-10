@@ -23,25 +23,73 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 
-internal data class UserUpdateRequest(
+/**
+ * UserUpdateRequest
+ *
+ * Represents the request to update user details
+ */
+data class UserUpdateRequest(
+
+    /** First name of the user (optional) */
     @SerializedName("first_name") val firstName: String? = null,
+
+    /** Email address of the user (optional) */
     @SerializedName("email") val email: String? = null,
+
+    /** Primary currency of the user */
     @SerializedName("primary_currency") val primaryCurrency: String? = null,
+
+    /** Attribution of the user */
     @SerializedName("attribution") val attribution: Attribution? = null,
+
+    /** Last name of the user (optional) */
     @SerializedName("last_name") val lastName: String? = null,
+
+    /** Mobile phone number of the user (optional) */
     @SerializedName("mobile_number") val mobileNumber: String? = null,
+
+    /** Gender of the user (optional) */
     @SerializedName("gender") val gender: Gender? = null,
+
+    /** Current residential address of the user */
     @SerializedName("residential_address_id") val residentialAddressId: Long? = null,
+
+    /** Mailing address of the user */
     @SerializedName("mailing_address_id") val mailingAddressId: Long? = null,
+
+    /** Previous residential address of the user */
     @SerializedName("previous_address_id") val previousAddressId: Long? = null,
+
+    /** Number of people in the household (optional) */
     @SerializedName("household_size") val householdSize: Int? = null,
+
+    /** Household type of the user (optional) */
     @SerializedName("marital_status") val householdType: HouseholdType? = null,
+
+    /** Occupation of the user (optional) */
     @SerializedName("occupation") val occupation: Occupation? = null,
+
+    /** Industry the user works in (optional) */
     @SerializedName("industry") val industry: Industry? = null,
+
+    /** Date of birth of the user (optional) (format pattern - yyyy-MM-dd) */
     @SerializedName("date_of_birth") val dateOfBirth: String? = null, // yyyy-MM-dd
+
+    /** Drivers license of the user */
     @SerializedName("driver_license") val driverLicense: String? = null,
+
+    /** Foreign tax user (optional) */
     @SerializedName("foreign_tax") val foreignTax: Boolean? = null,
+
+    /** Tax residency (optional) */
     @SerializedName("tax_residency") val taxResidency: String? = null,
+
+    /** Foreign Tax residency (optional) */
+    @SerializedName("foreign_tax_residency") val foreignTaxResidency: String? = null,
+
+    /** TFN of the user */
     @SerializedName("tfn") val tfn: String? = null,
+
+    /** TIN of the user */
     @SerializedName("tin") val tin: String? = null
 )

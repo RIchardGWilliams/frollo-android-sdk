@@ -34,7 +34,6 @@ import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.notify
 import us.frollo.frollosdk.extensions.toString
-import us.frollo.frollosdk.extensions.updateRequest
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toUser
 import us.frollo.frollosdk.model.api.device.DeviceUpdateRequest
@@ -174,8 +173,8 @@ class UserManagement(
      * @param securityCode Verification Code / OTP for updating sensitive information
      * @param completion A completion handler once the API has returned and the cache has been updated. Returns any error that occurred during the process.
      */
-    fun updateUser(user: User, securityCode: String? = null, completion: OnFrolloSDKCompletionListener<Result>) {
-        userAPI.updateUser(user.updateRequest(), otp = securityCode).enqueue { resource ->
+    fun updateUser(userUpdateRequest: UserUpdateRequest, securityCode: String? = null, completion: OnFrolloSDKCompletionListener<Result>) {
+        userAPI.updateUser(userUpdateRequest, otp = securityCode).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#updateUser", resource.error?.localizedDescription)

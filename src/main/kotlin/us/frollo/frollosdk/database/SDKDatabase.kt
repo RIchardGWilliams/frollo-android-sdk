@@ -562,13 +562,19 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 2) Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - To add new column reference, reason
                 // 3) Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) cards table - To add digital wallet column
 
+                // START - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) account table - To add new column payids
+                database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP TABLE `account`")
                 database.execSQL("DROP INDEX IF EXISTS `index_account_account_id`")
                 database.execSQL("DROP INDEX IF EXISTS `index_account_provider_account_id`")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `account` (`account_id` INTEGER NOT NULL, `account_name` TEXT NOT NULL, `account_number` TEXT, `bsb` TEXT, `nick_name` TEXT, `provider_account_id` INTEGER NOT NULL, `provider_name` TEXT NOT NULL, `aggregator` TEXT, `aggregator_id` INTEGER NOT NULL, `account_status` TEXT NOT NULL, `included` INTEGER NOT NULL, `favourite` INTEGER NOT NULL, `hidden` INTEGER NOT NULL, `apr` TEXT, `interest_rate` TEXT, `last_payment_date` TEXT, `due_date` TEXT, `end_date` TEXT, `goal_ids` TEXT, `external_id` TEXT NOT NULL, `features` TEXT, `products_available` INTEGER NOT NULL, `payids` TEXT, `h_profile_name` TEXT, `attr_account_type` TEXT NOT NULL, `attr_account_sub_type` TEXT NOT NULL, `attr_account_group` TEXT NOT NULL, `attr_account_classification` TEXT, `r_status_status` TEXT, `r_status_sub_status` TEXT, `r_status_additional_status` TEXT, `r_status_last_refreshed` TEXT, `r_status_next_refresh` TEXT, `c_balance_amount` TEXT, `c_balance_currency` TEXT, `a_balance_amount` TEXT, `a_balance_currency` TEXT, `a_cash_amount` TEXT, `a_cash_currency` TEXT, `a_credit_amount` TEXT, `a_credit_currency` TEXT, `t_cash_amount` TEXT, `t_cash_currency` TEXT, `t_credit_amount` TEXT, `t_credit_currency` TEXT, `int_totalamount` TEXT, `int_totalcurrency` TEXT, `a_due_amount` TEXT, `a_due_currency` TEXT, `m_amount_amount` TEXT, `m_amount_currency` TEXT, `l_payment_amount` TEXT, `l_payment_currency` TEXT, `b_details_current_description` TEXT, `b_details_tiers` TEXT, `cdr_p_product_id` INTEGER, `cdr_p_product_name` TEXT, `cdr_p_product_details_page_url` TEXT, `cdr_p_key_information` TEXT, PRIMARY KEY(`account_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_account_account_id` ON `account` (`account_id`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_account_provider_account_id` ON `account` (`provider_account_id`)")
+                database.execSQL("COMMIT")
+                // END - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) account table - To add new column payids
 
+                // START - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - To add new column reference, reason
+                database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP TABLE `transaction_model`")
                 database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_transaction_id`")
                 database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_account_id`")
@@ -579,13 +585,19 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_account_id` ON `transaction_model` (`account_id`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_category_id` ON `transaction_model` (`category_id`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_merchant_id` ON `transaction_model` (`merchant_id`)")
+                database.execSQL("COMMIT")
+                // END - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - To add new column reference, reason
 
+                // START - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) cards table - To add digital wallet column
+                database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP TABLE `card`")
                 database.execSQL("DROP INDEX IF EXISTS `index_card_card_id`")
                 database.execSQL("DROP INDEX IF EXISTS `index_card_account_id`")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `card` (`card_id` INTEGER NOT NULL, `account_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `design_type` TEXT NOT NULL, `created_at` TEXT NOT NULL, `cancelled_at` TEXT, `name` TEXT, `nick_name` TEXT, `pan_last_digits` TEXT, `expiry_date` TEXT, `cardholder_name` TEXT, `type` TEXT, `issuer` TEXT, `digital_wallets` TEXT, `pin_set_at` TEXT, PRIMARY KEY(`card_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_card_id` ON `card` (`card_id`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_card_account_id` ON `card` (`account_id`)")
+                database.execSQL("COMMIT")
+                // END - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) cards table - To add digital wallet column
             }
         }
 
@@ -594,8 +606,20 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 // New changes in this migration:
                 // 1) New table - service_outage
+                // 2) Alter table - user - add tfn_status & foreign_tax_residency columns, delete tfn & tin columns
 
                 database.execSQL("CREATE TABLE IF NOT EXISTS `service_outage` (`type` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `duration` INTEGER NOT NULL, `outage_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read` INTEGER NOT NULL, `message_title` TEXT NOT NULL, `message_summary` TEXT NOT NULL, `message_description` TEXT NOT NULL, `message_action` TEXT NOT NULL, `message_url` TEXT NOT NULL)")
+
+                // START - Drop column tfn, tin and add column foreign_tax_residency, tfn_status
+                database.execSQL("BEGIN TRANSACTION")
+                database.execSQL("DROP INDEX IF EXISTS `index_user_user_id`")
+                database.execSQL("ALTER TABLE user RENAME TO original_user")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `user` (`user_id` INTEGER NOT NULL, `first_name` TEXT, `email` TEXT NOT NULL, `email_verified` INTEGER NOT NULL, `status` TEXT NOT NULL, `primary_currency` TEXT NOT NULL, `valid_password` INTEGER NOT NULL, `register_steps` TEXT, `registration_date` TEXT NOT NULL, `facebook_id` TEXT, `attribution` TEXT, `last_name` TEXT, `mobile_number` TEXT, `gender` TEXT, `household_size` INTEGER, `marital_status` TEXT, `occupation` TEXT, `industry` TEXT, `date_of_birth` TEXT, `driver_license` TEXT, `features` TEXT, `foreign_tax` INTEGER, `tax_residency` TEXT, `foreign_tax_residency` TEXT, `tfn_status` TEXT, `external_id` TEXT, `residential_address_id` INTEGER, `residential_address_long_form` TEXT, `mailing_address_id` INTEGER, `mailing_address_long_form` TEXT, `previous_address_id` INTEGER, `previous_address_long_form` TEXT, PRIMARY KEY(`user_id`))")
+                database.execSQL("INSERT INTO user(user_id, first_name, email, email_verified, status, primary_currency, valid_password, register_steps, registration_date, facebook_id, attribution, last_name, mobile_number, gender, residential_address_id, residential_address_long_form, mailing_address_id, mailing_address_long_form, previous_address_id, previous_address_long_form, household_size, marital_status, occupation, industry, date_of_birth, driver_license, features, foreign_tax, tax_residency, external_id) SELECT user_id, first_name, email, email_verified, status, primary_currency, valid_password, register_steps, registration_date, facebook_id, attribution, last_name, mobile_number, gender, residential_address_id, residential_address_long_form, mailing_address_id, mailing_address_long_form, previous_address_id, previous_address_long_form, household_size, marital_status, occupation, industry, date_of_birth, driver_license, features, foreign_tax, tax_residency, external_id FROM original_user")
+                database.execSQL("DROP TABLE original_user")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_user_user_id` ON `user` (`user_id`)")
+                database.execSQL("COMMIT")
+                // END - Drop column tfn, tin and add column foreign_tax_residency, tfn_status
             }
         }
     }

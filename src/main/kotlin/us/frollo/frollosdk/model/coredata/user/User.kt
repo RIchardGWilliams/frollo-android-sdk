@@ -113,11 +113,11 @@ data class User(
     /** Tax residency (optional) */
     @ColumnInfo(name = "tax_residency") var taxResidency: String?,
 
-    /** Tax file number (optional) */
-    @ColumnInfo(name = "tfn") var tfn: String?,
+    /** Foreign Tax residency (optional) */
+    @ColumnInfo(name = "foreign_tax_residency") var foreignTaxResidency: String?,
 
-    /** Tax identification number (optional) */
-    @ColumnInfo(name = "tin") var tin: String?,
+    /** TFN status (optional) */
+    @ColumnInfo(name = "tfn_status") var tfnStatus: TFNStatus?,
 
     /** External ID (Optional) */
     @ColumnInfo(name = "external_id") val externalId: String?

@@ -50,11 +50,13 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.OtpMethodType
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdOTPMethodType
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdStatus
 import us.frollo.frollosdk.model.testAddressResponseData
+import us.frollo.frollosdk.model.testUserRequestData
 import us.frollo.frollosdk.model.testUserResponseData
 import us.frollo.frollosdk.network.api.DeviceAPI
 import us.frollo.frollosdk.network.api.UserAPI
@@ -225,10 +227,10 @@ class UserManagementTest : BaseAndroidTest() {
             assertEquals("AUD", user?.primaryCurrency)
             assertEquals(Gender.MALE, user?.gender)
             assertEquals("1990-01-10", user?.dateOfBirth)
-            assertEquals("12345678", user?.tfn)
+            assertEquals(TFNStatus.RECEIVED, user?.tfnStatus)
             assertEquals("AU", user?.taxResidency)
             assertEquals(false, user?.foreignTax)
-            assertEquals("12345", user?.tin)
+            assertEquals("US", user?.foreignTaxResidency)
             assertEquals(0L, user?.residentialAddress?.addressId)
             assertEquals("Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia", user?.residentialAddress?.longForm)
             assertEquals(1L, user?.mailingAddress?.addressId)
@@ -288,7 +290,7 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(testUserResponseData().toUser()) { result ->
+        userManagement.updateUser(testUserRequestData()) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -331,7 +333,7 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.updateUser(testUserResponseData().toUser()) { result ->
+        userManagement.updateUser(testUserRequestData()) { result ->
             assertFalse(oAuth2Authentication.loggedIn)
 
             assertEquals(Result.Status.ERROR, result.status)

@@ -91,6 +91,7 @@ import us.frollo.frollosdk.model.coredata.user.HouseholdType
 import us.frollo.frollosdk.model.coredata.user.Industry
 import us.frollo.frollosdk.model.coredata.user.Occupation
 import us.frollo.frollosdk.model.coredata.user.RegisterStep
+import us.frollo.frollosdk.model.coredata.user.TFNStatus
 import us.frollo.frollosdk.model.coredata.user.UserStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.testAccountFeatureDetailsData
@@ -274,6 +275,22 @@ class ConvertersTest {
         )
         val json = Converters.instance.stringFromListOfRegisterStep(steps)
         assertEquals("[{\"key\":\"kyc\",\"index\":0,\"required\":true,\"completed\":true},{\"key\":\"survey\",\"index\":1,\"required\":true,\"completed\":false}]", json)
+    }
+
+    @Test
+    fun testStringToTFNStatus() {
+        val status = Converters.instance.stringToTFNStatus("RECEIVED")
+        assertEquals(TFNStatus.RECEIVED, status)
+
+        assertNull(Converters.instance.stringToTFNStatus(null))
+    }
+
+    @Test
+    fun testStringFromTFNStatus() {
+        val str = Converters.instance.stringFromTFNStatus(TFNStatus.RECEIVED)
+        assertEquals("RECEIVED", str)
+
+        assertNull(Converters.instance.stringFromTFNStatus(null))
     }
 
     @Test

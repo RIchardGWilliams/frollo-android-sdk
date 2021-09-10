@@ -8,10 +8,10 @@
   "primary_currency": "AUD",
   "gender": "male",
   "date_of_birth": "1990-01-10",
-  "tfn": "12345678",
+  "foreign_tax_residency": "US",
   "tax_residency": "AU",
   "foreign_tax": false,
-  "tin": "12345",
+  "tfn_status": "received",
   "residential_address": {
     "id": 0,
     "long_form": "Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia"

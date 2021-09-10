@@ -44,6 +44,8 @@ enum class APIErrorCode(val rawValue: String) {
     @SerializedName("F0012") MIGRATION_FAILED("F0012"),
     /** Aggregator Bad Request Received */
     @SerializedName("F0014") AGGREGATOR_BAD_REQUEST("F0014"),
+    /** Foreign tax residency restricted */
+    @SerializedName("F0017") FOREIGN_TAX_RESIDENCY_RESTRICTED("F0017"),
     /** Payment - Other error */
     @SerializedName("F1000") PAYMENT_OTHER_ERROR("F1000"),
     /** Payment - Payment processor error */

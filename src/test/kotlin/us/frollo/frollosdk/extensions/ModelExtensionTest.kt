@@ -18,7 +18,6 @@ package us.frollo.frollosdk.extensions
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import us.frollo.frollosdk.mapping.toUser
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
@@ -52,16 +51,8 @@ import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
-import us.frollo.frollosdk.model.testUserResponseData
 
 class ModelExtensionTest {
-
-    @Test
-    fun testUserUpdateRequest() {
-        val user = testUserResponseData().toUser()
-        val request = user.updateRequest()
-        assertEquals(user.firstName, request.firstName)
-    }
 
     @Test
     fun testSQLForMessages() {
