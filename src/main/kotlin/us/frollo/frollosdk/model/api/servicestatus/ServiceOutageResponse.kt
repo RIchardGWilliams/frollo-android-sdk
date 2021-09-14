@@ -23,7 +23,7 @@ import us.frollo.frollosdk.model.coredata.servicestatus.StatusOutageMessage
 internal data class ServiceOutageResponse(
     @SerializedName("type") val type: ServiceOutageType,
     @SerializedName("start_date") val startDate: String, // ISO8601 format Eg: 2011-12-03T10:15:30+01:00
-    @SerializedName("end_date") val endDate: String, // ISO8601 format Eg: 2011-12-03T10:15:30+01:00
-    @SerializedName("duration") val duration: Long,
+    @SerializedName("end_date") val endDate: String?, // ISO8601 format Eg: 2011-12-03T10:15:30+01:00
+    @SerializedName("duration") val duration: Long?,
     @SerializedName("message") val message: StatusOutageMessage
 )

@@ -518,7 +518,10 @@ class ModelExtensionTest {
 
     @Test
     fun testSQLForExistingOutage() {
-        val query = sqlForExistingOutage(type = ServiceOutageType.OUTAGE, startDate = "2011-12-03T10:15:30+01:00", endDate = "2011-12-04T10:15:30+01:00")
+        var query = sqlForExistingOutage(type = ServiceOutageType.OUTAGE, startDate = "2011-12-03T10:15:30+01:00", endDate = "2011-12-04T10:15:30+01:00")
         assertEquals("SELECT  *  FROM service_outage WHERE type = 'OUTAGE' AND start_date = '2011-12-03T10:15:30+01:00' AND end_date = '2011-12-04T10:15:30+01:00' ", query.sql)
+
+        query = sqlForExistingOutage(type = ServiceOutageType.OUTAGE, startDate = "2011-12-03T10:15:30+01:00", endDate = null)
+        assertEquals("SELECT  *  FROM service_outage WHERE type = 'OUTAGE' AND start_date = '2011-12-03T10:15:30+01:00' AND end_date IS NULL ", query.sql)
     }
 }

@@ -608,7 +608,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 1) New table - service_outage
                 // 2) Alter table - user - add tfn_status & foreign_tax_residency columns, delete tfn & tin columns
 
-                database.execSQL("CREATE TABLE IF NOT EXISTS `service_outage` (`type` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT NOT NULL, `duration` INTEGER NOT NULL, `outage_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read` INTEGER NOT NULL, `message_title` TEXT NOT NULL, `message_summary` TEXT NOT NULL, `message_description` TEXT NOT NULL, `message_action` TEXT NOT NULL, `message_url` TEXT NOT NULL)")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `service_outage` (`type` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT, `duration` INTEGER, `outage_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read` INTEGER NOT NULL, `message_title` TEXT NOT NULL, `message_summary` TEXT NOT NULL, `message_description` TEXT NOT NULL, `message_action` TEXT NOT NULL, `message_url` TEXT NOT NULL)")
 
                 // START - Drop column tfn, tin and add column foreign_tax_residency, tfn_status
                 database.execSQL("BEGIN TRANSACTION")

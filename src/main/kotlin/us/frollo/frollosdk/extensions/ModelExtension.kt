@@ -692,12 +692,13 @@ internal fun sqlForCards(status: CardStatus? = null, accountId: Long? = null): S
     return sqlQueryBuilder.create()
 }
 
-internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, endDate: String): SimpleSQLiteQuery {
+internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, endDate: String?): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("service_outage")
 
     sqlQueryBuilder.appendSelection(selection = "type = '${ type.name }'")
     sqlQueryBuilder.appendSelection(selection = "start_date = '$startDate'")
-    sqlQueryBuilder.appendSelection(selection = "end_date = '$endDate'")
+    val endDateSelection = endDate?.let { "end_date = '$endDate'" } ?: run { "end_date IS NULL" }
+    sqlQueryBuilder.appendSelection(selection = endDateSelection)
 
     return sqlQueryBuilder.create()
 }

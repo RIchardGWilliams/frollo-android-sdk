@@ -42,15 +42,15 @@ data class ServiceOutage(
      */
     @ColumnInfo(name = "start_date") var startDate: String,
 
-    /** End date of the outage
+    /** End date of the outage (Optional)
      *
      * Date format for this field is ISO8601
      * example 2011-12-03T10:15:30+01:00
      */
-    @ColumnInfo(name = "end_date") var endDate: String,
+    @ColumnInfo(name = "end_date") var endDate: String?,
 
     /** Outage time in seconds (Optional) */
-    @ColumnInfo(name = "duration") var duration: Long,
+    @ColumnInfo(name = "duration") var duration: Long?,
 
     /** Information message about outage */
     @Embedded(prefix = "message_") var message: StatusOutageMessage
