@@ -49,7 +49,6 @@ internal class NetworkInterceptor(private val network: NetworkService, private v
 
         var response = chain.proceed(request)
 
-        // TODO: Review 429 Rate Limiting
         if (!response.isSuccessful && response.code == 429  && rateLimitCount < MAX_RATE_LIMIT_COUNT) {
             Log.e("$TAG#intercept", "Error Response 429: Too many requests. Backoff!")
 
