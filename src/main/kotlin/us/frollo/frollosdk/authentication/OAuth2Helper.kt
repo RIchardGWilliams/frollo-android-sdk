@@ -39,6 +39,12 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
     private val domain: String
         get() = Uri.parse(config.serverUrl).host ?: ""
 
+    private val audience: String
+        get() {
+            val audUrl = oAuth2.audienceUrl
+            return if (audUrl?.isNotBlank() == true) audUrl else config.serverUrl
+        }
+
     internal fun getRefreshTokensRequest(refreshToken: String?) =
         OAuthTokenRequest(
             grantType = OAuthGrantType.REFRESH_TOKEN,
@@ -54,7 +60,7 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
             domain = domain,
             username = username,
             password = password,
-            audience = oAuth2.audienceUrl ?: config.serverUrl,
+            audience = audience,
             scope = scopes.joinToString(" "),
             realm = "Username-Password-Authentication" // Note: Needed for Volt
         )
@@ -105,12 +111,12 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
             oAuth2.redirectUri
         )
 
-        val customParameters = mutableMapOf(Pair("audience", config.serverUrl), Pair("domain", domain))
+        val customParameters = mutableMapOf(Pair("audience", audience), Pair("domain", domain))
         additionalParameters?.let { customParameters.putAll(it) }
 
         return authRequestBuilder
             .setScopes(scopes)
-            // .setPrompt("login") // Specifies whether the Authorization Server prompts the End-User for re-authentication
+            .setPrompt(AuthorizationRequest.Prompt.LOGIN) // Specifies whether the Authorization Server prompts the End-User for re-authentication. Without this the chrome tabs will remember the last user logged in and there is no way we can clear the cookies.
             .setAdditionalParameters(customParameters)
             .build()
     }
