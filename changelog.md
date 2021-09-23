@@ -21,6 +21,7 @@
 - Add reference and rejected reason to transaction and additional transaction statuses
 - Add support for digital wallets in cards
 - Add Session ID in Header
+- Provider API response changes to support joint accounts
 
 ### 3.9.0
 

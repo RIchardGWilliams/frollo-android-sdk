@@ -99,7 +99,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Address::class,
         ServiceOutage::class
     ],
-    version = 15, exportSchema = true
+    version = 16, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -162,7 +162,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_11_12,
                     MIGRATION_12_13,
                     MIGRATION_13_14,
-                    MIGRATION_14_15
+                    MIGRATION_14_15,
+                    MIGRATION_15_16
                 )
                 .build()
         }
@@ -620,6 +621,17 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_user_user_id` ON `user` (`user_id`)")
                 database.execSQL("COMMIT")
                 // END - Drop column tfn, tin and add column foreign_tax_residency, tfn_status
+            }
+        }
+
+        private val MIGRATION_15_16: Migration = object : Migration(15, 16) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // New changes in this migration:
+                // 1) Alter table - provider - add joint_accounts_available & associated_provider_ids columns
+
+                database.execSQL("ALTER TABLE `provider` ADD COLUMN `joint_accounts_available` INTEGER")
+                database.execSQL("ALTER TABLE `provider` ADD COLUMN `associated_provider_ids` TEXT")
             }
         }
     }

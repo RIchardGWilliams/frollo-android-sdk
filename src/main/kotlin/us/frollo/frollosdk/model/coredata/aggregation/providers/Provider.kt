@@ -98,6 +98,15 @@ data class Provider(
     @ColumnInfo(name = "login_form") val loginForm: ProviderLoginForm?,
 
     /** Provider encryption (optional) */
-    @Embedded(prefix = "encryption_") val encryption: ProviderEncryption?
+    @Embedded(prefix = "encryption_") val encryption: ProviderEncryption?,
+
+    /** This will be true if Provider supports linking joint accounts (optional) */
+    @ColumnInfo(name = "joint_accounts_available") val jointAccountsAvailable: Boolean?,
+
+    /**
+     * A list of IDs of associated Providers that can be used to group Yodlee
+     * and CDR Providers together. Eg: For Joint accounts purpose (optional)
+     */
+    @ColumnInfo(name = "associated_provider_ids") val associatedProviderIds: List<Long>?
 
 ) : IAdapterModel

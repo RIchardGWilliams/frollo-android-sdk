@@ -95,6 +95,8 @@ internal fun testProviderResponseData(providerId: Long? = null): ProviderRespons
         smallLogoRevision = 1,
         aggregatorType = AggregatorType.YODLEE,
         permissionIds = null,
-        productsAvailable = false
+        productsAvailable = false,
+        jointAccountsAvailable = null,
+        associatedProviderIds = null
     )
 }
