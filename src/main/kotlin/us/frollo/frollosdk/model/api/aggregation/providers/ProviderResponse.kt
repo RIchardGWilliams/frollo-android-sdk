@@ -50,5 +50,7 @@ internal data class ProviderResponse(
     @SerializedName("help_message") val helpMessage: String?,
     @SerializedName("login_help_message") val loginHelpMessage: String?,
     @SerializedName("login_form") val loginForm: ProviderLoginForm?,
-    @SerializedName("encryption") val encryption: ProviderEncryption?
+    @SerializedName("encryption") val encryption: ProviderEncryption?,
+    @SerializedName("joint_accounts_available") val jointAccountsAvailable: Boolean?,
+    @SerializedName("associated_provider_ids") val associatedProviderIds: List<Long>?
 )

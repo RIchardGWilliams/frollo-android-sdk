@@ -67,7 +67,9 @@ internal fun ProviderResponse.toProvider(): Provider =
         encryption = encryption,
         aggregatorType = aggregatorType ?: AggregatorType.UNKNOWN, // This is a required field but sometimes backend sends null hence this workaround instead of making the column nullable in DB.
         permissionIds = permissionIds,
-        productsAvailable = productsAvailable ?: false
+        productsAvailable = productsAvailable ?: false,
+        jointAccountsAvailable = jointAccountsAvailable,
+        associatedProviderIds = associatedProviderIds
     )
 
 internal fun Provider.toProvidersResponse(): ProvidersResponse =
