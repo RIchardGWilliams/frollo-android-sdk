@@ -125,7 +125,7 @@ class UserManagement(
     /**
      * Register a user by email and password
      *
-     * @param firstName Given name of the user, if provided (optional)
+     * @param firstName Given name of the user
      * @param lastName Family name of the user, if provided (optional)
      * @param mobileNumber Mobile phone number of the user, if provided (optional)
      * @param dateOfBirth Date of birth of the user, if provided (optional)
@@ -134,7 +134,7 @@ class UserManagement(
      * @param completion Completion handler with any error that occurred
      */
     fun registerUser(
-        firstName: String? = null,
+        firstName: String,
         lastName: String? = null,
         mobileNumber: String? = null,
         dateOfBirth: Date? = null,
