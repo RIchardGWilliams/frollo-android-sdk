@@ -158,6 +158,16 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(1L, model?.termsConditions?.first()?.termsId)
             assertEquals("Volt Bank Savings Terms & Conditions", model?.termsConditions?.first()?.name)
             assertEquals("https://www.voltbank.com.au/voltsaveterms", model?.termsConditions?.first()?.url)
+            assertEquals(2, model?.features?.size)
+            assertEquals(1L, model?.features?.first()?.featureId)
+            assertEquals("Pique Your Interest", model?.features?.first()?.description)
+            assertEquals("You'll actually get the interest rate that we've said you would.", model?.features?.first()?.additionalInfo)
+            assertEquals("https://example.com/image.png", model?.features?.first()?.iconUrl)
+            assertEquals("2021-09-30T10:36:58.682+10:00", model?.features?.first()?.createdAt)
+            assertEquals("2021-09-30T10:36:58.682+10:00", model?.features?.first()?.updatedAt)
+            assertEquals(2L, model?.features?.last()?.featureId)
+            assertEquals("Set your goals", model?.features?.last()?.description)
+            assertNull(model?.features?.last()?.additionalInfo)
 
             signal.countDown()
         }

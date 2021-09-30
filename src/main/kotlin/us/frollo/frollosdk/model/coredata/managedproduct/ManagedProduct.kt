@@ -37,5 +37,8 @@ data class ManagedProduct(
     @SerializedName("account_type") val accountType: String,
 
     /** List of Terms & Conditions of the [ManagedProduct] */
-    @SerializedName("terms_conditions") val termsConditions: List<TermsCondition>
+    @SerializedName("terms_conditions") val termsConditions: List<TermsCondition>,
+
+    /** List of [ProductFeature] of the [ManagedProduct] (Optional) */
+    @SerializedName("features") val features: List<ProductFeature>?
 )

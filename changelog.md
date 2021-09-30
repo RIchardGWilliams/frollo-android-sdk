@@ -22,6 +22,7 @@
 - Add support for digital wallets in cards
 - Add Session ID in Header
 - Provider API response changes to support joint accounts
+- Add features array to Managed Products API response
 
 ### 3.9.0
 
