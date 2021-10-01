@@ -1146,7 +1146,7 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals(AccountFeatureType.STATEMENTS, first?.features?.get(2)?.featureId)
             assertNull(first?.features?.get(2)?.imageUrl)
             assertNull(first?.features?.get(2)?.details)
-            
+
             assertEquals(1L, first?.cdrProduct?.productId)
             assertEquals("Everyday Saver", first?.cdrProduct?.productName)
             assertEquals("www.example.com/product_details", first?.cdrProduct?.productDetailsPageUrl)
