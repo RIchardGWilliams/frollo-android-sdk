@@ -31,6 +31,12 @@ enum class AccountFeatureType {
     /** Statements feature */
     @SerializedName("statements") STATEMENTS,
 
+    /** Account Info feature */
+    @SerializedName("account_info") ACCOUNT_INFO,
+
+    /** Product Info feature */
+    @SerializedName("product_info") PRODUCT_INFO,
+
     /** Unknown feature */
     @SerializedName("unknown") UNKNOWN;
 

@@ -163,9 +163,6 @@ data class Account(
     /** Account features */
     @ColumnInfo(name = "features") val features: List<AccountFeature>?,
 
-    /** ProductsAvailable. True if CDR Products are available for this Account */
-    @ColumnInfo(name = "products_available") val productsAvailable: Boolean,
-
     /** CDR Product (optional) */
     @Embedded(prefix = "cdr_p_") val cdrProduct: CDRProduct?,
 

@@ -103,7 +103,6 @@ internal fun testAccountResponseData(accountId: Long? = null, providerAccountId:
         goalIds = null,
         externalId = randomString(8),
         features = testAccountFeaturesData(),
-        productsAvailable = false,
         cdrProduct = null,
         payIds = null
     )
