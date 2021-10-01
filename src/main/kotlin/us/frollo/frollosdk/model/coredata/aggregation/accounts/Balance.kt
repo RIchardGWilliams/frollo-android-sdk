@@ -28,4 +28,14 @@ data class Balance(
 
     /** Currency */
     @ColumnInfo(name = "currency") @SerializedName("currency") val currency: String
-)
+) {
+    companion object {
+        fun getBalanceWithDefaultCurrencyIfMissing(balance: Balance): Balance {
+            return if (balance.currency == null) { // Note: Failsafe check if API doesn't send the currency
+                Balance(balance.amount, "AUD")
+            } else {
+                balance
+            }
+        }
+    }
+}

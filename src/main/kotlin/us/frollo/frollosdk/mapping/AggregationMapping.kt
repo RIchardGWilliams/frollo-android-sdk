@@ -30,6 +30,7 @@ import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Account
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.Merchant
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.ProviderAccount
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
@@ -117,18 +118,18 @@ internal fun AccountResponse.toAccount(): Account =
         favourite = favourite,
         hidden = hidden,
         refreshStatus = refreshStatus,
-        currentBalance = currentBalance,
-        availableBalance = availableBalance,
-        availableCash = availableCash,
-        availableCredit = availableCredit,
-        totalCashLimit = totalCashLimit,
-        totalCreditLine = totalCreditLine,
-        interestTotal = interestTotal,
+        currentBalance = currentBalance?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        availableBalance = availableBalance?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        availableCash = availableCash?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        availableCredit = availableCredit?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        totalCashLimit = totalCashLimit?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        totalCreditLine = totalCreditLine?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        interestTotal = interestTotal?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
         apr = apr,
         interestRate = interestRate,
-        amountDue = amountDue,
-        minimumAmountDue = minimumAmountDue,
-        lastPaymentAmount = lastPaymentAmount,
+        amountDue = amountDue?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        minimumAmountDue = minimumAmountDue?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
+        lastPaymentAmount = lastPaymentAmount?.let { Balance.getBalanceWithDefaultCurrencyIfMissing(it) },
         lastPaymentDate = lastPaymentDate,
         dueDate = dueDate,
         endDate = endDate,
@@ -145,7 +146,7 @@ internal fun TransactionResponse.toTransaction(): Transaction =
     Transaction(
         transactionId = transactionId,
         accountId = accountId,
-        amount = amount,
+        amount = Balance.getBalanceWithDefaultCurrencyIfMissing(amount),
         baseType = baseType,
         billId = billId,
         billPaymentId = billPaymentId,
