@@ -64,7 +64,6 @@ internal data class AccountResponse(
     @SerializedName("goal_ids") val goalIds: List<Long>?,
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("features") val features: List<AccountFeature>?,
-    @SerializedName("products_available") val productsAvailable: Boolean?,
     @SerializedName("product") val cdrProduct: CDRProduct?,
     @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?
 )

@@ -137,7 +137,6 @@ internal fun AccountResponse.toAccount(): Account =
         goalIds = goalIds,
         externalId = externalId ?: "",
         features = features,
-        productsAvailable = productsAvailable ?: false,
         cdrProduct = cdrProduct,
         payIds = payIds
     )
