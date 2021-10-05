@@ -23,6 +23,8 @@
 - Add Session ID in Header
 - Provider API response changes to support joint accounts
 - Add features array to Managed Products API response
+- Optional first name during user registration
+- Additional user statuses - CREATED, FAILED and INVITED
 
 ### 3.9.0
 

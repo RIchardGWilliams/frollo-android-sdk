@@ -30,7 +30,13 @@ enum class UserStatus {
     /** The user has completed all setup activities and is now fully active. This includes adding an account and setting a budget */
     @SerializedName("active") ACTIVE,
     /** The user is inactive as they have previously added an account but now have no aggregation accounts linked. Similar to [REGISTERED] */
-    @SerializedName("inactive") INACTIVE;
+    @SerializedName("inactive") INACTIVE,
+    /** The user is invited */
+    @SerializedName("invited") INVITED,
+    /** The user is created */
+    @SerializedName("created") CREATED,
+    /** The user creation is failed during the on-boarding or migration process */
+    @SerializedName("failed") FAILED;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters
