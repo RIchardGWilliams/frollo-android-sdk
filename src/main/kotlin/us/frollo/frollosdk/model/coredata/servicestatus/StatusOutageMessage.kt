@@ -35,7 +35,7 @@ data class StatusOutageMessage(
     /** Message action name (e.g. Copy for buttons) */
     @SerializedName("action") @ColumnInfo(name = "action") val actionName: String,
 
-    /** Message action URL */
-    @SerializedName("url") @ColumnInfo(name = "url") val actionUrl: String
+    /** Message action URL (Optional) */
+    @SerializedName("url") @ColumnInfo(name = "url") val actionUrl: String?
 
 ) : IAdapterModel

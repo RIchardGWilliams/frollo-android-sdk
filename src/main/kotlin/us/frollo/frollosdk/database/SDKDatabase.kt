@@ -630,6 +630,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // New changes in this migration:
                 // 1) Alter table - provider - add joint_accounts_available & associated_provider_ids columns
                 // 2) Alter account table - Delete products_available column
+                // 3) Drop & re-create table `service_outage`
 
                 database.execSQL("ALTER TABLE `provider` ADD COLUMN `joint_accounts_available` INTEGER")
                 database.execSQL("ALTER TABLE `provider` ADD COLUMN `associated_provider_ids` TEXT")
@@ -646,6 +647,9 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_account_provider_account_id` ON `account` (`provider_account_id`)")
                 database.execSQL("COMMIT")
                 // END - Drop column products_available
+
+                database.execSQL("DROP TABLE service_outage")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `service_outage` (`type` TEXT NOT NULL, `start_date` TEXT NOT NULL, `end_date` TEXT, `duration` INTEGER, `outage_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `read` INTEGER NOT NULL, `message_title` TEXT NOT NULL, `message_summary` TEXT NOT NULL, `message_description` TEXT NOT NULL, `message_action` TEXT NOT NULL, `message_url` TEXT)")
             }
         }
     }
