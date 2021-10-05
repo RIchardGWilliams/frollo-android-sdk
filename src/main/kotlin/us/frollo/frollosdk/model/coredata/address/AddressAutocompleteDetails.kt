@@ -26,10 +26,10 @@ import java.io.Serializable
 data class AddressAutocompleteDetails(
 
     /** Address line 1. (Optional) */
-    @SerializedName("line_1") val line1: String? = null,
+    @SerializedName("line_1") var line1: String? = null,
 
     /** Address line 2. (Optional) */
-    @SerializedName("line_2") val line2: String? = null,
+    @SerializedName("line_2") var line2: String? = null,
 
     /** Address suburb name. (Optional) */
     @SerializedName("suburb") var suburb: String? = null,
