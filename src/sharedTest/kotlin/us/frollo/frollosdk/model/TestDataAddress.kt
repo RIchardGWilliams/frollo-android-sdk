@@ -23,11 +23,9 @@ import us.frollo.frollosdk.testutils.randomString
 internal fun testAddressResponseData(addressId: Long? = null): AddressResponse {
     return AddressResponse(
         addressId = addressId ?: randomNumber().toLong(),
-        buildingName = randomString(20),
-        unitNumber = randomString(20),
-        streetNumber = randomString(20),
-        streetName = randomString(20),
-        streetType = randomString(20),
+        dpId = randomString(20),
+        line1 = randomString(20),
+        line2 = randomString(20),
         suburb = randomString(20),
         town = randomString(20),
         region = randomString(20),

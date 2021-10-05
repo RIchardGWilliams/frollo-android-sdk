@@ -130,11 +130,9 @@ class AddressManagementTest : BaseAndroidTest() {
             val model = testObserver.value()
             assertNotNull(model)
             assertEquals(addressId, model?.addressId)
-            assertEquals("105 Ashmole", model?.buildingName)
-            assertEquals("", model?.unitNumber)
-            assertEquals("105", model?.streetNumber)
-            assertEquals("Ashmole", model?.streetName)
-            assertEquals("Road", model?.streetType)
+            assertEquals("105 Ashmole Road", model?.line1)
+            assertNull(model?.line2)
+            assertNull(model?.dpId)
             assertEquals("Redcliffe", model?.suburb)
             assertEquals("", model?.town)
             assertEquals("", model?.region)
@@ -207,11 +205,9 @@ class AddressManagementTest : BaseAndroidTest() {
             assertNotNull(models)
             assertEquals(2, models?.size)
             assertEquals(3L, models?.first()?.addressId)
-            assertEquals("105 Ashmole", models?.first()?.buildingName)
-            assertEquals("", models?.first()?.unitNumber)
-            assertEquals("105", models?.first()?.streetNumber)
-            assertEquals("Ashmole", models?.first()?.streetName)
-            assertEquals("Road", models?.first()?.streetType)
+            assertEquals("105 Ashmole Road", models?.first()?.line1)
+            assertNull(models?.first()?.line2)
+            assertNull(models?.first()?.dpId)
             assertEquals("Redcliffe", models?.first()?.suburb)
             assertEquals("", models?.first()?.town)
             assertEquals("", models?.first()?.region)
@@ -276,10 +272,7 @@ class AddressManagementTest : BaseAndroidTest() {
             )
 
         addressManagement.createAddress(
-            buildingName = "105 Ashmole",
-            streetNumber = "105",
-            streetName = "Ashmole",
-            streetType = "Road",
+            line1 = "105 Ashmole Road",
             suburb = "Redcliffe",
             state = "QLD",
             country = "AU",
@@ -294,7 +287,7 @@ class AddressManagementTest : BaseAndroidTest() {
             testObserver.awaitValue()
             assertNotNull(testObserver.value())
             assertEquals(3L, testObserver.value()?.addressId)
-            assertEquals("Ashmole", testObserver.value()?.streetName)
+            assertEquals("105 Ashmole Road", testObserver.value()?.line1)
 
             signal.countDown()
         }
@@ -316,10 +309,7 @@ class AddressManagementTest : BaseAndroidTest() {
         clearLoggedInPreferences()
 
         addressManagement.createAddress(
-            buildingName = "105 Ashmole",
-            streetNumber = "105",
-            streetName = "Ashmole",
-            streetType = "Road",
+            line1 = "105 Ashmole Road",
             suburb = "Redcliffe",
             state = "QLD",
             country = "AU",
@@ -368,10 +358,7 @@ class AddressManagementTest : BaseAndroidTest() {
 
         addressManagement.updateAddress(
             addressId = address.addressId,
-            buildingName = "105 Ashmole",
-            streetNumber = "105",
-            streetName = "Ashmole",
-            streetType = "Road",
+            line1 = "105 Ashmole",
             suburb = "Redcliffe",
             state = "QLD",
             country = "AU",
@@ -386,7 +373,7 @@ class AddressManagementTest : BaseAndroidTest() {
             val model = testObserver.value()
             assertNotNull(model)
             assertEquals(3L, testObserver.value()?.addressId)
-            assertEquals("Ashmole", testObserver.value()?.streetName)
+            assertEquals("105 Ashmole Road", testObserver.value()?.line1)
 
             signal.countDown()
         }
@@ -409,10 +396,7 @@ class AddressManagementTest : BaseAndroidTest() {
 
         addressManagement.updateAddress(
             addressId = 3,
-            buildingName = "105 Ashmole",
-            streetNumber = "105",
-            streetName = "Ashmole",
-            streetType = "Road",
+            line1 = "105 Ashmole Road",
             suburb = "Redcliffe",
             state = "QLD",
             country = "AU",
@@ -607,11 +591,8 @@ class AddressManagementTest : BaseAndroidTest() {
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
-            assertEquals("105 Ashmole", resource.data?.buildingName)
-            assertEquals("", resource.data?.unitNumber)
-            assertEquals("105", resource.data?.streetNumber)
-            assertEquals("Ashmole", resource.data?.streetName)
-            assertEquals("Road", resource.data?.streetType)
+            assertEquals("105 Ashmole Road", resource.data?.line1)
+            assertNull(resource.data?.line2)
             assertEquals("Redcliffe", resource.data?.suburb)
             assertEquals("", resource.data?.town)
             assertEquals("", resource.data?.region)

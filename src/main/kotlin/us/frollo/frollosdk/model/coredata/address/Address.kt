@@ -40,20 +40,14 @@ data class Address(
     /** Unique Identifier of the Address */
     @PrimaryKey @ColumnInfo(name = "address_id") var addressId: Long,
 
-    /** Address building name. (Optional) */
-    @ColumnInfo(name = "building_name") var buildingName: String? = null,
+    /** Address DPID - Delivery Point Identifier (Optional) */
+    @ColumnInfo(name = "dpid") var dpId: String? = null,
 
-    /** Address unit number. (Optional) */
-    @ColumnInfo(name = "unit_number") var unitNumber: String? = null,
+    /** Address line 1 (Optional) */
+    @ColumnInfo(name = "line_1") var line1: String? = null,
 
-    /** Address street number. (Optional) */
-    @ColumnInfo(name = "street_number") var streetNumber: String? = null,
-
-    /** Address street name. (Optional) */
-    @ColumnInfo(name = "street_name") var streetName: String? = null,
-
-    /** Address street type. (Optional) */
-    @ColumnInfo(name = "street_type") var streetType: String? = null,
+    /** Address line 2 (Optional) */
+    @ColumnInfo(name = "line_2") var line2: String? = null,
 
     /** Address suburb name. (Optional) */
     @ColumnInfo(name = "suburb") var suburb: String? = null,

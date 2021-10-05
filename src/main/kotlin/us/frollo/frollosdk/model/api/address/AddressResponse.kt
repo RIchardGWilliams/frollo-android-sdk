@@ -20,11 +20,9 @@ import com.google.gson.annotations.SerializedName
 
 internal data class AddressResponse(
     @SerializedName("id") val addressId: Long,
-    @SerializedName("building_name") val buildingName: String? = null,
-    @SerializedName("unit_number") val unitNumber: String? = null,
-    @SerializedName("street_number") val streetNumber: String? = null,
-    @SerializedName("street_name") val streetName: String? = null,
-    @SerializedName("street_type") val streetType: String? = null,
+    @SerializedName("dpid") val dpId: String? = null,
+    @SerializedName("line_1") val line1: String? = null,
+    @SerializedName("line_2") val line2: String? = null,
     @SerializedName("suburb") val suburb: String? = null,
     @SerializedName("town") val town: String? = null,
     @SerializedName("region") val region: String? = null,
