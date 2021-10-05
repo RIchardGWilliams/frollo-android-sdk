@@ -25,6 +25,9 @@ import java.io.Serializable
  */
 data class AddressAutocompleteDetails(
 
+    /** Address DPID - Delivery Point Identifier (Optional) */
+    @SerializedName("dpid") var dpId: String? = null,
+
     /** Address line 1. (Optional) */
     @SerializedName("line_1") var line1: String? = null,
 

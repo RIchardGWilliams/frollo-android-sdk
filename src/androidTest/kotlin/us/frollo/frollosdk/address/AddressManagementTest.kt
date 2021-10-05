@@ -592,6 +592,7 @@ class AddressManagementTest : BaseAndroidTest() {
             assertNull(resource.error)
 
             assertEquals("105 Ashmole Road", resource.data?.line1)
+            assertNull(resource.data?.dpId)
             assertNull(resource.data?.line2)
             assertEquals("Redcliffe", resource.data?.suburb)
             assertEquals("", resource.data?.town)
