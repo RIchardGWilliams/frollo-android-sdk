@@ -22,11 +22,9 @@ import us.frollo.frollosdk.model.coredata.address.Address
 internal fun AddressResponse.toAddress(): Address =
     Address(
         addressId = addressId,
-        unitNumber = unitNumber,
-        buildingName = buildingName,
-        streetNumber = streetNumber,
-        streetName = streetName,
-        streetType = streetType,
+        dpId = dpId,
+        line1 = line1,
+        line2 = line2,
         suburb = suburb,
         town = town,
         region = region,

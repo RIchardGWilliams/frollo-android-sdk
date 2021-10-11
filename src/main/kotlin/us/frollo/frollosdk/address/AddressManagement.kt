@@ -121,11 +121,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Create a new address on the host
      *
-     * @param unitNumber Unit number (Optional)
-     * @param buildingName Building name (Optional)
-     * @param streetNumber Street number (Optional)
-     * @param streetName Street name (Optional)
-     * @param streetType Street type (Optional)
+     * @param dpId DPID - Delivery Point Identifier (Optional)
+     * @param line1 Address line 1 (Optional)
+     * @param line2 Address line 2 (Optional)
      * @param suburb Suburb (Optional)
      * @param town Town (Optional)
      * @param region Region (Optional)
@@ -135,11 +133,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
      * @param completion Optional completion handler with optional error if the request fails else ID of the Address created if success
      */
     fun createAddress(
-        unitNumber: String? = null,
-        buildingName: String? = null,
-        streetNumber: String? = null,
-        streetName: String? = null,
-        streetType: String? = null,
+        dpId: String? = null,
+        line1: String? = null,
+        line2: String? = null,
         suburb: String? = null,
         town: String? = null,
         region: String? = null,
@@ -149,11 +145,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = AddressRequest(
-            unitNumber = unitNumber,
-            buildingName = buildingName,
-            streetNumber = streetNumber,
-            streetName = streetName,
-            streetType = streetType,
+            dpId = dpId,
+            line1 = line1,
+            line2 = line2,
             suburb = suburb,
             town = town,
             region = region,
@@ -179,11 +173,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
      * Update a address on the host
      *
      * @param addressId ID of the address to be updated
-     * @param unitNumber Unit number (Optional)
-     * @param buildingName Building name (Optional)
-     * @param streetNumber Street number (Optional)
-     * @param streetName Street name (Optional)
-     * @param streetType Street type (Optional)
+     * @param dpId DPID - Delivery Point Identifier (Optional)
+     * @param line1 Address line 1 (Optional)
+     * @param line2 Address line 2 (Optional)
      * @param suburb Suburb (Optional)
      * @param town Town (Optional)
      * @param region Region (Optional)
@@ -194,11 +186,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
      */
     fun updateAddress(
         addressId: Long,
-        unitNumber: String? = null,
-        buildingName: String? = null,
-        streetNumber: String? = null,
-        streetName: String? = null,
-        streetType: String? = null,
+        dpId: String? = null,
+        line1: String? = null,
+        line2: String? = null,
         suburb: String? = null,
         town: String? = null,
         region: String? = null,
@@ -208,11 +198,9 @@ class AddressManagement(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = AddressRequest(
-            unitNumber = unitNumber,
-            buildingName = buildingName,
-            streetNumber = streetNumber,
-            streetName = streetName,
-            streetType = streetType,
+            dpId = dpId,
+            line1 = line1,
+            line2 = line2,
             suburb = suburb,
             town = town,
             region = region,

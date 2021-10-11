@@ -19,11 +19,9 @@ package us.frollo.frollosdk.model.api.address
 import com.google.gson.annotations.SerializedName
 
 internal data class AddressRequest(
-    @SerializedName("building_name") var buildingName: String? = null,
-    @SerializedName("unit_number") var unitNumber: String? = null,
-    @SerializedName("street_number") var streetNumber: String? = null,
-    @SerializedName("street_name") var streetName: String? = null,
-    @SerializedName("street_type") var streetType: String? = null,
+    @SerializedName("dpid") var dpId: String? = null,
+    @SerializedName("line_1") var line1: String? = null,
+    @SerializedName("line_2") var line2: String? = null,
     @SerializedName("suburb") var suburb: String? = null,
     @SerializedName("town") var town: String? = null,
     @SerializedName("region") var region: String? = null,

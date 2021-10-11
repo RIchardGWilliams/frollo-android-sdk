@@ -25,6 +25,7 @@
 - Add features array to Managed Products API response
 - Optional first name during user registration
 - Additional user statuses - CREATED, FAILED and INVITED
+- Changes to Address API response
 
 ### 3.9.0
 

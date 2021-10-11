@@ -25,20 +25,14 @@ import java.io.Serializable
  */
 data class AddressAutocompleteDetails(
 
-    /** Address building name. (Optional) */
-    @SerializedName("building_name") var buildingName: String? = null,
+    /** Address DPID - Delivery Point Identifier (Optional) */
+    @SerializedName("dpid") var dpId: String? = null,
 
-    /** Address unit number. (Optional) */
-    @SerializedName("unit_number") var unitNumber: String? = null,
+    /** Address line 1. (Optional) */
+    @SerializedName("line_1") var line1: String? = null,
 
-    /** Address street number. (Optional) */
-    @SerializedName("street_number") var streetNumber: String? = null,
-
-    /** Address street name. (Optional) */
-    @SerializedName("street_name") var streetName: String? = null,
-
-    /** Address street type. (Optional) */
-    @SerializedName("street_type") var streetType: String? = null,
+    /** Address line 2. (Optional) */
+    @SerializedName("line_2") var line2: String? = null,
 
     /** Address suburb name. (Optional) */
     @SerializedName("suburb") var suburb: String? = null,
