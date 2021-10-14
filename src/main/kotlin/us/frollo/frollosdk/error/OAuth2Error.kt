@@ -20,6 +20,7 @@ import net.openid.appauth.AuthorizationException
 import us.frollo.frollosdk.mapping.toOAuth2ErrorResponse
 import us.frollo.frollosdk.mapping.toOAuth2ErrorType
 import us.frollo.frollosdk.model.oauth.OAuth2ErrorResponse
+import java.lang.StringBuilder
 
 /**
  * Represents OAuth2 error that can be returned from the authentication server
@@ -42,7 +43,14 @@ class OAuth2Error(private val exception: AuthorizationException? = null, respons
 
     /** Localized description */
     override val localizedDescription: String?
-        get() = oAuth2ErrorResponse?.errorDescription ?: type.toLocalizedString(context)
+        get() {
+            val errorMessage = StringBuilder()
+            oAuth2ErrorResponse?.errorDescription?.let {
+                errorMessage.append(it).append("\n")
+            }
+            errorMessage.append(type.toLocalizedString(context))
+            return errorMessage.toString()
+        }
 
     /** Debug description */
     override val debugDescription: String?
