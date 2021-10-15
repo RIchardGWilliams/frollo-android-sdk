@@ -45,10 +45,10 @@ class OAuth2Error(private val exception: AuthorizationException? = null, respons
     override val localizedDescription: String?
         get() {
             val errorMessage = StringBuilder()
-            oAuth2ErrorResponse?.errorDescription?.let {
-                errorMessage.append(it).append("\n")
-            }
             errorMessage.append(type.toLocalizedString(context))
+            (oAuth2ErrorResponse?.errorDescription ?: exception?.errorDescription)?.let {
+                errorMessage.append("\n\n").append(it)
+            }
             return errorMessage.toString()
         }
 
