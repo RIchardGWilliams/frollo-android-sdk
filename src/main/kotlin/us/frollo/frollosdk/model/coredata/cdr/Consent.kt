@@ -20,7 +20,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.google.gson.JsonObject
 import us.frollo.frollosdk.model.IAdapterModel
 
 // Declaring the ColumnInfo allows for the renaming of variables without
@@ -50,8 +49,8 @@ data class Consent(
     /** The permissions requested for the consent */
     @ColumnInfo(name = "permissions") val permissionIds: List<String>,
 
-    /** Additional permissions (meta-data map of String:Boolean) that can be set (Optional) */
-    @ColumnInfo(name = "additional_permissions") val additionalPermissions: JsonObject?,
+    /** Array of additional permissions that can be set for the consent (Optional) */
+    @ColumnInfo(name = "additional_permissions") val additionalPermissions: List<String>?,
 
     /** The authorization URL that should be used to initiate a login with the provider (Optional) */
     @ColumnInfo(name = "authorisation_request_url") val authorisationRequestURL: String?,

@@ -30,7 +30,7 @@ internal data class ConsentCreateRequest(
     /** List of permission IDs requested for the consent. Refer to [CDRPermission.permissionId] */
     @SerializedName("permissions") val permissions: List<String>,
 
-    /** Additional permissions (meta-data map of String:Boolean) that can be set (Optional) */
+    /** Array of additional permissions that can be set for the consent (Optional) */
     @SerializedName("additional_permissions") val additionalPermissions: List<String>?,
 
     /** Specifies whether the data should be deleted after the consent is done */

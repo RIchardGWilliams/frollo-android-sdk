@@ -16,7 +16,6 @@
 
 package us.frollo.frollosdk.model.api.cdr
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 
@@ -34,8 +33,8 @@ internal data class ConsentResponse(
     /** The permission IDs requested for the consent */
     @SerializedName("permissions") val permissionIds: List<String>,
 
-    /** Additional permissions (meta-data map of String:Boolean) that can be set (Optional) */
-    @SerializedName("additional_permissions") val additionalPermissions: JsonObject?,
+    /** Array of additional permissions that can be set for the consent (Optional) */
+    @SerializedName("additional_permissions") val additionalPermissions: List<String>?,
 
     /** The authorization URL that should be used to initiate a login with the provider (Optional) */
     @SerializedName("authorisation_request_url") val authorisationRequestURL: String?,
