@@ -8,7 +8,7 @@
         "account_details",
         "transaction_details"
     ],
-    "additional_permissions": {},
+    "additional_permissions": [],
     "delete_redundant_data": true,
     "confirmation_pdf_url": "https://content.frollo.us/pdf/consent_confirmation.pdf",
     "withdrawal_pdf_url": "https://content.frollo.us/pdf/consent_withdrawal.pdf"

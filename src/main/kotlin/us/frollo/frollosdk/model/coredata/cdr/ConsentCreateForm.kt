@@ -16,8 +16,6 @@
 
 package us.frollo.frollosdk.model.coredata.cdr
 
-import com.google.gson.JsonObject
-
 /**
  * Consent form that can be submitted to create a consent with a provider
  */
@@ -32,8 +30,8 @@ data class ConsentCreateForm(
     /** List of permission IDs requested for the consent. Refer to [CDRPermission.permissionId] */
     var permissions: List<String>,
 
-    /** Additional permissions (meta-data map of String:Boolean) that can be set (Optional) */
-    var additionalPermissions: JsonObject? = null,
+    /** List of  Additional permissions (Strings) that can be set (Optional) */
+    var additionalPermissions: List<String>? = null,
 
     /** ID of the consent being updated (Optional) */
     var existingConsentId: Long? = null

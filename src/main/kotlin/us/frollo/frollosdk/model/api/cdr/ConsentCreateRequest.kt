@@ -16,7 +16,6 @@
 
 package us.frollo.frollosdk.model.api.cdr
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 
@@ -31,8 +30,8 @@ internal data class ConsentCreateRequest(
     /** List of permission IDs requested for the consent. Refer to [CDRPermission.permissionId] */
     @SerializedName("permissions") val permissions: List<String>,
 
-    /** Additional permissions (meta-data map of String:Boolean) that can be set (Optional) */
-    @SerializedName("additional_permissions") val additionalPermissions: JsonObject?,
+    /** Array of additional permissions that can be set for the consent (Optional) */
+    @SerializedName("additional_permissions") val additionalPermissions: List<String>?,
 
     /** Specifies whether the data should be deleted after the consent is done */
     @SerializedName("delete_redundant_data") val deleteRedundantData: Boolean,
