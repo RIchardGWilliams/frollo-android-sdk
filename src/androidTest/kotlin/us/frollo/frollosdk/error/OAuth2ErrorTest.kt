@@ -140,7 +140,7 @@ class OAuth2ErrorTest {
         val authError = OAuth2Error(exception = exception)
         assertEquals(OAuth2ErrorType.NETWORK_ERROR, authError.type)
         val localizedDescription = app.resources.getString(OAuth2ErrorType.NETWORK_ERROR.textResource)
-        assertEquals(localizedDescription, authError.localizedDescription)
+        assertEquals(true, authError.localizedDescription?.contains(localizedDescription))
     }
 
     @Test
@@ -158,7 +158,7 @@ class OAuth2ErrorTest {
         val authError = OAuth2Error(exception = exception)
         assertEquals(OAuth2ErrorType.USER_CANCELLED, authError.type)
         val localizedDescription = app.resources.getString(OAuth2ErrorType.USER_CANCELLED.textResource)
-        assertEquals(localizedDescription, authError.localizedDescription)
+        assertEquals(true, authError.localizedDescription?.contains(localizedDescription))
     }
 
     @Test
@@ -167,7 +167,7 @@ class OAuth2ErrorTest {
         val authError = OAuth2Error(exception = exception)
         assertEquals(OAuth2ErrorType.OTHER_AUTHORIZATION, authError.type)
         val localizedDescription = app.resources.getString(OAuth2ErrorType.OTHER_AUTHORIZATION.textResource)
-        assertEquals(localizedDescription, authError.localizedDescription)
+        assertEquals(true, authError.localizedDescription?.contains(localizedDescription))
     }
 
     @Test
@@ -176,7 +176,12 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.INVALID_CLIENT, authError.type)
-        assertEquals("Invalid client request", authError.localizedDescription)
+        assertEquals(
+            "An authorization error occurring on the client rather than the server. For example, due to a state mismatch or misconfiguration. Should be treated as an unrecoverable authorization error.\n" +
+                "\n" +
+                "Invalid client request",
+            authError.localizedDescription
+        )
     }
 
     @Test
@@ -185,7 +190,12 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.INVALID_GRANT, authError.type)
-        assertEquals("Invalid Grant Request", authError.localizedDescription)
+        assertEquals(
+            "The provided authorization grant (e.g., authorization code, resource owner credentials) or refresh token is invalid, expired, revoked, does not match the redirection URI used in the authorization request, or was issued to another client.\n" +
+                "\n" +
+                "Invalid Grant Request",
+            authError.localizedDescription
+        )
     }
 
     @Test
@@ -194,7 +204,12 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.INVALID_REQUEST, authError.type)
-        assertEquals("Request was missing the 'redirect_uri' parameter.", authError.localizedDescription)
+        assertEquals(
+            "The request is missing a required parameter, includes an unsupported parameter value (other than grant type), repeats a parameter, includes multiple credentials, utilizes more than one mechanism for authenticating the client, or is otherwise malformed.\n" +
+                "\n" +
+                "Request was missing the 'redirect_uri' parameter.",
+            authError.localizedDescription
+        )
         assertEquals("See the full API docs at https://authorization-server.com/docs/access_token", authError.errorUri)
     }
 
@@ -204,7 +219,12 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.INVALID_SCOPE, authError.type)
-        assertEquals("Invalid scope request.", authError.localizedDescription)
+        assertEquals(
+            "The requested scope is invalid, unknown, or malformed.\n" +
+                "\n" +
+                "Invalid scope request.",
+            authError.localizedDescription
+        )
     }
 
     @Test
@@ -213,7 +233,12 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.SERVER_ERROR, authError.type)
-        assertEquals("Authorization server not configured with default connection.", authError.localizedDescription)
+        assertEquals(
+            "Indicates a server error occurred.\n" +
+                "\n" +
+                "Authorization server not configured with default connection.",
+            authError.localizedDescription
+        )
     }
 
     @Test
@@ -222,6 +247,11 @@ class OAuth2ErrorTest {
 
         val authError = OAuth2Error(response = errorResponse)
         assertEquals(OAuth2ErrorType.UNAUTHORIZED_CLIENT, authError.type)
-        assertEquals("Unauthorized client request.", authError.localizedDescription)
+        assertEquals(
+            "The client is not authorized to request an authorization code using this method.\n" +
+                "\n" +
+                "Unauthorized client request.",
+            authError.localizedDescription
+        )
     }
 }

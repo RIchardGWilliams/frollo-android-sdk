@@ -65,9 +65,9 @@
     <string name="FrolloSDK_Error_OAuth_UnsupportedGrantType">The authorization grant type is not supported by the authorization server.</string>
     <string name="FrolloSDK_Error_OAuth_UnsupportedResponseType">The authorization server does not support obtaining an authorization code using this method.</string>
     <string name="FrolloSDK_Error_OAuth_BrowserError">The browser could not be opened.</string>
-    <string name="FrolloSDK_Error_OAuth_NetworkError">Indicates a network error or server error occurred.</string>
-    <string name="FrolloSDK_Error_OAuth_OtherAuthorisation">An unknown authorisation error occurred.</string>
+    <string name="FrolloSDK_Error_OAuth_NetworkError">Indicates a network error or server error occurred.\nNetwork error</string>
+    <string name="FrolloSDK_Error_OAuth_OtherAuthorisation">An unknown authorisation error occurred.\nInvalid discovery document</string>
     <string name="FrolloSDK_Error_OAuth_ServerError">Indicates a server error occurred.</string>
-    <string name="FrolloSDK_Error_OAuth_UserCancelled">Indicates the user manually cancelled the OAuth authorization code flow.</string>
+    <string name="FrolloSDK_Error_OAuth_UserCancelled">Indicates the user manually cancelled the OAuth authorization code flow.\nUser cancelled flow</string>
     <string name="FrolloSDK_Error_OAuth_Unknown">Unknown error occurred trying to authenticate.</string>
 </resources>
