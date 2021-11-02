@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.11.0
+
+#### Changes
+
+- Support DA OAuth2 Login with PKCE Authorization Code Flow
+
 ### 3.10.0
 
 #### Features

@@ -39,6 +39,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.error.OAuth2Error
 import us.frollo.frollosdk.error.OAuth2ErrorType
+import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.UserAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.randomString
@@ -419,6 +420,43 @@ class OAuth2AuthenticationTest : BaseAndroidTest() {
 
         val request2 = mockTokenServer.takeRequest()
         assertEquals(TOKEN_URL, request2.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testExchangeAuthorizationCodeForDAOAuth2Login() {
+        initSetup(daOAuth2Login = true)
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == DATokenAPI.URL_DA_TOKEN) {
+                    return MockResponse()
+                        .setResponseCode(200)
+                        .setBody(readStringFromJson(app, R.raw.token_valid))
+                }
+                return MockResponse().setResponseCode(404)
+            }
+        }
+
+        oAuth2Authentication.exchangeAuthorizationCode(code = randomString(32), scopes = listOf()) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            assertTrue(oAuth2Authentication.loggedIn)
+            assertEquals("MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3", keystore.decrypt(preferences.encryptedAccessToken))
+            assertEquals("IwOGYzYTlmM2YxOTQ5MGE3YmNmMDFkNTVk", keystore.decrypt(preferences.encryptedRefreshToken))
+            assertEquals(2550794799, preferences.accessTokenExpiry)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(DATokenAPI.URL_DA_TOKEN, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 

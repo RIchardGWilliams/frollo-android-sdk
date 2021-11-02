@@ -34,11 +34,18 @@ internal data class OAuthTokenRequest(
     @SerializedName("scope") val scope: String? = null,
     @SerializedName("realm") val realm: String? = null,
 ) {
-    val valid: Boolean
-        get() = when (grantType) {
-            OAuthGrantType.AUTHORIZATION_CODE -> code != null && redirectUrl != null
+    fun isValid(isDAOAuth2Login: Boolean = false): Boolean {
+        return when (grantType) {
+            OAuthGrantType.AUTHORIZATION_CODE -> {
+                if (isDAOAuth2Login) {
+                    code != null
+                } else {
+                    code != null && redirectUrl != null
+                }
+            }
             OAuthGrantType.PASSWORD,
             OAuthGrantType.REALM_PASSWORD -> (password != null && username != null) || legacyToken != null
             OAuthGrantType.REFRESH_TOKEN -> refreshToken != null
         }
+    }
 }

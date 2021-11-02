@@ -44,6 +44,7 @@ import us.frollo.frollosdk.model.oauth.OAuthTokenRequest
 import us.frollo.frollosdk.model.oauth.OAuthTokenResponse
 import us.frollo.frollosdk.network.ApiResponse
 import us.frollo.frollosdk.network.ErrorResponseType
+import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.TokenAPI
 import us.frollo.frollosdk.preferences.Preferences
 
@@ -71,6 +72,7 @@ class OAuth2Authentication(
 
     internal var tokenAPI: TokenAPI? = null
     internal var revokeTokenAPI: TokenAPI? = null
+    internal var daTokenAPI: DATokenAPI? = null
     internal var authToken: AuthToken? = null
 
     private var codeVerifier: String? = null
@@ -222,7 +224,7 @@ class OAuth2Authentication(
             scopes = scopes,
             grantType = grantType
         )
-        if (!request.valid) {
+        if (!request.isValid()) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
@@ -247,14 +249,22 @@ class OAuth2Authentication(
             return
         }
 
-        val request = oAuth2Helper.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = scopes)
-        if (!request.valid) {
+        val request = if (oAuth2Helper.config.isDAOAuth2LoginEnabled()) {
+            oAuth2Helper.getExchangeAuthorizationCodeRequestForDAOAuth2Login(code = code)
+        } else {
+            oAuth2Helper.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = scopes)
+        }
+        if (!request.isValid(oAuth2Helper.config.isDAOAuth2LoginEnabled())) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
 
         // Authorize the user
-        authorizeUser(request, completion, "exchangeAuthorizationCode")
+        if (oAuth2Helper.config.isDAOAuth2LoginEnabled()) {
+            authorizeUserForDAOAuthLogin(request, completion)
+        } else {
+            authorizeUser(request, completion, "exchangeAuthorizationCode")
+        }
     }
 
     /**
@@ -266,7 +276,7 @@ class OAuth2Authentication(
     fun exchangeLegacyToken(legacyToken: String, completion: OnFrolloSDKCompletionListener<Result>) {
         val scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID)
         val request = oAuth2Helper.getExchangeTokenRequest(legacyToken = legacyToken, scopes = scopes)
-        if (!request.valid) {
+        if (!request.isValid()) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
@@ -285,19 +295,39 @@ class OAuth2Authentication(
                 }
 
                 Resource.Status.SUCCESS -> {
-                    resource.data?.let { response ->
-                        handleTokens(response)
-
-                        setLoggedIn()
-
-                        updateDevice()
-
-                        completion.invoke(Result.success())
-                    } ?: run {
-                        completion.invoke(Result.error(DataError(DataErrorType.AUTHENTICATION, DataErrorSubType.MISSING_ACCESS_TOKEN)))
-                    }
+                    handlePostAuthorization(resource.data, completion)
                 }
             }
+        }
+    }
+
+    private fun authorizeUserForDAOAuthLogin(request: OAuthTokenRequest, completion: OnFrolloSDKCompletionListener<Result>) {
+        daTokenAPI?.exchangeCodeForTokens(request)?.enqueue(ErrorResponseType.OAUTH2) { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#authorizeUserForDAOAuthLogin.exchangeCodeForTokens", resource.error?.localizedDescription)
+
+                    completion.invoke(Result.error(resource.error))
+                }
+
+                Resource.Status.SUCCESS -> {
+                    handlePostAuthorization(resource.data, completion)
+                }
+            }
+        }
+    }
+
+    private fun handlePostAuthorization(tokenResponse: OAuthTokenResponse?, completion: OnFrolloSDKCompletionListener<Result>) {
+        tokenResponse?.let { response ->
+            handleTokens(response)
+
+            setLoggedIn()
+
+            updateDevice()
+
+            completion.invoke(Result.success())
+        } ?: run {
+            completion.invoke(Result.error(DataError(DataErrorType.AUTHENTICATION, DataErrorSubType.MISSING_ACCESS_TOKEN)))
         }
     }
 
