@@ -93,7 +93,8 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
             grantType = OAuthGrantType.AUTHORIZATION_CODE,
             clientId = config.clientId,
             domain = domain,
-            code = code
+            code = code,
+            redirectUrl = oAuth2.redirectUrl
         )
 
     internal fun getExchangeTokenRequest(legacyToken: String, scopes: List<String>) =
