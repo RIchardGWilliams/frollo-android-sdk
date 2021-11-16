@@ -16,17 +16,18 @@
 package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 
+/** Data representation of the breakdown of Income or expenses of the Financial Passport */
 data class FPIncomeExpensesBreakdown(
 
     /**  The category in this breakdown; Optional */
     @SerializedName("category") val category: FPIncomeExpenseBreakdownCategory?,
     /**  Number of transactions in this breakdown; Optional */
     @SerializedName("number_of_transactions") val numberOfTransactions: Long?,
-    /**  The date of the first Transaction in this breakdown; Optional */
+    /**  The date of the first Transaction in this breakdown; Optional  . See [FinancialPassportResponse.DATE_FORMAT_PATTERN]*/
     @SerializedName("first_transaction_date") val firstTransactionDate: String?,
-    /**  The date of the last Transaction in this breakdown; Optional */
+    /**  The date of the last Transaction in this breakdown; Optional  . See [FinancialPassportResponse.DATE_FORMAT_PATTERN]*/
     @SerializedName("last_transaction_date") val lastTransactionDate: String?,
-    /**  An object to repersent average of this breakdown; Optional */
+    /**  An object to represent average of this breakdown; Optional */
     @SerializedName("averages") val averages: FPIncomeExpenseAverages?,
     /**  The [FPIncomeExpenseBreakdownTotals] in this breakdown; Optional */
     @SerializedName("totals") val FPIncomeExpenseBreakdownTotals: FPIncomeExpenseBreakdownTotals?,

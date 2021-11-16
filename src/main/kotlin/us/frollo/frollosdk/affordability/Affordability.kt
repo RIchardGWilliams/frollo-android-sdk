@@ -35,7 +35,7 @@ class Affordability(network: NetworkService) {
         private const val TAG = "Affordability"
     }
 
-    private val affordability: AffordabilityAPI = network.create(AffordabilityAPI::class.java)
+    private val affordabilityAPI: AffordabilityAPI = network.create(AffordabilityAPI::class.java)
 
     /**
      * Get financial passport from the host
@@ -55,7 +55,7 @@ class Affordability(network: NetworkService) {
         toDate: String? = null, // 2021-01-01
         completion: OnFrolloSDKCompletionListener<Resource<FinancialPassportResponse>>
     ) {
-        affordability.getFinancialPassport(
+        affordabilityAPI.getFinancialPassport(
             accountIds,
             providerAccountIDs,
             aggregator,
@@ -76,7 +76,7 @@ class Affordability(network: NetworkService) {
      * @param completion: Completion handler with optional error if the request fails or Financial Passport PDF body if succeeds
      */
     fun exportFinancialPassport(format: ExportType, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>>) {
-        affordability.exportFinancialPassport(format).enqueue { resource ->
+        affordabilityAPI.exportFinancialPassport(format).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     completion.invoke(resource)

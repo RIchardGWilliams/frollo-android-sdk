@@ -17,6 +17,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the Accounts in the Financial Passport */
 data class FPAccounts(
 
     /**  The account ID of the Account.  */
@@ -38,5 +39,5 @@ data class FPAccounts(
     /**  The closing balance of the Account. */
     @SerializedName("closing_balance") val closingBalance: BigDecimal?,
     /**  The number of the Account */
-    @SerializedName("number") val number: String?
+    @SerializedName("account_number") val number: String?
 )

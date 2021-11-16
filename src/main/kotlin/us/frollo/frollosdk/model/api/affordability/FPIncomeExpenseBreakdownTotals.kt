@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the breakdown totals of the Financial Passport's Income and Expense Totals */
 data class FPIncomeExpenseBreakdownTotals(
 
     /**  The total amount spent in the last week of the reporting period. */

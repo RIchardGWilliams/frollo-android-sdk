@@ -15,6 +15,8 @@
  */
 
 package us.frollo.frollosdk.affordability
+
+import com.google.gson.Gson
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -29,6 +31,10 @@ import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.extensions.fromJson
+import us.frollo.frollosdk.model.api.affordability.ExportType
+import us.frollo.frollosdk.model.coredata.user.User
+import us.frollo.frollosdk.network.api.AffordabilityAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
 import us.frollo.frollosdk.testutils.trimmedPath
@@ -36,6 +42,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+
 class AffordabilityTest : BaseAndroidTest() {
 
     override fun initSetup() {
@@ -53,16 +60,18 @@ class AffordabilityTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.financial_passport_response)
-        mockServer.dispatcher = (object : Dispatcher() {
+        mockServer.dispatcher = (
+            object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "affordability/financialpassport") {
+                    if (request.trimmedPath == AffordabilityAPI.URL_FINANCIAL_PASSPORT) {
                         return MockResponse()
                             .setResponseCode(200)
                             .setBody(body)
                     }
                     return MockResponse().setResponseCode(404)
                 }
-            })
+            }
+            )
 
         affordability.getFinancialPassport { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -79,7 +88,7 @@ class AffordabilityTest : BaseAndroidTest() {
             signal.countDown()
         }
         val request = mockServer.takeRequest()
-        assertEquals("affordability/financialpassport", request.trimmedPath)
+        assertEquals(AffordabilityAPI.URL_FINANCIAL_PASSPORT, request.trimmedPath)
         signal.await(3, TimeUnit.SECONDS)
 
         tearDown()
@@ -93,6 +102,59 @@ class AffordabilityTest : BaseAndroidTest() {
         affordability.getFinancialPassport { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
+
+    @Test
+    fun testFinancialPassportExport() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.user_details_complete)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?format=pdf") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            assertNotNull(resource.data)
+            val bodyString = resource.data?.string()?.replace("\n", "")
+            bodyString?.let {
+                val user: User? = Gson().fromJson(it)
+                assertEquals("jacob@frollo.us", user?.email)
+            }
+            signal.countDown()
+        }
+        val request = mockServer.takeRequest()
+        assertEquals("${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?format=pdf", request.trimmedPath)
+        signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
+
+    @Test
+    fun testFinancialPassportExportFailsIfLoggedOut() {
+        initSetup()
+        val signal = CountDownLatch(1)
+        clearLoggedInPreferences()
+
+        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
+            assertNotNull(resource)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
             signal.countDown()

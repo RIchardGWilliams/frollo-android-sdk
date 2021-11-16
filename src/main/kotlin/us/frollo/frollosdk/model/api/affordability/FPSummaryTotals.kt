@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the breakdown totals of the Financial Passport's Summary */
 data class FPSummaryTotals(
 
     /**  The total value of expenses over the report period; Optional */

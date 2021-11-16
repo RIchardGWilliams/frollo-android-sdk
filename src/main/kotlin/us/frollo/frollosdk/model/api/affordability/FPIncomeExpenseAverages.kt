@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the averages of Income or expenses of the Financial Passport */
 data class FPIncomeExpenseAverages(
 
     /** The average amount earned/spent each week; Optional */

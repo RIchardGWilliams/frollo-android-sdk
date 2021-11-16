@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the breakdown of Assets or Liabilities of the Financial Passport */
 data class FPAssetLiabilityBreakdown(
     /**  The name of name of liabilities breakdown; optional */
     @SerializedName("name") val name: String?,
@@ -26,5 +27,5 @@ data class FPAssetLiabilityBreakdown(
     /**  The percentage of liabilities breakdown; optional */
     @SerializedName("percentage") val percentage: BigDecimal?,
     /**  A list of accounts in assets or liabilities breakdown; optional */
-    @SerializedName("accounts") val accounts: List<FPAssetsLiabilitiesBreakdownAccounts>
+    @SerializedName("accounts") val accounts: List<FPAssetsLiabilitiesBreakdownAccounts>?
 )

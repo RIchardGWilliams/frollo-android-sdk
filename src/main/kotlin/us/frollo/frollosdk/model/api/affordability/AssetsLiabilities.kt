@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
+/** Data representation of the Assets and Liabilities of the Financial Passport */
 data class AssetsLiabilities(
 
     /**  The total number of assets or liabilities over the report period; optional */

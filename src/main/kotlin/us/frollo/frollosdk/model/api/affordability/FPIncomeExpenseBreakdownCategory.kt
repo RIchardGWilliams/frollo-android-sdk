@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.api.affordability
 
 import com.google.gson.annotations.SerializedName
 
+/** Data representation of the category  of Income or expenses of the Financial Passport */
 data class FPIncomeExpenseBreakdownCategory(
 
     /**  The name of the Category; Optional */
