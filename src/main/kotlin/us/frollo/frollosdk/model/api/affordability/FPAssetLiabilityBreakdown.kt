@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.financialpassport
-
+package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 
-data class Summary(
-
-    @SerializedName("totals") val totals: SummaryTotals
+data class FPAssetLiabilityBreakdown(
+    /**  The name of name of liabilities breakdown; optional */
+    @SerializedName("name") val name: String?,
+    /**  The closing balance of liabilities breakdown; optional */
+    @SerializedName("closing_balance") val closing_balance: String?,
+    /**  The percentage of liabilities breakdown; optional */
+    @SerializedName("percentage") val percentage: String?,
+    /**  A list of accounts in assets or liabilities breakdown; optional */
+    @SerializedName("accounts") val accounts: List<FPAssetsLiabilitiesBreakdownAccounts>
 )

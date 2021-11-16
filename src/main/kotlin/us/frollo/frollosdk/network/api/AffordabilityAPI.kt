@@ -19,20 +19,20 @@ package us.frollo.frollosdk.network.api
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
-import us.frollo.frollosdk.model.api.financialpassport.ExportType
-import us.frollo.frollosdk.model.api.financialpassport.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.ExportType
+import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 
-internal interface FinancialPassportAPI {
+internal interface AffordabilityAPI {
     companion object {
         const val URL_FINANCIAL_PASSPORT = "affordability/financialpassport"
+        const val URL_FINANCIAL_PASSPORT_EXPORT= "affordability/financialpassport/export"
     }
 
     @GET(URL_FINANCIAL_PASSPORT)
     fun getFinancialPassport(@QueryMap queryParams: Map<String, String>): Call<FinancialPassportResponse>
 
-    @POST("$URL_FINANCIAL_PASSPORT/export")
+    @GET(URL_FINANCIAL_PASSPORT_EXPORT)
     fun exportFinancialPassport(@Query("format") format: ExportType): Call<ResponseBody>
 }

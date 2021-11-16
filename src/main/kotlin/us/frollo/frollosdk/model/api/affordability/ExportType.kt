@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.financialpassport
+package us.frollo.frollosdk.model.api.affordability
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
+/** Format to download PDF in */
+@Keep
 enum class ExportType {
 
     /** get financial passport as PDF file */
     @SerializedName("pdf") PDF,
-
+    /** get financial passport as XLSX file */
     @SerializedName("xlsx")XLSX;
 
     /** Enum to serialized string */

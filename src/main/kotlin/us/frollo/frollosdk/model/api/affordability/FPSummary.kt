@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.financialpassport
+package us.frollo.frollosdk.model.api.affordability
+
 import com.google.gson.annotations.SerializedName
+/**
+Financial Passport Summary Totals
+ */
+data class FPSummary(
 
-data class Expenses(
-
-    @SerializedName("total") val total: Double,
-    @SerializedName("breakdown") val breakdown: List<IncomeExpensesBreakdown>
+    /**  The total summary, Optional */
+    @SerializedName("totals") val totals: FPSummaryTotals?
 )

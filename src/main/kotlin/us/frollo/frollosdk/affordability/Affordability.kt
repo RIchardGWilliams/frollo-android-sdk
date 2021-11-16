@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.financialpassport
+package us.frollo.frollosdk.affordability
 
 import okhttp3.ResponseBody
 import us.frollo.frollosdk.base.Resource
@@ -22,31 +22,31 @@ import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.getFinancialPassport
 import us.frollo.frollosdk.logging.Log
-import us.frollo.frollosdk.model.api.financialpassport.ExportType
-import us.frollo.frollosdk.model.api.financialpassport.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.ExportType
+import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.api.statements.Statement
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.network.NetworkService
-import us.frollo.frollosdk.network.api.FinancialPassportAPI
+import us.frollo.frollosdk.network.api.AffordabilityAPI
 
-/** Manages all aspects of FinancialPassport */
+/** Manages all aspects of Affordability */
 class Affordability(network: NetworkService) {
 
     companion object {
-        private const val TAG = "FinancialPassport"
+        private const val TAG = "Affordability"
     }
 
-    private val financialPassport: FinancialPassportAPI = network.create(FinancialPassportAPI::class.java)
+    private val affordability: AffordabilityAPI = network.create(AffordabilityAPI::class.java)
 
     /**
      * Get financial passport from the host
      *
      * @param accountIds: List of  accounts IDs; Optional
      * @param providerAccountIDs: List of  provider accounts IDs; Optional
-     * @param aggregator: `Provider.AggregatorType` type; Optional
-     * @param fromDate: From date of financial passport; Optional; defaults to one year ago
-     * @param toDate: To date of financial passport; Optional; defaults to today
-     * @param completion: Completion handler with optional error if the request fails and list of [Statement] with pagination information if succeeds
+     * @param aggregator: [AggregatorType] type; Optional
+     * @param fromDate: From date of financial passport; Optional; defaults to one year ago. See [FinancialPassportResponse.DATE_FORMAT_PATTERN]
+     * @param toDate: To date of financial passport; Optional; defaults to today . See [FinancialPassportResponse.DATE_FORMAT_PATTERN]
+     * @param completion: Completion handler with optional error if the request fails or [FinancialPassportResponse] if succeeds
      */
     fun getFinancialPassport(
         accountIds: List<Long>? = null,
@@ -56,7 +56,7 @@ class Affordability(network: NetworkService) {
         toDate: String? = null, // 2021-01-01
         completion: OnFrolloSDKCompletionListener<Resource<FinancialPassportResponse>>
     ) {
-        financialPassport.getFinancialPassport(
+        affordability.getFinancialPassport(
             accountIds,
             providerAccountIDs,
             aggregator,
@@ -74,10 +74,10 @@ class Affordability(network: NetworkService) {
      * Export financial passport from the host
      *
      * @param format of financial passport  to download
-     * @param completion: Completion handler with optional error if the request fails and statement PDF body if succeeds
+     * @param completion: Completion handler with optional error if the request fails or Financial Passport PDF body if succeeds
      */
     fun exportFinancialPassport(format: ExportType, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>>) {
-        financialPassport.exportFinancialPassport(format).enqueue { resource ->
+        affordability.exportFinancialPassport(format).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     completion.invoke(resource)

@@ -36,7 +36,7 @@ import us.frollo.frollosdk.core.DeviceInfo
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.events.Events
-import us.frollo.frollosdk.financialpassport.Affordability
+import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.goals.Goals
 import us.frollo.frollosdk.images.Images
 import us.frollo.frollosdk.keystore.Keystore

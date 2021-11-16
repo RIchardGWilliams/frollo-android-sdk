@@ -28,7 +28,7 @@ import us.frollo.frollosdk.model.api.bills.BillPaymentResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetPeriodResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
-import us.frollo.frollosdk.model.api.financialpassport.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
@@ -60,7 +60,7 @@ import us.frollo.frollosdk.network.api.BillsAPI
 import us.frollo.frollosdk.network.api.BudgetsAPI
 import us.frollo.frollosdk.network.api.CdrAPI
 import us.frollo.frollosdk.network.api.ContactsAPI
-import us.frollo.frollosdk.network.api.FinancialPassportAPI
+import us.frollo.frollosdk.network.api.AffordabilityAPI
 import us.frollo.frollosdk.network.api.GoalsAPI
 import us.frollo.frollosdk.network.api.ImagesAPI
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
@@ -378,7 +378,7 @@ internal fun StatementsAPI.fetchStatements(
     return fetchStatements(queryMap)
 }
 
-internal fun FinancialPassportAPI.getFinancialPassport(
+internal fun AffordabilityAPI.getFinancialPassport(
     accountIds: List<Long>? = null,
     providerAccountIDs: List<Long>? = null,
     aggregator: AggregatorType? = null,
@@ -390,7 +390,7 @@ internal fun FinancialPassportAPI.getFinancialPassport(
         queryMap["account_ids"] = accountIds.joinToString(",")
     }
     providerAccountIDs?.let {
-        queryMap["provider_account_ids"] = it.toString()
+        queryMap["provider_account_ids"] = it.joinToString(",")
     }
     aggregator?.let {
         queryMap["aggregator"] = it.toString()

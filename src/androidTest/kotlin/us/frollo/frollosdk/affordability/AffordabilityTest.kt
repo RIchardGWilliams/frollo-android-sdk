@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.financialpassport
+package us.frollo.frollosdk.affordability
 
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -75,9 +75,9 @@ class AffordabilityTest : BaseAndroidTest() {
             assertNotNull(model)
             assertEquals(11029, model?.accounts?.get(0)?.account_id)
             assertEquals("-316.44", model?.summary?.totals?.expenses)
-            assertEquals("Recreation", model?.expenses?.breakdown?.get(0)?.category?.name)
+            assertEquals("Recreation", model?.incomeExpenses?.breakdown?.get(0)?.category?.name)
             assertEquals("Superannuation", model?.income?.breakdown?.get(0)?.category?.name)
-            assertEquals(11033, model?.assets?.breakdown?.get(0)?.accounts?.get(0)?.id)
+            assertEquals(11033, model?.assetsLiabilities?.breakdown?.get(0)?.accounts?.get(0)?.id)
             assertEquals("Loans", model?.liabilities?.breakdown?.get(0)?.name)
             signal.countDown()
         }

@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.financialpassport
-
+package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 
-data class Assets(
+/**
+Financial Passport Income Expense
+ */
+data class FPIncomeExpenses(
 
-    @SerializedName("total") val total: Double,
-    @SerializedName("breakdown") val breakdown: List<AssetsLiabilitiesBreakdown>
+    /**  The total of Income / Expense in financial passport; Optional */
+    @SerializedName("total") val total: String?,
+    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport; Optional */
+    @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
+    /** An object to represent overall average; Optional */
+    @SerializedName("averages") val averages: FPIncomeExpenseAverages?
 )

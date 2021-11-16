@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.financialpassport
-import com.google.gson.annotations.SerializedName
+package us.frollo.frollosdk.model.api.affordability
 
-data class AssetsLiabilitiesBreakdown(
-    @SerializedName("name") val name: String,
-    @SerializedName("closing_balance") val closing_balance: Double,
-    @SerializedName("percentage") val percentage: Double,
-    @SerializedName("accounts") val accounts: List<AssetsLiabilitiesAccounts>
+import com.google.gson.annotations.SerializedName
+data class FPIncomeExpenseAverages(
+
+    /** The average amount earned/spent each week; Optional */
+    @SerializedName("weekly") val weekly: String,
+    /** The average amount earned/spent each month; Optional */
+    @SerializedName("monthly") val monthly: String
 )

@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package us.frollo.frollosdk.model.api.financialpassport
+
+package us.frollo.frollosdk.model.api.affordability
+
 import com.google.gson.annotations.SerializedName
 
-data class AssetsLiabilitiesAccounts(
-    @SerializedName("id") val id: Int,
-    @SerializedName("name") val name: String,
-    @SerializedName("provider") val provider: String,
-    @SerializedName("holder_name") val holder_name: String,
-    @SerializedName("description") val description: String,
-    @SerializedName("opening_balance") val opening_balance: Double,
-    @SerializedName("closing_balance") val closing_balance: Double
+data class FPIncomeExpenseBreakdownCategory(
+
+    /**  The name of the Category; Optional */
+    @SerializedName("name") val name: String?,
+    /** The key of the Category; Optional */
+    @SerializedName("key") val key: String?
 )
