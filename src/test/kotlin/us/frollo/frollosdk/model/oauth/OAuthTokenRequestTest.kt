@@ -27,15 +27,15 @@ class OAuthTokenRequestTest {
     @Test
     fun testValid() {
         var request = testOAuthTokenRequestData(grantType = OAuthGrantType.PASSWORD, password = randomString(8))
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
 
         request = testOAuthTokenRequestData(grantType = OAuthGrantType.PASSWORD, password = null, legacyToken = null)
-        assertFalse(request.isValid())
+        assertFalse(request.valid)
 
         request = testOAuthTokenRequestData(grantType = OAuthGrantType.REFRESH_TOKEN, refreshToken = null)
-        assertFalse(request.isValid())
+        assertFalse(request.valid)
 
         request = testOAuthTokenRequestData(grantType = OAuthGrantType.AUTHORIZATION_CODE, authorizationCode = null)
-        assertFalse(request.isValid())
+        assertFalse(request.valid)
     }
 }

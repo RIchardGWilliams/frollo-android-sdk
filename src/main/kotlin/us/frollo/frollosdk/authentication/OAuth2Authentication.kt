@@ -229,7 +229,7 @@ class OAuth2Authentication(
             scopes = scopes,
             grantType = grantType
         )
-        if (!request.isValid()) {
+        if (!request.valid) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
@@ -259,7 +259,7 @@ class OAuth2Authentication(
         } else {
             oAuth2Helper.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = scopes)
         }
-        if (!request.isValid(oAuth2Helper.config.isDAOAuth2LoginEnabled())) {
+        if (!request.valid) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
@@ -281,7 +281,7 @@ class OAuth2Authentication(
     fun exchangeLegacyToken(legacyToken: String, completion: OnFrolloSDKCompletionListener<Result>) {
         val scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID)
         val request = oAuth2Helper.getExchangeTokenRequest(legacyToken = legacyToken, scopes = scopes)
-        if (!request.isValid()) {
+        if (!request.valid) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }

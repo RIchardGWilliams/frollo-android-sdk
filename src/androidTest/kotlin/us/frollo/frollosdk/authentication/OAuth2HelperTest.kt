@@ -40,7 +40,7 @@ class OAuth2HelperTest {
         val refreshToken = randomString(32)
         val request = oAuth.getRefreshTokensRequest(refreshToken = refreshToken)
         assertNotNull(request)
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
         assertEquals(refreshToken, request.refreshToken)
         assertNull(request.scope)
     }
@@ -51,7 +51,7 @@ class OAuth2HelperTest {
         val password = randomString(8)
         val request = oAuth.getLoginRequest(username = username, password = password, scopes = listOf("offline_access", "openid", "email"), grantType = OAuthGrantType.PASSWORD)
         assertNotNull(request)
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
         assertEquals(username, request.username)
         assertEquals(password, request.password)
         assertEquals("offline_access openid email", request.scope)
@@ -63,7 +63,7 @@ class OAuth2HelperTest {
         val password = randomString(8)
         val request = oAuth.getRegisterRequest(username = username, password = password, scopes = listOf("offline_access", "openid", "email"), grantType = OAuthGrantType.PASSWORD)
         assertNotNull(request)
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
         assertEquals(username, request.username)
         assertEquals(password, request.password)
         assertEquals("offline_access openid email", request.scope)
@@ -75,7 +75,7 @@ class OAuth2HelperTest {
         val codeVerifier = randomString(32)
         val request = oAuth.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = listOf("offline_access", "openid", "email"))
         assertNotNull(request)
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
         assertEquals(code, request.code)
         assertEquals(codeVerifier, request.codeVerifier)
         assertEquals("offline_access openid email", request.scope)
@@ -86,7 +86,7 @@ class OAuth2HelperTest {
         val code = randomString(32)
         val request = oAuth.getExchangeAuthorizationCodeRequestForDAOAuth2Login(code = code)
         assertNotNull(request)
-        assertTrue(request.isValid(isDAOAuth2Login = true))
+        assertTrue(request.valid)
         assertEquals(code, request.code)
     }
 
@@ -95,7 +95,7 @@ class OAuth2HelperTest {
         val legacyToken = randomString(32)
         val request = oAuth.getExchangeTokenRequest(legacyToken = legacyToken, scopes = listOf("offline_access", "openid", "email"))
         assertNotNull(request)
-        assertTrue(request.isValid())
+        assertTrue(request.valid)
         assertEquals(legacyToken, request.legacyToken)
         assertEquals("offline_access openid email", request.scope)
     }
