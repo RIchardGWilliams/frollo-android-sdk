@@ -21,15 +21,15 @@ data class FPIncomeExpensesBreakdown(
     /**  The category in this breakdown; Optional */
     @SerializedName("category") val category: FPIncomeExpenseBreakdownCategory?,
     /**  Number of transactions in this breakdown; Optional */
-    @SerializedName("number_of_transactions") val number_of_transactions: Int?,
+    @SerializedName("number_of_transactions") val numberOfTransactions: Long?,
     /**  The date of the first Transaction in this breakdown; Optional */
-    @SerializedName("first_transaction_date") val first_transaction_date: String?,
+    @SerializedName("first_transaction_date") val firstTransactionDate: String?,
     /**  The date of the last Transaction in this breakdown; Optional */
-    @SerializedName("last_transaction_date") val last_transaction_date: String?,
+    @SerializedName("last_transaction_date") val lastTransactionDate: String?,
     /**  An object to repersent average of this breakdown; Optional */
     @SerializedName("averages") val averages: FPIncomeExpenseAverages?,
     /**  The [FPIncomeExpenseBreakdownTotals] in this breakdown; Optional */
     @SerializedName("totals") val FPIncomeExpenseBreakdownTotals: FPIncomeExpenseBreakdownTotals?,
     /**  An array of all Transactions that make up this expense breakdown. These can be used to query the Get Transactions API for more details on the underlying Transactions. */
-    @SerializedName("transaction_ids") val transaction_ids: List<Long>?
+    @SerializedName("transaction_ids") val transactionIds: List<Long>?
 )

@@ -17,11 +17,12 @@
 package us.frollo.frollosdk.model.api.affordability
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class AssetsLiabilities(
 
     /**  The total number of assets or liabilities over the report period; optional */
-    @SerializedName("total") val total: String?,
+    @SerializedName("total") val total: BigDecimal?,
     /**  The breakdown of assets or liabilities over the report period; optional */
     @SerializedName("breakdown") val breakdown: List<FPAssetLiabilityBreakdown>?
 )

@@ -25,11 +25,11 @@ Holds information about the user's FinancialPassport
 data class FinancialPassportResponse(
 
     /** Date at which financial passport was created */
-    @SerializedName("created_at") val created_at: String,
+    @SerializedName("created_at") val createdAt: String,
     /**  From date of financial passport */
-    @SerializedName("from_date") val from_date: String,
+    @SerializedName("from_date") val fromDate: String,
     /**  To date of financial passport */
-    @SerializedName("to_date") val to_date: String,
+    @SerializedName("to_date") val toDate: String,
     /**  List of [FPAccounts] of financial passport; Optional*/
     @SerializedName("accounts") val accounts: List<FPAccounts>?,
     /**  Summary of  of financial passport; Optional */
@@ -43,12 +43,11 @@ data class FinancialPassportResponse(
     /**  An object to represent liabilities in financial passport; Optional*/
     @SerializedName("liabilities") val liabilities: AssetsLiabilities?,
     /**  List of [FPRiskScores] of financial passport; Optional*/
-    @SerializedName("risk_scores") val risk_scores: List<FPRiskScores>?
-){
+    @SerializedName("risk_scores") val riskScores: List<FPRiskScores>?
+) {
     companion object {
 
         /** Date format for dates associated with FinancialPassportResponse */
         const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
     }
 }
-

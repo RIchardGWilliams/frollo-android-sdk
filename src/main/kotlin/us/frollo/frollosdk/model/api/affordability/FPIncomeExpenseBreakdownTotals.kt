@@ -17,17 +17,18 @@
 package us.frollo.frollosdk.model.api.affordability
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class FPIncomeExpenseBreakdownTotals(
 
     /**  The total amount spent in the last week of the reporting period. */
-    @SerializedName("weekly") val weekly: String?,
+    @SerializedName("weekly") val weekly: BigDecimal?,
     /**  The total amount spent in the last month of the reporting period (if applicable). */
-    @SerializedName("monthly") val monthly: String?,
+    @SerializedName("monthly") val monthly: BigDecimal?,
     /**  The total amount spent in the last 90 days of the reporting period (if applicable). */
-    @SerializedName("ninety_day") val ninety_day: String?,
+    @SerializedName("ninety_day") val ninetyDay: BigDecimal?,
     /**  The total amount spent in the last 180 days of the reporting period (if applicable). */
-    @SerializedName("one_eighty_day") val one_eighty_day: String?,
+    @SerializedName("one_eighty_day") val oneEightyDay: BigDecimal?,
     /** The total amount spent in the last year of the reporting period (if applicable). */
-    @SerializedName("yearly") val yearly: String?
+    @SerializedName("yearly") val yearly: BigDecimal?
 )

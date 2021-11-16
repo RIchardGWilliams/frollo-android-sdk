@@ -19,6 +19,7 @@ package us.frollo.frollosdk.extensions
 import retrofit2.Call
 import retrofit2.http.Query
 import us.frollo.frollosdk.model.api.address.AddressAutocomplete
+import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
@@ -28,7 +29,6 @@ import us.frollo.frollosdk.model.api.bills.BillPaymentResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetPeriodResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
-import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
@@ -55,12 +55,12 @@ import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.coredata.surveys.Survey
 import us.frollo.frollosdk.network.api.AddressAPI
+import us.frollo.frollosdk.network.api.AffordabilityAPI
 import us.frollo.frollosdk.network.api.AggregationAPI
 import us.frollo.frollosdk.network.api.BillsAPI
 import us.frollo.frollosdk.network.api.BudgetsAPI
 import us.frollo.frollosdk.network.api.CdrAPI
 import us.frollo.frollosdk.network.api.ContactsAPI
-import us.frollo.frollosdk.network.api.AffordabilityAPI
 import us.frollo.frollosdk.network.api.GoalsAPI
 import us.frollo.frollosdk.network.api.ImagesAPI
 import us.frollo.frollosdk.network.api.ManagedProductsAPI

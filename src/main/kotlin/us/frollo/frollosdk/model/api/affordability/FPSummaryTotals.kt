@@ -17,15 +17,16 @@
 package us.frollo.frollosdk.model.api.affordability
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class FPSummaryTotals(
 
     /**  The total value of expenses over the report period; Optional */
-    @SerializedName("expenses") val expenses: String,
+    @SerializedName("expenses") val expenses: BigDecimal?,
     /**  The total value of income over the report period; Optional */
-    @SerializedName("income") val monthly: String,
+    @SerializedName("income") val monthly: BigDecimal?,
     /**  The total value of assets over the report period; Optional */
-    @SerializedName("assets") val assets: String,
+    @SerializedName("assets") val assets: BigDecimal?,
     /**  The total value of liabilities over the report period; Optional */
-    @SerializedName("liabilities") val liabilities: String
+    @SerializedName("liabilities") val liabilities: BigDecimal?
 )

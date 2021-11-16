@@ -27,7 +27,7 @@ import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 internal interface AffordabilityAPI {
     companion object {
         const val URL_FINANCIAL_PASSPORT = "affordability/financialpassport"
-        const val URL_FINANCIAL_PASSPORT_EXPORT= "affordability/financialpassport/export"
+        const val URL_FINANCIAL_PASSPORT_EXPORT = "affordability/financialpassport/export"
     }
 
     @GET(URL_FINANCIAL_PASSPORT)

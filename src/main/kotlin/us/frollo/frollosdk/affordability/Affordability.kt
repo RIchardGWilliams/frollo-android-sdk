@@ -24,7 +24,6 @@ import us.frollo.frollosdk.extensions.getFinancialPassport
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.model.api.affordability.ExportType
 import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
-import us.frollo.frollosdk.model.api.statements.Statement
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.AffordabilityAPI

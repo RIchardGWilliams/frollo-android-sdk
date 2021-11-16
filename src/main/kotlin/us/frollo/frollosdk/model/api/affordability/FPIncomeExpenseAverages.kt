@@ -17,10 +17,12 @@
 package us.frollo.frollosdk.model.api.affordability
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
+
 data class FPIncomeExpenseAverages(
 
     /** The average amount earned/spent each week; Optional */
-    @SerializedName("weekly") val weekly: String,
+    @SerializedName("weekly") val weekly: BigDecimal?,
     /** The average amount earned/spent each month; Optional */
-    @SerializedName("monthly") val monthly: String
+    @SerializedName("monthly") val monthly: BigDecimal?
 )

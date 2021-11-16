@@ -26,6 +26,7 @@ import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import us.frollo.frollosdk.address.AddressManagement
+import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.aggregation.Aggregation
 import us.frollo.frollosdk.authentication.AuthenticationStatus
 import us.frollo.frollosdk.authentication.AuthenticationType.Custom
@@ -51,7 +52,6 @@ import us.frollo.frollosdk.events.Events
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.notify
 import us.frollo.frollosdk.extensions.toString
-import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.goals.Goals
 import us.frollo.frollosdk.images.Images
 import us.frollo.frollosdk.keystore.Keystore

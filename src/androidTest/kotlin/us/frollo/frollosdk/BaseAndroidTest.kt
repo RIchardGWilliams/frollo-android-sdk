@@ -24,6 +24,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Rule
 import us.frollo.frollosdk.address.AddressManagement
+import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.aggregation.Aggregation
 import us.frollo.frollosdk.authentication.OAuth2Authentication
 import us.frollo.frollosdk.authentication.OAuth2Helper
@@ -36,7 +37,6 @@ import us.frollo.frollosdk.core.DeviceInfo
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.events.Events
-import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.goals.Goals
 import us.frollo.frollosdk.images.Images
 import us.frollo.frollosdk.keystore.Keystore

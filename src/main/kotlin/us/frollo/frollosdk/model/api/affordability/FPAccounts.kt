@@ -15,11 +15,12 @@
  */
 package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
 data class FPAccounts(
 
     /**  The account ID of the Account.  */
-    @SerializedName("account_id") val accountId: Int?,
+    @SerializedName("account_id") val accountId: Long?,
     /**  The name of the Account. */
     @SerializedName("account_name") val accountName: String?,
     /**  The bsb of the Account. */
@@ -33,9 +34,9 @@ data class FPAccounts(
     /**   The description of the Account.  */
     @SerializedName("description") val description: String?,
     /**  The opening balance of the Account. */
-    @SerializedName("opening_balance") val openingBalance: String?,
+    @SerializedName("opening_balance") val openingBalance: BigDecimal?,
     /**  The closing balance of the Account. */
-    @SerializedName("closing_balance") val closingBalance: String?,
+    @SerializedName("closing_balance") val closingBalance: BigDecimal?,
     /**  The number of the Account */
     @SerializedName("number") val number: String?
 )
