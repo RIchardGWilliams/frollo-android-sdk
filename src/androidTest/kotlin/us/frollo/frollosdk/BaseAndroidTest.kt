@@ -36,6 +36,7 @@ import us.frollo.frollosdk.core.DeviceInfo
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.events.Events
+import us.frollo.frollosdk.financialpassport.Affordability
 import us.frollo.frollosdk.goals.Goals
 import us.frollo.frollosdk.images.Images
 import us.frollo.frollosdk.keystore.Keystore
@@ -94,6 +95,7 @@ abstract class BaseAndroidTest {
     lateinit var addressManagement: AddressManagement
     lateinit var statements: Statements
     lateinit var serviceStatusManagement: ServiceStatusManagement
+    lateinit var affordability: Affordability
     lateinit var appInfo: AppInfo
 
     val scopes = listOf("offline_access", "openid", "email")
@@ -152,6 +154,7 @@ abstract class BaseAndroidTest {
         paydays = Paydays(network, database)
         addressManagement = AddressManagement(network, database)
         statements = Statements(network)
+        affordability = Affordability(network)
         serviceStatusManagement = ServiceStatusManagement(network, database)
 
         AndroidThreeTen.init(app)

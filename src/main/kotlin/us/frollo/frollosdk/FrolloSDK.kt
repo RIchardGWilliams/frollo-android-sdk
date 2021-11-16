@@ -51,6 +51,7 @@ import us.frollo.frollosdk.events.Events
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.notify
 import us.frollo.frollosdk.extensions.toString
+import us.frollo.frollosdk.financialpassport.Affordability
 import us.frollo.frollosdk.goals.Goals
 import us.frollo.frollosdk.images.Images
 import us.frollo.frollosdk.keystore.Keystore
@@ -223,6 +224,12 @@ object FrolloSDK {
     val serviceStatusManagement: ServiceStatusManagement
         get() = _serviceStatusManagement ?: throw IllegalAccessException(SDK_NOT_SETUP)
 
+    /**
+     * Surveys - Surveys management. See [Surveys] for details
+     */
+    val finacialPassport: Affordability
+        get() = _financialPassport ?: throw IllegalAccessException(SDK_NOT_SETUP)
+
     private var _setup = false
     private var _logger: LogManager? = null
     private var _aggregation: Aggregation? = null
@@ -245,6 +252,7 @@ object FrolloSDK {
     private var _statements: Statements? = null
     private var _addressManagement: AddressManagement? = null
     private var _serviceStatusManagement: ServiceStatusManagement? = null
+    private var _financialPassport: Affordability? = null
     private lateinit var keyStore: Keystore
     private lateinit var preferences: Preferences
     private lateinit var version: Version
@@ -391,6 +399,9 @@ object FrolloSDK {
 
             // 29. Setup Service Status Management
             _serviceStatusManagement = ServiceStatusManagement(network, database)
+
+            // 30. Financial passport management
+            _financialPassport = Affordability(network)
 
             if (version.migrationNeeded()) {
                 version.migrateVersion()
