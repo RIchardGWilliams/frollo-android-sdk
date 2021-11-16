@@ -239,3 +239,7 @@ Manages fetching & submitting surveys.
 # Package us.frollo.frollosdk.user
 
 Manages the user details and device
+
+# Package us.frollo.frollosdk.financialpassport
+
+Manages all aspects Financial Passport

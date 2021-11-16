@@ -1,6 +1,7 @@
 ## Changelog
 
 ### 3.10.0
+- Financial passport
 
 #### Features
 - Statements
