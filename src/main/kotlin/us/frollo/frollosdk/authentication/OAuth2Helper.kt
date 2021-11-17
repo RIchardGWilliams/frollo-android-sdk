@@ -88,6 +88,15 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
             scope = scopes.joinToString(" ")
         )
 
+    internal fun getExchangeAuthorizationCodeRequestForDAOAuth2Login(code: String) =
+        OAuthTokenRequest(
+            grantType = OAuthGrantType.AUTHORIZATION_CODE,
+            clientId = config.clientId,
+            domain = domain,
+            code = code,
+            redirectUrl = oAuth2.redirectUrl
+        )
+
     internal fun getExchangeTokenRequest(legacyToken: String, scopes: List<String>) =
         OAuthTokenRequest(
             grantType = OAuthGrantType.PASSWORD,
@@ -98,7 +107,7 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
             scope = scopes.joinToString(" ")
         )
 
-    internal fun getAuthorizationRequest(scopes: List<String>, additionalParameters: Map<String, String>? = null): AuthorizationRequest {
+    internal fun getAuthorizationRequest(scopes: List<String>, additionalParameters: Map<String, String>? = null, clientId: String? = null): AuthorizationRequest {
         val serviceConfig = AuthorizationServiceConfiguration(
             oAuth2.authorizationUri,
             oAuth2.tokenUri
@@ -106,7 +115,7 @@ class OAuth2Helper(val config: FrolloSDKConfiguration) {
 
         val authRequestBuilder = AuthorizationRequest.Builder(
             serviceConfig,
-            config.clientId,
+            clientId ?: config.clientId, // Use clientId from FrolloSDKConfiguration if the custom clientId is not provided
             ResponseTypeValues.CODE,
             oAuth2.redirectUri
         )

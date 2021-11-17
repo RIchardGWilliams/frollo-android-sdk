@@ -28,14 +28,16 @@ internal fun testSDKConfig(
     tokenUrl: String? = null,
     authorizationUrl: String? = null,
     redirectUrl: String? = null,
-    revokeTokenURL: String? = null
+    revokeTokenURL: String? = null,
+    daOAuth2Login: Boolean = false
 ) =
     FrolloSDKConfiguration(
         authenticationType = AuthenticationType.OAuth2(
             redirectUrl = redirectUrl ?: "app://redirect",
             authorizationUrl = authorizationUrl ?: "https://id.example.com/oauth/authorize/",
             tokenUrl = tokenUrl ?: "https://id.example.com/oauth/token/",
-            revokeTokenURL = revokeTokenURL ?: "https://id.example.com/oauth/revoke/"
+            revokeTokenURL = revokeTokenURL ?: "https://id.example.com/oauth/revoke/",
+            daOAuth2Login = daOAuth2Login
         ),
         clientId = clientId ?: "abc123",
         serverUrl = serverUrl ?: "https://api.example.com/",

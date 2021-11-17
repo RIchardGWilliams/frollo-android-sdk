@@ -45,8 +45,8 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
     private lateinit var userAPI: UserAPI
     private lateinit var paymentsAPI: PaymentsAPI
 
-    override fun initSetup() {
-        super.initSetup()
+    override fun initSetup(daOAuth2Login: Boolean) {
+        super.initSetup(daOAuth2Login)
 
         userAPI = network.create(UserAPI::class.java)
         paymentsAPI = network.create(PaymentsAPI::class.java)

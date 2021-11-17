@@ -63,4 +63,8 @@ data class FrolloSDKConfiguration(
         }
         return false
     }
+
+    internal fun isDAOAuth2LoginEnabled(): Boolean {
+        return authenticationType is OAuth2 && authenticationType.daOAuth2Login
+    }
 }

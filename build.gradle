@@ -177,6 +177,9 @@ dependencies {
     implementation 'androidx.room:room-rxjava2:2.3.0'
     kapt "androidx.room:room-compiler:2.3.0"
 
+    // AndroidX
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
@@ -191,5 +194,5 @@ dependencies {
     implementation "com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0"
 
     // AppAuth
-    implementation "net.openid:appauth:0.7.1"
+    implementation "net.openid:appauth:0.10.0"
 }

@@ -55,8 +55,8 @@ class EventsTest : BaseAndroidTest() {
     private var transactionIds: LongArray? = null
     private var onboardingStep: String? = null
 
-    override fun initSetup() {
-        super.initSetup()
+    override fun initSetup(daOAuth2Login: Boolean) {
+        super.initSetup(daOAuth2Login)
 
         preferences.loggedIn = true
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")

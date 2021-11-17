@@ -41,13 +41,15 @@ sealed class AuthenticationType {
      * @param tokenUrl URL of the OAuth2 token endpoint for getting tokens and native login
      * @param revokeTokenURL OAuth2 token endpoint to revoke refresh token on logout (if supported)
      * @param audienceUrl OAuth2 audience URL (Optional)
+     * @param daOAuth2Login Indicates if the token should be exchanged with via DA token endpoint. Defaults to false.
      */
     class OAuth2(
         val redirectUrl: String,
         val authorizationUrl: String,
         val tokenUrl: String,
         val revokeTokenURL: String? = null,
-        val audienceUrl: String? = null
+        val audienceUrl: String? = null,
+        val daOAuth2Login: Boolean = false
     ) : AuthenticationType() {
 
         /**

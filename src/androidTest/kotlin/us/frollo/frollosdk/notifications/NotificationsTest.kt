@@ -36,8 +36,8 @@ import us.frollo.frollosdk.testutils.wait
 
 class NotificationsTest : BaseAndroidTest() {
 
-    override fun initSetup() {
-        super.initSetup()
+    override fun initSetup(daOAuth2Login: Boolean) {
+        super.initSetup(daOAuth2Login)
 
         preferences.loggedIn = true
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")

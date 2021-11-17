@@ -44,8 +44,8 @@ import java.util.concurrent.TimeUnit
 
 class PaydaysTest : BaseAndroidTest() {
 
-    override fun initSetup() {
-        super.initSetup()
+    override fun initSetup(daOAuth2Login: Boolean) {
+        super.initSetup(daOAuth2Login)
 
         preferences.loggedIn = true
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
