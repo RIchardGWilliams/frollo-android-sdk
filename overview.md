@@ -26,6 +26,7 @@ The Frollo Android SDK is broken down into multiple components that reflect the 
 * [AddressManagement](#addressmanagement) - TBD
 * [Statements](#statements) - TBD
 * [ServiceStatusManagement](#servicestatusmanagement) - TBD
+* [AffordabilityManagement](#affordabilitymanagement) - TBD
 
 ### Authentication
 

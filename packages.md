@@ -52,6 +52,10 @@ Handles events and allows triggering of events on the host.
 
 Convenient extension methods for use of the app
 
+# Package us.frollo.frollosdk.financialpassport
+
+Manages all aspects Financial Passport
+
 # Package us.frollo.frollosdk.goals
 
 Tracking and managing goals

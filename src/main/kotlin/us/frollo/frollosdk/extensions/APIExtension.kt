@@ -19,6 +19,7 @@ package us.frollo.frollosdk.extensions
 import retrofit2.Call
 import retrofit2.http.Query
 import us.frollo.frollosdk.model.api.address.AddressAutocomplete
+import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
@@ -37,6 +38,7 @@ import us.frollo.frollosdk.model.api.statements.Statement
 import us.frollo.frollosdk.model.api.statements.StatementSortBy
 import us.frollo.frollosdk.model.api.statements.StatementType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
@@ -53,6 +55,7 @@ import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.coredata.surveys.Survey
 import us.frollo.frollosdk.network.api.AddressAPI
+import us.frollo.frollosdk.network.api.AffordabilityAPI
 import us.frollo.frollosdk.network.api.AggregationAPI
 import us.frollo.frollosdk.network.api.BillsAPI
 import us.frollo.frollosdk.network.api.BudgetsAPI
@@ -373,4 +376,30 @@ internal fun StatementsAPI.fetchStatements(
     statementSortBy?.let { queryMap["sort"] = it.toString() }
     orderType?.let { queryMap["order"] = it.toString() }
     return fetchStatements(queryMap)
+}
+
+internal fun AffordabilityAPI.getFinancialPassport(
+    accountIds: List<Long>? = null,
+    providerAccountIDs: List<Long>? = null,
+    aggregator: AggregatorType? = null,
+    fromDate: String? = null, // 2020-09-09
+    toDate: String? = null, // 2020-09-09
+): Call<FinancialPassportResponse> {
+    val queryMap = mutableMapOf<String, String>()
+    accountIds?.let {
+        queryMap["account_ids"] = accountIds.joinToString(",")
+    }
+    providerAccountIDs?.let {
+        queryMap["provider_account_ids"] = it.joinToString(",")
+    }
+    aggregator?.let {
+        queryMap["aggregator"] = it.toString()
+    }
+    fromDate?.let {
+        queryMap["from_date"] = it
+    }
+    toDate?.let {
+        queryMap["to_date"] = it
+    }
+    return getFinancialPassport(queryMap)
 }

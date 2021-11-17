@@ -24,6 +24,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Rule
 import us.frollo.frollosdk.address.AddressManagement
+import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.aggregation.Aggregation
 import us.frollo.frollosdk.authentication.OAuth2Authentication
 import us.frollo.frollosdk.authentication.OAuth2Helper
@@ -95,6 +96,7 @@ abstract class BaseAndroidTest {
     lateinit var addressManagement: AddressManagement
     lateinit var statements: Statements
     lateinit var serviceStatusManagement: ServiceStatusManagement
+    lateinit var affordability: Affordability
     lateinit var appInfo: AppInfo
 
     val scopes = listOf("offline_access", "openid", "email")
@@ -161,6 +163,7 @@ abstract class BaseAndroidTest {
         paydays = Paydays(network, database)
         addressManagement = AddressManagement(network, database)
         statements = Statements(network)
+        affordability = Affordability(network)
         serviceStatusManagement = ServiceStatusManagement(network, database)
 
         AndroidThreeTen.init(app)

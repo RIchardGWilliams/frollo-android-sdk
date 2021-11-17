@@ -1,0 +1,585 @@
+{
+  "created_at": "2021-09-09T15:18:28.875+10:00",
+  "from_date": "2020-09-09",
+  "to_date": "2021-09-09",
+  "accounts": [
+    {
+      "account_id": 11029,
+      "account_name": "My Savings",
+      "provider": "Virgin Money (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Savings",
+      "description": "Savings",
+      "opening_balance": "500.0",
+      "closing_balance": "500.0"
+    },
+    {
+      "account_id": 1855,
+      "account_name": "Reward",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other",
+      "opening_balance": "20000.0",
+      "closing_balance": "20000.0"
+    },
+    {
+      "account_id": 1851,
+      "account_name": "Loan with interest",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Loans",
+      "description": "Mortgage",
+      "opening_balance": "-1000823.85",
+      "closing_balance": "-1000823.85"
+    },
+    {
+      "account_id": 9394,
+      "account_name": "TESTDATA1",
+      "account_number": "xxxx3xxx",
+      "provider": "DagBankSeCUrityQA",
+      "asset_name": "Savings",
+      "description": "Savings",
+      "opening_balance": "9044.78",
+      "closing_balance": "9044.78"
+    },
+    {
+      "account_id": 11037,
+      "account_name": "Cash Converter",
+      "provider": "Society One (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Loans",
+      "description": "Personal Loan",
+      "opening_balance": "-1641.0",
+      "closing_balance": "-1641.0"
+    },
+    {
+      "account_id": 1847,
+      "account_name": "Savings with APR",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Savings",
+      "description": "Savings",
+      "opening_balance": "823.85",
+      "closing_balance": "823.85"
+    },
+    {
+      "account_id": 11105,
+      "account_name": "TESTDATA",
+      "account_number": "xxxx3xxx",
+      "provider": "DagBankSeCUrityQA",
+      "asset_name": "Cash",
+      "description": "Current",
+      "opening_balance": "44.78",
+      "closing_balance": "44.78"
+    },
+    {
+      "account_id": 11104,
+      "account_name": "TESTDATA1",
+      "account_number": "xxxx3xxx",
+      "provider": "DagBankSeCUrityQA",
+      "asset_name": "Savings",
+      "description": "Savings",
+      "opening_balance": "9044.78",
+      "closing_balance": "9044.78"
+    },
+    {
+      "account_id": 9395,
+      "account_name": "TESTDATA",
+      "account_number": "xxxx3xxx",
+      "provider": "DagBankSeCUrityQA",
+      "asset_name": "Cash",
+      "description": "Current",
+      "opening_balance": "44.78",
+      "closing_balance": "44.78"
+    },
+    {
+      "account_id": 1854,
+      "account_name": "Credit Card with APR",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Credit",
+      "description": "Credit",
+      "opening_balance": "-10823.85",
+      "closing_balance": "-10823.85"
+    },
+    {
+      "account_id": 1850,
+      "account_name": "Insurance",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Insurance",
+      "description": "Insurance",
+      "opening_balance": "0.0",
+      "closing_balance": "0.0"
+    },
+    {
+      "account_id": 11027,
+      "account_name": "Velocity Points",
+      "provider": "Virgin Money (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other",
+      "opening_balance": "69000.0",
+      "closing_balance": "69000.0"
+    },
+    {
+      "account_id": 1856,
+      "account_name": "Insurance",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Insurance",
+      "description": "Insurance",
+      "opening_balance": "0.0",
+      "closing_balance": "0.0"
+    },
+    {
+      "account_id": 11035,
+      "account_name": "Frollo Score",
+      "provider": "Frollo Score",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other",
+      "opening_balance": "400.0",
+      "closing_balance": "701.0"
+    },
+    {
+      "account_id": 1853,
+      "account_name": "Savings with APR",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Savings",
+      "description": "Savings",
+      "opening_balance": "823.85",
+      "closing_balance": "823.85"
+    },
+    {
+      "account_id": 11033,
+      "account_name": "Retirement Income",
+      "provider": "AustralianSuper (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Superannuation",
+      "description": "Super",
+      "opening_balance": "9514.6",
+      "closing_balance": "14000.0"
+    },
+    {
+      "account_id": 1852,
+      "account_name": "Credit Score",
+      "provider": "Pioneer Credit Score",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other"
+    },
+    {
+      "account_id": 11031,
+      "account_name": "Credit Card",
+      "provider": "ANZ (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Credit",
+      "description": "Credit",
+      "opening_balance": "-5500.0",
+      "closing_balance": "-5500.0"
+    },
+    {
+      "account_id": 1858,
+      "account_name": "Credit Score",
+      "provider": "Pioneer Credit Score",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other"
+    },
+    {
+      "account_id": 11025,
+      "account_name": "Bills Account",
+      "provider": "Virgin Money (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Cash",
+      "description": "Current",
+      "opening_balance": "550.0",
+      "closing_balance": "550.0"
+    },
+    {
+      "account_id": 11023,
+      "account_name": "Personal Account",
+      "provider": "Virgin Money (demo)",
+      "holder_name": "Jacob",
+      "asset_name": "Cash",
+      "description": "Current",
+      "opening_balance": "668.0",
+      "closing_balance": "668.0"
+    },
+    {
+      "account_id": 1857,
+      "account_name": "Loan with interest",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Loans",
+      "description": "Mortgage",
+      "opening_balance": "-1000823.85",
+      "closing_balance": "-1000823.85"
+    },
+    {
+      "account_id": 1849,
+      "account_name": "Reward",
+      "provider": "Bank of Testing (test)",
+      "holder_name": "Jacob",
+      "asset_name": "Other",
+      "description": "Other",
+      "opening_balance": "20000.0",
+      "closing_balance": "20000.0"
+    }
+  ],
+  "summary": {
+    "totals": {
+      "expenses": "-316.44",
+      "income": "4801.84",
+      "assets": "145245.82",
+      "liabilities": "2019612.55"
+    }
+  },
+  "expenses": {
+    "total": "-316.44",
+    "breakdown": [
+      {
+        "category": {
+          "name": "Recreation",
+          "key": "RECREATION"
+        },
+        "number_of_transactions": 12,
+        "first_transaction_date": "2020-10-09",
+        "last_transaction_date": "2021-09-09",
+        "averages": {
+          "weekly": "-1.3846153846153846",
+          "monthly": "-6.0"
+        },
+        "totals": {
+          "weekly": "-6.0",
+          "monthly": "-6.0",
+          "ninety_day": "-18.0",
+          "one_eighty_day": "-36.0",
+          "yearly": "-72.0"
+        },
+        "transaction_ids": [
+          2966493,
+          2966473,
+          2966499,
+          2966507,
+          2966533,
+          2966513,
+          2966539,
+          2966487,
+          2966467,
+          2966479,
+          2966527,
+          2966519
+        ]
+      },
+      {
+        "category": {
+          "name": "Insurance",
+          "key": "INSURANCE"
+        },
+        "number_of_transactions": 12,
+        "first_transaction_date": "2020-10-09",
+        "last_transaction_date": "2021-09-09",
+        "averages": {
+          "weekly": "-4.7007692307692308",
+          "monthly": "-20.37"
+        },
+        "totals": {
+          "weekly": "-20.37",
+          "monthly": "-20.37",
+          "ninety_day": "-61.11",
+          "one_eighty_day": "-122.22",
+          "yearly": "-244.44"
+        },
+        "transaction_ids": [
+          2966491,
+          2966505,
+          2966537,
+          2966497,
+          2966477,
+          2966511,
+          2966471,
+          2966465,
+          2966485,
+          2966531,
+          2966525,
+          2966517
+        ]
+      }
+    ]
+  },
+  "income": {
+    "total": "4801.84",
+    "breakdown": [
+      {
+        "category": {
+          "name": "Superannuation",
+          "key": "SUPERANNUATION"
+        },
+        "number_of_transactions": 16,
+        "first_transaction_date": "2020-10-09",
+        "last_transaction_date": "2021-09-09",
+        "averages": {
+          "weekly": "92.3430769230769231",
+          "monthly": "400.1533333333333333"
+        },
+        "totals": {
+          "weekly": "1192.82",
+          "monthly": "1192.82",
+          "ninety_day": "1200.46",
+          "one_eighty_day": "2400.92",
+          "yearly": "4801.84"
+        },
+        "transaction_ids": []
+      }
+    ]
+  },
+  "assets": {
+    "total": "145245.82",
+    "breakdown": [
+      {
+        "name": "Superannuation",
+        "closing_balance": "14000.0",
+        "percentage": "9.6",
+        "accounts": [
+          {
+            "id": 11033,
+            "name": "Retirement Income",
+            "provider": "AustralianSuper (demo)",
+            "holder_name": "Jacob",
+            "description": "Super",
+            "opening_balance": "9514.6",
+            "closing_balance": "14000.0"
+          }
+        ]
+      },
+      {
+        "name": "Other",
+        "closing_balance": "109701.0",
+        "percentage": "75.5",
+        "accounts": [
+          {
+            "id": 1855,
+            "name": "Reward",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Other",
+            "opening_balance": "20000.0",
+            "closing_balance": "20000.0"
+          },
+          {
+            "id": 11027,
+            "name": "Velocity Points",
+            "provider": "Virgin Money (demo)",
+            "holder_name": "Jacob",
+            "description": "Other",
+            "opening_balance": "69000.0",
+            "closing_balance": "69000.0"
+          },
+          {
+            "id": 11035,
+            "name": "Frollo Score",
+            "provider": "Frollo Score",
+            "holder_name": "Jacob",
+            "description": "Other",
+            "opening_balance": "400.0",
+            "closing_balance": "701.0"
+          },
+          {
+            "id": 1852,
+            "name": "Credit Score",
+            "provider": "Pioneer Credit Score",
+            "holder_name": "Jacob",
+            "description": "Other"
+          },
+          {
+            "id": 1858,
+            "name": "Credit Score",
+            "provider": "Pioneer Credit Score",
+            "holder_name": "Jacob",
+            "description": "Other"
+          },
+          {
+            "id": 1849,
+            "name": "Reward",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Other",
+            "opening_balance": "20000.0",
+            "closing_balance": "20000.0"
+          }
+        ]
+      },
+      {
+        "name": "Insurance",
+        "closing_balance": "0.0",
+        "percentage": "0.0",
+        "accounts": [
+          {
+            "id": 1850,
+            "name": "Insurance",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Insurance",
+            "opening_balance": "0.0",
+            "closing_balance": "0.0"
+          },
+          {
+            "id": 1856,
+            "name": "Insurance",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Insurance",
+            "opening_balance": "0.0",
+            "closing_balance": "0.0"
+          }
+        ]
+      },
+      {
+        "name": "Cash",
+        "closing_balance": "1307.56",
+        "percentage": "0.9",
+        "accounts": [
+          {
+            "id": 11105,
+            "name": "TESTDATA",
+            "number": "xxxx3xxx",
+            "provider": "DagBankSeCUrityQA",
+            "description": "Current",
+            "opening_balance": "44.78",
+            "closing_balance": "44.78"
+          },
+          {
+            "id": 9395,
+            "name": "TESTDATA",
+            "number": "xxxx3xxx",
+            "provider": "DagBankSeCUrityQA",
+            "description": "Current",
+            "opening_balance": "44.78",
+            "closing_balance": "44.78"
+          },
+          {
+            "id": 11025,
+            "name": "Bills Account",
+            "provider": "Virgin Money (demo)",
+            "holder_name": "Jacob",
+            "description": "Current",
+            "opening_balance": "550.0",
+            "closing_balance": "550.0"
+          },
+          {
+            "id": 11023,
+            "name": "Personal Account",
+            "provider": "Virgin Money (demo)",
+            "holder_name": "Jacob",
+            "description": "Current",
+            "opening_balance": "668.0",
+            "closing_balance": "668.0"
+          }
+        ]
+      },
+      {
+        "name": "Savings",
+        "closing_balance": "20237.26",
+        "percentage": "13.9",
+        "accounts": [
+          {
+            "id": 11029,
+            "name": "My Savings",
+            "provider": "Virgin Money (demo)",
+            "holder_name": "Jacob",
+            "description": "Savings",
+            "opening_balance": "500.0",
+            "closing_balance": "500.0"
+          },
+          {
+            "id": 9394,
+            "name": "TESTDATA1",
+            "number": "xxxx3xxx",
+            "provider": "DagBankSeCUrityQA",
+            "description": "Savings",
+            "opening_balance": "9044.78",
+            "closing_balance": "9044.78"
+          },
+          {
+            "id": 1847,
+            "name": "Savings with APR",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Savings",
+            "opening_balance": "823.85",
+            "closing_balance": "823.85"
+          },
+          {
+            "id": 11104,
+            "name": "TESTDATA1",
+            "number": "xxxx3xxx",
+            "provider": "DagBankSeCUrityQA",
+            "description": "Savings",
+            "opening_balance": "9044.78",
+            "closing_balance": "9044.78"
+          },
+          {
+            "id": 1853,
+            "name": "Savings with APR",
+            "provider": "Bank of Testing (test)",
+            "holder_name": "Jacob",
+            "description": "Savings",
+            "opening_balance": "823.85",
+            "closing_balance": "823.85"
+          }
+        ]
+      }
+    ]
+  },
+  "liabilities": {
+    "total": "2019612.55",
+    "breakdown": [
+      {
+        "name": "Loans",
+        "closing_balance": "-2003288.7",
+        "percentage": "99.2"
+      },
+      {
+        "name": "Credit",
+        "closing_balance": "-16323.85",
+        "percentage": "0.8"
+      }
+    ]
+  },
+  "risk_scores": [
+    {
+      "afterpay_count": "0.00",
+      "atm_withdrawals_average_month": "0.00",
+      "centrelink_average_month": "0.00",
+      "credit_limit_sum": "0.00",
+      "credits_no_transfers_30_days": "1025.40",
+      "debits_no_transfers_30_days": "-26.37",
+      "debits_over_500_count": "0.00",
+      "dishonours_average_month": "0.00",
+      "dishonours_count": "0.00",
+      "dishonours_count_30_days": "0.00",
+      "dishonours_count_last_30_days": "0.00",
+      "dishonours_count_last_90_days": "0.00",
+      "dishonours_without_fee_count": "0.00",
+      "entertainment_count_30_days": "0.00",
+      "gambling_average_month": "0.00",
+      "gambling_average_week": "0.00",
+      "gambling_count": "0.00",
+      "gambling_expenditure": "0.00",
+      "large_debits_count": "0.00",
+      "large_non_wages_credit_count": "0.00",
+      "loan_debits_average_month": "0.00",
+      "loans_30_days": "0.00",
+      "loans_average_month": "0.00",
+      "loans_count_30_days": "0.00",
+      "other_income_average_month": "400.15",
+      "overdrawn_average_month": "0.00",
+      "pension_payments_average_month": "0.00",
+      "salary_average_month": "0.00"
+    }
+  ]
+}

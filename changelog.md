@@ -2,8 +2,10 @@
 
 ### 3.12.0
 
-#### Changes
+#### Features
+- Financial Passport
 
+#### Changes
 - Update Host API version to v2.16
 - Support DA OAuth2 Login with PKCE Authorization Code Flow
 

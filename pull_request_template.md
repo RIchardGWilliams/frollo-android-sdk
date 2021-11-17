@@ -24,9 +24,10 @@ strikethrough when an item of the checklist does not apply to the changes.
 * Have the full test suite (unit & android tests) passed locally?
 * Has the changelog.md, packages.md, overview.md, extras.md been updated?
 * Has the dokka task passed?
-* Have you commited database schema changes (if applicable)?
+* Have you committed database schema changes (if applicable)?
 
 ## Results ##
 
 Add screenshots / videos.
-Note: After you upload the file, you can resize it using the format `<img src="https://user-images.githubusercontent.com/6498/142.gif" width="200">`
+Note: After you upload the file, you can resize it using the format
+<img src="" width="200">
