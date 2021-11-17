@@ -39,9 +39,9 @@ data class FinancialPassportResponse(
     /**  An object to represent income in financial passport; Optional */
     @SerializedName("income") val income: FPIncomeExpenses?,
     /**   An object to represent assets in financial passport; Optional */
-    @SerializedName("assets") val assetsLiabilities: AssetsLiabilities?,
+    @SerializedName("assets") val assetsLiabilities: FPAssetsLiabilities?,
     /**  An object to represent liabilities in financial passport; Optional*/
-    @SerializedName("liabilities") val liabilities: AssetsLiabilities?,
+    @SerializedName("liabilities") val liabilities: FPAssetsLiabilities?,
     /**  List of [FPRiskScores] of financial passport; Optional*/
     @SerializedName("risk_scores") val riskScores: List<FPRiskScores>?
 ) {

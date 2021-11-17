@@ -25,7 +25,7 @@ data class FPAssetLiabilityBreakdown(
     /**  The closing balance of liabilities breakdown; optional */
     @SerializedName("closing_balance") val closingBalance: BigDecimal?,
     /**  The percentage of liabilities breakdown; optional */
-    @SerializedName("percentage") val percentage: BigDecimal?,
+    @SerializedName("percentage") val percentage: Double?,
     /**  A list of accounts in assets or liabilities breakdown; optional */
     @SerializedName("accounts") val accounts: List<FPAssetsLiabilitiesBreakdownAccounts>?
 )
