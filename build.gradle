@@ -11,12 +11,12 @@ configurations.all{
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         minSdkVersion 23 // Android 6.0 (Marshmallow)
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
-        versionName "3.11.0"
+        versionName "3.12.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = ['appAuthRedirectScheme': 'frollo-sdk-test']
         buildConfigField "String", "SDK_VERSION_NAME", "\"$versionName\""
@@ -132,7 +132,7 @@ android {
 
 buildscript {
 
-    ext.kotlin_version_internal = '1.5.30'
+    ext.kotlin_version_internal = '1.5.31'
 
     repositories {
         google()
@@ -169,13 +169,16 @@ dependencies {
     androidTestImplementation 'com.jraska.livedata:testing:1.2.0'
 
     // Android KTX
-    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "androidx.core:core-ktx:1.7.0"
 
     // Android Arch Components
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
     implementation "androidx.room:room-runtime:2.3.0"
     implementation 'androidx.room:room-rxjava2:2.3.0'
     kapt "androidx.room:room-compiler:2.3.0"
+
+    // AndroidX
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
@@ -191,5 +194,5 @@ dependencies {
     implementation "com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0"
 
     // AppAuth
-    implementation "net.openid:appauth:0.7.1"
+    implementation "net.openid:appauth:0.10.0"
 }

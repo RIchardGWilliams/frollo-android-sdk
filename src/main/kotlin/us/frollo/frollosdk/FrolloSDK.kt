@@ -62,6 +62,7 @@ import us.frollo.frollosdk.managedproducts.ManagedProducts
 import us.frollo.frollosdk.messages.Messages
 import us.frollo.frollosdk.model.coredata.bills.BillPayment
 import us.frollo.frollosdk.network.NetworkService
+import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.ResponseDataAPI
 import us.frollo.frollosdk.network.api.TokenAPI
 import us.frollo.frollosdk.notifications.Notifications
@@ -330,6 +331,9 @@ object FrolloSDK {
                     oAuth2Authentication = OAuth2Authentication(oAuth, preferences).apply {
                         tokenAPI = network.createAuth(TokenAPI::class.java)
                         revokeTokenAPI = network.createRevoke(TokenAPI::class.java)
+                        if (configuration.isDAOAuth2LoginEnabled()) {
+                            daTokenAPI = network.createDATokenAuth(DATokenAPI::class.java)
+                        }
                         authToken = network.authToken
                     }
                     network.accessTokenProvider = oAuth2Authentication

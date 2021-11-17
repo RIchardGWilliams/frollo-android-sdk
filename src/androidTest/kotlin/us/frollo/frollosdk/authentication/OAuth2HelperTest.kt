@@ -82,6 +82,15 @@ class OAuth2HelperTest {
     }
 
     @Test
+    fun testGetExchangeAuthorizationCodeRequestForDAOAuth2Login() {
+        val code = randomString(32)
+        val request = oAuth.getExchangeAuthorizationCodeRequestForDAOAuth2Login(code = code)
+        assertNotNull(request)
+        assertTrue(request.valid)
+        assertEquals(code, request.code)
+    }
+
+    @Test
     fun testGetExchangeTokenRequest() {
         val legacyToken = randomString(32)
         val request = oAuth.getExchangeTokenRequest(legacyToken = legacyToken, scopes = listOf("offline_access", "openid", "email"))

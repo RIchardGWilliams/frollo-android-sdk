@@ -29,6 +29,7 @@ import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.core.ACTION
 import us.frollo.frollosdk.core.ARGUMENT
+import us.frollo.frollosdk.core.FrolloSDKConfiguration
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
@@ -44,6 +45,7 @@ import us.frollo.frollosdk.model.oauth.OAuthTokenRequest
 import us.frollo.frollosdk.model.oauth.OAuthTokenResponse
 import us.frollo.frollosdk.network.ApiResponse
 import us.frollo.frollosdk.network.ErrorResponseType
+import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.TokenAPI
 import us.frollo.frollosdk.preferences.Preferences
 
@@ -71,6 +73,7 @@ class OAuth2Authentication(
 
     internal var tokenAPI: TokenAPI? = null
     internal var revokeTokenAPI: TokenAPI? = null
+    internal var daTokenAPI: DATokenAPI? = null
     internal var authToken: AuthToken? = null
 
     private var codeVerifier: String? = null
@@ -97,6 +100,7 @@ class OAuth2Authentication(
      * @param additionalParameters Pass additional query parameters to the authorization endpoint (Optional)
      * @param completedIntent PendingIntent of an Activity to which the completed response from the ChromeTabs/Browser is delivered
      * @param cancelledIntent PendingIntent of an Activity to which the cancelled response from the ChromeTabs/Browser is delivered
+     * @param clientId OAuth2 Client identifier. The unique identifier of the application for Authorization if its different from the one configured in the [FrolloSDKConfiguration] (Optional)
      * @param toolBarColor Color of the CustomTabs toolbar using getColor() method
      *
      * NOTE: When using this method you need to call [handleWebLoginResponse]
@@ -109,6 +113,7 @@ class OAuth2Authentication(
         additionalParameters: Map<String, String>? = null,
         completedIntent: PendingIntent,
         cancelledIntent: PendingIntent,
+        clientId: String? = null,
         toolBarColor: Int? = null
     ) {
 
@@ -116,7 +121,7 @@ class OAuth2Authentication(
             throw DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)
         }
 
-        val authRequest = oAuth2Helper.getAuthorizationRequest(scopes, additionalParameters)
+        val authRequest = oAuth2Helper.getAuthorizationRequest(scopes, additionalParameters, clientId)
 
         codeVerifier = authRequest.codeVerifier
 
@@ -134,6 +139,7 @@ class OAuth2Authentication(
      * @param activity Activity from which the ChromeTabs/Browser should be launched
      * @param scopes OpenID Connect OAuth2 scopes to be sent. See [OAuth2Scope].
      * @param additionalParameters Pass additional query parameters to the authorization endpoint (Optional)
+     * @param clientId OAuth2 Client identifier. The unique identifier of the application for Authorization if its different from the one configured in the [FrolloSDKConfiguration] (Optional)
      * @param toolBarColor Color of the CustomTabs toolbar using getColor() method
      *
      * NOTE: When using this method you need to call [handleWebLoginResponse]
@@ -144,6 +150,7 @@ class OAuth2Authentication(
         activity: Activity,
         scopes: List<String>,
         additionalParameters: Map<String, String>? = null,
+        clientId: String? = null,
         toolBarColor: Int? = null
     ) {
 
@@ -151,7 +158,7 @@ class OAuth2Authentication(
             throw DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)
         }
 
-        val authRequest = oAuth2Helper.getAuthorizationRequest(scopes, additionalParameters)
+        val authRequest = oAuth2Helper.getAuthorizationRequest(scopes, additionalParameters, clientId)
 
         codeVerifier = authRequest.codeVerifier
 
@@ -247,14 +254,22 @@ class OAuth2Authentication(
             return
         }
 
-        val request = oAuth2Helper.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = scopes)
+        val request = if (oAuth2Helper.config.isDAOAuth2LoginEnabled()) {
+            oAuth2Helper.getExchangeAuthorizationCodeRequestForDAOAuth2Login(code = code)
+        } else {
+            oAuth2Helper.getExchangeAuthorizationCodeRequest(code = code, codeVerifier = codeVerifier, scopes = scopes)
+        }
         if (!request.valid) {
             completion.invoke(Result.error(DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)))
             return
         }
 
         // Authorize the user
-        authorizeUser(request, completion, "exchangeAuthorizationCode")
+        if (oAuth2Helper.config.isDAOAuth2LoginEnabled()) {
+            authorizeUserForDAOAuthLogin(request, completion)
+        } else {
+            authorizeUser(request, completion, "exchangeAuthorizationCode")
+        }
     }
 
     /**
@@ -285,19 +300,39 @@ class OAuth2Authentication(
                 }
 
                 Resource.Status.SUCCESS -> {
-                    resource.data?.let { response ->
-                        handleTokens(response)
-
-                        setLoggedIn()
-
-                        updateDevice()
-
-                        completion.invoke(Result.success())
-                    } ?: run {
-                        completion.invoke(Result.error(DataError(DataErrorType.AUTHENTICATION, DataErrorSubType.MISSING_ACCESS_TOKEN)))
-                    }
+                    handlePostAuthorization(resource.data, completion)
                 }
             }
+        }
+    }
+
+    private fun authorizeUserForDAOAuthLogin(request: OAuthTokenRequest, completion: OnFrolloSDKCompletionListener<Result>) {
+        daTokenAPI?.exchangeCodeForTokens(request)?.enqueue(ErrorResponseType.OAUTH2) { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#authorizeUserForDAOAuthLogin.exchangeCodeForTokens", resource.error?.localizedDescription)
+
+                    completion.invoke(Result.error(resource.error))
+                }
+
+                Resource.Status.SUCCESS -> {
+                    handlePostAuthorization(resource.data, completion)
+                }
+            }
+        }
+    }
+
+    private fun handlePostAuthorization(tokenResponse: OAuthTokenResponse?, completion: OnFrolloSDKCompletionListener<Result>) {
+        tokenResponse?.let { response ->
+            handleTokens(response)
+
+            setLoggedIn()
+
+            updateDevice()
+
+            completion.invoke(Result.success())
+        } ?: run {
+            completion.invoke(Result.error(DataError(DataErrorType.AUTHENTICATION, DataErrorSubType.MISSING_ACCESS_TOKEN)))
         }
     }
 

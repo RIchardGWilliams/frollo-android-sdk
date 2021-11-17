@@ -66,6 +66,7 @@ class NetworkService internal constructor(
             else null
         }
     private var revokeTokenRetrofit: Retrofit? = null
+    private var daTokenRetrofit: Retrofit? = null
     private val externalNoAuthRetrofit = createRetrofit(
         // Need to pass this as base URL cannot be empty for Retrofit initialization.
         // But, this will be ignored anyways when we specify full URL in the Service API.
@@ -84,6 +85,9 @@ class NetworkService internal constructor(
         if (oAuth2Helper.config.authenticationType is OAuth2) {
             oAuth2Helper.oAuth2.revokeTokenURL?.let { revokeTokenUrl ->
                 revokeTokenRetrofit = createRetrofit(baseUrl = revokeTokenUrl, isTokenEndpoint = true)
+            }
+            if (oAuth2Helper.oAuth2.daOAuth2Login) {
+                daTokenRetrofit = createRetrofit(baseUrl = oAuth2Helper.config.serverUrl, isTokenEndpoint = true)
             }
         }
     }
@@ -124,6 +128,7 @@ class NetworkService internal constructor(
     override fun <T> create(service: Class<T>): T = apiRetrofit.create(service)
     override fun <T> createAuth(service: Class<T>): T? = authRetrofit?.create(service)
     override fun <T> createRevoke(service: Class<T>): T? = revokeTokenRetrofit?.create(service)
+    override fun <T> createDATokenAuth(service: Class<T>): T? = daTokenRetrofit?.create(service)
     override fun <T> createExternalNoAuth(service: Class<T>): T = externalNoAuthRetrofit.create(service)
 
     private fun OkHttpClient.Builder.addInterceptors(isTokenEndpoint: Boolean): OkHttpClient.Builder {

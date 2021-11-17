@@ -43,8 +43,8 @@ class NetworkInterceptorTest : BaseAndroidTest() {
     private lateinit var userAPI: UserAPI
     private lateinit var testAPI: TestAPI
 
-    override fun initSetup() {
-        super.initSetup()
+    override fun initSetup(daOAuth2Login: Boolean) {
+        super.initSetup(daOAuth2Login)
 
         userAPI = network.create(UserAPI::class.java)
         testAPI = network.create(TestAPI::class.java)

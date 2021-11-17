@@ -1,9 +1,20 @@
 ## Changelog
 
-### 3.11.0
+### 3.12.0
 
 #### Features
 - Financial Passport
+
+#### Changes
+- Update Host API version to v2.16
+- Support DA OAuth2 Login with PKCE Authorization Code Flow
+
+### 3.11.0
+
+#### Changes
+
+- Fix OAuth2Error description
+- Consents - Change additional_permissions to string array instead of JsonObject
 
 ### 3.10.0
 

@@ -14,12 +14,19 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.network
+package us.frollo.frollosdk.network.api
 
-internal interface IApiProvider {
-    fun <T> create(service: Class<T>): T
-    fun <T> createAuth(service: Class<T>): T?
-    fun <T> createRevoke(service: Class<T>): T?
-    fun <T> createDATokenAuth(service: Class<T>): T?
-    fun <T> createExternalNoAuth(service: Class<T>): T
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
+import us.frollo.frollosdk.model.oauth.OAuthTokenRequest
+import us.frollo.frollosdk.model.oauth.OAuthTokenResponse
+
+internal interface DATokenAPI {
+    companion object {
+        const val URL_DA_TOKEN = "user/da/token"
+    }
+
+    @POST(URL_DA_TOKEN)
+    fun exchangeCodeForTokens(@Body request: OAuthTokenRequest): Call<OAuthTokenResponse>
 }

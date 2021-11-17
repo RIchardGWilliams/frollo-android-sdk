@@ -44,6 +44,7 @@ import us.frollo.frollosdk.kyc.KYC
 import us.frollo.frollosdk.managedproducts.ManagedProducts
 import us.frollo.frollosdk.messages.Messages
 import us.frollo.frollosdk.network.NetworkService
+import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.TokenAPI
 import us.frollo.frollosdk.notifications.Notifications
 import us.frollo.frollosdk.paydays.Paydays
@@ -100,7 +101,7 @@ abstract class BaseAndroidTest {
 
     val scopes = listOf("offline_access", "openid", "email")
 
-    protected open fun initSetup() {
+    protected open fun initSetup(daOAuth2Login: Boolean = false) {
         mockServer = MockWebServer()
         mockServer.start()
         val baseUrl = mockServer.url("/")
@@ -113,7 +114,12 @@ abstract class BaseAndroidTest {
         mockRevokeTokenServer.start()
         val baseRevokeTokenUrl = mockRevokeTokenServer.url("/$REVOKE_TOKEN_URL")
 
-        val config = testSDKConfig(serverUrl = baseUrl.toString(), tokenUrl = baseTokenUrl.toString(), revokeTokenURL = baseRevokeTokenUrl.toString())
+        val config = testSDKConfig(
+            serverUrl = baseUrl.toString(),
+            tokenUrl = baseTokenUrl.toString(),
+            revokeTokenURL = baseRevokeTokenUrl.toString(),
+            daOAuth2Login = daOAuth2Login
+        )
         if (!FrolloSDK.isSetup) {
             FrolloSDK.context = app
             FrolloSDK.setup(config) {}
@@ -130,6 +136,9 @@ abstract class BaseAndroidTest {
         oAuth2Authentication = OAuth2Authentication(oAuth, preferences).apply {
             tokenAPI = network.createAuth(TokenAPI::class.java)
             revokeTokenAPI = network.createRevoke(TokenAPI::class.java)
+            if (config.isDAOAuth2LoginEnabled()) {
+                daTokenAPI = network.createDATokenAuth(DATokenAPI::class.java)
+            }
             authToken = network.authToken
         }
         network.accessTokenProvider = oAuth2Authentication
