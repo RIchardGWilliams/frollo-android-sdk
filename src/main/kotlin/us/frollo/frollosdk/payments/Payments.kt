@@ -78,6 +78,7 @@ class Payments(network: NetworkService) {
         paymentDate: String? = null,
         reference: String? = null,
         sourceAccountId: Long,
+        overrideMethod: String? = null,
         securityCode: String? = null,
         completion: OnFrolloSDKCompletionListener<Resource<PayAnyoneResponse>>
     ) {
@@ -89,7 +90,8 @@ class Payments(network: NetworkService) {
             description = description,
             paymentDate = paymentDate,
             reference = reference,
-            sourceAccountId = sourceAccountId
+            sourceAccountId = sourceAccountId,
+            overrideMethod = overrideMethod
         )
         paymentsAPI.payAnyone(request, otp = securityCode).enqueue { resource ->
             if (resource.status == Resource.Status.ERROR) {

@@ -77,7 +77,8 @@ class PaymentsTest : BaseAndroidTest() {
             accountNumber = "98765432",
             amount = BigDecimal("542.37"),
             bsb = "123456",
-            sourceAccountId = 42
+            sourceAccountId = 42,
+            overrideMethod = "payanyone"
         ) { resource ->
 
             assertEquals(Resource.Status.SUCCESS, resource.status)
@@ -118,7 +119,8 @@ class PaymentsTest : BaseAndroidTest() {
             accountNumber = "98765432",
             amount = BigDecimal("542.37"),
             bsb = "123456",
-            sourceAccountId = 42
+            sourceAccountId = 42,
+            overrideMethod = "payanyone"
         ) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
