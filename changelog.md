@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.11.1
+
+#### Changes
+
+- Added overrideMethod in PayAnyoneRequest to force payment through DE route
+
 ### 3.10.0
 
 #### Features
