@@ -66,6 +66,7 @@ class Payments(network: NetworkService) {
      * @param paymentDate Date of the payment (Optional). See [Payments.DATE_FORMAT_PATTERN]
      * @param reference Reference of the payment (Optional)
      * @param sourceAccountId Account ID of the payment source account
+     * @param overrideMethod Send "payanyone" to force payment through DE route, else goes via NPP (Optional)
      * @param securityCode Verification Code / OTP for payment
      * @param completion Optional completion handler with optional error if the request fails else PayAnyoneResponse if success
      */
