@@ -49,6 +49,9 @@ class Payments(network: NetworkService) {
 
         /** Date format for dates associated with Payment */
         const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
+
+        /** overrideMethod val for "payanyone" to force payment through DE route */
+        const val PAYANYONE_OVERRIDE = "payanyone"
     }
 
     private val paymentsAPI: PaymentsAPI = network.create(PaymentsAPI::class.java)
@@ -66,7 +69,7 @@ class Payments(network: NetworkService) {
      * @param paymentDate Date of the payment (Optional). See [Payments.DATE_FORMAT_PATTERN]
      * @param reference Reference of the payment (Optional)
      * @param sourceAccountId Account ID of the payment source account
-     * @param overrideMethod Send "payanyone" to force payment through DE route, else goes via NPP (Optional)
+     * @param overrideMethod Send [Payments.PAYANYONE_OVERRIDE] to force payment through DE route, else goes via NPP (Optional).
      * @param securityCode Verification Code / OTP for payment
      * @param completion Optional completion handler with optional error if the request fails else PayAnyoneResponse if success
      */
