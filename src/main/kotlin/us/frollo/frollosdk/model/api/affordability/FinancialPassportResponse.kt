@@ -35,7 +35,7 @@ data class FinancialPassportResponse(
     /**  Summary of  of financial passport; Optional */
     @SerializedName("summary") val summary: FPSummary?,
     /**  An object to represent expenses in financial passport; Optional */
-    @SerializedName("expenses") val incomeExpenses: FPIncomeExpenses?,
+    @SerializedName("expenses") val expenses: FPIncomeExpenses?,
     /**  An object to represent income in financial passport; Optional */
     @SerializedName("income") val income: FPIncomeExpenses?,
     /**   An object to represent assets in financial passport; Optional */
