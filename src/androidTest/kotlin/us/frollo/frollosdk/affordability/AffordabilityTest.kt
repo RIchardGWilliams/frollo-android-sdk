@@ -80,7 +80,7 @@ class AffordabilityTest : BaseAndroidTest() {
             assertNotNull(model)
             assertEquals(11029L, model?.accounts?.get(0)?.accountId)
             assertEquals(BigDecimal(-316.44).setScale(2, RoundingMode.HALF_EVEN), model?.summary?.totals?.expenses)
-            assertEquals("Recreation", model?.incomeExpenses?.breakdown?.get(0)?.category?.name)
+            assertEquals("Recreation", model?.expenses?.breakdown?.get(0)?.category?.name)
             assertEquals("Superannuation", model?.income?.breakdown?.get(0)?.category?.name)
             assertEquals(11033L, model?.assetsLiabilities?.breakdown?.get(0)?.accounts?.get(0)?.id)
             assertEquals("Loans", model?.liabilities?.breakdown?.get(0)?.name)
