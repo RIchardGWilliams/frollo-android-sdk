@@ -34,5 +34,5 @@ internal interface AffordabilityAPI {
     fun getFinancialPassport(@QueryMap queryParams: Map<String, String>): Call<FinancialPassportResponse>
 
     @GET(URL_FINANCIAL_PASSPORT_EXPORT)
-    fun exportFinancialPassport(@Query("format") format: ExportType): Call<ResponseBody>
+    fun exportFinancialPassport(@Query("type") format: ExportType): Call<ResponseBody>
 }

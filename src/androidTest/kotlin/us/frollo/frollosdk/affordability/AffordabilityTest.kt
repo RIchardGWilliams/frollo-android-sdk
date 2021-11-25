@@ -120,7 +120,7 @@ class AffordabilityTest : BaseAndroidTest() {
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?format=pdf") {
+                    if (request.trimmedPath == "${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?type=pdf") {
                         return MockResponse()
                             .setResponseCode(200)
                             .setBody(body)
@@ -142,7 +142,7 @@ class AffordabilityTest : BaseAndroidTest() {
             signal.countDown()
         }
         val request = mockServer.takeRequest()
-        assertEquals("${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?format=pdf", request.trimmedPath)
+        assertEquals("${AffordabilityAPI.URL_FINANCIAL_PASSPORT_EXPORT}?type=pdf", request.trimmedPath)
         signal.await(3, TimeUnit.SECONDS)
         tearDown()
     }
