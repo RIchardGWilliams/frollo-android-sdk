@@ -33,7 +33,11 @@ class Resource<out T> private constructor(
     /**
      * Error details if state is [Status.ERROR]
      */
-    val error: FrolloSDKError? = null
+    val error: FrolloSDKError? = null,
+    /**
+     * Response status code 202,200 etc
+     */
+    val responseStatusCode: Int? = null
 ) {
 
     /**
@@ -61,7 +65,7 @@ class Resource<out T> private constructor(
          *
          * @param data Associated data (Optional)
          */
-        fun <T> success(data: T?): Resource<T> = Resource(Status.SUCCESS, data, null)
+        fun <T> success(data: T?, responseStatusCode: Int? = null): Resource<T> = Resource(Status.SUCCESS, data, null, responseStatusCode)
 
         /**
          * Instantiate Resource with status Error
