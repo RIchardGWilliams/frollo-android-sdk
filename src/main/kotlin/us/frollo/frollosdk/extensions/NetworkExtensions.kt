@@ -37,7 +37,7 @@ internal fun <T> Call<T>.enqueue(errorResponseType: ErrorResponseType = ErrorRes
         override fun onResponse(call: Call<T>?, response: Response<T>?) {
             val apiResponse = ApiResponse(response)
             if (apiResponse.isSuccessful) {
-                completion.invoke(Resource.success(data = apiResponse.body))
+                completion.invoke(Resource.success(data = apiResponse.body, responseStatusCode = apiResponse.code))
             } else {
                 handleFailure(errorResponseType, apiResponse, null, completion)
             }
