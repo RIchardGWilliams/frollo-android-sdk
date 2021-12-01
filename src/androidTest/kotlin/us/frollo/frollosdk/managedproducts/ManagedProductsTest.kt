@@ -33,6 +33,7 @@ import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProductAvailability
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
@@ -168,6 +169,11 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(2L, model?.features?.last()?.featureId)
             assertEquals("Set your goals", model?.features?.last()?.description)
             assertNull(model?.features?.last()?.additionalInfo)
+            assertEquals(2, model?.availability?.size)
+            assertEquals(ManagedProductAvailability.ONBOARDING_REQUIRED, model?.availability?.first())
+            assertEquals(ManagedProductAvailability.POST_ONBOARDING, model?.availability?.last())
+
+            assertEquals(ManagedProductAvailability.ONBOARDING_OPTIONAL, models?.last()?.availability?.first())
 
             signal.countDown()
         }

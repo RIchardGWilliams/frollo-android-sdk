@@ -8,6 +8,7 @@
 #### Changes
 - Update Host API version to v2.16
 - Support DA OAuth2 Login with PKCE Authorization Code Flow
+- Add availability field to Managed Product API response
 
 ### 3.11.1
 

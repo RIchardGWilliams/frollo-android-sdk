@@ -40,5 +40,8 @@ data class ManagedProduct(
     @SerializedName("terms_conditions") val termsConditions: List<TermsCondition>,
 
     /** List of [ProductFeature] of the [ManagedProduct] (Optional) */
-    @SerializedName("features") val features: List<ProductFeature>?
+    @SerializedName("features") val features: List<ProductFeature>?,
+
+    /** Indicates which app flow, this product is applicable for creation (Optional)*/
+    @SerializedName("availability") val availability: List<ManagedProductAvailability>?
 )
