@@ -24,6 +24,8 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import us.frollo.frollosdk.R
 import us.frollo.frollosdk.database.dao.AccountDao
 import us.frollo.frollosdk.database.dao.AddressDao
 import us.frollo.frollosdk.database.dao.BillDao
@@ -72,9 +74,6 @@ import us.frollo.frollosdk.model.coredata.payday.Payday
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutage
 import us.frollo.frollosdk.model.coredata.user.User
-import net.sqlcipher.database.SupportFactory
-import us.frollo.frollosdk.R
-
 
 @Database(
     entities = [
@@ -170,7 +169,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_12_13,
                     MIGRATION_13_14,
                     MIGRATION_14_15,
-                    MIGRATION_15_16
+                    MIGRATION_15_16,
+                    MIGRATION_16_17
                 )
                 .build()
         }
@@ -671,6 +671,13 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_addresses_address_id` ON `addresses` (`address_id`)")
                 database.execSQL("COMMIT")
                 // END - Drop & re-create table addresses
+            }
+        }
+        private val MIGRATION_16_17: Migration = object : Migration(16, 17) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // New changes in this migration:
+                //new migration added for supporting encryption,else app hangs
             }
         }
     }
