@@ -188,7 +188,7 @@ public class SQLCipherUtils {
             db=SQLiteDatabase.openDatabase(newFile.getAbsolutePath(), passphrase,
                     null, SQLiteDatabase.OPEN_READWRITE, null, null);
 
-            final SQLiteStatement st=db.compileStatement("ATTACH DATABASE ? AS plaintext");
+            final SQLiteStatement st=db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''");
 
             st.bindString(1, originalFile.getAbsolutePath());
             st.execute();
@@ -252,7 +252,7 @@ public class SQLCipherUtils {
                     SQLiteDatabase.openDatabase(originalFile.getAbsolutePath(),
                             passphrase, null, SQLiteDatabase.OPEN_READWRITE, null, null);
 
-            final SQLiteStatement st=db.compileStatement("ATTACH DATABASE ? AS plaintext");
+            final SQLiteStatement  st=db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''");
 
             st.bindString(1, newFile.getAbsolutePath());
             st.execute();

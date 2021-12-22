@@ -102,7 +102,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Address::class,
         ServiceOutage::class
     ],
-    version = 17, exportSchema = true
+    version = 16, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -174,8 +174,7 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_12_13,
                     MIGRATION_13_14,
                     MIGRATION_14_15,
-                    MIGRATION_15_16,
-                    MIGRATION_16_17
+                    MIGRATION_15_16
                 )
                 .build()
         }
@@ -676,14 +675,6 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_addresses_address_id` ON `addresses` (`address_id`)")
                 database.execSQL("COMMIT")
                 // END - Drop & re-create table addresses
-            }
-        }
-        private val MIGRATION_16_17: Migration = object : Migration(16, 17) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-
-                // New changes in this migration:
-                // new migration added for supporting encryption,else app hangs
-                database
             }
         }
     }
