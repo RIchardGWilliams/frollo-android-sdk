@@ -102,7 +102,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Address::class,
         ServiceOutage::class
     ],
-    version = 16, exportSchema = true
+    version = 17, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -677,7 +677,8 @@ abstract class SDKDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
 
                 // New changes in this migration:
-                //new migration added for supporting encryption,else app hangs
+                // new migration added for supporting encryption,else app hangs
+                database
             }
         }
     }
