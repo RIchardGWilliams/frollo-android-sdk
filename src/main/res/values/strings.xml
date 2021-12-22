@@ -70,4 +70,6 @@
     <string name="FrolloSDK_Error_OAuth_ServerError">Indicates a server error occurred.</string>
     <string name="FrolloSDK_Error_OAuth_UserCancelled">Indicates the user manually cancelled the OAuth authorization code flow.</string>
     <string name="FrolloSDK_Error_OAuth_Unknown">Unknown error occurred trying to authenticate.</string>
+
+    <string name="FrolloSDK_DB_PASSPHRASE">DBPassphrase</string>
 </resources>

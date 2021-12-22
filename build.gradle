@@ -195,4 +195,6 @@ dependencies {
 
     // AppAuth
     implementation "net.openid:appauth:0.10.0"
+
+    implementation "net.zetetic:android-database-sqlcipher:4.5.0"
 }

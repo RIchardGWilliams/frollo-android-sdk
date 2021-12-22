@@ -23,6 +23,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import net.sqlcipher.database.SQLiteDatabase
 import us.frollo.frollosdk.database.dao.AccountDao
 import us.frollo.frollosdk.database.dao.AddressDao
 import us.frollo.frollosdk.database.dao.BillDao
@@ -71,6 +72,9 @@ import us.frollo.frollosdk.model.coredata.payday.Payday
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutage
 import us.frollo.frollosdk.model.coredata.user.User
+import net.sqlcipher.database.SupportFactory
+import us.frollo.frollosdk.R
+
 
 @Database(
     entities = [
@@ -143,9 +147,12 @@ abstract class SDKDatabase : RoomDatabase() {
         }
 
         private fun create(context: Context, dbNamePrefix: String? = null): SDKDatabase {
+            val passphrase: ByteArray = SQLiteDatabase.getBytes(context.getString(R.string.FrolloSDK_DB_PASSPHRASE).toCharArray())
+            val factory = SupportFactory(passphrase)
             val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
             return Room.databaseBuilder(context, SDKDatabase::class.java, dbName)
                 .allowMainThreadQueries() // Needed for some tests
+                .openHelperFactory(factory)
                 // .fallbackToDestructiveMigration()
                 .addMigrations(
                     MIGRATION_1_2,
