@@ -23,7 +23,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SQLiteDatabase.getBytes
 import net.sqlcipher.database.SupportFactory
 import us.frollo.frollosdk.R
 import us.frollo.frollosdk.database.dao.AccountDao
@@ -146,7 +146,12 @@ abstract class SDKDatabase : RoomDatabase() {
         }
 
         private fun create(context: Context, dbNamePrefix: String? = null): SDKDatabase {
-            val passphrase: ByteArray = SQLiteDatabase.getBytes(context.getString(R.string.FrolloSDK_DB_PASSPHRASE).toCharArray())
+            val state = SQLCipherUtils.getDatabaseState(context, DEFAULT_DATABASE_NAME)
+            if (state == SQLCipherUtils.State.UNENCRYPTED) {
+                SQLCipherUtils.encrypt(context, DEFAULT_DATABASE_NAME, context.getString(R.string.FrolloSDK_DB_PASSPHRASE).toCharArray())
+            }
+
+            val passphrase: ByteArray = getBytes(context.getString(R.string.FrolloSDK_DB_PASSPHRASE).toCharArray())
             val factory = SupportFactory(passphrase)
             val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
             return Room.databaseBuilder(context, SDKDatabase::class.java, dbName)
