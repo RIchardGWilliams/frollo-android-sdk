@@ -34,6 +34,7 @@ import us.frollo.frollosdk.network.SessionIDProvider
  * @param sessionIdProvider Data source to provide client session ID
  * @param databaseNamePrefix Prefix for the name of the database
  * @param logLevel Level of logging for debug and error messages. Default is [LogLevel.ERROR]
+ * @param sdkDBPassphrase passphrase used to encrypt the DB
  */
 data class FrolloSDKConfiguration(
     val authenticationType: AuthenticationType,
@@ -41,7 +42,8 @@ data class FrolloSDKConfiguration(
     val serverUrl: String,
     val sessionIdProvider: SessionIDProvider? = null,
     val databaseNamePrefix: String? = null,
-    val logLevel: LogLevel = LogLevel.ERROR
+    val logLevel: LogLevel = LogLevel.ERROR,
+    val sdkDBPassphrase: String
 ) {
 
     internal fun validForROPC(): Boolean {

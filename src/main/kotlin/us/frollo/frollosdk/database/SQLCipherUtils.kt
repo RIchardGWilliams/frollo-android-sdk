@@ -1,35 +1,26 @@
-package us.frollo.frollosdk.database;
+package us.frollo.frollosdk.database
 
-import android.content.Context;
-import android.text.Editable;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteStatement;
+import android.content.Context
+import android.text.Editable
+import net.sqlcipher.database.SQLiteDatabase
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import java.lang.Exception
 
-public class SQLCipherUtils {
-    /**
-     * The detected state of the database, based on whether we can open it
-     * without a passphrase.
-     */
-    public enum State {
-        DOES_NOT_EXIST, UNENCRYPTED, ENCRYPTED
-    }
-
+object SQLCipherUtils {
     /**
      * Determine whether or not this database appears to be encrypted, based
      * on whether we can open it without a passphrase.
      *
      * @param ctxt a Context
      * @param dbName the name of the database, as used with Room, SQLiteOpenHelper,
-     *               etc.
+     * etc.
      * @return the detected state of the database
      */
-    public static State getDatabaseState(Context ctxt, String dbName) {
-        SQLiteDatabase.loadLibs(ctxt);
-
-        return(getDatabaseState(ctxt.getDatabasePath(dbName)));
+    fun getDatabaseState(ctxt: Context, dbName: String?): State {
+        SQLiteDatabase.loadLibs(ctxt)
+        return getDatabaseState(ctxt.getDatabasePath(dbName))
     }
 
     /**
@@ -43,30 +34,23 @@ public class SQLCipherUtils {
      * @param dbPath a File pointing to the database
      * @return the detected state of the database
      */
-    public static State getDatabaseState(File dbPath) {
+    fun getDatabaseState(dbPath: File): State {
         if (dbPath.exists()) {
-            SQLiteDatabase db=null;
-
-            try {
-                db=
-                        SQLiteDatabase.openDatabase(dbPath.getAbsolutePath(), "",
-                                null, SQLiteDatabase.OPEN_READONLY);
-
-                db.getVersion();
-
-                return(State.UNENCRYPTED);
-            }
-            catch (Exception e) {
-                return(State.ENCRYPTED);
-            }
-            finally {
-                if (db != null) {
-                    db.close();
-                }
+            var db: SQLiteDatabase? = null
+            return try {
+                db = SQLiteDatabase.openDatabase(
+                    dbPath.absolutePath, "",
+                    null, SQLiteDatabase.OPEN_READONLY
+                )
+                db.version
+                State.UNENCRYPTED
+            } catch (e: Exception) {
+                State.ENCRYPTED
+            } finally {
+                db?.close()
             }
         }
-
-        return(State.DOES_NOT_EXIST);
+        return State.DOES_NOT_EXIST
     }
 
     /**
@@ -81,17 +65,16 @@ public class SQLCipherUtils {
      *
      * @param ctxt a Context
      * @param dbName the name of the database, as used with Room, SQLiteOpenHelper,
-     *               etc.
+     * etc.
      * @param editor the passphrase, such as obtained by calling getText() on an
-     *               EditText
+     * EditText
      * @throws IOException
      */
-    public static void encrypt(Context ctxt, String dbName, Editable editor)
-            throws IOException {
-        char[] passphrase=new char[editor.length()];
-
-        editor.getChars(0, editor.length(), passphrase, 0);
-        encrypt(ctxt, dbName, passphrase);
+    @Throws(IOException::class)
+    fun encrypt(ctxt: Context, dbName: String?, editor: Editable) {
+        val passphrase = CharArray(editor.length)
+        editor.getChars(0, editor.length, passphrase, 0)
+        encrypt(ctxt, dbName, passphrase)
     }
 
     /**
@@ -106,13 +89,13 @@ public class SQLCipherUtils {
      *
      * @param ctxt a Context
      * @param dbName the name of the database, as used with Room, SQLiteOpenHelper,
-     *               etc.
+     * etc.
      * @param passphrase the passphrase from the user
      * @throws IOException
      */
-    public static void encrypt(Context ctxt, String dbName, char[] passphrase)
-            throws IOException {
-        encrypt(ctxt, ctxt.getDatabasePath(dbName), SQLiteDatabase.getBytes(passphrase));
+    @Throws(IOException::class)
+    fun encrypt(ctxt: Context, dbName: String?, passphrase: CharArray?) {
+        encrypt(ctxt, ctxt.getDatabasePath(dbName), SQLiteDatabase.getBytes(passphrase))
     }
 
     /**
@@ -127,13 +110,13 @@ public class SQLCipherUtils {
      *
      * @param ctxt a Context
      * @param dbName the name of the database, as used with Room, SQLiteOpenHelper,
-     *               etc.
+     * etc.
      * @param passphrase the passphrase
      * @throws IOException
      */
-    public static void encrypt(Context ctxt, String dbName, byte[] passphrase)
-            throws IOException {
-        encrypt(ctxt, ctxt.getDatabasePath(dbName), passphrase);
+    @Throws(IOException::class)
+    fun encrypt(ctxt: Context, dbName: String?, passphrase: ByteArray?) {
+        encrypt(ctxt, ctxt.getDatabasePath(dbName), passphrase)
     }
 
     /**
@@ -151,9 +134,9 @@ public class SQLCipherUtils {
      * @param passphrase the passphrase from the user
      * @throws IOException
      */
-    public static void encrypt(Context ctxt, File originalFile, char[] passphrase)
-            throws IOException {
-        encrypt(ctxt, originalFile, SQLiteDatabase.getBytes(passphrase));
+    @Throws(IOException::class)
+    fun encrypt(ctxt: Context, originalFile: File, passphrase: CharArray?) {
+        encrypt(ctxt, originalFile, SQLiteDatabase.getBytes(passphrase))
     }
 
     /**
@@ -171,39 +154,36 @@ public class SQLCipherUtils {
      * @param passphrase the passphrase from the user
      * @throws IOException
      */
-    public static void encrypt(Context ctxt, File originalFile, byte[] passphrase)
-            throws IOException {
-        SQLiteDatabase.loadLibs(ctxt);
-
+    @Throws(IOException::class)
+    fun encrypt(ctxt: Context, originalFile: File, passphrase: ByteArray?) {
+        SQLiteDatabase.loadLibs(ctxt)
         if (originalFile.exists()) {
-            File newFile=File.createTempFile("sqlcipherutils", "tmp",
-                    ctxt.getCacheDir());
-            SQLiteDatabase db=
-                    SQLiteDatabase.openDatabase(originalFile.getAbsolutePath(),
-                            "", null, SQLiteDatabase.OPEN_READWRITE);
-            int version=db.getVersion();
-
-            db.close();
-
-            db=SQLiteDatabase.openDatabase(newFile.getAbsolutePath(), passphrase,
-                    null, SQLiteDatabase.OPEN_READWRITE, null, null);
-
-            final SQLiteStatement st=db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''");
-
-            st.bindString(1, originalFile.getAbsolutePath());
-            st.execute();
-
-            db.rawExecSQL("SELECT sqlcipher_export('main', 'plaintext')");
-            db.rawExecSQL("DETACH DATABASE plaintext");
-            db.setVersion(version);
-            st.close();
-            db.close();
-
-            originalFile.delete();
-            newFile.renameTo(originalFile);
-        }
-        else {
-            throw new FileNotFoundException(originalFile.getAbsolutePath()+" not found");
+            val newFile = File.createTempFile(
+                "sqlcipherutils", "tmp",
+                ctxt.cacheDir
+            )
+            var db = SQLiteDatabase.openDatabase(
+                originalFile.absolutePath,
+                "", null, SQLiteDatabase.OPEN_READWRITE
+            )
+            val version = db.version
+            db.close()
+            db = SQLiteDatabase.openDatabase(
+                newFile.absolutePath, passphrase,
+                null, SQLiteDatabase.OPEN_READWRITE, null, null
+            )
+            val st = db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''")
+            st.bindString(1, originalFile.absolutePath)
+            st.execute()
+            db.rawExecSQL("SELECT sqlcipher_export('main', 'plaintext')")
+            db.rawExecSQL("DETACH DATABASE plaintext")
+            db.version = version
+            st.close()
+            db.close()
+            originalFile.delete()
+            newFile.renameTo(originalFile)
+        } else {
+            throw FileNotFoundException(originalFile.absolutePath + " not found")
         }
     }
 
@@ -221,9 +201,9 @@ public class SQLCipherUtils {
      * @param passphrase the passphrase from the user for the encrypted database
      * @throws IOException
      */
-    public static void decrypt(Context ctxt, File originalFile, char[] passphrase)
-            throws IOException {
-        decrypt(ctxt, originalFile, SQLiteDatabase.getBytes(passphrase));
+    @Throws(IOException::class)
+    fun decrypt(ctxt: Context, originalFile: File, passphrase: CharArray?) {
+        decrypt(ctxt, originalFile, SQLiteDatabase.getBytes(passphrase))
     }
 
     /**
@@ -240,41 +220,44 @@ public class SQLCipherUtils {
      * @param passphrase the passphrase from the user for the encrypted database
      * @throws IOException
      */
-    public static void decrypt(Context ctxt, File originalFile, byte[] passphrase)
-            throws IOException {
-        SQLiteDatabase.loadLibs(ctxt);
-
+    @Throws(IOException::class)
+    fun decrypt(ctxt: Context, originalFile: File, passphrase: ByteArray?) {
+        SQLiteDatabase.loadLibs(ctxt)
         if (originalFile.exists()) {
-            File newFile=
-                    File.createTempFile("sqlcipherutils", "tmp",
-                            ctxt.getCacheDir());
-            SQLiteDatabase db=
-                    SQLiteDatabase.openDatabase(originalFile.getAbsolutePath(),
-                            passphrase, null, SQLiteDatabase.OPEN_READWRITE, null, null);
-
-            final SQLiteStatement  st=db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''");
-
-            st.bindString(1, newFile.getAbsolutePath());
-            st.execute();
-
-            db.rawExecSQL("SELECT sqlcipher_export('plaintext')");
-            db.rawExecSQL("DETACH DATABASE plaintext");
-
-            int version=db.getVersion();
-
-            st.close();
-            db.close();
-
-            db=SQLiteDatabase.openDatabase(newFile.getAbsolutePath(), "",
-                    null, SQLiteDatabase.OPEN_READWRITE);
-            db.setVersion(version);
-            db.close();
-
-            originalFile.delete();
-            newFile.renameTo(originalFile);
+            val newFile = File.createTempFile(
+                "sqlcipherutils", "tmp",
+                ctxt.cacheDir
+            )
+            var db = SQLiteDatabase.openDatabase(
+                originalFile.absolutePath,
+                passphrase, null, SQLiteDatabase.OPEN_READWRITE, null, null
+            )
+            val st = db.compileStatement("ATTACH DATABASE ? AS plaintext KEY ''")
+            st.bindString(1, newFile.absolutePath)
+            st.execute()
+            db.rawExecSQL("SELECT sqlcipher_export('plaintext')")
+            db.rawExecSQL("DETACH DATABASE plaintext")
+            val version = db.version
+            st.close()
+            db.close()
+            db = SQLiteDatabase.openDatabase(
+                newFile.absolutePath, "",
+                null, SQLiteDatabase.OPEN_READWRITE
+            )
+            db.version = version
+            db.close()
+            originalFile.delete()
+            newFile.renameTo(originalFile)
+        } else {
+            throw FileNotFoundException(originalFile.absolutePath + " not found")
         }
-        else {
-            throw new FileNotFoundException(originalFile.getAbsolutePath()+" not found");
-        }
+    }
+
+    /**
+     * The detected state of the database, based on whether we can open it
+     * without a passphrase.
+     */
+    enum class State {
+        DOES_NOT_EXIST, UNENCRYPTED, ENCRYPTED
     }
 }
