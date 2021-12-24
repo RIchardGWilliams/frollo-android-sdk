@@ -1,4 +1,8 @@
 ## Changelog
+### 3.13.0
+
+#### Changes
+- DB encryption support
 
 ### 3.12.0
 

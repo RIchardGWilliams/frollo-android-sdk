@@ -301,7 +301,7 @@ object FrolloSDK {
             tokenInjector = TokenInjector(keyStore, preferences)
 
             // 4. Setup Database
-            database = SDKDatabase.getInstance(context, dbNamePrefix = configuration.databaseNamePrefix)
+            database = SDKDatabase.getInstance(context, configuration, dbNamePrefix = configuration.databaseNamePrefix)
 
             // 5. Setup Version Manager
             version = Version(preferences)

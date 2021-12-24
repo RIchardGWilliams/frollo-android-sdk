@@ -65,7 +65,7 @@ class FrolloSDKAndroidUnitTest {
         baseUrl = mockServer.url("/")
 
         preferences = Preferences(app)
-        database = SDKDatabase.getInstance(app)
+        database = SDKDatabase.getInstance(app, testSDKConfig())
 
         preferences.loggedIn = true
         preferences.encryptedAccessToken = "EncryptedAccessToken"

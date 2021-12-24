@@ -41,7 +41,8 @@ internal fun testSDKConfig(
         ),
         clientId = clientId ?: "abc123",
         serverUrl = serverUrl ?: "https://api.example.com/",
-        sessionIdProvider = MockSessionIDProvider()
+        sessionIdProvider = MockSessionIDProvider(),
+        sdkDBPassphrase = "dbPassphrase123"
     )
 
 internal fun testSDKCustomConfig(
@@ -53,7 +54,8 @@ internal fun testSDKCustomConfig(
     FrolloSDKConfiguration(
         authenticationType = AuthenticationType.Custom(accessTokenProvider, authenticationCallback),
         clientId = clientId ?: "abc123",
-        serverUrl = serverUrl ?: "https://api.example.com/"
+        serverUrl = serverUrl ?: "https://api.example.com/",
+        sdkDBPassphrase = "dbPassphrase123"
     )
 
 internal class MockSessionIDProvider : SessionIDProvider {

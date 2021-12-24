@@ -23,6 +23,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import net.sqlcipher.database.SQLiteDatabase.getBytes
+import net.sqlcipher.database.SupportFactory
+import us.frollo.frollosdk.core.FrolloSDKConfiguration
 import us.frollo.frollosdk.database.dao.AccountDao
 import us.frollo.frollosdk.database.dao.AddressDao
 import us.frollo.frollosdk.database.dao.BillDao
@@ -136,16 +139,24 @@ abstract class SDKDatabase : RoomDatabase() {
         @Volatile
         private var instance: SDKDatabase? = null // Singleton instantiation
 
-        internal fun getInstance(context: Context, dbNamePrefix: String? = null): SDKDatabase {
+        internal fun getInstance(context: Context, frolloSDKConfiguration: FrolloSDKConfiguration, dbNamePrefix: String? = null): SDKDatabase {
             return instance ?: synchronized(this) {
-                instance ?: create(context, dbNamePrefix).also { instance = it }
+                instance ?: create(context, frolloSDKConfiguration, dbNamePrefix).also { instance = it }
             }
         }
 
-        private fun create(context: Context, dbNamePrefix: String? = null): SDKDatabase {
+        private fun create(context: Context, frolloSDKConfiguration: FrolloSDKConfiguration, dbNamePrefix: String? = null): SDKDatabase {
+            val state = SQLCipherUtils.getDatabaseState(context, DEFAULT_DATABASE_NAME)
+            if (state == SQLCipherUtils.State.UNENCRYPTED) {
+                SQLCipherUtils.encrypt(context, DEFAULT_DATABASE_NAME, frolloSDKConfiguration.sdkDBPassphrase.toCharArray())
+            }
+
+            val passphrase: ByteArray = getBytes(frolloSDKConfiguration.sdkDBPassphrase.toCharArray())
+            val factory = SupportFactory(passphrase)
             val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
             return Room.databaseBuilder(context, SDKDatabase::class.java, dbName)
                 .allowMainThreadQueries() // Needed for some tests
+                .openHelperFactory(factory)
                 // .fallbackToDestructiveMigration()
                 .addMigrations(
                     MIGRATION_1_2,

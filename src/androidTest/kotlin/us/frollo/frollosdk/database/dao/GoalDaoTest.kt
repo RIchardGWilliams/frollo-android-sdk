@@ -29,6 +29,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.mapping.toAccount
 import us.frollo.frollosdk.mapping.toGoal
@@ -42,7 +43,7 @@ class GoalDaoTest {
     @get:Rule val testRule = InstantTaskExecutorRule()
 
     private val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
-    private val db = SDKDatabase.getInstance(app)
+    private val db = SDKDatabase.getInstance(app, testSDKConfig())
 
     @Before
     fun setUp() {

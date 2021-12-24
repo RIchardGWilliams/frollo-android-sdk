@@ -22,6 +22,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
+import us.frollo.frollosdk.core.testSDKConfig
 
 class SDKDatabaseTest {
 
@@ -35,7 +36,7 @@ class SDKDatabaseTest {
 
     @Test
     fun testDBCreate() {
-        db = SDKDatabase.getInstance(app)
+        db = SDKDatabase.getInstance(app, testSDKConfig())
         assertNotNull(db)
     }
 }
