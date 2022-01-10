@@ -16,10 +16,12 @@
 
 package us.frollo.frollosdk.model.coredata.payday
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** How often a payday occurs */
+@Keep
 enum class PaydayFrequency {
 
     /** Fortnightly */
