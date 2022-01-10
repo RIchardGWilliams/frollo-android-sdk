@@ -146,14 +146,14 @@ abstract class SDKDatabase : RoomDatabase() {
         }
 
         private fun create(context: Context, frolloSDKConfiguration: FrolloSDKConfiguration, dbNamePrefix: String? = null): SDKDatabase {
-            val state = SQLCipherUtils.getDatabaseState(context, DEFAULT_DATABASE_NAME)
+            val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
+            val state = SQLCipherUtils.getDatabaseState(context, dbName)
             if (state == SQLCipherUtils.State.UNENCRYPTED) {
-                SQLCipherUtils.encrypt(context, DEFAULT_DATABASE_NAME, frolloSDKConfiguration.sdkDBPassphrase.toCharArray())
+                SQLCipherUtils.encrypt(context, dbName, frolloSDKConfiguration.sdkDBPassphrase.toCharArray())
             }
 
             val passphrase: ByteArray = getBytes(frolloSDKConfiguration.sdkDBPassphrase.toCharArray())
             val factory = SupportFactory(passphrase)
-            val dbName = dbNamePrefix?.let { "$it-$DEFAULT_DATABASE_NAME" } ?: DEFAULT_DATABASE_NAME
             return Room.databaseBuilder(context, SDKDatabase::class.java, dbName)
                 .allowMainThreadQueries() // Needed for some tests
                 .openHelperFactory(factory)
