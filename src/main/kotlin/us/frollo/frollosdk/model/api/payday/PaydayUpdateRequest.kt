@@ -21,5 +21,5 @@ import us.frollo.frollosdk.model.coredata.payday.PaydayFrequency
 
 internal data class PaydayUpdateRequest(
     @SerializedName("frequency") var frequency: PaydayFrequency? = null,
-    @SerializedName("next_date") var nextDate: String? = null, // yyyy-MM-dd
+    @SerializedName("next_transaction_date") var nextDate: String? = null, // yyyy-MM-dd
 )
