@@ -91,5 +91,8 @@ data class UserUpdateRequest(
     @SerializedName("tfn") val tfn: String? = null,
 
     /** TIN of the user */
-    @SerializedName("tin") val tin: String? = null
+    @SerializedName("tin") val tin: String? = null,
+
+    /** Middle names of the user (optional) */
+    @SerializedName("middle_names") val middleNames: String? = null
 )

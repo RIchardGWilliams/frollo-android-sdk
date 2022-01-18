@@ -120,5 +120,8 @@ data class User(
     @ColumnInfo(name = "tfn_status") var tfnStatus: TFNStatus?,
 
     /** External ID (Optional) */
-    @ColumnInfo(name = "external_id") val externalId: String?
+    @ColumnInfo(name = "external_id") val externalId: String?,
+
+    /** Middle names of the user (optional) */
+    @ColumnInfo(name = "middle_names") val middleNames: String?
 )

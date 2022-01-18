@@ -57,5 +57,6 @@ internal data class UserResponse(
     @SerializedName("tax_residency") val taxResidency: String?,
     @SerializedName("foreign_tax_residency") val foreignTaxResidency: String?,
     @SerializedName("tfn_status") val tfnStatus: TFNStatus?,
-    @SerializedName("external_id") val externalId: String?
+    @SerializedName("external_id") val externalId: String?,
+    @SerializedName("middle_names") val middleNames: String?
 )

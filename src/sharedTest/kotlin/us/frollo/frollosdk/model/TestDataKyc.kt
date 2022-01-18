@@ -16,6 +16,7 @@
 
 package us.frollo.frollosdk.model
 
+import us.frollo.frollosdk.model.api.kyc.KycRequest
 import us.frollo.frollosdk.model.coredata.kyc.DateOfBirth
 import us.frollo.frollosdk.model.coredata.kyc.IdentityDocument
 import us.frollo.frollosdk.model.coredata.kyc.IdentityDocumentType
@@ -50,5 +51,20 @@ internal fun testKycResponseData(): UserKyc {
             )
         ),
         status = KycStatus.VERIFIED
+    )
+}
+
+internal fun testKycRequestData(): KycRequest {
+    return KycRequest(
+        identityDocuments = mutableListOf(
+            IdentityDocument(
+                country = "AU",
+                idExpiry = "2022-12-12",
+                idNumber = "123456",
+                idSubType = "certificate",
+                idType = IdentityDocumentType.NATIONAL_HEALTH_ID,
+                region = "Sydney"
+            )
+        )
     )
 }

@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.network.api
+package us.frollo.frollosdk.model.api.kyc
 
-import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import us.frollo.frollosdk.model.api.kyc.KycRequest
-import us.frollo.frollosdk.model.coredata.kyc.UserKyc
+import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.coredata.kyc.IdentityDocument
 
-internal interface KycAPI {
-    companion object {
-        const val URL_KYC = "user/kyc"
-        const val URL_KYC_CREATE_VERIFY = "user/kyc/create/verify"
-    }
+/** Data representation of User KYC Request */
+data class KycRequest(
 
-    @GET(URL_KYC)
-    fun fetchKyc(): Call<UserKyc>
-
-    @POST(URL_KYC_CREATE_VERIFY)
-    fun submitKyc(@Body request: KycRequest): Call<UserKyc>
-}
+    /** List of Identity Documents */
+    @SerializedName("identity_docs") var identityDocuments: MutableList<IdentityDocument>? = null
+)
