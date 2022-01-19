@@ -22,22 +22,22 @@ import com.google.gson.annotations.SerializedName
 data class UserKyc(
 
     /** Date of birth */
-    @SerializedName("date_of_birth") var dateOfBirth: DateOfBirth?,
+    @SerializedName("date_of_birth") val dateOfBirth: DateOfBirth?,
 
     /** Email */
-    @SerializedName("email") var email: String?,
+    @SerializedName("email") val email: String?,
 
     /** Gender. Allowed values - M, F, U, O (Male, Female, Unspecified, Other) */
-    @SerializedName("gender") var gender: String?,
+    @SerializedName("gender") val gender: String?,
 
     /** Mobile number */
-    @SerializedName("mobile_number") var mobileNumber: String?,
+    @SerializedName("mobile_number") val mobileNumber: String?,
 
     /** Name */
-    @SerializedName("name") var name: Name?,
+    @SerializedName("name") val name: Name?,
 
     /** List of Identity Documents */
-    @SerializedName("identity_docs") var identityDocuments: MutableList<IdentityDocument>?,
+    @SerializedName("identity_docs") val identityDocuments: MutableList<IdentityDocument>?,
 
     /** KYC status */
     @SerializedName("status") val status: KycStatus?
