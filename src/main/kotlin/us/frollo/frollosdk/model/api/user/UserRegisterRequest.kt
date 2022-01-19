@@ -20,10 +20,10 @@ import com.google.gson.annotations.SerializedName
 
 internal data class UserRegisterRequest(
     @SerializedName("email") val email: String,
-    @SerializedName("first_name") val firstName: String? = null,
+    @SerializedName("given_name") val firstName: String? = null,
     @SerializedName("password") val password: String,
     @SerializedName("date_of_birth") var dateOfBirth: String? = null, // yyyy-MM-dd
-    @SerializedName("last_name") val lastName: String? = null,
+    @SerializedName("family_name") val lastName: String? = null,
     @SerializedName("mobile_number") val mobileNumber: String? = null,
     @SerializedName("client_id") val clientId: String
 )

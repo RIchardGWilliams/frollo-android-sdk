@@ -31,7 +31,7 @@ import us.frollo.frollosdk.model.coredata.user.Occupation
 data class UserUpdateRequest(
 
     /** First name of the user (optional) */
-    @SerializedName("first_name") val firstName: String? = null,
+    @SerializedName("given_name") val firstName: String? = null,
 
     /** Email address of the user (optional) */
     @SerializedName("email") val email: String? = null,
@@ -43,7 +43,7 @@ data class UserUpdateRequest(
     @SerializedName("attribution") val attribution: Attribution? = null,
 
     /** Last name of the user (optional) */
-    @SerializedName("last_name") val lastName: String? = null,
+    @SerializedName("family_name") val lastName: String? = null,
 
     /** Mobile phone number of the user (optional) */
     @SerializedName("mobile_number") val mobileNumber: String? = null,

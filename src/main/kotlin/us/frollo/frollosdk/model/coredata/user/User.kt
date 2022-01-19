@@ -124,4 +124,11 @@ data class User(
 
     /** Middle names of the user (optional) */
     @ColumnInfo(name = "middle_names") val middleNames: String?
-)
+) {
+
+    companion object {
+
+        /** Date format for dates associated with User */
+        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
+    }
+}
