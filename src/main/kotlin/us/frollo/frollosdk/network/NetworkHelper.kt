@@ -36,6 +36,7 @@ internal class NetworkHelper(private val appInfo: AppInfo) {
         internal const val HEADER_BACKGROUND = "X-Background"
         internal const val HEADER_OTP = "X-User-Otp"
         internal const val HEADER_SESSION_ID = "X-Session-Id"
+        internal const val HEADER_HOST = "X-Host"
         internal const val API_VERSION = "2.17"
     }
 

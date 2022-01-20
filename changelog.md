@@ -5,6 +5,7 @@
 #### Changes
 - Do not pass name, dateOfBirth, email, mobileNumber, gender fields while submitting KYC.
 - Add middle_names field to User model
+- Add X-Host header to Service Status APIs
 
 ### 3.14.0
 

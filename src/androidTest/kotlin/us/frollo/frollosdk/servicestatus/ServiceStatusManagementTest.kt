@@ -84,7 +84,7 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
             }
             )
 
-        serviceStatusManagement.refreshServiceOutages(url) { result ->
+        serviceStatusManagement.refreshServiceOutages(url, "frollo") { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -163,7 +163,7 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
 
         database.serviceOutages().insertAll(*list.toTypedArray())
 
-        serviceStatusManagement.refreshServiceOutages(url) { result ->
+        serviceStatusManagement.refreshServiceOutages(url, "frollo") { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -290,7 +290,7 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
             }
             )
 
-        serviceStatusManagement.fetchServiceStatus(url) { resource ->
+        serviceStatusManagement.fetchServiceStatus(url, "frollo") { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
@@ -336,11 +336,12 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
             }
             )
 
-        serviceStatusManagement.refreshServiceOutages(url)
+        serviceStatusManagement.refreshServiceOutages(url, "frollo")
 
         val request = mockServer.takeRequest()
         assertEquals(url, request.trimmedPath)
 
+        assertEquals("frollo", request.getHeader("X-Host"))
         assertNull(request.getHeader("Authorization"))
         assertNull(request.getHeader("X-Api-Version"))
         assertNull(request.getHeader("X-Bundle-Id"))
@@ -371,11 +372,12 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
             }
             )
 
-        serviceStatusManagement.fetchServiceStatus(url) {}
+        serviceStatusManagement.fetchServiceStatus(url, "frollo") {}
 
         val request = mockServer.takeRequest()
         assertEquals(url, request.trimmedPath)
 
+        assertEquals("frollo", request.getHeader("X-Host"))
         assertNull(request.getHeader("Authorization"))
         assertNull(request.getHeader("X-Api-Version"))
         assertNull(request.getHeader("X-Bundle-Id"))
