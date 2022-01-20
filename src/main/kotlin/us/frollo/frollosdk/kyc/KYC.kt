@@ -20,6 +20,7 @@ import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.logging.Log
+import us.frollo.frollosdk.model.api.kyc.KycRequest
 import us.frollo.frollosdk.model.coredata.kyc.UserKyc
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.KycAPI
@@ -57,11 +58,11 @@ class KYC(network: NetworkService) {
     /**
      * Create or update KYC for the user
      *
-     * @param userKyc KYC of the user to create
+     * @param request [KycRequest] of the user to create
      * @param completion Completion handler with optional error if the request fails else data if success
      */
-    fun submitKyc(userKyc: UserKyc, completion: OnFrolloSDKCompletionListener<Resource<UserKyc>>) {
-        kycAPI.submitKyc(userKyc).enqueue { resource ->
+    fun submitKyc(request: KycRequest, completion: OnFrolloSDKCompletionListener<Resource<UserKyc>>) {
+        kycAPI.submitKyc(request).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     completion.invoke(resource)

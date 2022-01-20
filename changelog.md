@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.15.0
+
+#### Changes
+- Do not pass name, dateOfBirth, email, mobileNumber, gender fields while submitting KYC.
+- Add middle_names field to User model
+
 ### 3.14.0
 
 #### Changes

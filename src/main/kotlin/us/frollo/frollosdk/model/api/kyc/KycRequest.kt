@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.user
+package us.frollo.frollosdk.model.api.kyc
 
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.coredata.kyc.IdentityDocument
 
-internal data class UserRegisterRequest(
-    @SerializedName("email") val email: String,
-    @SerializedName("given_name") val firstName: String? = null,
-    @SerializedName("password") val password: String,
-    @SerializedName("date_of_birth") var dateOfBirth: String? = null, // yyyy-MM-dd
-    @SerializedName("family_name") val lastName: String? = null,
-    @SerializedName("mobile_number") val mobileNumber: String? = null,
-    @SerializedName("client_id") val clientId: String
+/** Data representation of User KYC Request */
+data class KycRequest(
+
+    /** List of Identity Documents */
+    @SerializedName("identity_docs") var identityDocuments: MutableList<IdentityDocument>? = null
 )

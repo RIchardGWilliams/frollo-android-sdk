@@ -222,6 +222,7 @@ class UserManagementTest : BaseAndroidTest() {
             assertEquals(12345L, user?.userId)
             assertEquals("Jacob", user?.firstName)
             assertEquals("Frollo", user?.lastName)
+            assertEquals("M", user?.middleNames)
             assertEquals(true, user?.emailVerified)
             assertEquals(UserStatus.ACTIVE, user?.status)
             assertEquals("AUD", user?.primaryCurrency)

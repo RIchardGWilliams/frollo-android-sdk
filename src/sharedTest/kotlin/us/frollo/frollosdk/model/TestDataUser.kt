@@ -72,7 +72,8 @@ internal fun testUserResponseData(
         foreignTaxResidency = "US",
         tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
-        externalId = "123456"
+        externalId = "123456",
+        middleNames = randomUUID()
     )
 }
 
@@ -106,7 +107,8 @@ internal fun UserResponse.testModifyUserResponseData(firstName: String): UserRes
         foreignTaxResidency = "US",
         tfnStatus = TFNStatus.RECEIVED,
         taxResidency = "AU",
-        externalId = "123456"
+        externalId = "123456",
+        middleNames = middleNames
     )
 }
 
@@ -133,7 +135,8 @@ internal fun testUserRequestData(): UserUpdateRequest {
         foreignTaxResidency = "US",
         taxResidency = "AU",
         tfn = "12345678",
-        tin = "111"
+        tin = "111",
+        middleNames = randomUUID()
     )
 }
 

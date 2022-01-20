@@ -30,7 +30,7 @@ import us.frollo.frollosdk.model.coredata.user.UserStatus
 
 internal data class UserResponse(
     @SerializedName("id") val userId: Long,
-    @SerializedName("first_name") val firstName: String?,
+    @SerializedName("given_name") val firstName: String?,
     @SerializedName("email") val email: String,
     @SerializedName("email_verified") val emailVerified: Boolean,
     @SerializedName("status") val status: UserStatus,
@@ -40,7 +40,7 @@ internal data class UserResponse(
     @SerializedName("registration_date") val registrationDate: String,
     @SerializedName("facebook_id") val facebookId: String?,
     @SerializedName("attribution") val attribution: Attribution?,
-    @SerializedName("last_name") val lastName: String?,
+    @SerializedName("family_name") val lastName: String?,
     @SerializedName("mobile_number") val mobileNumber: String?,
     @SerializedName("gender") val gender: Gender?,
     @SerializedName("residential_address") val residentialAddress: UserAddress?,
@@ -57,5 +57,6 @@ internal data class UserResponse(
     @SerializedName("tax_residency") val taxResidency: String?,
     @SerializedName("foreign_tax_residency") val foreignTaxResidency: String?,
     @SerializedName("tfn_status") val tfnStatus: TFNStatus?,
-    @SerializedName("external_id") val externalId: String?
+    @SerializedName("external_id") val externalId: String?,
+    @SerializedName("middle_names") val middleNames: String?
 )

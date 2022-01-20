@@ -49,5 +49,6 @@ internal fun UserResponse.toUser() =
         taxResidency = taxResidency,
         foreignTaxResidency = foreignTaxResidency,
         tfnStatus = tfnStatus,
-        externalId = externalId
+        externalId = externalId,
+        middleNames = middleNames
     )

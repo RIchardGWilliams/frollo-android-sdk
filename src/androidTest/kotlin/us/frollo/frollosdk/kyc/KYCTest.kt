@@ -32,7 +32,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.kyc.IdentityDocumentType
 import us.frollo.frollosdk.model.coredata.kyc.KycStatus
-import us.frollo.frollosdk.model.testKycResponseData
+import us.frollo.frollosdk.model.testKycRequestData
 import us.frollo.frollosdk.network.api.KycAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
@@ -212,7 +212,7 @@ class KYCTest : BaseAndroidTest() {
             }
             )
 
-        kyc.submitKyc(testKycResponseData()) { resource ->
+        kyc.submitKyc(testKycRequestData()) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
@@ -285,7 +285,7 @@ class KYCTest : BaseAndroidTest() {
             }
             )
 
-        kyc.submitKyc(testKycResponseData()) { resource ->
+        kyc.submitKyc(testKycRequestData()) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
@@ -345,7 +345,7 @@ class KYCTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        kyc.submitKyc(testKycResponseData()) { resource ->
+        kyc.submitKyc(testKycRequestData()) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)

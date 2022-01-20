@@ -20,6 +20,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import us.frollo.frollosdk.model.api.kyc.KycRequest
 import us.frollo.frollosdk.model.coredata.kyc.UserKyc
 
 internal interface KycAPI {
@@ -32,5 +33,5 @@ internal interface KycAPI {
     fun fetchKyc(): Call<UserKyc>
 
     @POST(URL_KYC_CREATE_VERIFY)
-    fun submitKyc(@Body request: UserKyc): Call<UserKyc>
+    fun submitKyc(@Body request: KycRequest): Call<UserKyc>
 }
