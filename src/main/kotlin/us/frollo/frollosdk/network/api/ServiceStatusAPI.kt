@@ -18,15 +18,17 @@ package us.frollo.frollosdk.network.api
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Url
 import us.frollo.frollosdk.model.api.servicestatus.ServiceOutageResponse
 import us.frollo.frollosdk.model.api.servicestatus.ServiceStatusResponse
+import us.frollo.frollosdk.network.NetworkHelper
 
 internal interface ServiceStatusAPI {
 
     @GET
-    fun fetchServiceStatus(@Url url: String): Call<ServiceStatusResponse>
+    fun fetchServiceStatus(@Url url: String, @Header(NetworkHelper.HEADER_HOST) host: String): Call<ServiceStatusResponse>
 
     @GET
-    fun fetchServiceOutages(@Url url: String): Call<List<ServiceOutageResponse>>
+    fun fetchServiceOutages(@Url url: String, @Header(NetworkHelper.HEADER_HOST) host: String): Call<List<ServiceOutageResponse>>
 }

@@ -49,10 +49,11 @@ class ServiceStatusManagement(network: NetworkService, internal val db: SDKDatab
      * Fetch service status from the host
      *
      * @param url URL for service status API. It is different on environments & tenants.
+     * @param host Host for service status API. It is different on tenants.
      * @param completion Completion handler with error if the request fails or [ServiceStatusResponse] if success
      */
-    fun fetchServiceStatus(url: String, completion: OnFrolloSDKCompletionListener<Resource<ServiceStatusResponse>>) {
-        serviceStatusAPI.fetchServiceStatus(url).enqueue { resource ->
+    fun fetchServiceStatus(url: String, host: String, completion: OnFrolloSDKCompletionListener<Resource<ServiceStatusResponse>>) {
+        serviceStatusAPI.fetchServiceStatus(url, host).enqueue { resource ->
             if (resource.status == Resource.Status.ERROR) {
                 Log.e("$TAG#fetchServiceStatus", resource.error?.localizedDescription)
             }
@@ -86,10 +87,11 @@ class ServiceStatusManagement(network: NetworkService, internal val db: SDKDatab
      * Refresh all available outages from the host.
      *
      * @param url URL for service outages API. It is different on environments & tenants.
+     * @param host Host for service status API. It is different on tenants.
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun refreshServiceOutages(url: String, completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        serviceStatusAPI.fetchServiceOutages(url).enqueue { resource ->
+    fun refreshServiceOutages(url: String, host: String, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        serviceStatusAPI.fetchServiceOutages(url, host).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#refreshServiceOutages", resource.error?.localizedDescription)
