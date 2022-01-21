@@ -318,7 +318,6 @@ class ContactsTest : BaseAndroidTest() {
             )
 
         contacts.createPayAnyoneContact(
-            name = "Johnathan",
             nickName = "Johnny Boy",
             accountName = "Mr Johnathan Smith",
             bsb = "100-123",
@@ -417,7 +416,6 @@ class ContactsTest : BaseAndroidTest() {
             )
 
         contacts.createPayIDContact(
-            name = "Johnathan",
             nickName = "Johnny Boy",
             description = "That guy I buy tyres from",
             payId = "0412345678",
@@ -508,7 +506,6 @@ class ContactsTest : BaseAndroidTest() {
         clearLoggedInPreferences()
 
         contacts.createPayAnyoneContact(
-            name = "Johnathan",
             nickName = "Johnny Boy",
             accountName = "Mr Johnathan Smith",
             bsb = "100-123",
@@ -554,7 +551,6 @@ class ContactsTest : BaseAndroidTest() {
 
         contacts.updatePayAnyoneContact(
             contactId = contactId,
-            name = "Johnathan",
             nickName = "Johnny Boy",
             accountName = "Mr Johnathan Smith",
             bsb = "100-123",
@@ -611,7 +607,6 @@ class ContactsTest : BaseAndroidTest() {
 
         contacts.updateBPayContact(
             contactId = contactId,
-            name = "Tenstra Inc",
             nickName = "Tenstra",
             description = "Test Desc update",
             billerCode = "2275362",
@@ -670,7 +665,6 @@ class ContactsTest : BaseAndroidTest() {
 
         contacts.updatePayIDContact(
             contactId = contactId,
-            name = "Johnathan Smith",
             nickName = "Johnny Boy",
             payId = "0412345678",
             payIdName = "J SMITH",
@@ -776,7 +770,6 @@ class ContactsTest : BaseAndroidTest() {
 
         contacts.updatePayAnyoneContact(
             contactId = 1,
-            name = "Johnathan",
             nickName = "Johnny Boy",
             accountName = "Mr Johnathan Smith",
             bsb = "100-123",

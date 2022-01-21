@@ -154,7 +154,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Create a new PayAnyone contact on the host
      *
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param accountName Account name of the payAnyone contact
@@ -163,7 +162,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
      */
     fun createPayAnyoneContact(
-        name: String? = null,
         nickName: String,
         description: String? = null,
         accountName: String,
@@ -172,7 +170,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = accountName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ANYONE,
@@ -188,17 +186,15 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Create a new BPay contact on the host
      *
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param billerCode Biller Code of the BPAY contact
      * @param crn CRN of the BPAY contact
-     * @param billerName Biller Name of the BPAY contact
+     * @param billerName Biller Name of the BPAY contact (from BPAY for this biller code)
      * @param crnType Type of the Biller's CRN; defaulted to UNKNOWN CRN. refer to [CRNType]
      * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
      */
     fun createBPayContact(
-        name: String? = null,
         nickName: String,
         description: String? = null,
         billerCode: String,
@@ -208,7 +204,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = billerName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.BPAY,
@@ -225,16 +221,14 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Create a new PayID contact on the host
      *
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param payId PayID value of the contact
-     * @param payIdName Name of the PayID contact
+     * @param payIdName Name of the PayID contact (from NPP registry)
      * @param payIdType Type of PayID; e.g. phone, email, abn, organisation id. Refer to [PayIDType]
      * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
      */
     fun createPayIDContact(
-        name: String? = null,
         nickName: String,
         description: String? = null,
         payId: String,
@@ -243,7 +237,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = payIdName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ID,
@@ -346,7 +340,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * Update a PayAnyone contact on the host
      *
      * @param contactId ID of the contact to be updated
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param accountName Account name of the payAnyone contact
@@ -356,7 +349,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      */
     fun updatePayAnyoneContact(
         contactId: Long,
-        name: String? = null,
         nickName: String,
         description: String? = null,
         accountName: String,
@@ -365,7 +357,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = accountName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ANYONE,
@@ -382,7 +374,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * Update a BPay contact on the host
      *
      * @param contactId ID of the contact to be updated
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param billerCode Biller Code of the BPAY contact
@@ -393,7 +384,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      */
     fun updateBPayContact(
         contactId: Long,
-        name: String? = null,
         nickName: String,
         description: String? = null,
         billerCode: String,
@@ -403,7 +393,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = billerName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.BPAY,
@@ -421,7 +411,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      * Update a PayID contact on the host
      *
      * @param contactId ID of the contact to be updated
-     * @param name Name of the contact; default value will be nickName (Optional)
      * @param nickName Nickname of the contact
      * @param description Description of the contact (Optional)
      * @param payId PayID value of the contact
@@ -431,7 +420,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
      */
     fun updatePayIDContact(
         contactId: Long,
-        name: String? = null,
         nickName: String,
         description: String? = null,
         payId: String,
@@ -440,7 +428,7 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = name ?: nickName,
+            name = payIdName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ID,
