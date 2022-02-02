@@ -684,8 +684,17 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 // New changes in this migration:
                 // 1) Alter table - user - add middle_names column
+                // 2) Delete re-create table - cdr_configuration - primary key column has changed and added many other fields
 
                 database.execSQL("ALTER TABLE `user` ADD COLUMN `middle_names` TEXT")
+                // START - Drop & re-create table cdr_configuration
+                database.execSQL("BEGIN TRANSACTION")
+                database.execSQL("DROP INDEX IF EXISTS `index_cdr_configuration_adr_id`")
+                database.execSQL("DROP TABLE cdr_configuration")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `adr_id` TEXT NOT NULL, `adr_name` TEXT NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `additional_permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, PRIMARY KEY(`config_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
+                database.execSQL("COMMIT")
+                // END - Drop & re-create table cdr_configuration
             }
         }
     }

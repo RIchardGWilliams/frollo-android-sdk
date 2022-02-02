@@ -33,8 +33,8 @@ internal interface CDRConfigurationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: CDRConfiguration)
 
-    @Query("DELETE FROM cdr_configuration WHERE adr_id != :apiAdrId")
-    fun deleteStaleIds(apiAdrId: String)
+    @Query("DELETE FROM cdr_configuration WHERE config_id != :configId")
+    fun deleteStaleIds(configId: Long)
 
     @Query("DELETE FROM cdr_configuration")
     fun clear()

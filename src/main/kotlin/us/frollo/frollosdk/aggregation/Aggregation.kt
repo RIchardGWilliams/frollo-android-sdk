@@ -2240,7 +2240,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         response?.let {
             doAsync {
                 db.cdrConfiguration().insert(response.toCDRConfiguration())
-                db.cdrConfiguration().deleteStaleIds(response.adrId)
+                db.cdrConfiguration().deleteStaleIds(response.configId)
 
                 uiThread { completion?.invoke(Result.success()) }
             }
