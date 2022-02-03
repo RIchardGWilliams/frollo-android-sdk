@@ -110,7 +110,8 @@ internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = n
         displayName = randomString(20),
         cdrPolicyUrl = randomString(20),
         model = CDRModel.AFFILIATE,
-        relatedParties = listOf()
+        relatedParties = listOf(),
+        sharingUseDuration = randomNumber().toLong()
     )
 }
 

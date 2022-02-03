@@ -33,5 +33,6 @@ internal data class CDRConfigurationResponse(
     @SerializedName("display_name") val displayName: String,
     @SerializedName("cdr_policy_url") val cdrPolicyUrl: String,
     @SerializedName("model") val model: CDRModel,
-    @SerializedName("related_parties") val relatedParties: List<CDRParty>
+    @SerializedName("related_parties") val relatedParties: List<CDRParty>,
+    @SerializedName("sharing_use_duration") val sharingUseDuration: Long
 )

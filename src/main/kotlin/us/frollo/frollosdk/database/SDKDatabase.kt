@@ -691,7 +691,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP INDEX IF EXISTS `index_cdr_configuration_adr_id`")
                 database.execSQL("DROP TABLE cdr_configuration")
-                database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `adr_id` TEXT NOT NULL, `adr_name` TEXT NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `additional_permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, PRIMARY KEY(`config_id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `adr_id` TEXT NOT NULL, `adr_name` TEXT NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, `sharing_use_duration` INTEGER NOT NULL, PRIMARY KEY(`config_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
                 database.execSQL("COMMIT")
                 // END - Drop & re-create table cdr_configuration

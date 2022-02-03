@@ -4288,6 +4288,7 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("AFF0001", model?.relatedParties?.first()?.adrId)
             assertEquals("CDR Policy", model?.relatedParties?.first()?.policy?.name)
             assertEquals("https://example.com", model?.relatedParties?.first()?.policy?.url)
+            assertEquals(7890000L, model?.sharingUseDuration)
 
             signal.countDown()
         }

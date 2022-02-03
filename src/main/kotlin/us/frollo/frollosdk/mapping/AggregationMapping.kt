@@ -239,5 +239,6 @@ internal fun CDRConfigurationResponse.toCDRConfiguration(): CDRConfiguration =
         displayName = displayName,
         cdrPolicyUrl = cdrPolicyUrl,
         model = model,
-        relatedParties = relatedParties
+        relatedParties = relatedParties,
+        sharingUseDuration = sharingUseDuration
     )
