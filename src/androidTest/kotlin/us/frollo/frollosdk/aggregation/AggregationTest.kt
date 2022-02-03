@@ -4277,7 +4277,6 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("support@frollo.us", model?.supportEmail)
             assertEquals(3, model?.sharingDurations?.size)
             assertEquals(2, model?.permissions?.size)
-            assertEquals(0, model?.additionalPermissions?.size)
             assertEquals("frollo-default", model?.externalId)
             assertEquals("Frollo", model?.displayName)
             assertEquals("https://example.com", model?.cdrPolicyUrl)

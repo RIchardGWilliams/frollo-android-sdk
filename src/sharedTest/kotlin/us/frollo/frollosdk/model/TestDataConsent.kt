@@ -106,7 +106,6 @@ internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = n
         supportEmail = randomString(20),
         sharingDurations = listOf(testSharingDurationData(), testSharingDurationData(), testSharingDurationData()),
         permissions = testCDRPermissionData(),
-        additionalPermissions = listOf(),
         externalId = randomUUID(),
         displayName = randomString(20),
         cdrPolicyUrl = randomString(20),

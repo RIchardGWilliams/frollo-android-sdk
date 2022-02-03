@@ -29,7 +29,6 @@ internal data class CDRConfigurationResponse(
     @SerializedName("support_email") val supportEmail: String,
     @SerializedName("sharing_durations") val sharingDurations: List<SharingDuration>,
     @SerializedName("permissions") val permissions: List<CDRPermission>?,
-    @SerializedName("additional_permissions") val additionalPermissions: List<String>?,
     @SerializedName("external_id") val externalId: String,
     @SerializedName("display_name") val displayName: String,
     @SerializedName("cdr_policy_url") val cdrPolicyUrl: String,

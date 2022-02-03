@@ -235,7 +235,6 @@ internal fun CDRConfigurationResponse.toCDRConfiguration(): CDRConfiguration =
         supportEmail = supportEmail,
         sharingDurations = sharingDurations,
         permissions = permissions,
-        additionalPermissions = additionalPermissions,
         externalId = externalId,
         displayName = displayName,
         cdrPolicyUrl = cdrPolicyUrl,

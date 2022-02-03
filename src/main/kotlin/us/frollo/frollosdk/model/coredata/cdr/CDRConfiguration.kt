@@ -50,9 +50,6 @@ data class CDRConfiguration(
     /** Permissions for the CDR Configuration */
     @ColumnInfo(name = "permissions") val permissions: List<CDRPermission>?,
 
-    /** Array of additional permissions that are allowed (Optional) */
-    @ColumnInfo(name = "additional_permissions") val additionalPermissions: List<String>?,
-
     /** External Identifier */
     @ColumnInfo(name = "external_id") val externalId: String,
 
