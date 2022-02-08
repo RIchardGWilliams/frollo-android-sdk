@@ -27,8 +27,8 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 @Dao
 internal interface CDRConfigurationDao {
 
-    @Query("SELECT * FROM cdr_configuration LIMIT 1")
-    fun load(): LiveData<CDRConfiguration?>
+    @Query("SELECT * FROM cdr_configuration WHERE external_id == :externalId LIMIT 1")
+    fun load(externalId: String): LiveData<CDRConfiguration?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: CDRConfiguration)

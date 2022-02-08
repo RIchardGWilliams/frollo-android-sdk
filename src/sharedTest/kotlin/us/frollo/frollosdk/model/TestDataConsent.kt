@@ -98,7 +98,7 @@ internal fun testConsentUpdateFormData(sharingDuration: Long? = null): ConsentUp
     )
 }
 
-internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = null): CDRConfigurationResponse {
+internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = null, externalId: String? = null): CDRConfigurationResponse {
     return CDRConfigurationResponse(
         configId = configId ?: randomNumber().toLong(),
         adrId = adrId ?: randomString(20),
@@ -106,7 +106,7 @@ internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = n
         supportEmail = randomString(20),
         sharingDurations = listOf(testSharingDurationData(), testSharingDurationData(), testSharingDurationData()),
         permissions = testCDRPermissionData(),
-        externalId = randomUUID(),
+        externalId = externalId ?: randomUUID(),
         displayName = randomString(20),
         cdrPolicyUrl = randomString(20),
         model = CDRModel.AFFILIATE,

@@ -97,6 +97,10 @@ import java.util.concurrent.TimeUnit
 
 class AggregationTest : BaseAndroidTest() {
 
+    companion object {
+        private const val CDR_CONFIG_EXTERNAL_ID = "frollo-default"
+    }
+
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
 
@@ -4233,9 +4237,15 @@ class AggregationTest : BaseAndroidTest() {
     fun testFetchCDRConfiguration() {
         initSetup()
 
-        database.cdrConfiguration().insert(testCDRConfigurationData(configId = 100, adrId = "12345").toCDRConfiguration())
+        database.cdrConfiguration().insert(
+            testCDRConfigurationData(
+                configId = 100,
+                adrId = "12345",
+                externalId = CDR_CONFIG_EXTERNAL_ID
+            ).toCDRConfiguration()
+        )
 
-        val testObserver = aggregation.fetchCDRConfiguration().test()
+        val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
         testObserver.awaitValue()
         assertEquals(100L, testObserver.value()?.configId)
         assertEquals("12345", testObserver.value()?.adrId)
@@ -4253,7 +4263,7 @@ class AggregationTest : BaseAndroidTest() {
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == CdrAPI.URL_CDR_CONFIG) {
+                    if (request.trimmedPath == "config/cdr/$CDR_CONFIG_EXTERNAL_ID") {
                         return MockResponse()
                             .setResponseCode(200)
                             .setBody(body)
@@ -4263,11 +4273,11 @@ class AggregationTest : BaseAndroidTest() {
             }
             )
 
-        aggregation.refreshCDRConfiguration { result ->
+        aggregation.refreshCDRConfiguration(CDR_CONFIG_EXTERNAL_ID) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = aggregation.fetchCDRConfiguration().test()
+            val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
             testObserver.awaitValue()
             val model = testObserver.value()
             assertNotNull(model)
@@ -4294,7 +4304,7 @@ class AggregationTest : BaseAndroidTest() {
         }
 
         val request = mockServer.takeRequest()
-        assertEquals(CdrAPI.URL_CDR_CONFIG, request.trimmedPath)
+        assertEquals("config/cdr/$CDR_CONFIG_EXTERNAL_ID", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -4309,7 +4319,7 @@ class AggregationTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        aggregation.refreshCDRConfiguration { result ->
+        aggregation.refreshCDRConfiguration(CDR_CONFIG_EXTERNAL_ID) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
