@@ -35,6 +35,10 @@ import us.frollo.frollosdk.model.testCDRConfigurationData
 
 class CDRConfigurationDaoTest {
 
+    companion object {
+        private const val EXTERNAL_ID = "frollo-default"
+    }
+
     @get:Rule val testRule = InstantTaskExecutorRule()
 
     private val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
@@ -52,49 +56,49 @@ class CDRConfigurationDaoTest {
 
     @Test
     fun testLoad() {
-        db.cdrConfiguration().insert(testCDRConfigurationData(adrId = "102").toCDRConfiguration())
+        db.cdrConfiguration().insert(testCDRConfigurationData(configId = 102, externalId = EXTERNAL_ID).toCDRConfiguration())
 
-        val testObserver = db.cdrConfiguration().load().test()
+        val testObserver = db.cdrConfiguration().load(EXTERNAL_ID).test()
 
         testObserver.awaitValue()
         assertNotNull(testObserver.value())
-        assertEquals("102", testObserver.value()?.adrId)
+        assertEquals(102L, testObserver.value()?.configId)
     }
 
     @Test
     fun testInsert() {
-        db.cdrConfiguration().insert(testCDRConfigurationData(adrId = "102").toCDRConfiguration())
+        db.cdrConfiguration().insert(testCDRConfigurationData(configId = 102, externalId = EXTERNAL_ID).toCDRConfiguration())
 
-        val testObserver = db.cdrConfiguration().load().test()
+        val testObserver = db.cdrConfiguration().load(EXTERNAL_ID).test()
 
         testObserver.awaitValue()
-        assertEquals("102", testObserver.value()?.adrId)
+        assertEquals(102L, testObserver.value()?.configId)
     }
 
     @Test
     fun testDeleteStaleIds() {
-        val data1 = testCDRConfigurationData(adrId = "100")
-        val data2 = testCDRConfigurationData(adrId = "101")
-        val data3 = testCDRConfigurationData(adrId = "102")
+        val data1 = testCDRConfigurationData(configId = 100)
+        val data2 = testCDRConfigurationData(configId = 101, externalId = EXTERNAL_ID)
+        val data3 = testCDRConfigurationData(configId = 102)
         val list = mutableListOf(data1, data2, data3)
 
         list.forEach {
             db.cdrConfiguration().insert(it.toCDRConfiguration())
         }
 
-        db.cdrConfiguration().deleteStaleIds("101")
+        db.cdrConfiguration().deleteStaleIds(101)
 
-        val testObserver = db.cdrConfiguration().load().test()
+        val testObserver = db.cdrConfiguration().load(EXTERNAL_ID).test()
 
         testObserver.awaitValue()
-        assertEquals("101", testObserver.value()?.adrId)
+        assertEquals(101L, testObserver.value()?.configId)
     }
 
     @Test
     fun testClear() {
-        val data1 = testCDRConfigurationData(adrId = "100")
-        val data2 = testCDRConfigurationData(adrId = "101")
-        val data3 = testCDRConfigurationData(adrId = "102")
+        val data1 = testCDRConfigurationData(configId = 100)
+        val data2 = testCDRConfigurationData(configId = 101)
+        val data3 = testCDRConfigurationData(configId = 102)
         val list = mutableListOf(data1, data2, data3)
 
         list.forEach {
@@ -103,7 +107,7 @@ class CDRConfigurationDaoTest {
 
         db.cdrConfiguration().clear()
 
-        val testObserver = db.cdrConfiguration().load().test()
+        val testObserver = db.cdrConfiguration().load(externalId = EXTERNAL_ID).test()
 
         testObserver.awaitValue()
         assertNull(testObserver.value())

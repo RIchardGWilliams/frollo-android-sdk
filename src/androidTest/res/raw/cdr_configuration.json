@@ -1,16 +1,41 @@
 {
-    "support_email": "suppert@acme.com",
-    "adr_id": "ADBK0001",
-    "adr_name": "ACME",
+    "id": 1,
+    "support_email": "support@frollo.us",
+    "adr_id": "ADRBNK000002",
+    "adr_name": "FROLLO AUSTRALIA PTY Limited",
+    "display_name": "Frollo",
+    "cdr_policy_url": "https://example.com",
+    "model": "affiliate",
+    "related_parties": [
+        {
+            "id": 12345,
+            "name": "ACME Inc",
+            "description": "Enhance stuff",
+            "type": "osp",
+            "adr_id": "AFF0001",
+            "policy": {
+                "name": "CDR Policy",
+                "url": "https://example.com"
+            }
+        }
+    ],
     "sharing_durations": [{
-        "duration": 86400,
-        "description": "Instant",
-        "image_url": "https://picsum.com/50"
+        "duration": 7884000,
+        "description": "3 Months",
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_3_months.png"
+    }, {
+        "duration": 15768000,
+        "description": "6 Months",
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_6_months.png"
+    }, {
+        "duration": 31536000,
+        "description": "12 Months",
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_12_months.png"
     }],
     "permissions": [{
         "id": "account_details",
-        "title": "Account balance details",
-        "description": "We leverage this data to support you with your savings goals.",
+        "title": "Account balance and details",
+        "description": "We leverage this data to support you with Money Management features and financial reporting.",
         "required": true,
         "details": [{
             "id": "account_type",
@@ -43,7 +68,7 @@
     }, {
         "id": "transaction_details",
         "title": "Transaction details",
-        "description": "We leverage this data to support you with your savings goals.",
+        "description": "We leverage this data to support you with Money Management features and financial reporting.",
         "required": true,
         "details": [{
             "id": "transactions",
@@ -61,5 +86,9 @@
             "id": "contacts_names",
             "description": "Who you have sent money to and received money from"
         }]
-    }]
+    }],
+    "sharing_use_duration": 7890000,
+    "additional_permissions": [],
+    "external_id": "frollo-default",
+    "initial_sync_window_weeks": 53
 }

@@ -60,8 +60,12 @@ import us.frollo.frollosdk.model.coredata.cards.CardDesignType
 import us.frollo.frollosdk.model.coredata.cards.CardIssuer
 import us.frollo.frollosdk.model.coredata.cards.CardStatus
 import us.frollo.frollosdk.model.coredata.cards.CardType
+import us.frollo.frollosdk.model.coredata.cdr.CDRModel
+import us.frollo.frollosdk.model.coredata.cdr.CDRParty
+import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
+import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
@@ -497,6 +501,30 @@ internal class Converters {
 
     @TypeConverter
     fun stringFromListOfSharingDuration(value: List<SharingDuration>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringFromCDRModel(value: CDRModel?): String? = value?.name ?: CDRModel.PRINCIPAL.name
+
+    @TypeConverter
+    fun stringToCDRModel(value: String?): CDRModel? = if (value == null) CDRModel.PRINCIPAL else CDRModel.valueOf(value)
+
+    @TypeConverter
+    fun stringToListOfCDRParty(value: String?): List<CDRParty>? = if (value == null) null else gson.fromJson<List<CDRParty>>(value)
+
+    @TypeConverter
+    fun stringFromListOfCDRParty(value: List<CDRParty>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringFromCDRPartyType(value: CDRPartyType?): String? = value?.name ?: CDRPartyType.AFFILIATE.name
+
+    @TypeConverter
+    fun stringToCDRPartyType(value: String?): CDRPartyType? = if (value == null) CDRPartyType.AFFILIATE else CDRPartyType.valueOf(value)
+
+    @TypeConverter
+    fun stringToCDRPolicy(value: String?): CDRPolicy? = if (value == null) null else gson.fromJson<CDRPolicy>(value)
+
+    @TypeConverter
+    fun stringFromCDRPolicy(value: CDRPolicy?): String? = if (value == null) null else gson.toJson(value)
 
     // Contact
 

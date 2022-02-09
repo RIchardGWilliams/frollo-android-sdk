@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.coredata.cdr.CDRModel
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.ConsentCreateForm
@@ -26,6 +27,7 @@ import us.frollo.frollosdk.model.coredata.cdr.ConsentUpdateForm
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
 import us.frollo.frollosdk.testutils.randomNumber
 import us.frollo.frollosdk.testutils.randomString
+import us.frollo.frollosdk.testutils.randomUUID
 
 internal fun testConsentResponseData(
     consentId: Long? = null,
@@ -96,13 +98,20 @@ internal fun testConsentUpdateFormData(sharingDuration: Long? = null): ConsentUp
     )
 }
 
-internal fun testCDRConfigurationData(adrId: String? = null): CDRConfigurationResponse {
+internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = null, externalId: String? = null): CDRConfigurationResponse {
     return CDRConfigurationResponse(
+        configId = configId ?: randomNumber().toLong(),
         adrId = adrId ?: randomString(20),
         adrName = randomString(20),
         supportEmail = randomString(20),
         sharingDurations = listOf(testSharingDurationData(), testSharingDurationData(), testSharingDurationData()),
-        permissions = testCDRPermissionData()
+        permissions = testCDRPermissionData(),
+        externalId = externalId ?: randomUUID(),
+        displayName = randomString(20),
+        cdrPolicyUrl = randomString(20),
+        model = CDRModel.AFFILIATE,
+        relatedParties = listOf(),
+        sharingUseDuration = randomNumber().toLong()
     )
 }
 

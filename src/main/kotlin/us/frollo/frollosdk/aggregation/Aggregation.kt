@@ -2209,21 +2209,23 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     // CDR Configuration
 
     /**
-     * Fetch CDR Configuration from the cache
+     * Fetch CDR Configuration from the cache for the tenant external ID
      *
+     * @param externalId External Identifier to specify the tenant
      * @return LiveData object of Resource<CDRConfiguration> which can be observed using an Observer for future changes as well.
      */
-    fun fetchCDRConfiguration(): LiveData<CDRConfiguration?> {
-        return db.cdrConfiguration().load()
+    fun fetchCDRConfiguration(externalId: String): LiveData<CDRConfiguration?> {
+        return db.cdrConfiguration().load(externalId)
     }
 
     /**
-     * Refresh CDR Configuration from the host.
+     * Refresh CDR Configuration for the tenant external ID from the host.
      *
+     * @param externalId External Identifier to specify the tenant
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun refreshCDRConfiguration(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        cdrAPI.fetchCDRConfig().enqueue { resource ->
+    fun refreshCDRConfiguration(externalId: String, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        cdrAPI.fetchCDRConfig(externalId).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#refreshCDRConfiguration", resource.error?.localizedDescription)
@@ -2240,7 +2242,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         response?.let {
             doAsync {
                 db.cdrConfiguration().insert(response.toCDRConfiguration())
-                db.cdrConfiguration().deleteStaleIds(response.adrId)
+                db.cdrConfiguration().deleteStaleIds(response.configId)
 
                 uiThread { completion?.invoke(Result.success()) }
             }

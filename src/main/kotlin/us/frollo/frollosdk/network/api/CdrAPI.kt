@@ -31,7 +31,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 
 internal interface CdrAPI {
     companion object {
-        const val URL_CDR_CONFIG = "config/cdr"
+        const val URL_CDR_CONFIG = "config/cdr/{external_id}"
         const val URL_CDR_CONSENTS = "cdr/consents"
         const val URL_CDR_CONSENT = "cdr/consents/{consent_id}"
         const val URL_CDR_PRODUCTS = "cdr/products"
@@ -39,7 +39,7 @@ internal interface CdrAPI {
     }
 
     @GET(URL_CDR_CONFIG)
-    fun fetchCDRConfig(): Call<CDRConfigurationResponse>
+    fun fetchCDRConfig(@Path("external_id") externalId: String): Call<CDRConfigurationResponse>
 
     @GET(URL_CDR_PRODUCTS)
     fun fetchProducts(@QueryMap queryParams: Map<String, String>): Call<List<CDRProduct>>

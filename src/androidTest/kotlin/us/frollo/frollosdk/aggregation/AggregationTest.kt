@@ -61,6 +61,8 @@ import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
+import us.frollo.frollosdk.model.coredata.cdr.CDRModel
+import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitPeriod
@@ -94,6 +96,10 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class AggregationTest : BaseAndroidTest() {
+
+    companion object {
+        private const val CDR_CONFIG_EXTERNAL_ID = "frollo-default"
+    }
 
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
@@ -4231,10 +4237,17 @@ class AggregationTest : BaseAndroidTest() {
     fun testFetchCDRConfiguration() {
         initSetup()
 
-        database.cdrConfiguration().insert(testCDRConfigurationData(adrId = "12345").toCDRConfiguration())
+        database.cdrConfiguration().insert(
+            testCDRConfigurationData(
+                configId = 100,
+                adrId = "12345",
+                externalId = CDR_CONFIG_EXTERNAL_ID
+            ).toCDRConfiguration()
+        )
 
-        val testObserver = aggregation.fetchCDRConfiguration().test()
+        val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
         testObserver.awaitValue()
+        assertEquals(100L, testObserver.value()?.configId)
         assertEquals("12345", testObserver.value()?.adrId)
 
         tearDown()
@@ -4250,7 +4263,7 @@ class AggregationTest : BaseAndroidTest() {
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == CdrAPI.URL_CDR_CONFIG) {
+                    if (request.trimmedPath == "config/cdr/$CDR_CONFIG_EXTERNAL_ID") {
                         return MockResponse()
                             .setResponseCode(200)
                             .setBody(body)
@@ -4260,25 +4273,38 @@ class AggregationTest : BaseAndroidTest() {
             }
             )
 
-        aggregation.refreshCDRConfiguration { result ->
+        aggregation.refreshCDRConfiguration(CDR_CONFIG_EXTERNAL_ID) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = aggregation.fetchCDRConfiguration().test()
+            val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
             testObserver.awaitValue()
             val model = testObserver.value()
             assertNotNull(model)
-            assertEquals("ADBK0001", model?.adrId)
-            assertEquals("ACME", model?.adrName)
-            assertEquals("suppert@acme.com", model?.supportEmail)
-            assertEquals(1, model?.sharingDurations?.size)
+            assertEquals(1L, model?.configId)
+            assertEquals("ADRBNK000002", model?.adrId)
+            assertEquals("FROLLO AUSTRALIA PTY Limited", model?.adrName)
+            assertEquals("support@frollo.us", model?.supportEmail)
+            assertEquals(3, model?.sharingDurations?.size)
             assertEquals(2, model?.permissions?.size)
+            assertEquals("frollo-default", model?.externalId)
+            assertEquals("Frollo", model?.displayName)
+            assertEquals("https://example.com", model?.cdrPolicyUrl)
+            assertEquals(CDRModel.AFFILIATE, model?.model)
+            assertEquals(12345L, model?.relatedParties?.first()?.partyId)
+            assertEquals("ACME Inc", model?.relatedParties?.first()?.name)
+            assertEquals("Enhance stuff", model?.relatedParties?.first()?.description)
+            assertEquals(CDRPartyType.OSP, model?.relatedParties?.first()?.type)
+            assertEquals("AFF0001", model?.relatedParties?.first()?.adrId)
+            assertEquals("CDR Policy", model?.relatedParties?.first()?.policy?.name)
+            assertEquals("https://example.com", model?.relatedParties?.first()?.policy?.url)
+            assertEquals(7890000L, model?.sharingUseDuration)
 
             signal.countDown()
         }
 
         val request = mockServer.takeRequest()
-        assertEquals(CdrAPI.URL_CDR_CONFIG, request.trimmedPath)
+        assertEquals("config/cdr/$CDR_CONFIG_EXTERNAL_ID", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -4293,7 +4319,7 @@ class AggregationTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        aggregation.refreshCDRConfiguration { result ->
+        aggregation.refreshCDRConfiguration(CDR_CONFIG_EXTERNAL_ID) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)

@@ -61,7 +61,11 @@ import us.frollo.frollosdk.model.coredata.cards.CardDesignType
 import us.frollo.frollosdk.model.coredata.cards.CardIssuer
 import us.frollo.frollosdk.model.coredata.cards.CardStatus
 import us.frollo.frollosdk.model.coredata.cards.CardType
+import us.frollo.frollosdk.model.coredata.cdr.CDRModel
+import us.frollo.frollosdk.model.coredata.cdr.CDRParty
+import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
+import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
 import us.frollo.frollosdk.model.coredata.contacts.BankAddress
@@ -1254,7 +1258,7 @@ class ConvertersTest {
         assertEquals("Transaction Details", info?.get(1)?.description)
         assertEquals("http://app.image.png", info?.get(1)?.imageUrl)
 
-        assertNull(Converters.instance.stringToListOfCDRProductInformation(null))
+        assertNull(Converters.instance.stringToListOfSharingDuration(null))
     }
 
     @Test
@@ -1265,6 +1269,82 @@ class ConvertersTest {
         )
         val json = Converters.instance.stringFromListOfSharingDuration(info)
         assertEquals("[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\"}]", json)
+    }
+
+    @Test
+    fun testStringToCDRModel() {
+        val status = Converters.instance.stringToCDRModel("AFFILIATE")
+        assertEquals(CDRModel.AFFILIATE, status)
+
+        assertEquals(CDRModel.PRINCIPAL, Converters.instance.stringToCDRModel(null))
+    }
+
+    @Test
+    fun testStringFromCDRModel() {
+        val str = Converters.instance.stringFromCDRModel(CDRModel.AFFILIATE)
+        assertEquals("AFFILIATE", str)
+
+        assertEquals("PRINCIPAL", Converters.instance.stringFromCDRModel(null))
+    }
+
+    @Test
+    fun testStringToListOfCDRParty() {
+        val json = "[{\"id\":12345,\"name\":\"ACME Inc\",\"description\":\"Enhance stuff\",\"type\":\"osp\",\"adr_id\":\"AFF0001\",\"policy\":{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}}]"
+        val info = Converters.instance.stringToListOfCDRParty(json)
+        assertNotNull(info)
+        assertTrue(info?.size == 1)
+        assertEquals(12345L, info?.first()?.partyId)
+        assertEquals("ACME Inc", info?.first()?.name)
+        assertEquals("Enhance stuff", info?.first()?.description)
+        assertEquals(CDRPartyType.OSP, info?.first()?.type)
+        assertEquals("AFF0001", info?.first()?.adrId)
+        assertEquals("CDR Policy", info?.first()?.policy?.name)
+        assertEquals("https://example.com", info?.first()?.policy?.url)
+
+        assertNull(Converters.instance.stringToListOfCDRParty(null))
+    }
+
+    @Test
+    fun testStringFromListOfCDRParty() {
+        val info = listOf(
+            CDRParty(12345, "ACME Inc", "Enhance stuff", CDRPartyType.OSP, "AFF0001", CDRPolicy("CDR Policy", "https://example.com"))
+        )
+        val json = Converters.instance.stringFromListOfCDRParty(info)
+        assertEquals("[{\"id\":12345,\"name\":\"ACME Inc\",\"description\":\"Enhance stuff\",\"type\":\"osp\",\"adr_id\":\"AFF0001\",\"policy\":{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}}]", json)
+    }
+
+    @Test
+    fun testStringToCDRPartyType() {
+        val status = Converters.instance.stringToCDRPartyType("REPRESENTATIVE")
+        assertEquals(CDRPartyType.REPRESENTATIVE, status)
+
+        assertEquals(CDRPartyType.AFFILIATE, Converters.instance.stringToCDRPartyType(null))
+    }
+
+    @Test
+    fun testStringFromCDRPartyType() {
+        val str = Converters.instance.stringFromCDRPartyType(CDRPartyType.REPRESENTATIVE)
+        assertEquals("REPRESENTATIVE", str)
+
+        assertEquals("AFFILIATE", Converters.instance.stringFromCDRPartyType(null))
+    }
+
+    @Test
+    fun testStringToCDRPolicy() {
+        val json = "{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}"
+        val info = Converters.instance.stringToCDRPolicy(json)
+        assertNotNull(info)
+        assertEquals("CDR Policy", info?.name)
+        assertEquals("https://example.com", info?.url)
+
+        assertNull(Converters.instance.stringToCDRPolicy(null))
+    }
+
+    @Test
+    fun testStringFromCDRPolicy() {
+        val info = CDRPolicy("CDR Policy", "https://example.com")
+        val json = Converters.instance.stringFromCDRPolicy(info)
+        assertEquals("{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}", json)
     }
 
     @Test

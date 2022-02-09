@@ -27,14 +27,14 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 @Dao
 internal interface CDRConfigurationDao {
 
-    @Query("SELECT * FROM cdr_configuration LIMIT 1")
-    fun load(): LiveData<CDRConfiguration?>
+    @Query("SELECT * FROM cdr_configuration WHERE external_id == :externalId LIMIT 1")
+    fun load(externalId: String): LiveData<CDRConfiguration?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: CDRConfiguration)
 
-    @Query("DELETE FROM cdr_configuration WHERE adr_id != :apiAdrId")
-    fun deleteStaleIds(apiAdrId: String)
+    @Query("DELETE FROM cdr_configuration WHERE config_id != :configId")
+    fun deleteStaleIds(configId: Long)
 
     @Query("DELETE FROM cdr_configuration")
     fun clear()

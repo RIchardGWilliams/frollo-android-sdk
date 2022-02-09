@@ -20,31 +20,51 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 // Declaring the ColumnInfo allows for the renaming of variables without
 // implementing a database migration, as the column name would not change.
 
 @Entity(
     tableName = "cdr_configuration",
-    indices = [Index("adr_id")]
+    indices = [Index("config_id")]
 )
 
 /** Represents key information of CDR Product */
 data class CDRConfiguration(
 
+    /** Unique ID of the CDR Configuration */
+    @PrimaryKey @ColumnInfo(name = "config_id") val configId: Long,
+
     /** The ID of the ADR that handles CDR data */
-    @PrimaryKey @ColumnInfo(name = "adr_id") @SerializedName("adr_id") val adrId: String,
+    @ColumnInfo(name = "adr_id") val adrId: String,
 
     /** The name of the ADR that handles CDR data */
-    @ColumnInfo(name = "adr_name") @SerializedName("adr_name") val adrName: String,
+    @ColumnInfo(name = "adr_name") val adrName: String,
 
     /** The email to contact for support */
-    @ColumnInfo(name = "support_email") @SerializedName("support_email") val supportEmail: String,
+    @ColumnInfo(name = "support_email") val supportEmail: String,
 
     /** The sharing durations for the CDR configuration */
-    @ColumnInfo(name = "sharing_durations") @SerializedName("sharing_durations") val sharingDurations: List<SharingDuration>,
+    @ColumnInfo(name = "sharing_durations") val sharingDurations: List<SharingDuration>,
 
     /** Permissions for the CDR Configuration */
-    @ColumnInfo(name = "permissions") val permissions: List<CDRPermission>?
+    @ColumnInfo(name = "permissions") val permissions: List<CDRPermission>?,
+
+    /** External Identifier */
+    @ColumnInfo(name = "external_id") val externalId: String,
+
+    /** CDR display name - friendlier name to show */
+    @ColumnInfo(name = "display_name") val displayName: String,
+
+    /** CDR Policy URL of the principal ADR */
+    @ColumnInfo(name = "cdr_policy_url") val cdrPolicyUrl: String,
+
+    /** CDR Model */
+    @ColumnInfo(name = "model") val model: CDRModel,
+
+    /** Array of Related Parties associated with the config - e.g. OSPs, affiliates */
+    @ColumnInfo(name = "related_parties") val relatedParties: List<CDRParty>,
+
+    /** Duration of one time consents data holding */
+    @ColumnInfo(name = "sharing_use_duration") val sharingUseDuration: Long
 )
