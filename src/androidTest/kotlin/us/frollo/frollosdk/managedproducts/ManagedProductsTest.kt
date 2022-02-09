@@ -34,6 +34,7 @@ import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProductAvailability
+import us.frollo.frollosdk.model.testManagedProductRequestData
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
@@ -86,6 +87,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(1L, model?.termsConditions?.first()?.termsId)
             assertEquals("Volt Bank Savings Terms & Conditions", model?.termsConditions?.first()?.name)
             assertEquals("https://www.voltbank.com.au/voltsaveterms", model?.termsConditions?.first()?.url)
+            assertEquals(true, model?.taxRequired)
 
             signal.countDown()
         }
@@ -166,6 +168,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals("https://example.com/image.png", model?.features?.first()?.iconUrl)
             assertEquals("2021-09-30T10:36:58.682+10:00", model?.features?.first()?.createdAt)
             assertEquals("2021-09-30T10:36:58.682+10:00", model?.features?.first()?.updatedAt)
+            assertEquals(true, model?.taxRequired)
             assertEquals(2L, model?.features?.last()?.featureId)
             assertEquals("Set your goals", model?.features?.last()?.description)
             assertNull(model?.features?.last()?.additionalInfo)
@@ -174,6 +177,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(ManagedProductAvailability.POST_ONBOARDING, model?.availability?.last())
 
             assertEquals(ManagedProductAvailability.ONBOARDING_OPTIONAL, models?.last()?.availability?.first())
+            assertEquals(false, models?.last()?.taxRequired)
 
             signal.countDown()
         }
@@ -246,6 +250,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(1L, model?.termsConditions?.first()?.termsId)
             assertEquals("Volt Bank Savings Terms & Conditions", model?.termsConditions?.first()?.name)
             assertEquals("https://www.voltbank.com.au/voltsaveterms", model?.termsConditions?.first()?.url)
+            assertEquals(true, model?.taxRequired)
 
             signal.countDown()
         }
@@ -299,7 +304,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             }
             )
 
-        managedProducts.createManagedProduct(1L, listOf(1, 2)) { resource ->
+        managedProducts.createManagedProduct(testManagedProductRequestData()) { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
@@ -313,6 +318,7 @@ class ManagedProductsTest : BaseAndroidTest() {
             assertEquals(1L, model?.termsConditions?.first()?.termsId)
             assertEquals("Volt Bank Savings Terms & Conditions", model?.termsConditions?.first()?.name)
             assertEquals("https://www.voltbank.com.au/voltsaveterms", model?.termsConditions?.first()?.url)
+            assertEquals(true, model?.taxRequired)
 
             signal.countDown()
         }
@@ -332,7 +338,7 @@ class ManagedProductsTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         clearLoggedInPreferences()
 
-        managedProducts.createManagedProduct(1L, listOf(1, 2)) { resource ->
+        managedProducts.createManagedProduct(testManagedProductRequestData()) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)

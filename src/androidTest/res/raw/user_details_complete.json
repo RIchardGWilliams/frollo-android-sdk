@@ -9,9 +9,6 @@
   "primary_currency": "AUD",
   "gender": "male",
   "date_of_birth": "1990-01-10",
-  "foreign_tax_residency": "US",
-  "tax_residency": "AU",
-  "foreign_tax": false,
   "tfn_status": "received",
   "residential_address": {
     "id": 0,

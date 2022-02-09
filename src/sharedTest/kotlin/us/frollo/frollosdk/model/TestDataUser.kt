@@ -68,10 +68,7 @@ internal fun testUserResponseData(
         dateOfBirth = "1990-01-10",
         driverLicense = "12345678",
         features = listOf(FeatureFlag(feature = "aggregation", enabled = true)),
-        foreignTax = false,
-        foreignTaxResidency = "US",
         tfnStatus = TFNStatus.RECEIVED,
-        taxResidency = "AU",
         externalId = "123456",
         middleNames = randomUUID()
     )
@@ -103,10 +100,7 @@ internal fun UserResponse.testModifyUserResponseData(firstName: String): UserRes
         dateOfBirth = dateOfBirth,
         driverLicense = driverLicense,
         features = features,
-        foreignTax = false,
-        foreignTaxResidency = "US",
         tfnStatus = TFNStatus.RECEIVED,
-        taxResidency = "AU",
         externalId = "123456",
         middleNames = middleNames
     )

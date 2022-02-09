@@ -7,6 +7,7 @@
 - Add middle_names field to User model
 - Add X-Host header to Service Status APIs
 - Update CDR Config APIs
+- Remove Tax info from User model, Add Tax info to ManagedProductCreateRequest
 
 ### 3.14.0
 

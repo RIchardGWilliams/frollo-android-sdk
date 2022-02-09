@@ -107,15 +107,6 @@ data class User(
     /** A list of [FeatureFlag] decoded from a json array stored in the database. (Optional) */
     @ColumnInfo(name = "features") val features: List<FeatureFlag>?,
 
-    /** Foreign tax user (optional) */
-    @ColumnInfo(name = "foreign_tax") var foreignTax: Boolean?,
-
-    /** Tax residency (optional) */
-    @ColumnInfo(name = "tax_residency") var taxResidency: String?,
-
-    /** Foreign Tax residency (optional) */
-    @ColumnInfo(name = "foreign_tax_residency") var foreignTaxResidency: String?,
-
     /** TFN status (optional) */
     @ColumnInfo(name = "tfn_status") var tfnStatus: TFNStatus?,
 

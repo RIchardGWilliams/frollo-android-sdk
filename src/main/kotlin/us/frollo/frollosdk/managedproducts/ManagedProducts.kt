@@ -28,7 +28,6 @@ import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.model.api.managedproduct.ManagedProductCreateRequest
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProduct
-import us.frollo.frollosdk.model.coredata.managedproduct.TermsCondition
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
 
@@ -139,17 +138,14 @@ class ManagedProducts(network: NetworkService) {
     /**
      * Create a managed product using a product from the available products
      *
-     * @param productId ID of [ManagedProduct] to create
-     * @param acceptedTermsConditionsIds: Array of IDs of [TermsCondition] for [ManagedProduct] to create
+     * @param managedProductRequest Managed product data to be created
      * @param completion Completion handler with optional error if the request fails else data if success
      */
     fun createManagedProduct(
-        productId: Long,
-        acceptedTermsConditionsIds: List<Long>,
+        managedProductRequest: ManagedProductCreateRequest,
         completion: OnFrolloSDKCompletionListener<Resource<ManagedProduct>>
     ) {
-        val request = ManagedProductCreateRequest(productId, acceptedTermsConditionsIds)
-        managedProductsAPI.createManagedProduct(request).enqueue { resource ->
+        managedProductsAPI.createManagedProduct(managedProductRequest).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     completion.invoke(resource)

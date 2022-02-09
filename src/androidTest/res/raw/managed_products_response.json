@@ -6,6 +6,7 @@
 			"provider_id": 22772,
 			"container": "bank",
 			"account_type": "savings",
+			"tax_required": true,
 			"terms_conditions": [
 				{
 					"id": 1,
@@ -38,6 +39,7 @@
 			"provider_id": 22772,
 			"container": "bank",
 			"account_type": "bank_account",
+			"tax_required": false,
 			"terms_conditions": [
 				{
 					"id": 1,
