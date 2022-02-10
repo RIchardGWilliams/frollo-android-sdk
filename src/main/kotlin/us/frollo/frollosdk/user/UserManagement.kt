@@ -169,7 +169,7 @@ class UserManagement(
     /**
      * Updates the user details on the server. This should be called whenever details or statistics about a user are to be altered, e.g. changing email.
      *
-     * @param user user data to be updated
+     * @param userUpdateRequest user data to be updated
      * @param securityCode Verification Code / OTP for updating sensitive information
      * @param completion A completion handler once the API has returned and the cache has been updated. Returns any error that occurred during the process.
      */

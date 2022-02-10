@@ -53,9 +53,6 @@ internal data class UserResponse(
     @SerializedName("date_of_birth") val dateOfBirth: String?, // yyyy-MM-dd
     @SerializedName("driver_license") val driverLicense: String?,
     @SerializedName("features") val features: List<FeatureFlag>?,
-    @SerializedName("foreign_tax") val foreignTax: Boolean?,
-    @SerializedName("tax_residency") val taxResidency: String?,
-    @SerializedName("foreign_tax_residency") val foreignTaxResidency: String?,
     @SerializedName("tfn_status") val tfnStatus: TFNStatus?,
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("middle_names") val middleNames: String?

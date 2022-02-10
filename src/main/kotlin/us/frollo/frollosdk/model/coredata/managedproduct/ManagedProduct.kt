@@ -43,5 +43,8 @@ data class ManagedProduct(
     @SerializedName("features") val features: List<ProductFeature>?,
 
     /** Indicates which app flow, this product is applicable for creation (Optional)*/
-    @SerializedName("availability") val availability: List<ManagedProductAvailability>?
+    @SerializedName("availability") val availability: List<ManagedProductAvailability>?,
+
+    /** Indicates if tax information is required to create this product */
+    @SerializedName("tax_required") val taxRequired: Boolean
 )
