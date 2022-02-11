@@ -16,9 +16,6 @@
 
 package us.frollo.frollosdk.logging
 
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -26,11 +23,12 @@ import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
-import us.frollo.frollosdk.network.api.DeviceAPI
-import us.frollo.frollosdk.testutils.trimmedPath
 import us.frollo.frollosdk.testutils.wait
 
 class LogTest : BaseAndroidTest() {
+
+    private var networkLogMessage = ""
+
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
 
@@ -39,7 +37,12 @@ class LogTest : BaseAndroidTest() {
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
         preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
 
-        Log.network = network
+        networkLogMessage = ""
+        Log.networkLoggingProvider = object : NetworkLoggingProvider {
+            override fun logNetworkError(message: String, logLevel: LogLevel) {
+                networkLogMessage = message
+            }
+        }
     }
 
     override fun tearDown() {
@@ -48,6 +51,7 @@ class LogTest : BaseAndroidTest() {
         Log.debugLoggers.clear()
         Log.infoLoggers.clear()
         Log.errorLoggers.clear()
+        networkLogMessage = ""
     }
 
     @Test
@@ -134,6 +138,21 @@ class LogTest : BaseAndroidTest() {
         initSetup()
         Log.logLevel = LogLevel.ERROR
 
+        Log.e("Tag", "Test Message")
+
+        wait(3)
+
+        assertEquals("Tag : Test Message", networkLogMessage)
+
+        tearDown()
+    }
+
+    // Keeping our legacy implementation just-in-case we need to revert back in future
+    /*@Test
+    fun testErrorMessage() {
+        initSetup()
+        Log.logLevel = LogLevel.ERROR
+
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
@@ -157,7 +176,7 @@ class LogTest : BaseAndroidTest() {
         assertEquals(DeviceAPI.URL_LOG, request.trimmedPath)
 
         tearDown()
-    }
+    }*/
 
     private fun typesOfLoggerIn(loggers: List<Logger>): TypesOfLogger {
         var consoleLoggerFound = false

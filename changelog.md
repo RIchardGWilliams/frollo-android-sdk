@@ -8,6 +8,7 @@
 - Add X-Host header to Service Status APIs
 - Update CDR Config APIs
 - Remove Tax info from User model, Add Tax info to ManagedProductCreateRequest
+- Refactor logging to delegate responsibility to the client application implementing the SDK
 
 ### 3.14.0
 

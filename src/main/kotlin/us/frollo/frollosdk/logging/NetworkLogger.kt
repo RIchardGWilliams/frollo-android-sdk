@@ -16,12 +16,17 @@
 
 package us.frollo.frollosdk.logging
 
-import us.frollo.frollosdk.extensions.enqueue
-import us.frollo.frollosdk.model.api.device.LogRequest
-import us.frollo.frollosdk.network.NetworkService
-import us.frollo.frollosdk.network.api.DeviceAPI
-
 internal class NetworkLogger(
+    private val networkLoggingProvider: NetworkLoggingProvider?
+) : Logger() {
+
+    override fun writeMessage(message: String, logLevel: LogLevel) {
+        networkLoggingProvider?.logNetworkError(message, logLevel)
+    }
+}
+
+// Keeping our legacy implementation just-in-case we need to revert back in future
+/*internal class NetworkLogger(
     private val network: NetworkService?,
     private val deviceId: String?,
     private val deviceType: String?,
@@ -46,4 +51,4 @@ internal class NetworkLogger(
             )
         )?.enqueue { }
     }
-}
+}*/

@@ -17,15 +17,10 @@
 package us.frollo.frollosdk.logging
 
 import us.frollo.frollosdk.base.doAsync
-import us.frollo.frollosdk.network.NetworkService
 
 internal object Log {
 
-    var network: NetworkService? = null
-
-    var deviceId: String? = null
-    var deviceName: String? = null
-    var deviceType: String? = null
+    var networkLoggingProvider: NetworkLoggingProvider? = null
 
     var logLevel: LogLevel = LogLevel.ERROR
         set(value) = updateLogLevel(value)
@@ -36,7 +31,7 @@ internal object Log {
 
     private fun updateLogLevel(level: LogLevel) {
         val consoleLogger = ConsoleLogger()
-        val networkLogger = NetworkLogger(network, deviceId, deviceType, deviceName)
+        val networkLogger = NetworkLogger(networkLoggingProvider)
 
         debugLoggers.clear()
         infoLoggers.clear()

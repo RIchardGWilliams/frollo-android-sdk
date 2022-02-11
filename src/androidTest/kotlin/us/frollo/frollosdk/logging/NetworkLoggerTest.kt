@@ -16,20 +16,15 @@
 
 package us.frollo.frollosdk.logging
 
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
-import us.frollo.frollosdk.network.api.DeviceAPI
-import us.frollo.frollosdk.testutils.randomString
-import us.frollo.frollosdk.testutils.randomUUID
-import us.frollo.frollosdk.testutils.trimmedPath
 
 class NetworkLoggerTest : BaseAndroidTest() {
+
+    private var networkLogMessage = ""
 
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
@@ -41,6 +36,25 @@ class NetworkLoggerTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testLogging() {
+        initSetup()
+
+        val logger = NetworkLogger(
+            networkLoggingProvider = object : NetworkLoggingProvider {
+                override fun logNetworkError(message: String, logLevel: LogLevel) {
+                    networkLogMessage = message
+                }
+            }
+        )
+        logger.writeMessage("Test Message", LogLevel.ERROR)
+
+        assertEquals("Test Message", networkLogMessage)
+
+        tearDown()
+    }
+
+    // Keeping our legacy implementation just-in-case we need to revert back in future
+    /*@Test
     fun testLogging() {
         initSetup()
 
@@ -63,5 +77,5 @@ class NetworkLoggerTest : BaseAndroidTest() {
         assertEquals(DeviceAPI.URL_LOG, request.trimmedPath)
 
         tearDown()
-    }
+    }*/
 }
