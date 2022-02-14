@@ -20,6 +20,7 @@ import us.frollo.frollosdk.authentication.AuthenticationType
 import us.frollo.frollosdk.authentication.AuthenticationType.Custom
 import us.frollo.frollosdk.authentication.AuthenticationType.OAuth2
 import us.frollo.frollosdk.logging.LogLevel
+import us.frollo.frollosdk.logging.NetworkLoggingProvider
 import us.frollo.frollosdk.network.SessionIDProvider
 
 /**
@@ -35,6 +36,7 @@ import us.frollo.frollosdk.network.SessionIDProvider
  * @param databaseNamePrefix Prefix for the name of the database
  * @param logLevel Level of logging for debug and error messages. Default is [LogLevel.ERROR]
  * @param sdkDBPassphrase passphrase used to encrypt the DB
+ * @param networkLoggingProvider for logging SDK errors to network. (Optional)
  */
 data class FrolloSDKConfiguration(
     val authenticationType: AuthenticationType,
@@ -43,7 +45,8 @@ data class FrolloSDKConfiguration(
     val sessionIdProvider: SessionIDProvider? = null,
     val databaseNamePrefix: String? = null,
     val logLevel: LogLevel = LogLevel.ERROR,
-    val sdkDBPassphrase: String
+    val sdkDBPassphrase: String,
+    val networkLoggingProvider: NetworkLoggingProvider? = null
 ) {
 
     internal fun validForROPC(): Boolean {

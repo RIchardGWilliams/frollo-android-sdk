@@ -19,6 +19,8 @@ package us.frollo.frollosdk.core
 import us.frollo.frollosdk.authentication.AccessTokenProvider
 import us.frollo.frollosdk.authentication.AuthenticationCallback
 import us.frollo.frollosdk.authentication.AuthenticationType
+import us.frollo.frollosdk.logging.LogLevel
+import us.frollo.frollosdk.logging.NetworkLoggingProvider
 import us.frollo.frollosdk.network.SessionIDProvider
 import us.frollo.frollosdk.testutils.randomUUID
 
@@ -42,7 +44,8 @@ internal fun testSDKConfig(
         clientId = clientId ?: "abc123",
         serverUrl = serverUrl ?: "https://api.example.com/",
         sessionIdProvider = MockSessionIDProvider(),
-        sdkDBPassphrase = "dbPassphrase123"
+        sdkDBPassphrase = "dbPassphrase123",
+        networkLoggingProvider = MockNetworkLoggingProvider()
     )
 
 internal fun testSDKCustomConfig(
@@ -55,9 +58,14 @@ internal fun testSDKCustomConfig(
         authenticationType = AuthenticationType.Custom(accessTokenProvider, authenticationCallback),
         clientId = clientId ?: "abc123",
         serverUrl = serverUrl ?: "https://api.example.com/",
-        sdkDBPassphrase = "dbPassphrase123"
+        sdkDBPassphrase = "dbPassphrase123",
+        networkLoggingProvider = MockNetworkLoggingProvider()
     )
 
 internal class MockSessionIDProvider : SessionIDProvider {
     override val sessionId: String = randomUUID()
+}
+
+internal class MockNetworkLoggingProvider : NetworkLoggingProvider {
+    override fun logNetworkError(message: String, logLevel: LogLevel) {}
 }

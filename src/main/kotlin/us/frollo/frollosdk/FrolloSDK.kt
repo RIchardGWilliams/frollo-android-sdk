@@ -311,12 +311,9 @@ object FrolloSDK {
             network = NetworkService(oAuth2Helper = oAuth, keystore = keyStore, pref = preferences, appInfo = AppInfo(context))
 
             // 7. Setup Logger
-            // Initialize Log.network, Log.deviceId, Log.deviceName and Log.deviceType
-            // before Log.logLevel as Log.logLevel is dependant on Log.network
-            Log.network = network
-            Log.deviceId = deviceInfo.deviceId
-            Log.deviceName = deviceInfo.deviceName
-            Log.deviceType = deviceInfo.deviceType
+            // Initialize Log.networkLoggingProvider before Log.logLevel
+            // as Log.logLevel is dependant on Log.networkLoggingProvider
+            Log.networkLoggingProvider = configuration.networkLoggingProvider
             Log.logLevel = configuration.logLevel
             // Setup Log Manager
             _logger = LogManager()
