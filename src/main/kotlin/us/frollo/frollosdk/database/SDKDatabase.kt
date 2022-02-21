@@ -682,28 +682,28 @@ abstract class SDKDatabase : RoomDatabase() {
         private val MIGRATION_16_17: Migration = object : Migration(16, 17) {
             override fun migrate(database: SupportSQLiteDatabase) {
 
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
                 // New changes in this migration:
                 // 1) Alter table - user - add middle_names column, delete foreign_tax, tax_residency, foreign_tax_residency columns
                 // 2) Delete re-create table - cdr_configuration - primary key column has changed and added many other fields
 
                 // START - Add column middle_names & Drop columns foreign_tax, tax_residency, foreign_tax_residency in user table
-                database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP INDEX IF EXISTS `index_user_user_id`")
                 database.execSQL("ALTER TABLE user RENAME TO original_user")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `user` (`user_id` INTEGER NOT NULL, `first_name` TEXT, `email` TEXT NOT NULL, `email_verified` INTEGER NOT NULL, `status` TEXT NOT NULL, `primary_currency` TEXT NOT NULL, `valid_password` INTEGER NOT NULL, `register_steps` TEXT, `registration_date` TEXT NOT NULL, `facebook_id` TEXT, `attribution` TEXT, `last_name` TEXT, `mobile_number` TEXT, `gender` TEXT, `household_size` INTEGER, `marital_status` TEXT, `occupation` TEXT, `industry` TEXT, `date_of_birth` TEXT, `driver_license` TEXT, `features` TEXT, `tfn_status` TEXT, `external_id` TEXT, `middle_names` TEXT, `residential_address_id` INTEGER, `residential_address_long_form` TEXT, `mailing_address_id` INTEGER, `mailing_address_long_form` TEXT, `previous_address_id` INTEGER, `previous_address_long_form` TEXT, PRIMARY KEY(`user_id`))")
                 database.execSQL("INSERT INTO user(user_id, first_name, email, email_verified, status, primary_currency, valid_password, register_steps, registration_date, facebook_id, attribution, last_name, mobile_number, gender, household_size, marital_status, occupation, industry, date_of_birth, driver_license, features, tfn_status, external_id, residential_address_id, residential_address_long_form, mailing_address_id, mailing_address_long_form, previous_address_id, previous_address_long_form) SELECT user_id, first_name, email, email_verified, status, primary_currency, valid_password, register_steps, registration_date, facebook_id, attribution, last_name, mobile_number, gender, household_size, marital_status, occupation, industry, date_of_birth, driver_license, features, tfn_status, external_id, residential_address_id, residential_address_long_form, mailing_address_id, mailing_address_long_form, previous_address_id, previous_address_long_form FROM user")
                 database.execSQL("DROP TABLE original_user")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_user_user_id` ON `user` (`user_id`)")
-                database.execSQL("COMMIT")
                 // END - Add column middle_names & Drop columns foreign_tax, tax_residency, foreign_tax_residency in user table
 
                 // START - Drop & re-create table cdr_configuration
-                database.execSQL("BEGIN TRANSACTION")
                 database.execSQL("DROP INDEX IF EXISTS `index_cdr_configuration_adr_id`")
                 database.execSQL("DROP TABLE cdr_configuration")
                 database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `adr_id` TEXT NOT NULL, `adr_name` TEXT NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, `sharing_use_duration` INTEGER NOT NULL, PRIMARY KEY(`config_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
-                database.execSQL("COMMIT")
                 // END - Drop & re-create table cdr_configuration
             }
         }

@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.15.1
+
+#### Changes
+- Fix DB Migration Issue
+
 ### 3.15.0
 
 #### Changes
