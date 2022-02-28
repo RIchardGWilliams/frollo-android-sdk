@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.15.2
+
+#### Changes
+- Passwordless Authentication Tokens API
+- Fix Dokka Documentation Issue
+
 ### 3.15.1
 
 #### Changes

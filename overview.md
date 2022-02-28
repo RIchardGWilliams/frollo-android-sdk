@@ -242,10 +242,20 @@ TBD
 
 See [AddressManagement](us.frollo.frollosdk.address/-address-management/index.html) for more details.
 
+### Statements
+
 TBD
 
 See [Statements](us.frollo.frollosdk.statements/-statements/index.html) for more details.
 
+### ServiceStatusManagement
+
 TBD
 
 See [ServiceStatusManagement](us.frollo.frollosdk.servicestatus/-service-status-management/index.html) for more details.
+
+### AffordabilityManagement
+
+TBD
+
+See [AffordabilityManagement](us.frollo.frollosdk.affordability/-affordability/index.html) for more details.
