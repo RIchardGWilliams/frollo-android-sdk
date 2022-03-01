@@ -1302,4 +1302,72 @@ class UserManagementTest : BaseAndroidTest() {
 
         tearDown()
     }
+
+    @Test
+    fun testGetWebAuthorizationCode() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        preferences.loggedIn = true
+        preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
+        preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
+        preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
+
+        val body = readStringFromJson(app, R.raw.web_authorization_code_valid)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == UserAPI.URL_AUTH_WEB) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        userManagement.getWebAuthorizationCode { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+
+            assertEquals("10620cbf-31bb-49d5-9789-d6576a3564fd", resource.data?.authorisationCode)
+            assertEquals("2022-03-01T15:43:16.147+11:00", resource.data?.createdAt)
+            assertEquals("2022-03-01T16:43:16.117+11:00", resource.data?.expiresAt)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(UserAPI.URL_AUTH_WEB, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testGetWebAuthorizationCodeFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        userManagement.getWebAuthorizationCode { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        assertEquals(0, mockServer.requestCount)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
 }

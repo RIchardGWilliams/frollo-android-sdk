@@ -33,6 +33,7 @@ import us.frollo.frollosdk.model.api.user.UserResetPasswordRequest
 import us.frollo.frollosdk.model.api.user.UserResponse
 import us.frollo.frollosdk.model.api.user.UserUnconfirmedDetailsResponse
 import us.frollo.frollosdk.model.api.user.UserUpdateRequest
+import us.frollo.frollosdk.model.api.user.UserWebAuthResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPRequest
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPResponse
@@ -55,6 +56,7 @@ internal interface UserAPI {
         const val URL_PAYID_REMOVE = "user/payid/remove"
         const val URL_PAYID_OTP = "user/payid/otp"
         const val URL_PAYID_ACCOUNT = "user/payid/account/{account_id}"
+        const val URL_AUTH_WEB = "user/auth/web"
     }
 
     @POST(URL_REGISTER)
@@ -101,4 +103,7 @@ internal interface UserAPI {
 
     @GET(URL_PAYID_ACCOUNT)
     fun fetchPayIdsForAccount(@Path("account_id") id: Long): Call<List<UserPayIdAccountResponse>>
+
+    @POST(URL_AUTH_WEB)
+    fun getWebAuthorizationCode(): Call<UserWebAuthResponse>
 }

@@ -47,6 +47,7 @@ import us.frollo.frollosdk.model.api.user.UserResetPasswordRequest
 import us.frollo.frollosdk.model.api.user.UserResponse
 import us.frollo.frollosdk.model.api.user.UserUnconfirmedDetailsResponse
 import us.frollo.frollosdk.model.api.user.UserUpdateRequest
+import us.frollo.frollosdk.model.api.user.UserWebAuthResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPRequest
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPResponse
@@ -609,6 +610,25 @@ class UserManagement(
                 }
                 Resource.Status.SUCCESS -> {
                     completion?.invoke(Result.success())
+                }
+            }
+        }
+    }
+
+    /**
+     * Request a new passwordless authentication token for the user to be used for accessing web based flows.
+     *
+     * @param completion Completion handler with optional error if the request fails or the data if succeeds
+     */
+    fun getWebAuthorizationCode(completion: OnFrolloSDKCompletionListener<Resource<UserWebAuthResponse>>) {
+        userAPI.getWebAuthorizationCode().enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#getWebAuthorizationCode", resource.error?.localizedDescription)
+                    completion.invoke(resource)
+                }
+                Resource.Status.SUCCESS -> {
+                    completion.invoke(resource)
                 }
             }
         }
