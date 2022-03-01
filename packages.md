@@ -8,6 +8,10 @@ FrolloSDK manages the lifecycle of the SDK. Only one instance should be instanti
 
 Manages all aspects of addresses.
 
+# Package us.frollo.frollosdk.affordability
+
+Manages all aspects of affordability.
+
 # Package us.frollo.frollosdk.aggregation
 
 Manages all aggregation data including accounts, transactions, categories and merchants.
@@ -88,17 +92,37 @@ Frollo SDK data models
 
 Frollo SDK address models
 
+# Package us.frollo.frollosdk.model.api.affordability
+
+Frollo SDK affordability models
+
 # Package us.frollo.frollosdk.model.api.cards
 
 Frollo SDK card models
+
+# Package us.frollo.frollosdk.model.api.kyc
+
+Frollo SDK kyc models
+
+# Package us.frollo.frollosdk.model.api.managedproduct
+
+Frollo SDK managedproduct models
 
 # Package us.frollo.frollosdk.model.api.payments
 
 Frollo SDK payment models
 
+# Package us.frollo.frollosdk.model.api.servicestatus
+
+Frollo SDK service status models
+
 # Package us.frollo.frollosdk.model.api.shared
 
 Frollo SDK shared models
+
+# Package us.frollo.frollosdk.model.api.statements
+
+Frollo SDK statements models
 
 # Package us.frollo.frollosdk.model.api.user
 
@@ -192,6 +216,10 @@ Frollo SDK payment models
 
 Frollo SDK report models
 
+# Package us.frollo.frollosdk.model.coredata.servicestatus
+
+Frollo SDK service status models
+
 # Package us.frollo.frollosdk.model.coredata.shared
 
 Frollo SDK shared models
@@ -235,6 +263,14 @@ Manages all aspects of payments.
 # Package us.frollo.frollosdk.reports
 
 Manages all aspects of reporting of aggregation data including spending and balances.
+
+# Package us.frollo.frollosdk.servicestatus
+
+Manages all aspects of Service Status & Outages
+
+# Package us.frollo.frollosdk.statements
+
+Manages all aspects of statements.
 
 # Package us.frollo.frollosdk.surveys
 

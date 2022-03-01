@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'org.jetbrains.dokka'
 apply from: "ktlint.gradle"
 
 configurations.all{
@@ -60,41 +60,8 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/javadoc"
-        reportUndocumented = true
-        includeNonPublic = false
-        skipDeprecated = false
-        skipEmptyPackages = true
 
-        includes = ['overview.md','changelog.md','README.md','extras.md','packages.md']
-
-        packageOptions {
-            prefix = "us.frollo.frollosdk.database"
-            suppress = true
-        }
-        packageOptions {
-            prefix = "us.frollo.frollosdk.keystore"
-            suppress = true
-        }
-        packageOptions {
-            prefix = "us.frollo.frollosdk.network"
-            suppress = true
-        }
-        packageOptions {
-            prefix = "us.frollo.frollosdk.preferences"
-            suppress = true
-        }
-        packageOptions {
-            prefix = "us.frollo.frollosdk.FrolloSDKInitProvider"
-            suppress = true
-        }
-    }
-
-    // TODO: Uncomment this when we upgrade dokka version.
-    //  Commented this for now as we are not able to add project description markup files
-    /*dokkaHtml {
+    dokkaHtml {
         dokkaSourceSets {
             named("main") {
                 reportUndocumented.set(true)
@@ -102,6 +69,7 @@ android {
                 skipDeprecated.set(false)
                 skipEmptyPackages.set(true)
 
+                // TODO: Commented this for now as we are not able to add project description markup files
                 // includes.from("overview.md", "changelog.md", "README.md", "extras.md","packages.md")
                 includes.from("packages.md")
 
@@ -127,7 +95,7 @@ android {
                 }
             }
         }
-    }*/
+    }
 }
 
 buildscript {
@@ -141,7 +109,7 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version_internal"
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.17"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.6.10"
     }
 }
 
