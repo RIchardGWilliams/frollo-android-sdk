@@ -28,12 +28,12 @@ import us.frollo.frollosdk.model.api.user.UserChangePasswordRequest
 import us.frollo.frollosdk.model.api.user.UserConfirmDetailsRequest
 import us.frollo.frollosdk.model.api.user.UserMigrationRequest
 import us.frollo.frollosdk.model.api.user.UserOTPRequest
+import us.frollo.frollosdk.model.api.user.UserPasswordlessTokenResponse
 import us.frollo.frollosdk.model.api.user.UserRegisterRequest
 import us.frollo.frollosdk.model.api.user.UserResetPasswordRequest
 import us.frollo.frollosdk.model.api.user.UserResponse
 import us.frollo.frollosdk.model.api.user.UserUnconfirmedDetailsResponse
 import us.frollo.frollosdk.model.api.user.UserUpdateRequest
-import us.frollo.frollosdk.model.api.user.UserWebAuthResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPRequest
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPResponse
@@ -105,5 +105,5 @@ internal interface UserAPI {
     fun fetchPayIdsForAccount(@Path("account_id") id: Long): Call<List<UserPayIdAccountResponse>>
 
     @POST(URL_AUTH_WEB)
-    fun getWebAuthorizationCode(): Call<UserWebAuthResponse>
+    fun requestPasswordlessToken(): Call<UserPasswordlessTokenResponse>
 }
