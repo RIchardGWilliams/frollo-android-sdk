@@ -2,21 +2,21 @@
 
 ### Requirements
 
-- Android Studio Arctic Fox | 2020.3.1
-- Kotlin version 1.5.21+
-- Gradle tools plugin version 7.0.0+ - In your project level **build.gradle**
+- Android Studio Bumblebee | 2021.1.1
+- Kotlin version 1.6.10+
+- Gradle tools plugin version 7.0.4+ - In your project level **build.gradle**
     ```
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0"
+        classpath "com.android.tools.build:gradle:7.0.4"
         //..
     }
     ```
-- Gradle version must be 7.0.2+
+- Gradle version must be 7.3-rc-3+
 
     Modify Gradle version in your **gradle-wrapper.properties** as below
 
     ```
-    distributionUrl=https\://services.gradle.org/distributions/gradle-7.0.2-all.zip
+    distributionUrl=https\://services.gradle.org/distributions/gradle-7.3-rc-3-bin.zip
     ```
     
 - **minSdkVersion** in your gradle file must be **23** or above. Frollo SDK does not support Android versions below Marshmallow (6.0).
@@ -37,12 +37,12 @@ To integrate Frollo Android SDK to your Android app use the following steps:
 #### Integration using AAR file
 
 1. Goto File > New > New Module > Import JAR/AAR Package
-2. Select the file frollo-android-sdk-release-3.10.0.aar and Finish
+2. Select the file frollo-android-sdk-release-3.15.2.aar and Finish
 3. Add below line to the dependencies in your **app/build.gradle** file
     ```
     dependencies {
         //..
-        implementation project(":frollo-android-sdk-release-3.10.0")
+        implementation project(":frollo-android-sdk-release-3.15.2")
     }
     ```
 4. Copy the provided frollosdk.gradle file to your project's root directory
@@ -94,7 +94,7 @@ To integrate Frollo Android SDK to your Android app use the following steps:
     
       `git fetch`    
             
-      `git checkout release/3.9.0` (replace the version number with the most stable version number)
+      `git checkout release/3.15.2` (replace the version number with the most stable version number)
 
 2. Add _frollo-android-sdk_ module to your **settings.gradle** file
 
@@ -135,7 +135,7 @@ To integrate Frollo Android SDK to your Android app use the following steps:
     ```
     dependencies {
         //..
-        implementation(name: 'frollo-android-sdk-release-3.10.0', ext: 'aar')
+        implementation(name: 'frollo-android-sdk-release-3.15.2', ext: 'aar')
     }
     ```
 3. Add below to your project level **build.gradle** file

@@ -11,21 +11,33 @@ Import the FrolloSDK and ensure you run setup with your tenant URL provided by u
 
             // OAuth2 Config
             val configuration = FrolloSDKConfiguration(
-                                      authenticationType = OAuth2(
-                                              redirectUrl = "<REDIRECT_URI>",
-                                              authorizationUrl = "https://id.frollo.us/oauth/authorize",
-                                              tokenUrl = "https://id.frollo.us/oauth/token"),
-                                      clientId = "<APPLICATION_CLIENT_ID>",
-                                      serverUrl = "https://<API_TENANT>.frollo.us/api/v2/")
+                authenticationType = AuthenticationType.OAuth2(
+                    redirectUrl = "<REDIRECT_URI>",
+                    authorizationUrl = "https://id.frollo.us/oauth/authorize/",
+                    tokenUrl = "https://id.frollo.us/oauth/token/",
+                    revokeTokenURL = "https://id.frollo.us/oauth/revoke/",
+                    audienceUrl = "https://id-sandbox.frollo.us/oauth/authorize/"
+                ),
+                clientId = "<APPLICATION_CLIENT_ID>",
+                serverUrl = "https://<API_TENANT>.frollo.us/api/v2/",
+                databaseNamePrefix = "<TENANT_NAME>",
+                sdkDBPassphrase = "<SAVED_PASSPHRASE_FOR_DB_ENCRYPTION_DECRYPTION>"
+                logLevel = LogLevel.ERROR
+            )
 
             // Custom Authentication Config
             val customAuthentication = CustomAuthentication()
             val configuration = FrolloSDKConfiguration(
-                                      authenticationType = Custom(
-                                              accessTokenProvider = customAuthentication,
-                                              authenticationCallback = customAuthentication),
-                                      clientId = "<APPLICATION_CLIENT_ID>",
-                                      serverUrl = "https://<API_TENANT>.frollo.us/api/v2/")
+                authenticationType = Custom(
+                   accessTokenProvider = customAuthentication,
+                   authenticationCallback = customAuthentication
+                ),
+                clientId = "<APPLICATION_CLIENT_ID>",
+                serverUrl = "https://<API_TENANT>.frollo.us/api/v2/",
+                databaseNamePrefix = "<TENANT_NAME>",
+                sdkDBPassphrase = "<SAVED_PASSPHRASE_FOR_DB_ENCRYPTION_DECRYPTION>"
+                logLevel = LogLevel.ERROR
+            )
 
             FrolloSDK.setup(configuration = configuration) { result ->
                 when (result.status) {
@@ -63,7 +75,12 @@ See [loginUser(email:password:completion:)](us.frollo.frollosdk.authentication/-
 
 
 ```kotlin
-    FrolloSDK.oAuth2Authentication.loginUser(email = "jacob@example.com", password = "$uPer5ecr@t") { result ->
+    FrolloSDK.oAuth2Authentication.loginUser(
+        email = "jacob@example.com",
+        password = "$uPer5ecr@t",
+        scopes = mutableListOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID),
+        grantType = OAuthGrantType.PASSWORD
+    ) { result ->
         when (result.status) {
             Result.Status.ERROR -> displayError(result.error?.localizedDescription, "Login Failed")
             Result.Status.SUCCESS -> completeLogin()
@@ -131,11 +148,12 @@ Completion intent and Cancelled intent should be provided to the SDK to support 
             cancelIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 
             FrolloSDK.oAuth2Authentication.loginUserUsingWeb(
-                    activity = this,
-                    scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID),
-                    completedIntent = PendingIntent.getActivity(this, 0, completionIntent, 0),
-                    cancelledIntent = PendingIntent.getActivity(this, 0, cancelIntent, 0),
-                    toolBarColor = resources.getColor(R.color.colorPrimary, null))
+                activity = this,
+                scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID),
+                completedIntent = PendingIntent.getActivity(this, 0, completionIntent, 0),
+                cancelledIntent = PendingIntent.getActivity(this, 0, cancelIntent, 0),
+                toolBarColor = resources.getColor(R.color.colorPrimary, null)
+            )
         }
     }
 ```
@@ -147,7 +165,10 @@ The next step is to pass the intent received by the Completion Activity to the S
 
         override fun onCreate(savedInstanceState: Bundle?) {
             //...
-            FrolloSDK.oAuth2Authentication.handleWebLoginResponse(intent) { result ->
+            FrolloSDK.oAuth2Authentication.handleWebLoginResponse(
+                intent = intent,
+                scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID)
+            ) { result ->
                 when (result.status) {
                     Result.Status.SUCCESS -> {
                         startActivity<MainActivity>()
@@ -173,9 +194,10 @@ The next step is to pass the intent received by the Completion Activity to the S
 
         private fun startAuthorizationCodeFlow() {
             FrolloSDK.authentication.loginUserUsingWeb(
-                    activity = this,
-                    scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID),
-                    toolBarColor = resources.getColor(R.color.colorPrimary, null))
+                activity = this,
+                scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID),
+                toolBarColor = resources.getColor(R.color.colorPrimary, null)
+            )
         }
 
         override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -186,7 +208,10 @@ The next step is to pass the intent received by the Completion Activity to the S
                     displayAuthCancelled();
                 } else {
                     // The next step is to pass the intent received to the SDK to complete the login process and exchange the authorization code for a token.
-                    FrolloSDK.authentication.handleWebLoginResponse(intent) { result ->
+                    FrolloSDK.authentication.handleWebLoginResponse(
+                        intent = intent,
+                        scopes = listOf(OAuth2Scope.OFFLINE_ACCESS, OAuth2Scope.EMAIL, OAuth2Scope.OPENID)
+                    ) { result ->
                         when (result.status) {
                             Result.Status.SUCCESS -> {
                                 startActivity<MainActivity>()
@@ -279,31 +304,31 @@ Follow the steps [here](https://firebase.google.com/docs/android/setup) and [her
 - Register for push notifications at an appropriate point in the onboarding journey, for example after login/registration and at every app launch to register the device token for notifications.
 
 ```kotlin
-            FirebaseMessaging.getInstance().token
-                .addOnSuccessListener { token ->
-                    token?.let { FrolloSDK.notifications.registerPushNotificationToken(it) }
+    FirebaseMessaging.getInstance().token
+        .addOnSuccessListener { token ->
+            token?.let { FrolloSDK.notifications.registerPushNotificationToken(it) }
+        }
+        .addOnFailureListener {
+            it.printStackTrace()
+        }
+        .addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.e(TAG, "getToken failed ${task.exception}")
+                    return@OnCompleteListener
                 }
-                .addOnFailureListener {
-                    it.printStackTrace()
-                }
-                .addOnCompleteListener(
-                    OnCompleteListener { task ->
-                        if (!task.isSuccessful) {
-                            Log.e(TAG, "getToken failed ${task.exception}")
-                            return@OnCompleteListener
-                        }
-                    }
-                )
+            }
+        )
 ```
 
 - Also register the new token in your FirebaseMessagingService instance inside onNewToken() method.
 
 ```kotlin
-            class MyFirebaseMessagingService : FirebaseMessagingService() {
-                override fun onNewToken(token: String?) {
-                    token?.let { FrolloSDK.notifications.registerPushNotificationToken(it) }
-                }
-            }
+    class MyFirebaseMessagingService : FirebaseMessagingService() {
+        override fun onNewToken(token: String?) {
+            token?.let { FrolloSDK.notifications.registerPushNotificationToken(it) }
+        }
+    }
 ```
 
 ### Handling Notifications and Events
@@ -311,23 +336,23 @@ Follow the steps [here](https://firebase.google.com/docs/android/setup) and [her
 - In your FirebaseMessagingService instance inside onMessageReceived() method, pass the info received from the remote notification to the SDK by implementing the following method.
 
 ```kotlin
-            class MyFirebaseMessagingService : FirebaseMessagingService() {
-                override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-                    remoteMessage?.data?.let { data ->
-                        if (data.isNotEmpty()) {
-                            FrolloSDK.notifications.handlePushNotification(data)
-                        }
-                    }
+    class MyFirebaseMessagingService : FirebaseMessagingService() {
+        override fun onMessageReceived(remoteMessage: RemoteMessage?) {
+            remoteMessage?.data?.let { data ->
+                if (data.isNotEmpty()) {
+                    FrolloSDK.notifications.handlePushNotification(data)
                 }
             }
+        }
+    }
 ```
 
 - Also in your launcher activity implement below method in onCreate after SDK setup.
 
 ```kotlin
-            intent.extras?.let {
-                FrolloSDK.notifications.handlePushNotification(it)
-            }
+    intent.extras?.let {
+        FrolloSDK.notifications.handlePushNotification(it)
+    }
 ```
 
  
