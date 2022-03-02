@@ -21,7 +21,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Data representation of User's Passwordless Authentication Token.
  */
-data class UserWebAuthResponse(
+data class UserPasswordlessTokenResponse(
 
     /** Authorisation code issued by the Frollo identity provider */
     @SerializedName("authorisation_code") val authorisationCode: String,

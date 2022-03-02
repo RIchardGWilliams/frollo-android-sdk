@@ -42,12 +42,12 @@ import us.frollo.frollosdk.model.api.user.UserChangePasswordRequest
 import us.frollo.frollosdk.model.api.user.UserConfirmDetailsRequest
 import us.frollo.frollosdk.model.api.user.UserMigrationRequest
 import us.frollo.frollosdk.model.api.user.UserOTPRequest
+import us.frollo.frollosdk.model.api.user.UserPasswordlessTokenResponse
 import us.frollo.frollosdk.model.api.user.UserRegisterRequest
 import us.frollo.frollosdk.model.api.user.UserResetPasswordRequest
 import us.frollo.frollosdk.model.api.user.UserResponse
 import us.frollo.frollosdk.model.api.user.UserUnconfirmedDetailsResponse
 import us.frollo.frollosdk.model.api.user.UserUpdateRequest
-import us.frollo.frollosdk.model.api.user.UserWebAuthResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPRequest
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdOTPResponse
@@ -620,8 +620,8 @@ class UserManagement(
      *
      * @param completion Completion handler with optional error if the request fails or the data if succeeds
      */
-    fun getWebAuthorizationCode(completion: OnFrolloSDKCompletionListener<Resource<UserWebAuthResponse>>) {
-        userAPI.getWebAuthorizationCode().enqueue { resource ->
+    fun requestPasswordlessToken(completion: OnFrolloSDKCompletionListener<Resource<UserPasswordlessTokenResponse>>) {
+        userAPI.requestPasswordlessToken().enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#getWebAuthorizationCode", resource.error?.localizedDescription)

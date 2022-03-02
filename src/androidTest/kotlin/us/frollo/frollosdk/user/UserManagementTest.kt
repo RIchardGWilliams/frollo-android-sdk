@@ -1304,7 +1304,7 @@ class UserManagementTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testGetWebAuthorizationCode() {
+    fun testRequestPasswordlessToken() {
         initSetup()
 
         val signal = CountDownLatch(1)
@@ -1328,7 +1328,7 @@ class UserManagementTest : BaseAndroidTest() {
             }
             )
 
-        userManagement.getWebAuthorizationCode { resource ->
+        userManagement.requestPasswordlessToken { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
 
@@ -1348,14 +1348,14 @@ class UserManagementTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testGetWebAuthorizationCodeFailsIfLoggedOut() {
+    fun testRequestPasswordlessTokenFailsIfLoggedOut() {
         initSetup()
 
         val signal = CountDownLatch(1)
 
         clearLoggedInPreferences()
 
-        userManagement.getWebAuthorizationCode { resource ->
+        userManagement.requestPasswordlessToken { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
