@@ -28,6 +28,9 @@ enum class AggregatorType {
     /** OpenBanking - CDR */
     @SerializedName("cdr") CDR,
 
+    /** Data Action */
+    @SerializedName("data_action") DATA_ACTION,
+
     /** Demo */
     @SerializedName("demo") DEMO,
 
