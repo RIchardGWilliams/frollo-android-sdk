@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.16.0
+
+#### Changes
+- Add new aggregator type data_action
+
 ### 3.15.2
 
 #### Changes
