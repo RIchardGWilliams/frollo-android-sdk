@@ -127,6 +127,69 @@ enum class AccountSubType {
     /** Financial Health Score */
     @SerializedName("health_score") HEALTH_SCORE,
 
+    /** Cash */
+    @SerializedName("cash") CASH,
+
+    /** Cash Management */
+    @SerializedName("cash_management") CASH_MANAGEMENT,
+
+    /** Collection */
+    @SerializedName("collection") COLLECTION,
+
+    /** Commercial Bill */
+    @SerializedName("commercial_bill") COMMERCIAL_BILL,
+
+    /** Contents Insurance */
+    @SerializedName("contents_insurance") CONTENTS_INSURANCE,
+
+    /** Contingent Liability */
+    @SerializedName("contingent_liability") CONTINGENT_LIABILITY,
+
+    /** Hire Purchase */
+    @SerializedName("hire_purchase") HIRE_PURCHASE,
+
+    /** Intellectual Property */
+    @SerializedName("intellectual_property") INTELLECTUAL_PROPERTY,
+
+    /** Investment */
+    @SerializedName("investment") INVESTMENT,
+
+    /** Lease */
+    @SerializedName("lease") LEASE,
+
+    /** Loan */
+    @SerializedName("loan") LOAN,
+
+    /** Managed Funds */
+    @SerializedName("managed_funds") MANAGED_FUNDS,
+
+    /** Margin */
+    @SerializedName("margin") MARGIN,
+
+    /** Overdraft */
+    @SerializedName("overdraft") OVERDRAFT,
+
+    /** Property */
+    @SerializedName("property") PROPERTY,
+
+    /** Stock Machinery */
+    @SerializedName("stock_machinery") STOCK_MACHINERY,
+
+    /** Store Card */
+    @SerializedName("store_card") STORE_CARD,
+
+    /** Tax Debt */
+    @SerializedName("tax_debt") TAX_DEBT,
+
+    /** Term Loan */
+    @SerializedName("term_loan") TERM_LOAN,
+
+    /** Trade Tools */
+    @SerializedName("trade_tools") TRADE_TOOLS,
+
+    /** Vehicle */
+    @SerializedName("vehicle") VEHICLE,
+
     /** Other or unknown sub type */
     @SerializedName("other") OTHER;
 

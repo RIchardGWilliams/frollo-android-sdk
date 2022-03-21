@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.17.0
+
+#### Changes
+- Update Account Container and Account Types
+
 ### 3.16.0
 
 #### Changes
