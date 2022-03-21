@@ -1,14 +1,10 @@
 ## Changelog
 
-### 3.17.0
-
-#### Changes
-- Update Account Container and Account Types
-
 ### 3.16.0
 
 #### Changes
 - Add new aggregator type data_action
+- Update Account Groups, Account Containers and Account Types
 
 ### 3.15.2
 

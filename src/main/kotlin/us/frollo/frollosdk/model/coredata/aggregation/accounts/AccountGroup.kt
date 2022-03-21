@@ -46,6 +46,9 @@ enum class AccountGroup {
     /** Rewards and Loyalty */
     @SerializedName("reward") REWARD,
 
+    /** Asset */
+    @SerializedName("asset") ASSET,
+
     /** Scores */
     @SerializedName("score") SCORE,
 
