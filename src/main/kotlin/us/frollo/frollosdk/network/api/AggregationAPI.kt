@@ -166,4 +166,7 @@ internal interface AggregationAPI {
 
     @GET(URL_PAYMENT_LIMITS)
     fun fetchPaymentLimits(@Path("account_id") accountId: Long): Call<List<PaymentLimit>>
+
+    @DELETE(URL_ACCOUNT)
+    fun deleteAccount(@Path("account_id") accountId: Long): Call<Void>
 }
