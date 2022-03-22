@@ -34,6 +34,9 @@ enum class AccountType {
     /** Credit Score */
     @SerializedName("loan") LOAN,
 
+    /** Asset */
+    @SerializedName("asset") ASSET,
+
     /** Insurance */
     @SerializedName("bill") BILL,
 

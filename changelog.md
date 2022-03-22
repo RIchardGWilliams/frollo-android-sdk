@@ -4,6 +4,7 @@
 
 #### Changes
 - Add new aggregator type data_action
+- Update Account Groups, Account Containers and Account Types
 
 ### 3.15.2
 
