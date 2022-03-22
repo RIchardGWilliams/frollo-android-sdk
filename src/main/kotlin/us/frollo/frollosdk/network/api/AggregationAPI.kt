@@ -25,6 +25,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
+import us.frollo.frollosdk.model.api.aggregation.accounts.AccountCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountResponse
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
@@ -114,6 +115,9 @@ internal interface AggregationAPI {
 
     @PUT(URL_ACCOUNT)
     fun updateAccount(@Path("account_id") accountId: Long, @Body request: AccountUpdateRequest): Call<AccountResponse>
+
+    @POST(URL_ACCOUNTS)
+    fun createAccount(@Body request: AccountCreateUpdateRequest): Call<AccountResponse>
 
     // Transaction API
 

@@ -79,6 +79,7 @@ import us.frollo.frollosdk.mapping.toTransaction
 import us.frollo.frollosdk.mapping.toTransactionCategory
 import us.frollo.frollosdk.mapping.toTransactionTag
 import us.frollo.frollosdk.mapping.toTransactionsSummary
+import us.frollo.frollosdk.model.api.aggregation.accounts.AccountCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountResponse
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
@@ -843,6 +844,38 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
     }
 
+    /**
+     * Manually create an account for tracking a user's asset or liability.
+     * Manually created account will not be automatically updated.
+     *
+     * @param request request model for manual account creation
+     * @param completion Optional completion handler with optional error if the request fails else ID of the ProviderAccount created if success
+     */
+    fun createAccountManually(
+        request: AccountCreateUpdateRequest,
+        completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
+    ) {
+        // TODO check and remove if not needed
+        /*if (!request.valid) {
+            Log.e("$TAG#createAccountManually", "Invalid AccountType & AccountSubtype mapping")
+            val error = DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)
+            completion?.invoke(Resource.error(error))
+            return
+        }*/
+
+        aggregationAPI.createAccount(request).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleAccountResponse(response = resource.data, completionWithData = completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#createAccountManually", resource.error?.localizedDescription)
+                    completion?.invoke(Resource.error(resource.error))
+                }
+            }
+        }
+    }
+
     private fun handleAccountsResponse(response: List<AccountResponse>?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
         response?.let {
             doAsync {
@@ -861,14 +894,24 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
     }
 
-    private fun handleAccountResponse(response: AccountResponse?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+    private fun handleAccountResponse(
+        response: AccountResponse?,
+        completion: OnFrolloSDKCompletionListener<Result>? = null,
+        completionWithData: OnFrolloSDKCompletionListener<Resource<Long>>? = null
+    ) {
         response?.let {
             doAsync {
                 db.accounts().insert(response.toAccount())
 
-                uiThread { completion?.invoke(Result.success()) }
+                uiThread {
+                    completion?.invoke(Result.success())
+                    completionWithData?.invoke(Resource.success(response.accountId))
+                }
             }
-        } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
+        } ?: run {
+            completion?.invoke(Result.success())
+            completionWithData?.invoke(Resource.success(null))
+        } // Explicitly invoke completion callback if response is null.
     }
 
     private fun updateAccountCache(

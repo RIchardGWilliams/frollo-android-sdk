@@ -16,26 +16,20 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
-import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
-/** Balance model with amount and currency */
-data class Balance(
+/** Vehicle Details */
+data class VehicleDetails(
 
-    /** Amount */
-    @ColumnInfo(name = "amount") @SerializedName("amount") var amount: BigDecimal,
+    /** Vehicle type */
+    @SerializedName("type") var type: VehicleType,
 
-    /** Currency */
-    @ColumnInfo(name = "currency") @SerializedName("currency") var currency: String
-) {
-    companion object {
-        fun getBalanceWithDefaultCurrencyIfMissing(balance: Balance): Balance {
-            return if (balance.currency == null) { // Note: Failsafe check if API doesn't send the currency
-                Balance(balance.amount, "AUD")
-            } else {
-                balance
-            }
-        }
-    }
-}
+    /** Manufacture Year. Date Format YYYY (Optional) */
+    @SerializedName("manufacture_year") var manufactureYear: String? = null,
+
+    /** Vehicle maker (Optional) */
+    @SerializedName("make") var make: String? = null,
+
+    /** Vehicle model (Optional) */
+    @SerializedName("model") var model: Boolean? = null
+)

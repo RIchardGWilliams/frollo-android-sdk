@@ -16,26 +16,14 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
-import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
-/** Balance model with amount and currency */
-data class Balance(
+/** Data Representation of Related Account */
+data class RelatedAccount( // TODO add columninfo/embedded?
 
-    /** Amount */
-    @ColumnInfo(name = "amount") @SerializedName("amount") var amount: BigDecimal,
+    /** ID of account record from Frollo Accounts API */
+    @SerializedName("account_id") var accountId: Long,
 
-    /** Currency */
-    @ColumnInfo(name = "currency") @SerializedName("currency") var currency: String
-) {
-    companion object {
-        fun getBalanceWithDefaultCurrencyIfMissing(balance: Balance): Balance {
-            return if (balance.currency == null) { // Note: Failsafe check if API doesn't send the currency
-                Balance(balance.amount, "AUD")
-            } else {
-                balance
-            }
-        }
-    }
-}
+    /** Account relationship */
+    @SerializedName("relationship") var relationship: AccountRelationship
+)
