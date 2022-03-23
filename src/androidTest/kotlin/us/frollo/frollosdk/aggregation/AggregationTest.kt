@@ -4407,7 +4407,7 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testDeleteAccount() {
+    fun testDeleteManualAccount() {
         initSetup()
 
         val signal = CountDownLatch(1)
@@ -4427,7 +4427,7 @@ class AggregationTest : BaseAndroidTest() {
         val data = testAccountResponseData(accountId = 542L)
         database.accounts().insert(data.toAccount())
 
-        aggregation.deleteAccount(542L) { result ->
+        aggregation.deleteManualAccount(542L) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
@@ -4448,14 +4448,14 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testDeleteAccountFailsIfLoggedOut() {
+    fun testDeleteManualAccountFailsIfLoggedOut() {
         initSetup()
 
         val signal = CountDownLatch(1)
 
         clearLoggedInPreferences()
 
-        aggregation.deleteAccount(542L) { result ->
+        aggregation.deleteManualAccount(542L) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
