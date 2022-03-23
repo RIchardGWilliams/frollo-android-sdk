@@ -119,6 +119,9 @@ internal interface AggregationAPI {
     @POST(URL_ACCOUNTS)
     fun createAccount(@Body request: AccountCreateUpdateRequest): Call<AccountResponse>
 
+    @DELETE(URL_ACCOUNT)
+    fun deleteAccount(@Path("account_id") accountId: Long): Call<Void>
+
     // Transaction API
 
     @GET(URL_TRANSACTIONS)
