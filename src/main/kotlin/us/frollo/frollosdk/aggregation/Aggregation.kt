@@ -843,6 +843,27 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
     }
 
+    /**
+     * Delete a specific account created manually by ID from the host
+     *
+     * @param accountId Account ID of the account to be deleted
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun deleteManualAccount(accountId: Long, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        aggregationAPI.deleteAccount(accountId).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    removeCachedAccounts(longArrayOf(accountId))
+                    completion?.invoke(Result.success())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#deleteAccount", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
     private fun handleAccountsResponse(response: List<AccountResponse>?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
         response?.let {
             doAsync {

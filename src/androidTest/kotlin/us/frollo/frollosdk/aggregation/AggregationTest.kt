@@ -4405,4 +4405,67 @@ class AggregationTest : BaseAndroidTest() {
 
         tearDown()
     }
+
+    @Test
+    fun testDeleteManualAccount() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/accounts/542") {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data = testAccountResponseData(accountId = 542L)
+        database.accounts().insert(data.toAccount())
+
+        aggregation.deleteManualAccount(542L) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchAccount(542L).test()
+            testObserver.awaitValue()
+            val model = testObserver.value().data
+            assertNull(model)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("aggregation/accounts/542", request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testDeleteManualAccountFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.deleteManualAccount(542L) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
 }
