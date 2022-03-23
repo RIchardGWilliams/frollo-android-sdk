@@ -116,6 +116,7 @@ internal interface AggregationAPI {
     fun updateAccount(@Path("account_id") accountId: Long, @Body request: AccountUpdateRequest): Call<AccountResponse>
 
     // Transaction API
+    
     @GET(URL_TRANSACTIONS)
     fun fetchTransactions(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
 
