@@ -28,11 +28,18 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureDet
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountGroup
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceTier
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.CDRProductInformation
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyPurpose
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyZoning
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.RelatedAccount
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.VehicleType
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantLocation
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantType
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshAdditionalStatus
@@ -339,6 +346,48 @@ internal class Converters {
 
     @TypeConverter
     fun stringToListOfUserPayIdAccountResponse(value: String?): List<UserPayIdAccountResponse>? = if (value == null) null else gson.fromJson<List<UserPayIdAccountResponse>>(value)
+
+    @TypeConverter
+    fun stringFromListOfRelatedAccount(value: List<RelatedAccount>?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringToListOfRelatedAccount(value: String?): List<RelatedAccount>? = if (value == null) null else gson.fromJson<List<RelatedAccount>>(value)
+
+    @TypeConverter
+    fun stringToStatementOrPaymentFrequency(value: String?): StatementOrPaymentFrequency? = if (value == null) StatementOrPaymentFrequency.IRREGULAR else StatementOrPaymentFrequency.valueOf(value)
+
+    @TypeConverter
+    fun stringFromStatementOrPaymentFrequency(value: StatementOrPaymentFrequency?): String? = value?.name ?: StatementOrPaymentFrequency.IRREGULAR.name
+
+    @TypeConverter
+    fun stringToAccountOwnerType(value: String?): AccountOwnerType? = if (value == null) AccountOwnerType.UNKNOWN else AccountOwnerType.valueOf(value)
+
+    @TypeConverter
+    fun stringFromAccountOwnerType(value: AccountOwnerType?): String? = value?.name ?: AccountOwnerType.UNKNOWN.name
+
+    @TypeConverter
+    fun stringToVehicleType(value: String?): VehicleType? = value?.let { VehicleType.valueOf(it) }
+
+    @TypeConverter
+    fun stringFromVehicleType(value: VehicleType?): String? = value?.name
+
+    @TypeConverter
+    fun stringToPropertyType(value: String?): PropertyType? = if (value == null) PropertyType.OTHER else PropertyType.valueOf(value)
+
+    @TypeConverter
+    fun stringFromPropertyType(value: PropertyType?): String? = value?.name ?: PropertyType.OTHER.name
+
+    @TypeConverter
+    fun stringToPropertyZoning(value: String?): PropertyZoning? = value?.let { PropertyZoning.valueOf(it) }
+
+    @TypeConverter
+    fun stringFromPropertyZoning(value: PropertyZoning?): String? = value?.name
+
+    @TypeConverter
+    fun stringToPropertyPurpose(value: String?): PropertyPurpose? = value?.let { PropertyPurpose.valueOf(it) }
+
+    @TypeConverter
+    fun stringFromPropertyPurpose(value: PropertyPurpose?): String? = value?.name
 
     // Transaction
 

@@ -16,20 +16,21 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 
 /** Vehicle Details */
 data class VehicleDetails(
 
     /** Vehicle type */
-    @SerializedName("type") var type: VehicleType,
+    @ColumnInfo(name = "type") @SerializedName("type") var type: VehicleType,
 
     /** Manufacture Year. Date Format YYYY (Optional) */
-    @SerializedName("manufacture_year") var manufactureYear: String? = null,
+    @ColumnInfo(name = "manufacture_year") @SerializedName("manufacture_year") var manufactureYear: String? = null,
 
     /** Vehicle maker (Optional) */
-    @SerializedName("make") var make: String? = null,
+    @ColumnInfo(name = "make") @SerializedName("make") var make: String? = null,
 
     /** Vehicle model (Optional) */
-    @SerializedName("model") var model: Boolean? = null
+    @ColumnInfo(name = "model") @SerializedName("model") var model: String? = null
 )

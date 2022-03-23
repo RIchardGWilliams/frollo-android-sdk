@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package us.frollo.frollosdk.model.api.aggregation.accounts
+package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import com.google.gson.annotations.SerializedName
-import us.frollo.frollosdk.model.coredata.aggregation.accounts.VehicleDetails
 
 /** Additional information to the account */
-data class AccountAdditionalDetailsRequest(
+data class AccountAdditionalDetails(
 
     /** Additional description to the account (Optional) */
-    @SerializedName("description") var description: String? = null,
+    @ColumnInfo(name = "description") @SerializedName("description") var description: String? = null,
 
     /** External image url (Optional) */
-    @SerializedName("image_url") var imageUrl: String? = null,
+    @ColumnInfo(name = "image_url") @SerializedName("image_url") var imageUrl: String? = null,
 
     /** Additional information to property account (Optional) */
-    @SerializedName("property") var propertyDetails: PropertyDetailsRequest? = null,
+    @Embedded(prefix = "property_") @SerializedName("property") var propertyDetails: PropertyDetails? = null,
 
     /** Additional information to vehicle account (Optional) */
-    @SerializedName("vehicle") var vehicleDetails: VehicleDetails? = null
+    @Embedded(prefix = "vehicle_") @SerializedName("vehicle") var vehicleDetails: VehicleDetails? = null
 )

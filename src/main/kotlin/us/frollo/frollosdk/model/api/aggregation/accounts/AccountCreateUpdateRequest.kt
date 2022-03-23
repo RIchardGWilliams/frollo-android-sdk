@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.model.api.aggregation.accounts
 
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAdditionalDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
@@ -112,7 +113,7 @@ data class AccountCreateUpdateRequest(
     @SerializedName("frequency") var frequency: StatementOrPaymentFrequency? = null,
 
     /** Additional information to the account (Optional) */
-    @SerializedName("details") var additionalDetails: AccountAdditionalDetailsRequest? = null,
+    @SerializedName("details") var additionalDetails: AccountAdditionalDetails? = null,
 
     /** Indicates if this is a joint account (Optional) */
     @SerializedName("joint_account") var jointAccount: Boolean? = null,

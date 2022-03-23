@@ -16,6 +16,7 @@
 
 package us.frollo.frollosdk.model
 
+import us.frollo.frollosdk.model.api.aggregation.accounts.AccountCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountResponse
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountUpdateRequest
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAttributes
@@ -25,6 +26,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureDet
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountGroup
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
@@ -32,6 +34,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceTier
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.HolderProfile
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshAdditionalStatus
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshStatus
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshSubStatus
@@ -104,7 +107,13 @@ internal fun testAccountResponseData(accountId: Long? = null, providerAccountId:
         externalId = randomString(8),
         features = testAccountFeaturesData(),
         cdrProduct = null,
-        payIds = null
+        payIds = null,
+        relatedAccounts = null,
+        asset = false,
+        frequency = StatementOrPaymentFrequency.MONTHLY,
+        additionalDetails = null,
+        jointAccount = true,
+        ownerType = AccountOwnerType.values().randomElement()
     )
 }
 
@@ -159,5 +168,37 @@ internal fun testUpdateRequestData(hidden: Boolean = false, included: Boolean = 
         favourite = true,
         accountSubType = AccountSubType.BANK_ACCOUNT,
         nickName = "Friendly Name"
+    )
+}
+
+internal fun testAccountCreateUpdateRequestData(): AccountCreateUpdateRequest {
+    return AccountCreateUpdateRequest(
+        accountType = AccountType.ASSET,
+        accountName = randomUUID(),
+        favourite = true,
+        hidden = false,
+        included = true,
+        amountDue = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        apr = BigDecimal("18.53"),
+        availableBalance = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        availableCash = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        availableCredit = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        currentBalance = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        dueDate = "2019-01-01",
+        interestRate = BigDecimal("3.05"),
+        lastPaymentAmount = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        lastPaymentDate = "2019-01-01",
+        minimumAmountDue = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        nickName = "Friendly Name",
+        totalCashLimit = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        totalCreditLine = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        accountNumber = randomUUID(),
+        bsb = randomUUID(),
+        interestTotal = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        relatedAccounts = null,
+        frequency = StatementOrPaymentFrequency.MONTHLY,
+        additionalDetails = null,
+        jointAccount = true,
+        ownerType = AccountOwnerType.values().randomElement()
     )
 }

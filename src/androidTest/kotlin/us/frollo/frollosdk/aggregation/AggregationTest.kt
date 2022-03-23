@@ -50,8 +50,15 @@ import us.frollo.frollosdk.mapping.toTransaction
 import us.frollo.frollosdk.mapping.toTransactionCategory
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountRelationship
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyPurpose
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyZoning
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.VehicleType
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantType
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshStatus
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
@@ -70,6 +77,7 @@ import us.frollo.frollosdk.model.coredata.payments.PaymentLimitType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.loginFormFilledData
+import us.frollo.frollosdk.model.testAccountCreateUpdateRequestData
 import us.frollo.frollosdk.model.testAccountResponseData
 import us.frollo.frollosdk.model.testCDRConfigurationData
 import us.frollo.frollosdk.model.testCardResponseData
@@ -1168,6 +1176,28 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.createdAt)
             assertEquals("2021-05-14T04:24:04.407Z", first?.payIds?.get(0)?.updatedAt)
 
+            assertEquals(123L, first?.relatedAccounts?.get(0)?.accountId)
+            assertEquals(AccountRelationship.OFFSET, first?.relatedAccounts?.get(0)?.relationship)
+            assertEquals(true, first?.asset)
+            assertEquals(StatementOrPaymentFrequency.MONTHLY, first?.frequency)
+            assertEquals("Frollo", first?.additionalDetails?.description)
+            assertEquals("http://example.com/image.png", first?.additionalDetails?.imageUrl)
+            assertEquals(PropertyType.COMPANY_TITLE_UNIT, first?.additionalDetails?.propertyDetails?.type)
+            assertEquals(PropertyZoning.INDUSTRIAL, first?.additionalDetails?.propertyDetails?.zoning)
+            assertEquals(PropertyPurpose.COMMERCIAL, first?.additionalDetails?.propertyDetails?.purpose)
+            assertEquals(true, first?.additionalDetails?.propertyDetails?.principalResidence)
+            assertEquals(700L, first?.additionalDetails?.propertyDetails?.address?.addressId)
+            assertEquals("Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia", first?.additionalDetails?.propertyDetails?.address?.longForm)
+            assertEquals(false, first?.jointAccount)
+            assertEquals(AccountOwnerType.BUSINESS, first?.ownerType)
+
+            assertEquals("Car", models?.get(1)?.additionalDetails?.description)
+            assertEquals("http://example.com/image.png", models?.get(1)?.additionalDetails?.imageUrl)
+            assertEquals(VehicleType.LARGE, models?.get(1)?.additionalDetails?.vehicleDetails?.type)
+            assertEquals("2020", models?.get(1)?.additionalDetails?.vehicleDetails?.manufactureYear)
+            assertEquals("Mitsubishi", models?.get(1)?.additionalDetails?.vehicleDetails?.make)
+            assertEquals("Outlander", models?.get(1)?.additionalDetails?.vehicleDetails?.model)
+
             assertEquals(AggregatorType.VOLT_BAAP, models?.get(0)?.aggregatorType)
             assertEquals(AggregatorType.YODLEE, models?.get(1)?.aggregatorType)
             assertEquals(AggregatorType.DEMO, models?.get(2)?.aggregatorType)
@@ -1385,6 +1415,87 @@ class AggregationTest : BaseAndroidTest() {
             assertTrue(result.error is DataError)
             assertEquals(DataErrorType.API, (result.error as DataError).type)
             assertEquals(DataErrorSubType.INVALID_DATA, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testCreateManualAccount() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.account_id_542)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_ACCOUNTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        aggregation.createManualAccount(testAccountCreateUpdateRequestData()) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            assertEquals(542L, resource.data)
+
+            val testObserver = aggregation.fetchAccounts().test()
+            testObserver.awaitValue()
+            val models = testObserver.value().data
+            val first = models?.first()
+            assertNotNull(models)
+
+            assertEquals(1, models?.size)
+            assertEquals(542L, first?.accountId)
+            assertEquals(123L, first?.relatedAccounts?.get(0)?.accountId)
+            assertEquals(AccountRelationship.OFFSET, first?.relatedAccounts?.get(0)?.relationship)
+            assertEquals(true, first?.asset)
+            assertEquals(StatementOrPaymentFrequency.MONTHLY, first?.frequency)
+            assertEquals("Frollo", first?.additionalDetails?.description)
+            assertEquals("http://example.com/image.png", first?.additionalDetails?.imageUrl)
+            assertEquals(PropertyType.COMPANY_TITLE_UNIT, first?.additionalDetails?.propertyDetails?.type)
+            assertEquals(PropertyZoning.INDUSTRIAL, first?.additionalDetails?.propertyDetails?.zoning)
+            assertEquals(PropertyPurpose.COMMERCIAL, first?.additionalDetails?.propertyDetails?.purpose)
+            assertEquals(true, first?.additionalDetails?.propertyDetails?.principalResidence)
+            assertEquals(700L, first?.additionalDetails?.propertyDetails?.address?.addressId)
+            assertEquals("Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia", first?.additionalDetails?.propertyDetails?.address?.longForm)
+            assertEquals(false, first?.jointAccount)
+            assertEquals(AccountOwnerType.BUSINESS, first?.ownerType)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(AggregationAPI.URL_ACCOUNTS, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testCreateManualAccountFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.createManualAccount(testAccountCreateUpdateRequestData()) { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
 
             signal.countDown()
         }

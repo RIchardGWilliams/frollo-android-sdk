@@ -851,18 +851,10 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
      * @param request request model for manual account creation
      * @param completion Optional completion handler with optional error if the request fails else ID of the ProviderAccount created if success
      */
-    fun createAccountManually(
+    fun createManualAccount(
         request: AccountCreateUpdateRequest,
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
-        // TODO check and remove if not needed
-        /*if (!request.valid) {
-            Log.e("$TAG#createAccountManually", "Invalid AccountType & AccountSubtype mapping")
-            val error = DataError(DataErrorType.API, DataErrorSubType.INVALID_DATA)
-            completion?.invoke(Resource.error(error))
-            return
-        }*/
-
         aggregationAPI.createAccount(request).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {

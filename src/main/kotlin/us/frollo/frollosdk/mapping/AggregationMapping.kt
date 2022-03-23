@@ -138,7 +138,13 @@ internal fun AccountResponse.toAccount(): Account =
         externalId = externalId ?: "",
         features = features,
         cdrProduct = cdrProduct,
-        payIds = payIds
+        payIds = payIds,
+        relatedAccounts = relatedAccounts,
+        asset = asset,
+        frequency = frequency,
+        additionalDetails = additionalDetails,
+        jointAccount = jointAccount,
+        ownerType = ownerType
     )
 
 internal fun TransactionResponse.toTransaction(): Transaction =
