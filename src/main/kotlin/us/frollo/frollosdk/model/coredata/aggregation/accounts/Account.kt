@@ -167,6 +167,24 @@ data class Account(
     @Embedded(prefix = "cdr_p_") val cdrProduct: CDRProduct?,
 
     /** Associated payIDs (optional) */
-    @ColumnInfo(name = "payids") val payIds: List<UserPayIdAccountResponse>?
+    @ColumnInfo(name = "payids") val payIds: List<UserPayIdAccountResponse>?,
+
+    /** Related accounts in Frollo system (Optional) */
+    @ColumnInfo(name = "related_accounts") val relatedAccounts: List<RelatedAccount>?,
+
+    /** Indicates if this is an Asset account (Optional) */
+    @ColumnInfo(name = "asset") val asset: Boolean?,
+
+    /** Repayment frequency (Optional) */
+    @ColumnInfo(name = "frequency") val frequency: StatementOrPaymentFrequency?,
+
+    /** Additional information to the account (Optional) */
+    @Embedded(prefix = "add_details_") val additionalDetails: AccountAdditionalDetails?,
+
+    /** Indicates if this is a joint account (Optional) */
+    @ColumnInfo(name = "joint_account") val jointAccount: Boolean?,
+
+    /** Account owner type (Optional) */
+    @ColumnInfo(name = "owner_type") val ownerType: AccountOwnerType?
 
 ) : IAdapterModel

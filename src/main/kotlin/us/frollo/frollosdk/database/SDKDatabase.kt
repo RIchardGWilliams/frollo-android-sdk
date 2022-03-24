@@ -102,7 +102,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Address::class,
         ServiceOutage::class
     ],
-    version = 17, exportSchema = true
+    version = 18, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -175,7 +175,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_13_14,
                     MIGRATION_14_15,
                     MIGRATION_15_16,
-                    MIGRATION_16_17
+                    MIGRATION_16_17,
+                    MIGRATION_17_18
                 )
                 .build()
         }
@@ -705,6 +706,38 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `adr_id` TEXT NOT NULL, `adr_name` TEXT NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, `sharing_use_duration` INTEGER NOT NULL, PRIMARY KEY(`config_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
                 // END - Drop & re-create table cdr_configuration
+            }
+        }
+
+        private val MIGRATION_17_18: Migration = object : Migration(17, 18) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) Alter table - account - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
+
+                // START - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `related_accounts` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `asset` INTEGER")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `frequency` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `joint_account` INTEGER")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `owner_type` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_description` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_image_url` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_type` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_zoning` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_purpose` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_ppor` INTEGER")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_address_id` INTEGER")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_property_address_long_form` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_type` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_manufacture_year` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_make` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_model` TEXT")
+                // END - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
             }
         }
     }

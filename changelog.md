@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.17.0
+
+#### Changes
+- Manual Account - Create, Update, Delete
+
 ### 3.16.0
 
 #### Changes

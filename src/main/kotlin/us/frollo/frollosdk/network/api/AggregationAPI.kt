@@ -25,6 +25,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
+import us.frollo.frollosdk.model.api.aggregation.accounts.AccountCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountResponse
 import us.frollo.frollosdk.model.api.aggregation.accounts.AccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
@@ -115,8 +116,14 @@ internal interface AggregationAPI {
     @PUT(URL_ACCOUNT)
     fun updateAccount(@Path("account_id") accountId: Long, @Body request: AccountUpdateRequest): Call<AccountResponse>
 
+    @POST(URL_ACCOUNTS)
+    fun createAccount(@Body request: AccountCreateUpdateRequest): Call<AccountResponse>
+
+    @DELETE(URL_ACCOUNT)
+    fun deleteAccount(@Path("account_id") accountId: Long): Call<Void>
+
     // Transaction API
-    
+
     @GET(URL_TRANSACTIONS)
     fun fetchTransactions(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
 
@@ -166,7 +173,4 @@ internal interface AggregationAPI {
 
     @GET(URL_PAYMENT_LIMITS)
     fun fetchPaymentLimits(@Path("account_id") accountId: Long): Call<List<PaymentLimit>>
-
-    @DELETE(URL_ACCOUNT)
-    fun deleteAccount(@Path("account_id") accountId: Long): Call<Void>
 }

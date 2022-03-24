@@ -18,13 +18,17 @@ package us.frollo.frollosdk.model.api.aggregation.accounts
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.api.user.payid.UserPayIdAccountResponse
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAdditionalDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAttributes
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeature
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.HolderProfile
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.RelatedAccount
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.RefreshStatus
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import java.math.BigDecimal
@@ -65,5 +69,11 @@ internal data class AccountResponse(
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("features") val features: List<AccountFeature>?,
     @SerializedName("product") val cdrProduct: CDRProduct?,
-    @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?
+    @SerializedName("payids") val payIds: List<UserPayIdAccountResponse>?,
+    @SerializedName("related_accounts") val relatedAccounts: List<RelatedAccount>?,
+    @SerializedName("asset") val asset: Boolean?,
+    @SerializedName("frequency") val frequency: StatementOrPaymentFrequency?,
+    @SerializedName("details") val additionalDetails: AccountAdditionalDetails?,
+    @SerializedName("joint_account") val jointAccount: Boolean?,
+    @SerializedName("owner_type") val ownerType: AccountOwnerType? = null
 )

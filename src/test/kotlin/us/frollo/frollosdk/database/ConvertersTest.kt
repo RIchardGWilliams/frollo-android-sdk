@@ -28,11 +28,19 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassifica
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountFeatureType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountGroup
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountRelationship
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.BalanceTier
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.CDRProductInformation
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyPurpose
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyZoning
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.RelatedAccount
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.VehicleType
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantLocation
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantType
 import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRefreshAdditionalStatus
@@ -835,6 +843,129 @@ class ConvertersTest {
         )
         val json = Converters.instance.stringFromListOfCDRProductInformation(info)
         assertEquals("[{\"name\":\"Benefits\",\"value\":\"Free ATMs\"},{\"name\":\"Addons\",\"value\":\"0% Interest\"}]", json)
+    }
+
+    @Test
+    fun testStringToListOfRelatedAccount() {
+        val json = "[{\"account_id\":123,\"relationship\":\"offset\"},{\"account_id\":456,\"relationship\":\"loan\"},{\"account_id\":789,\"relationship\":\"loan\"}]"
+        val accounts = Converters.instance.stringToListOfRelatedAccount(json)
+        assertNotNull(accounts)
+        assertTrue(accounts?.size == 3)
+        assertEquals(123L, accounts?.get(0)?.accountId)
+        assertEquals(AccountRelationship.OFFSET, accounts?.get(0)?.relationship)
+        assertEquals(456L, accounts?.get(1)?.accountId)
+        assertEquals(AccountRelationship.LOAN, accounts?.get(1)?.relationship)
+        assertEquals(789L, accounts?.get(2)?.accountId)
+        assertEquals(AccountRelationship.LOAN, accounts?.get(2)?.relationship)
+
+        assertNull(Converters.instance.stringToListOfRelatedAccount(null))
+    }
+
+    @Test
+    fun testStringFromListOfRelatedAccount() {
+        val accounts = listOf(
+            RelatedAccount(123L, AccountRelationship.OFFSET),
+            RelatedAccount(456L, AccountRelationship.LOAN),
+            RelatedAccount(789L, AccountRelationship.LOAN)
+        )
+        val json = Converters.instance.stringFromListOfRelatedAccount(accounts)
+        assertEquals("[{\"account_id\":123,\"relationship\":\"offset\"},{\"account_id\":456,\"relationship\":\"loan\"},{\"account_id\":789,\"relationship\":\"loan\"}]", json)
+    }
+
+    @Test
+    fun testStringToStatementOrPaymentFrequency() {
+        val status = Converters.instance.stringToStatementOrPaymentFrequency("MONTHLY")
+        assertEquals(StatementOrPaymentFrequency.MONTHLY, status)
+
+        assertEquals(StatementOrPaymentFrequency.IRREGULAR, Converters.instance.stringToStatementOrPaymentFrequency(null))
+    }
+
+    @Test
+    fun testStringFromStatementOrPaymentFrequency() {
+        val str = Converters.instance.stringFromStatementOrPaymentFrequency(StatementOrPaymentFrequency.MONTHLY)
+        assertEquals("MONTHLY", str)
+
+        assertEquals("IRREGULAR", Converters.instance.stringFromStatementOrPaymentFrequency(null))
+    }
+
+    @Test
+    fun testStringToAccountOwnerType() {
+        val status = Converters.instance.stringToAccountOwnerType("BUSINESS")
+        assertEquals(AccountOwnerType.BUSINESS, status)
+
+        assertEquals(AccountOwnerType.UNKNOWN, Converters.instance.stringToAccountOwnerType(null))
+    }
+
+    @Test
+    fun testStringFromAccountOwnerType() {
+        val str = Converters.instance.stringFromAccountOwnerType(AccountOwnerType.BUSINESS)
+        assertEquals("BUSINESS", str)
+
+        assertEquals("UNKNOWN", Converters.instance.stringFromAccountOwnerType(null))
+    }
+
+    @Test
+    fun testStringToVehicleType() {
+        val status = Converters.instance.stringToVehicleType("BIKE")
+        assertEquals(VehicleType.BIKE, status)
+
+        assertNull(Converters.instance.stringToVehicleType(null))
+    }
+
+    @Test
+    fun testStringFromVehicleType() {
+        val str = Converters.instance.stringFromVehicleType(VehicleType.BIKE)
+        assertEquals("BIKE", str)
+
+        assertNull(Converters.instance.stringFromVehicleType(null))
+    }
+
+    @Test
+    fun testStringToPropertyType() {
+        val status = Converters.instance.stringToPropertyType("COMPANY_TITLE_UNIT")
+        assertEquals(PropertyType.COMPANY_TITLE_UNIT, status)
+
+        assertEquals(PropertyType.OTHER, Converters.instance.stringToPropertyType(null))
+    }
+
+    @Test
+    fun testStringFromPropertyType() {
+        val str = Converters.instance.stringFromPropertyType(PropertyType.COMPANY_TITLE_UNIT)
+        assertEquals("COMPANY_TITLE_UNIT", str)
+
+        assertEquals("OTHER", Converters.instance.stringFromPropertyType(null))
+    }
+
+    @Test
+    fun testStringToPropertyZoning() {
+        val status = Converters.instance.stringToPropertyZoning("COMMERCIAL")
+        assertEquals(PropertyZoning.COMMERCIAL, status)
+
+        assertNull(Converters.instance.stringToPropertyZoning(null))
+    }
+
+    @Test
+    fun testStringFromPropertyZoning() {
+        val str = Converters.instance.stringFromPropertyZoning(PropertyZoning.COMMERCIAL)
+        assertEquals("COMMERCIAL", str)
+
+        assertNull(Converters.instance.stringFromPropertyZoning(null))
+    }
+
+    @Test
+    fun testStringToPropertyPurpose() {
+        val status = Converters.instance.stringToPropertyPurpose("INVESTMENT")
+        assertEquals(PropertyPurpose.INVESTMENT, status)
+
+        assertNull(Converters.instance.stringToPropertyPurpose(null))
+    }
+
+    @Test
+    fun testStringFromPropertyPurpose() {
+        val str = Converters.instance.stringFromPropertyPurpose(PropertyPurpose.INVESTMENT)
+        assertEquals("INVESTMENT", str)
+
+        assertNull(Converters.instance.stringFromPropertyPurpose(null))
     }
 
     @Test
