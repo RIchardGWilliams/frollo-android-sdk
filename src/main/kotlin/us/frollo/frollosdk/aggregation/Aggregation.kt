@@ -849,7 +849,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
      * Manually created account will not be automatically updated.
      *
      * @param request request model for manual account creation
-     * @param completion Optional completion handler with optional error if the request fails else ID of the ProviderAccount created if success
+     * @param completion Optional completion handler with optional error if the request fails else ID of the Account created if success
      */
     fun createManualAccount(
         request: AccountCreateUpdateRequest,
@@ -869,6 +869,31 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * Update a manually created account (for tracking a user's asset or liability) on the host.
+     *
+     * @param accountId ID of the account to be updated
+     * @param request request model for updating manually created account
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun updateManualAccount(
+        accountId: Long,
+        request: AccountCreateUpdateRequest,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        aggregationAPI.updateManualAccount(accountId, request).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleAccountResponse(resource.data, completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#updateManualAccount", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
      * Delete a specific account created manually by ID from the host
      *
      * @param accountId Account ID of the account to be deleted
@@ -882,7 +907,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                     completion?.invoke(Result.success())
                 }
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#deleteAccount", resource.error?.localizedDescription)
+                    Log.e("$TAG#deleteManualAccount", resource.error?.localizedDescription)
                     completion?.invoke(Result.error(resource.error))
                 }
             }

@@ -116,6 +116,9 @@ internal interface AggregationAPI {
     @PUT(URL_ACCOUNT)
     fun updateAccount(@Path("account_id") accountId: Long, @Body request: AccountUpdateRequest): Call<AccountResponse>
 
+    @PUT(URL_ACCOUNT)
+    fun updateManualAccount(@Path("account_id") accountId: Long, @Body request: AccountCreateUpdateRequest): Call<AccountResponse>
+
     @POST(URL_ACCOUNTS)
     fun createAccount(@Body request: AccountCreateUpdateRequest): Call<AccountResponse>
 

@@ -1506,6 +1506,102 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testUpdateManualAccount() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val accountId = 542L
+
+        val body = readStringFromJson(app, R.raw.account_id_542)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/accounts/$accountId") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val list = mutableListOf(testAccountResponseData(accountId = accountId), testAccountResponseData(accountId = 123))
+        database.accounts().insertAll(*list.map { it.toAccount() }.toList().toTypedArray())
+
+        val testObserver1 = aggregation.fetchAccounts().test()
+        testObserver1.awaitValue()
+        val models1 = testObserver1.value().data
+        assertEquals(2, models1?.size)
+        assertNotNull(models1?.find { it.accountId == accountId })
+
+        aggregation.updateManualAccount(
+            accountId = 542,
+            request = testAccountCreateUpdateRequestData()
+        ) { result ->
+
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver2 = aggregation.fetchAccounts().test()
+            testObserver2.awaitValue()
+            val models2 = testObserver2.value().data
+            assertEquals(2, models2?.size)
+            val account = models2?.find { it.accountId == accountId }
+            assertNotNull(account)
+            assertEquals(542L, account?.accountId)
+            assertEquals(123L, account?.relatedAccounts?.get(0)?.accountId)
+            assertEquals(AccountRelationship.OFFSET, account?.relatedAccounts?.get(0)?.relationship)
+            assertEquals(true, account?.asset)
+            assertEquals(StatementOrPaymentFrequency.MONTHLY, account?.frequency)
+            assertEquals("Frollo", account?.additionalDetails?.description)
+            assertEquals("http://example.com/image.png", account?.additionalDetails?.imageUrl)
+            assertEquals(PropertyType.COMPANY_TITLE_UNIT, account?.additionalDetails?.propertyDetails?.type)
+            assertEquals(PropertyZoning.INDUSTRIAL, account?.additionalDetails?.propertyDetails?.zoning)
+            assertEquals(PropertyPurpose.COMMERCIAL, account?.additionalDetails?.propertyDetails?.purpose)
+            assertEquals(true, account?.additionalDetails?.propertyDetails?.principalResidence)
+            assertEquals(700L, account?.additionalDetails?.propertyDetails?.address?.addressId)
+            assertEquals("Frollo, Level 33, 100 Mount St, North Sydney, NSW, 2060, Australia", account?.additionalDetails?.propertyDetails?.address?.longForm)
+            assertEquals(false, account?.jointAccount)
+            assertEquals(AccountOwnerType.BUSINESS, account?.ownerType)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("aggregation/accounts/542", request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateManualAccountFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.updateManualAccount(
+            accountId = 542,
+            request = testAccountCreateUpdateRequestData()
+        ) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testDeleteManualAccount() {
         initSetup()
 
