@@ -3828,7 +3828,9 @@
                 "latitude": -33.868327
             }
         },
-        "user_tags": []
+        "user_tags": [],
+        "service_id": "x2p1.02",
+        "service_type": "x2p1"
     }, {
         "id": 159660,
         "account_id": 2142,

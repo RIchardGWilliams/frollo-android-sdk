@@ -31,6 +31,7 @@ import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.network.api.PaymentsAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
@@ -517,6 +518,8 @@ class PaymentsTest : BaseAndroidTest() {
             assertEquals("2060", response?.address?.postcode)
             assertEquals(true, response?.isNppAllowed)
             assertEquals(true, response?.valid)
+            assertEquals(4, response?.nppServiceIds?.size)
+            assertEquals(true, response?.nppServiceIds?.containsAll(NPPServiceIdType.values().toList()))
 
             signal.countDown()
         }
@@ -609,7 +612,7 @@ class PaymentsTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testVerifyPayIdInvalid() {
+    fun testVerifyPayIdValid() {
         initSetup()
 
         val signal = CountDownLatch(1)
@@ -642,6 +645,8 @@ class PaymentsTest : BaseAndroidTest() {
             assertEquals("John Doe", response?.name)
             assertEquals("+61411111111", response?.payId)
             assertEquals(PayIDType.MOBILE, response?.type)
+            assertEquals(4, response?.nppServiceIds?.size)
+            assertEquals(true, response?.nppServiceIds?.containsAll(NPPServiceIdType.values().toList()))
 
             signal.countDown()
         }

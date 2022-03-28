@@ -72,6 +72,7 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRModel
 import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitPeriod
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
@@ -1978,6 +1979,8 @@ class AggregationTest : BaseAndroidTest() {
             val model = testObserver.value().data
             assertNotNull(model)
             assertEquals(194630L, model?.transactionId)
+            assertEquals("x2p1.02", model?.serviceId)
+            assertEquals(NPPServiceIdType.X2P1, model?.serviceType)
 
             signal.countDown()
         }
@@ -2127,6 +2130,8 @@ class AggregationTest : BaseAndroidTest() {
             val updatedTransaction = testObserver2.value().data
             assertNotNull(updatedTransaction)
             assertEquals("BURGER PROJECT SYDNEY AU", updatedTransaction?.description?.original)
+            assertEquals("x2p1.02", updatedTransaction?.serviceId)
+            assertEquals(NPPServiceIdType.X2P1, updatedTransaction?.serviceType)
 
             signal1.countDown()
         }
