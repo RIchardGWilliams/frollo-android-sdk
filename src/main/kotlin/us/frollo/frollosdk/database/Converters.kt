@@ -86,6 +86,7 @@ import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.OpenMode
 import us.frollo.frollosdk.model.coredata.payday.PaydayFrequency
 import us.frollo.frollosdk.model.coredata.payday.PaydayStatus
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
@@ -619,6 +620,14 @@ internal class Converters {
             }
         }
     }
+
+    // Payment
+
+    @TypeConverter
+    fun stringToNPPServiceIdType(value: String?): NPPServiceIdType? = value?.let { NPPServiceIdType.valueOf(it) }
+
+    @TypeConverter
+    fun stringFromNPPServiceIdType(value: NPPServiceIdType?): String? = value?.name
 
     // Card
 

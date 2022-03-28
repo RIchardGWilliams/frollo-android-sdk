@@ -24,6 +24,7 @@ import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantDetails
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 
 // Declaring the ColumnInfo allows for the renaming of variables without
@@ -102,7 +103,13 @@ data class Transaction(
     @ColumnInfo(name = "reference") val reference: String?,
 
     /** Reason of cancelled or rejected transaction (Optional) */
-    @ColumnInfo(name = "reason") val reason: String?
+    @ColumnInfo(name = "reason") val reason: String?,
+
+    /** Service ID used for the transaction Eg: "x2p1.02" (Optional) */
+    @ColumnInfo(name = "service_id") val serviceId: String?,
+
+    /** Service Type used for the transaction Eg: "sct", "x2p1" (Osko) (Optional) */
+    @ColumnInfo(name = "service_type") val serviceType: NPPServiceIdType?
 
 ) : IAdapterModel {
 

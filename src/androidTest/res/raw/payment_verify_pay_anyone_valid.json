@@ -9,5 +9,6 @@
     "state": "NSW",
     "postal_code": "2060"
   },
-  "npp_allowed": true
+  "npp_allowed": true,
+  "npp_service_ids": ["sct", "catsct", "x2p1", "other"]
 }

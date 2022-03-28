@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.api.payments
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.payments.BSBAddress
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 
 /**
  * VerifyPayAnyoneResponse
@@ -45,5 +46,8 @@ data class VerifyPayAnyoneResponse(
     @SerializedName("payments_flags") val paymentsFlags: String?,
 
     /** Indicates if NPP is allowed for Payment */
-    @SerializedName("npp_allowed") val isNppAllowed: Boolean?
+    @SerializedName("npp_allowed") val isNppAllowed: Boolean?,
+
+    /** The service ids available on this payment (Optional) */
+    @SerializedName("npp_service_ids") val nppServiceIds: List<NPPServiceIdType>?
 )

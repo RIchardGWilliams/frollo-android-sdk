@@ -23,6 +23,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.Cate
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionStatus
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 
 internal data class TransactionResponse(
@@ -45,5 +46,7 @@ internal data class TransactionResponse(
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("goal_id") val goalId: Long?,
     @SerializedName("reference") val reference: String?,
-    @SerializedName("reason") val reason: String?
+    @SerializedName("reason") val reason: String?,
+    @SerializedName("service_id") val serviceId: String?,
+    @SerializedName("service_type") val serviceType: NPPServiceIdType?
 )

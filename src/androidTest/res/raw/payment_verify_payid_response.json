@@ -1,5 +1,6 @@
 {
   "type": "mobile",
   "payid": "+61411111111",
-  "payid_name": "John Doe"
+  "payid_name": "John Doe",
+  "npp_service_ids": ["sct", "catsct", "x2p1", "other"]
 }

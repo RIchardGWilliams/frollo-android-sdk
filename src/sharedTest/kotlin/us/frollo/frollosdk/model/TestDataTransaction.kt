@@ -25,6 +25,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.Cate
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionStatus
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.testutils.randomNumber
 import us.frollo.frollosdk.testutils.randomString
@@ -66,7 +67,9 @@ internal fun testTransactionResponseData(
         externalId = randomString(8),
         goalId = randomNumber().toLong(),
         reference = "",
-        reason = ""
+        reason = "",
+        serviceId = "x2p1.02",
+        serviceType = NPPServiceIdType.X2P1
     )
 }
 

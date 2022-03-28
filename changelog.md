@@ -4,6 +4,7 @@
 
 #### Changes
 - Manual Account - Create, Update, Delete
+- Osko Service Types in Payment & Transaction APIs
 
 ### 3.16.0
 

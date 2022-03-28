@@ -718,6 +718,7 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 // New changes in this migration:
                 // 1) Alter table - account - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
+                // 2) Alter table - transaction_model - Add columns service_id, service_type
 
                 // START - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `related_accounts` TEXT")
@@ -738,6 +739,11 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_make` TEXT")
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `add_details_vehicle_model` TEXT")
                 // END - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
+
+                // START - Add columns service_id, service_type
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `service_id` TEXT")
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `service_type` TEXT")
+                // END - Add columns service_id, service_type
             }
         }
     }

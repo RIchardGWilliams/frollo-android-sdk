@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.api.payments
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 
 /**
  * VerifyPayIdResponse
@@ -33,5 +34,8 @@ data class VerifyPayIdResponse(
     @SerializedName("type") val type: PayIDType,
 
     /** Name of the registered PayID; shown to external parties when they attempt to make a Payment */
-    @SerializedName("payid_name") val name: String
+    @SerializedName("payid_name") val name: String,
+
+    /** The service ids available on this payment (Optional) */
+    @SerializedName("npp_service_ids") val nppServiceIds: List<NPPServiceIdType>?
 )

@@ -92,6 +92,7 @@ import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.OpenMode
 import us.frollo.frollosdk.model.coredata.payday.PaydayFrequency
 import us.frollo.frollosdk.model.coredata.payday.PaydayStatus
+import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
@@ -1476,6 +1477,22 @@ class ConvertersTest {
         val info = CDRPolicy("CDR Policy", "https://example.com")
         val json = Converters.instance.stringFromCDRPolicy(info)
         assertEquals("{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}", json)
+    }
+
+    @Test
+    fun testStringToNPPServiceIdType() {
+        val status = Converters.instance.stringToNPPServiceIdType("X2P1")
+        assertEquals(NPPServiceIdType.X2P1, status)
+
+        assertNull(Converters.instance.stringToNPPServiceIdType(null))
+    }
+
+    @Test
+    fun testStringFromNPPServiceIdType() {
+        val str = Converters.instance.stringFromNPPServiceIdType(NPPServiceIdType.X2P1)
+        assertEquals("X2P1", str)
+
+        assertNull(Converters.instance.stringFromNPPServiceIdType(null))
     }
 
     @Test
