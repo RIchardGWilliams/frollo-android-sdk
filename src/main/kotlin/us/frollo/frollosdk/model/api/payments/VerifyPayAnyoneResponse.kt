@@ -48,6 +48,6 @@ data class VerifyPayAnyoneResponse(
     /** Indicates if NPP is allowed for Payment */
     @SerializedName("npp_allowed") val isNppAllowed: Boolean?,
 
-    /** The service ids available on this payment (Optional) */
-    @SerializedName("npp_service_ids") val nppServiceIds: List<NPPServiceIdType>?
+    /** The service types available on this payment (Optional) */
+    @SerializedName("service_types") val serviceTypes: List<NPPServiceIdType>?
 )
