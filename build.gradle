@@ -140,10 +140,10 @@ dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
 
     // Android Arch Components
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
-    implementation "androidx.room:room-runtime:2.4.1"
-    implementation 'androidx.room:room-rxjava2:2.4.1'
-    kapt "androidx.room:room-compiler:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+    implementation "androidx.room:room-runtime:2.4.2"
+    implementation 'androidx.room:room-rxjava2:2.4.2'
+    kapt "androidx.room:room-compiler:2.4.2"
 
     // AndroidX
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
