@@ -660,6 +660,19 @@ internal fun sqlForConsents(providerId: Long? = null, providerAccountId: Long? =
     return sqlQueryBuilder.create()
 }
 
+internal fun sqlForConsentIdsToGetStaleIds(
+    before: Long? = null,
+    after: Long? = null
+): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("consent")
+    sqlQueryBuilder.columns(arrayOf("consent_id"))
+
+    before?.let { sqlQueryBuilder.appendSelection(selection = "consent_id > $it") }
+    after?.let { sqlQueryBuilder.appendSelection(selection = "consent_id <= $it") }
+
+    return sqlQueryBuilder.create()
+}
+
 internal fun sqlForContacts(paymentMethod: PaymentMethod? = null): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("contact")
 

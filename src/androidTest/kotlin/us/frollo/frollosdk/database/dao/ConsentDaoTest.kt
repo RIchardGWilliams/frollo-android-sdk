@@ -18,6 +18,7 @@ package us.frollo.frollosdk.database.dao
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.jraska.livedata.test
@@ -115,7 +116,7 @@ class ConsentDaoTest {
     }
 
     @Test
-    fun testGetStaleIds() {
+    fun testGetIdsByQuery() {
         val data1 = testConsentResponseData(consentId = 100)
         val data2 = testConsentResponseData(consentId = 101)
         val data3 = testConsentResponseData(consentId = 102)
@@ -124,10 +125,11 @@ class ConsentDaoTest {
 
         db.consents().insertAll(*list.map { it.toConsent() }.toList().toTypedArray())
 
-        val staleIds = db.consents().getStaleIds(longArrayOf(100, 103)).sorted()
+        val query = SimpleSQLiteQuery("SELECT consent_id FROM consent WHERE consent_id IN (101,102)")
+        val ids = db.consents().getIdsByQuery(query).sorted()
 
-        assertEquals(2, staleIds.size)
-        assertTrue(staleIds.containsAll(mutableListOf<Long>(101, 102)))
+        assertEquals(2, ids.size)
+        assertTrue(ids.containsAll(mutableListOf(101L, 102L)))
     }
 
     @Test
