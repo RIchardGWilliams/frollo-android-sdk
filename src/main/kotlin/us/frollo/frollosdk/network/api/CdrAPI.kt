@@ -27,6 +27,7 @@ import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
+import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 
 internal interface CdrAPI {
@@ -48,7 +49,7 @@ internal interface CdrAPI {
     fun fetchProduct(@Path("product_id") productId: Long): Call<CDRProduct>
 
     @GET(URL_CDR_CONSENTS)
-    fun fetchConsents(): Call<List<ConsentResponse>>
+    fun fetchConsents(@QueryMap options: Map<String, String>): Call<PaginatedResponse<ConsentResponse>>
 
     @GET(URL_CDR_CONSENT)
     fun fetchConsent(@Path("consent_id") consentId: Long): Call<ConsentResponse>

@@ -45,6 +45,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.extensions.compareToFindMissingItems
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.fetchConsents
 import us.frollo.frollosdk.extensions.fetchMerchants
 import us.frollo.frollosdk.extensions.fetchProducts
 import us.frollo.frollosdk.extensions.fetchSuggestedTags
@@ -54,6 +55,7 @@ import us.frollo.frollosdk.extensions.fetchTransactionsSummaryByQuery
 import us.frollo.frollosdk.extensions.fetchUserTags
 import us.frollo.frollosdk.extensions.refreshProviderAccounts
 import us.frollo.frollosdk.extensions.sqlForAccounts
+import us.frollo.frollosdk.extensions.sqlForConsentIdsToGetStaleIds
 import us.frollo.frollosdk.extensions.sqlForConsents
 import us.frollo.frollosdk.extensions.sqlForMerchants
 import us.frollo.frollosdk.extensions.sqlForMerchantsIds
@@ -2135,19 +2137,74 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * Refresh consents from the host with pagination.
+     *
+     * @param before Consent ID to fetch before this consent (optional)
+     * @param after Consent ID to fetch upto this consent (optional)
+     * @param size Count of objects to returned from the API (page size) (optional)
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun refreshConsentsWithPagination(
+        after: Long? = null,
+        before: Long? = null,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+    ) {
+        cdrAPI.fetchConsents(
+            after = after,
+            before = before,
+            size = size
+        ).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#refreshConsentsWithPagination", resource.error?.localizedDescription)
+                    completion?.invoke(PaginatedResult.Error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    val response = resource.data
+                    handleConsentsWithPaginationResponse(
+                        response = response?.data,
+                        before = response?.paging?.cursors?.before?.toLong(),
+                        after = response?.paging?.cursors?.after?.toLong(),
+                        completion = completion
+                    )
+                }
+            }
+        }
+    }
+
+    /**
      * Refresh all available consents from the host.
      *
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun refreshConsents(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        cdrAPI.fetchConsents().enqueue { resource ->
-            when (resource.status) {
-                Resource.Status.ERROR -> {
-                    Log.e("$TAG#refreshConsents", resource.error?.localizedDescription)
-                    completion?.invoke(Result.error(resource.error))
+    fun refreshAllConsents(completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        refreshNextConsents {
+            completion?.invoke(it)
+        }
+    }
+
+    private fun refreshNextConsents(
+        after: Long? = null,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        refreshConsentsWithPagination(after = after) { result ->
+            when (result) {
+                is PaginatedResult.Success -> {
+                    result.paginationInfo?.let { paginationInfo ->
+                        if (paginationInfo.after == null) {
+                            completion?.invoke(Result.success())
+                        } else {
+                            refreshNextConsents(
+                                after = paginationInfo.after,
+                                completion = completion
+                            )
+                        }
+                    }
                 }
-                Resource.Status.SUCCESS -> {
-                    handleConsentsResponse(response = resource.data, completion = completion)
+                is PaginatedResult.Error -> {
+                    Log.e("$TAG#refreshNextConsents", result.error?.localizedDescription)
+                    completion?.invoke(Result.error(result.error))
                 }
             }
         }
@@ -2191,7 +2248,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 }
                 Resource.Status.SUCCESS -> {
                     // Since submitting a consent might affect other consents for the user, we need to refresh all of them
-                    refreshConsents { // This call will anyways add the newly created consent to the cache. Hence no need to call handleConsentResponse.
+                    refreshNextConsents { // This call will anyways add the newly created consent to the cache. Hence no need to call handleConsentResponse.
                         when (it.status) {
                             Result.Status.SUCCESS -> {
                                 completion?.invoke(Resource.success(resource.data?.consentId))
@@ -2257,22 +2314,42 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         updateConsent(consentId, consentForm, completion)
     }
 
-    private fun handleConsentsResponse(response: List<ConsentResponse>?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+    private fun handleConsentsWithPaginationResponse(
+        response: List<ConsentResponse>?,
+        after: Long?,
+        before: Long?,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
+    ) {
         response?.let {
             doAsync {
+                // Insert all consents from API response
                 val models = response.map { it.toConsent() }
                 db.consents().insertAll(*models.toTypedArray())
 
+                // Fetch IDs from API response
                 val apiIds = models.map { it.consentId }.toList()
-                val staleIds = db.consents().getStaleIds(apiIds.toLongArray())
+
+                // Get IDs from database
+                val consentIds = db.consents().getIdsByQuery(
+                    sqlForConsentIdsToGetStaleIds(
+                        before = before,
+                        after = after
+                    )
+                ).toHashSet()
+
+                // Get stale IDs that are not present in the API response
+                val staleIds = consentIds.minus(apiIds)
 
                 if (staleIds.isNotEmpty()) {
                     db.consents().deleteMany(staleIds.toLongArray())
                 }
 
-                uiThread { completion?.invoke(Result.success()) }
+                uiThread {
+                    val paginationInfo = PaginationInfo(before = before, after = after)
+                    completion?.invoke(PaginatedResult.Success(paginationInfo))
+                }
             }
-        } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
+        } ?: run { completion?.invoke(PaginatedResult.Success()) } // Explicitly invoke completion callback if response is null.
     }
 
     private fun handleConsentResponse(response: ConsentResponse?, completion: OnFrolloSDKCompletionListener<Result>? = null) {

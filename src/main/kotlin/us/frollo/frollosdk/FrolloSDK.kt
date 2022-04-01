@@ -535,7 +535,7 @@ object FrolloSDK {
         aggregation.refreshProviderAccounts()
         aggregation.refreshAccounts()
         aggregation.refreshTransactionsWithPagination()
-        aggregation.refreshConsents()
+        aggregation.refreshConsentsWithPagination()
         userManagement.refreshUser()
         messages.refreshUnreadMessages()
         budgets.refreshBudgets()

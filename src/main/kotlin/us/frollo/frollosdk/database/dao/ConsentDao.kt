@@ -45,8 +45,8 @@ internal interface ConsentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: Consent): Long
 
-    @Query("SELECT consent_id FROM consent WHERE consent_id NOT IN (:apiIds)")
-    fun getStaleIds(apiIds: LongArray): List<Long>
+    @RawQuery
+    fun getIdsByQuery(queryStr: SupportSQLiteQuery): MutableList<Long>
 
     @Query("DELETE FROM consent WHERE consent_id IN (:consentIds)")
     fun deleteMany(consentIds: LongArray)
