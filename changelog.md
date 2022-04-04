@@ -5,6 +5,9 @@
 #### Changes
 - Manual Account - Create, Update, Delete
 - Osko Service Types in Payment & Transaction APIs
+- Add pagination to Consent API Response
+- Add new fields to Contact API Response
+- Add new Payment Methods - digital_wallet & card
 
 ### 3.16.0
 

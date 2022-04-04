@@ -1,6 +1,23 @@
+/*
+ * Copyright 2019 Frollo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package us.frollo.frollosdk.model.coredata.contacts
 
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.extensions.toJsonObject
 import java.io.Serializable
 
 /** Represents the payment details of a contact */
@@ -56,18 +73,66 @@ sealed class PaymentDetails : Serializable {
         @SerializedName("bank_details") val bankDetails: BankDetails
     ) : PaymentDetails()
 
+    /** Represents the payment details of a Digital Wallet Payment contact */
+    data class DigitalWallet(
+
+        /** Name of the wallet or wallet provider */
+        @SerializedName("name") val name: String,
+
+        /** Identifier of the digital wallet */
+        @SerializedName("identifier") val identifier: String,
+
+        /** Type of wallet identifier */
+        @SerializedName("type") val type: DigitalWalletType,
+
+        /** Provider of the wallet */
+        @SerializedName("provider") val provider: DigitalWalletProvider,
+    ) : PaymentDetails()
+
+    /** Represents the payment details of a Card Payment contact */
+    data class Card(
+
+        /** Masked PAN to be paid */
+        @SerializedName("card") val maskedCardPAN: String
+    ) : PaymentDetails()
+
     companion object {
         internal fun jsonIsPayAnyone(json: String): Boolean {
-            return json.contains("account_number") && json.contains("bsb")
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("account_number") &&
+                jsonObject.has("bsb")
         }
         internal fun jsonIsBiller(json: String): Boolean {
-            return json.contains("biller_code") && json.contains("crn")
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("biller_code") &&
+                jsonObject.has("crn")
         }
         internal fun jsonIsPayID(json: String): Boolean {
-            return json.contains("payid") && json.contains("type")
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("payid") &&
+                jsonObject.has("type")
         }
         internal fun jsonIsInternational(json: String): Boolean {
-            return json.contains("beneficiary") && json.contains("bank_details")
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("beneficiary") &&
+                jsonObject.has("bank_details")
+        }
+        internal fun jsonIsDigitalWallet(json: String): Boolean {
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("name") &&
+                jsonObject.has("identifier") &&
+                jsonObject.has("type") &&
+                jsonObject.has("provider")
+        }
+        internal fun jsonIsCard(json: String): Boolean {
+            val jsonObject = json.toJsonObject()
+            return jsonObject != null &&
+                jsonObject.has("card")
         }
     }
 }

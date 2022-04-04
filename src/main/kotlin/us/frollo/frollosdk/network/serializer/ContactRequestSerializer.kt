@@ -19,7 +19,8 @@ internal object ContactRequestSerializer : JsonSerializer<ContactCreateUpdateReq
             PaymentMethod.PAY_ANYONE -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.PayAnyone::class.java)
             PaymentMethod.BPAY -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.Biller::class.java)
             PaymentMethod.PAY_ID -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.PayID::class.java)
-            PaymentMethod.INTERNATIONAL -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.International::class.java)
+            PaymentMethod.DIGITAL_WALLET -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.DigitalWallet::class.java)
+            PaymentMethod.CARD -> Gson().toJsonTree(src.paymentDetails, PaymentDetails.Card::class.java)
             else -> null
         }
         paymentDetailsElement?.let {

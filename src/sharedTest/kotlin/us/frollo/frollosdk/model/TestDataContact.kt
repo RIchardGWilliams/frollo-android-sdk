@@ -17,10 +17,13 @@
 package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.model.coredata.contacts.BankAddress
 import us.frollo.frollosdk.model.coredata.contacts.BankDetails
 import us.frollo.frollosdk.model.coredata.contacts.Beneficiary
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -42,8 +45,11 @@ internal fun testContactResponseData(
         name = randomString(20),
         nickName = randomString(20),
         description = randomString(20),
+        aggregatorType = AggregatorType.values().randomElement(),
+        consentId = randomNumber().toLong(),
+        editable = true,
         paymentMethod = method,
-        paymentDetails = testPaymentDetailsData(method)
+        paymentDetails = testPaymentDetailsData(method),
     )
 }
 
@@ -53,6 +59,8 @@ internal fun testPaymentDetailsData(paymentMethod: PaymentMethod): PaymentDetail
         PaymentMethod.BPAY -> testBillerDetailsData()
         PaymentMethod.PAY_ID -> testPayIDDetailsData()
         PaymentMethod.INTERNATIONAL -> testInternationalDetailsData()
+        PaymentMethod.DIGITAL_WALLET -> testDigitalWalletDetailsData()
+        PaymentMethod.CARD -> testCardDetailsData()
     }
 }
 
@@ -101,5 +109,20 @@ internal fun testInternationalDetailsData(): PaymentDetails.International {
             routingNumber = randomString(20),
             legalEntityIdentifier = randomString(20)
         )
+    )
+}
+
+internal fun testDigitalWalletDetailsData(): PaymentDetails.DigitalWallet {
+    return PaymentDetails.DigitalWallet(
+        name = randomString(20),
+        identifier = randomString(20),
+        type = DigitalWalletType.CONTACT_NAME,
+        provider = DigitalWalletProvider.PAYPAL_AU
+    )
+}
+
+internal fun testCardDetailsData(): PaymentDetails.Card {
+    return PaymentDetails.Card(
+        maskedCardPAN = randomString(20)
     )
 }

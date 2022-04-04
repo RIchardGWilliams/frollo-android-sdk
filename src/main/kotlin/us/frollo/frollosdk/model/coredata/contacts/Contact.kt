@@ -1,3 +1,19 @@
+/*
+ * Copyright 2019 Frollo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package us.frollo.frollosdk.model.coredata.contacts
 
 import androidx.room.ColumnInfo
@@ -5,6 +21,7 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
+import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 
 @Entity(
     tableName = "contact",
@@ -40,6 +57,15 @@ data class Contact(
 
     /** Description */
     @ColumnInfo(name = "description") var description: String?,
+
+    /** Specifies the aggregator with which this contact was synced from */
+    @ColumnInfo(name = "aggregator") val aggregatorType: AggregatorType,
+
+    /** ID of the Consent this contact was retrieved from */
+    @ColumnInfo(name = "consent_id") val consentId: Long?,
+
+    /** Indicates if edit APIs such as Update/Delete will work */
+    @ColumnInfo(name = "editable") val editable: Boolean,
 
     /** Payment Method of the contact */
     @ColumnInfo(name = "payment_method") var paymentMethod: PaymentMethod,

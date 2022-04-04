@@ -16,31 +16,19 @@
 
 package us.frollo.frollosdk.model.coredata.contacts
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
-/**
- * Indicates the payment method type for the contact
- */
-enum class PaymentMethod {
+/** Provider of the Digital Wallet */
+@Keep
+enum class DigitalWalletProvider {
 
-    /** Pay Anyone type*/
-    @SerializedName("pay_anyone") PAY_ANYONE,
+    /** PayPal */
+    @SerializedName("PAYPAL_AU") PAYPAL_AU,
 
-    /** Pay ID type */
-    @SerializedName("pay_id") PAY_ID,
-
-    /** BPay type */
-    @SerializedName("bpay") BPAY,
-
-    /** International Payment type */
-    @SerializedName("international") INTERNATIONAL,
-
-    /** Digital Wallet Payment type */
-    @SerializedName("digital_wallet") DIGITAL_WALLET,
-
-    /** Card Payment type */
-    @SerializedName("card") CARD;
+    /** Other */
+    @SerializedName("OTHER") OTHER;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters

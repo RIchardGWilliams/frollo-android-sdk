@@ -11,5 +11,8 @@
     },
     "created_date": "2020-12-07T14:29:21.112+11:00",
     "modified_date": "2020-12-07T14:29:21.112+11:00",
-    "verified": false
+    "verified": false,
+    "aggregator": "cdr",
+    "consent_id": 123,
+    "editable": false
 }

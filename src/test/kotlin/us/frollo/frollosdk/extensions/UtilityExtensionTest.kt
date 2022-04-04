@@ -32,6 +32,7 @@ import org.junit.Test
 import us.frollo.frollosdk.error.APIErrorType
 import us.frollo.frollosdk.model.coredata.user.Attribution
 import us.frollo.frollosdk.model.coredata.user.Gender
+import us.frollo.frollosdk.testutils.toStringTrimmed
 
 class UtilityExtensionTest {
 
@@ -117,5 +118,15 @@ class UtilityExtensionTest {
         val missingElements = set1.compareToFindMissingItems(set2)
         assertEquals(2, missingElements.size)
         assertTrue(missingElements.containsAll(listOf<Long>(2, 7)))
+    }
+
+    @Test
+    fun testStringToJsonObject() {
+        val json = "{\"name\":\"J GILBERT\",\"identifier\":\"j.gilbert@frollo.com\",\"type\":\"EMAIL\",\"provider\":\"PAYPAL_AU\"}"
+        val jsonObject = json.toJsonObject()
+        assertEquals("J GILBERT", jsonObject?.get("name")?.toStringTrimmed())
+        assertEquals("j.gilbert@frollo.com", jsonObject?.get("identifier")?.toStringTrimmed())
+        assertEquals("EMAIL", jsonObject?.get("type")?.toStringTrimmed())
+        assertEquals("PAYPAL_AU", jsonObject?.get("provider")?.toStringTrimmed())
     }
 }

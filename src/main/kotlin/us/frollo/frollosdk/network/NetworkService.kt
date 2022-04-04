@@ -35,8 +35,10 @@ import us.frollo.frollosdk.base.LiveDataCallAdapterFactory
 import us.frollo.frollosdk.core.AppInfo
 import us.frollo.frollosdk.keystore.Keystore
 import us.frollo.frollosdk.model.api.contacts.ContactCreateUpdateRequest
+import us.frollo.frollosdk.model.api.contacts.ContactInternationalCreateUpdateRequest
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.network.deserializer.ContactResponseDeserializer
+import us.frollo.frollosdk.network.serializer.ContactInternationalRequestSerializer
 import us.frollo.frollosdk.network.serializer.ContactRequestSerializer
 import us.frollo.frollosdk.preferences.Preferences
 import java.util.concurrent.TimeUnit
@@ -112,6 +114,7 @@ class NetworkService internal constructor(
         val gson = GsonBuilder()
             .registerTypeAdapter(ContactResponse::class.java, ContactResponseDeserializer)
             .registerTypeAdapter(ContactCreateUpdateRequest::class.java, ContactRequestSerializer)
+            .registerTypeAdapter(ContactInternationalCreateUpdateRequest::class.java, ContactInternationalRequestSerializer)
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .enableComplexMapKeySerialization()
             .create()

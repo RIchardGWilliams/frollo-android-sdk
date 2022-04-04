@@ -20,6 +20,8 @@ import android.content.Intent
 import android.util.Base64
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import okhttp3.Response
@@ -136,4 +138,13 @@ internal fun encryptValueBase64(publicKeyString: String, value: String): String 
     cypher.init(Cipher.ENCRYPT_MODE, publicKey)
     val bytes = cypher.doFinal(value.toByteArray())
     return Base64.encodeToString(bytes, Base64.NO_WRAP) // NO_WRAP is important to exclude new line characters in the encoded string
+}
+
+internal fun String.toJsonObject(): JsonObject? {
+    val jsonElement = JsonParser().parse(this)
+    return if (jsonElement.isJsonObject) {
+        jsonElement.asJsonObject
+    } else {
+        null
+    }
 }

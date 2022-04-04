@@ -21,6 +21,8 @@ import org.junit.Assert.assertNull
 import org.junit.Test
 import us.frollo.frollosdk.model.api.contacts.ContactCreateUpdateRequest
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -31,7 +33,6 @@ class ContactRequestSerializerTest {
     @Test
     fun testSerializePayAnyoneContactRequest() {
         val payAnyoneRequest = ContactCreateUpdateRequest(
-            name = "Johnathan",
             nickName = "Johnny Boy",
             description = null,
             paymentMethod = PaymentMethod.PAY_ANYONE,
@@ -42,7 +43,6 @@ class ContactRequestSerializerTest {
             )
         )
         val jsonObject = ContactRequestSerializer.serialize(payAnyoneRequest, ContactCreateUpdateRequest::class.java, null).asJsonObject
-        assertEquals("Johnathan", jsonObject["name"].toStringTrimmed())
         assertEquals("Johnny Boy", jsonObject["nick_name"].toStringTrimmed())
         assertEquals("pay_anyone", jsonObject["payment_method"].toStringTrimmed())
         assertNull(jsonObject["description"])
@@ -55,7 +55,6 @@ class ContactRequestSerializerTest {
     @Test
     fun testSerializeBPayContactRequest() {
         val bPayRequest = ContactCreateUpdateRequest(
-            name = "Tenstra Inc",
             nickName = "Tenstra",
             description = null,
             paymentMethod = PaymentMethod.BPAY,
@@ -67,7 +66,6 @@ class ContactRequestSerializerTest {
             )
         )
         val jsonObject = ContactRequestSerializer.serialize(bPayRequest, ContactCreateUpdateRequest::class.java, null).asJsonObject
-        assertEquals("Tenstra Inc", jsonObject["name"].toStringTrimmed())
         assertEquals("Tenstra", jsonObject["nick_name"].toStringTrimmed())
         assertEquals("bpay", jsonObject["payment_method"].toStringTrimmed())
         assertNull(jsonObject["description"])
@@ -81,7 +79,6 @@ class ContactRequestSerializerTest {
     @Test
     fun testSerializePayIDContactRequest() {
         val payIDRequest = ContactCreateUpdateRequest(
-            name = "Johnathan Gilbert",
             nickName = "Johnny",
             description = null,
             paymentMethod = PaymentMethod.PAY_ID,
@@ -92,7 +89,6 @@ class ContactRequestSerializerTest {
             )
         )
         val jsonObject = ContactRequestSerializer.serialize(payIDRequest, ContactCreateUpdateRequest::class.java, null).asJsonObject
-        assertEquals("Johnathan Gilbert", jsonObject["name"].toStringTrimmed())
         assertEquals("Johnny", jsonObject["nick_name"].toStringTrimmed())
         assertEquals("pay_id", jsonObject["payment_method"].toStringTrimmed())
         assertNull(jsonObject["description"])
@@ -100,5 +96,47 @@ class ContactRequestSerializerTest {
         assertEquals("j.gilbert@frollo.com", paymentDetailsJsonObject["payid"].toStringTrimmed())
         assertEquals("J GILBERT", paymentDetailsJsonObject["name"].toStringTrimmed())
         assertEquals("email", paymentDetailsJsonObject["type"].toStringTrimmed())
+    }
+
+    @Test
+    fun testSerializeDigitalWalletContactRequest() {
+        val request = ContactCreateUpdateRequest(
+            nickName = "Johnny",
+            description = null,
+            paymentMethod = PaymentMethod.DIGITAL_WALLET,
+            paymentDetails = PaymentDetails.DigitalWallet(
+                name = "J GILBERT",
+                identifier = "j.gilbert@frollo.com",
+                type = DigitalWalletType.EMAIL,
+                provider = DigitalWalletProvider.PAYPAL_AU
+            )
+        )
+        val jsonObject = ContactRequestSerializer.serialize(request, ContactCreateUpdateRequest::class.java, null).asJsonObject
+        assertEquals("Johnny", jsonObject["nick_name"].toStringTrimmed())
+        assertEquals("digital_wallet", jsonObject["payment_method"].toStringTrimmed())
+        assertNull(jsonObject["description"])
+        val paymentDetailsJsonObject = jsonObject["payment_details"].asJsonObject
+        assertEquals("J GILBERT", paymentDetailsJsonObject["name"].toStringTrimmed())
+        assertEquals("j.gilbert@frollo.com", paymentDetailsJsonObject["identifier"].toStringTrimmed())
+        assertEquals("EMAIL", paymentDetailsJsonObject["type"].toStringTrimmed())
+        assertEquals("PAYPAL_AU", paymentDetailsJsonObject["provider"].toStringTrimmed())
+    }
+
+    @Test
+    fun testSerializeCardDContactRequest() {
+        val request = ContactCreateUpdateRequest(
+            nickName = "Johnny",
+            description = null,
+            paymentMethod = PaymentMethod.CARD,
+            paymentDetails = PaymentDetails.Card(
+                maskedCardPAN = "xxxxxxxxxxxx1234"
+            )
+        )
+        val jsonObject = ContactRequestSerializer.serialize(request, ContactCreateUpdateRequest::class.java, null).asJsonObject
+        assertEquals("Johnny", jsonObject["nick_name"].toStringTrimmed())
+        assertEquals("card", jsonObject["payment_method"].toStringTrimmed())
+        assertNull(jsonObject["description"])
+        val paymentDetailsJsonObject = jsonObject["payment_details"].asJsonObject
+        assertEquals("xxxxxxxxxxxx1234", paymentDetailsJsonObject["card"].toStringTrimmed())
     }
 }

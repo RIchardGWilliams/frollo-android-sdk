@@ -16,7 +16,10 @@
             },
             "created_date": "2020-12-07T14:30:11.625+11:00",
             "modified_date": "2020-12-07T14:30:11.625+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 9,
@@ -31,7 +34,10 @@
             },
             "created_date": "2020-12-07T14:29:21.112+11:00",
             "modified_date": "2020-12-07T14:29:21.112+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 8,
@@ -46,7 +52,10 @@
             },
             "created_date": "2020-12-07T14:28:06.557+11:00",
             "modified_date": "2020-12-07T14:28:06.557+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 7,
@@ -60,7 +69,10 @@
             },
             "created_date": "2020-12-07T14:27:22.727+11:00",
             "modified_date": "2020-12-07T14:27:22.727+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 6,
@@ -78,7 +90,10 @@
             },
             "created_date": "2020-12-07T14:26:57.594+11:00",
             "modified_date": "2020-12-07T14:26:57.594+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 5,
@@ -92,7 +107,10 @@
             },
             "created_date": "2020-12-07T14:22:15.358+11:00",
             "modified_date": "2020-12-07T14:22:15.358+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 4,
@@ -110,7 +128,10 @@
             },
             "created_date": "2020-12-07T14:14:41.498+11:00",
             "modified_date": "2020-12-07T14:14:41.498+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 3,
@@ -125,7 +146,10 @@
             },
             "created_date": "2020-12-07T14:10:12.390+11:00",
             "modified_date": "2020-12-07T14:10:12.390+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 2,
@@ -139,7 +163,10 @@
             },
             "created_date": "2020-12-07T14:00:44.940+11:00",
             "modified_date": "2020-12-07T14:00:44.940+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 1,
@@ -153,7 +180,10 @@
             },
             "created_date": "2020-12-07T13:59:35.677+11:00",
             "modified_date": "2020-12-07T13:59:35.677+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         }
     ],
     "paging": {
