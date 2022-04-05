@@ -28,6 +28,7 @@ import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionsSummar
 import us.frollo.frollosdk.model.api.bills.BillPaymentResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetPeriodResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetResponse
+import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
@@ -295,6 +296,18 @@ internal fun CdrAPI.fetchProducts(
     productCategory?.let { queryMap["product_category"] = it.toString() }
     productName?.let { queryMap["name"] = it }
     return fetchProducts(queryMap)
+}
+
+internal fun CdrAPI.fetchConsents(
+    after: Long? = null,
+    before: Long? = null,
+    size: Long? = null
+): Call<PaginatedResponse<ConsentResponse>> {
+    val queryMap = mutableMapOf<String, String>()
+    after?.let { queryMap.put("after", it.toString()) }
+    before?.let { queryMap.put("before", it.toString()) }
+    size?.let { queryMap.put("size", it.toString()) }
+    return fetchConsents(queryMap)
 }
 
 // Contacts

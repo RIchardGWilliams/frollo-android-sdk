@@ -4115,12 +4115,12 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshConsents() {
+    fun testRefreshConsentsIsCached() {
         initSetup()
 
         val signal = CountDownLatch(1)
 
-        val body = readStringFromJson(app, R.raw.consents_valid)
+        val body = readStringFromJson(app, R.raw.consents_page_1)
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
@@ -4134,9 +4134,8 @@ class AggregationTest : BaseAndroidTest() {
             }
             )
 
-        aggregation.refreshConsents { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
+        aggregation.refreshConsentsWithPagination { result ->
+            assertTrue(result is PaginatedResult.Success)
 
             val testObserver = aggregation.fetchConsents().test()
             testObserver.awaitValue()
@@ -4163,9 +4162,9 @@ class AggregationTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        aggregation.refreshConsents { result ->
-            assertEquals(Result.Status.ERROR, result.status)
-            assertNotNull(result.error)
+        aggregation.refreshConsentsWithPagination { result ->
+            assertTrue(result is PaginatedResult.Error)
+            assertNotNull((result as PaginatedResult.Error).error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
 
@@ -4173,6 +4172,123 @@ class AggregationTest : BaseAndroidTest() {
         }
 
         signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshPaginatedConsents() {
+        initSetup()
+
+        val requestPath1 = "${CdrAPI.URL_CDR_CONSENTS}?size=8"
+        val requestPath2 = "${CdrAPI.URL_CDR_CONSENTS}?after=8&size=8"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.consents_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.consents_page_2))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale contacts
+        val data1 = testConsentResponseData(consentId = 14)
+        val data2 = testConsentResponseData(consentId = 15)
+        val list = mutableListOf(data1, data2)
+        database.consents().insertAll(*list.map { it.toConsent() }.toList().toTypedArray())
+
+        aggregation.refreshConsentsWithPagination(size = 8) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(8L, result1.paginationInfo?.after)
+
+            aggregation.refreshConsentsWithPagination(size = 8, after = result1.paginationInfo?.after) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(8L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertNull(result2.paginationInfo?.after)
+
+                val testObserver = aggregation.fetchConsents().test()
+                testObserver.awaitValue()
+                val models = testObserver.value()
+                assertNotNull(models)
+                assertEquals(11, models?.size)
+
+                // Verify that the stale consents are deleted from the database
+                assertEquals(0, models?.filter { it.consentId == 14L && it.consentId == 15L }?.size)
+
+                signal.countDown()
+            }
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(2, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshAllConsents() {
+        initSetup()
+
+        val requestPath1 = CdrAPI.URL_CDR_CONSENTS
+        val requestPath2 = "${CdrAPI.URL_CDR_CONSENTS}?after=8"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.consents_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.consents_page_2))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale contacts
+        val data1 = testConsentResponseData(consentId = 14)
+        val data2 = testConsentResponseData(consentId = 15)
+        val list = mutableListOf(data1, data2)
+        database.consents().insertAll(*list.map { it.toConsent() }.toList().toTypedArray())
+
+        aggregation.refreshAllConsents { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchConsents().test()
+            testObserver.awaitValue()
+            val models = testObserver.value()
+            assertNotNull(models)
+            assertEquals(11, models?.size)
+
+            // Verify that the stale consents are deleted from the database
+            assertEquals(0, models?.filter { it.consentId == 14L && it.consentId == 15L }?.size)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(2, mockServer.requestCount)
 
         tearDown()
     }
@@ -4244,17 +4360,25 @@ class AggregationTest : BaseAndroidTest() {
     fun testSubmitConsent() {
         initSetup()
 
+        val requestPath1 = CdrAPI.URL_CDR_CONSENTS
+        val requestPath2 = "${CdrAPI.URL_CDR_CONSENTS}?after=8"
+
         val signal = CountDownLatch(1)
 
-        val refreshBody = readStringFromJson(app, R.raw.consents_valid)
         val submitBody = readStringFromJson(app, R.raw.consent_created)
+        val refreshPage1 = readStringFromJson(app, R.raw.consents_page_1)
+        val refreshPage2 = readStringFromJson(app, R.raw.consents_page_2)
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == CdrAPI.URL_CDR_CONSENTS) {
+                    if (request.trimmedPath == requestPath1) {
                         return MockResponse()
                             .setResponseCode(200)
-                            .setBody(if (request.method == "POST") submitBody else refreshBody)
+                            .setBody(if (request.method == "POST") submitBody else refreshPage1)
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(refreshPage2)
                     }
                     return MockResponse().setResponseCode(404)
                 }
@@ -4270,13 +4394,10 @@ class AggregationTest : BaseAndroidTest() {
             testObserver.awaitValue()
             val models = testObserver.value()
             assertNotNull(models)
-            assertEquals(8, models?.size)
+            assertEquals(11, models?.size)
 
             signal.countDown()
         }
-
-        val request = mockServer.takeRequest()
-        assertEquals(CdrAPI.URL_CDR_CONSENTS, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 

@@ -490,6 +490,15 @@ class ModelExtensionTest {
     }
 
     @Test
+    fun testSQLForConsentIdsToGetStaleIds() {
+        var query = sqlForConsentIdsToGetStaleIds(after = 20, before = 10)
+        assertEquals("SELECT consent_id  FROM consent WHERE consent_id > 10 AND consent_id <= 20 ", query.sql)
+
+        query = sqlForConsentIdsToGetStaleIds()
+        assertEquals("SELECT consent_id  FROM consent", query.sql)
+    }
+
+    @Test
     fun testSQLForContacts() {
         var query = sqlForContacts(paymentMethod = PaymentMethod.PAY_ANYONE)
         assertEquals("SELECT  *  FROM contact WHERE payment_method = 'PAY_ANYONE' ", query.sql)

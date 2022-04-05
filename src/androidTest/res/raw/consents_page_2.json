@@ -1,0 +1,60 @@
+{
+    "data": [
+        {
+            "id": 9,
+            "provider_id": 447,
+            "provider_account_id": 15988,
+            "status": "active",
+            "sharing_duration": 15814800,
+            "sharing_stopped_at": "2020-03-01",
+            "permissions": [
+                "account_details",
+                "transaction_details"
+            ],
+            "additional_permissions": [],
+            "delete_redundant_data": true,
+            "confirmation_pdf_url": "https://example.com/api/v2/cdr/consents/286/pdfs/confirmation",
+            "withdrawal_pdf_url": "https://example.com/api/v2/cdr/consents/286/pdfs/withdrawal"
+        },
+        {
+            "id": 10,
+            "provider_id": 447,
+            "provider_account_id": 16356,
+            "status": "withdrawn",
+            "sharing_started_at": "2020-03-10",
+            "sharing_duration": 15814800,
+            "sharing_stopped_at": "2020-02-28",
+            "permissions": [
+                "account_details",
+                "transaction_details"
+            ],
+            "additional_permissions": [],
+            "delete_redundant_data": true,
+            "confirmation_pdf_url": "https://example.com/api/v2/cdr/consents/332/pdfs/confirmation",
+            "withdrawal_pdf_url": "https://example.com/api/v2/cdr/consents/332/pdfs/withdrawal"
+        },
+        {
+            "id": 11,
+            "provider_id": 11582,
+            "provider_account_id": 6234,
+            "status": "pending",
+            "sharing_duration": 15814800,
+            "sharing_stopped_at": "2020-05-26",
+            "permissions": [
+                "account_details",
+                "transaction_details"
+            ],
+            "additional_permissions": [],
+            "delete_redundant_data": true,
+            "confirmation_pdf_url": "https://example.com/api/v2/cdr/consents/351/pdfs/confirmation",
+            "withdrawal_pdf_url": "https://example.com/api/v2/cdr/consents/351/pdfs/withdrawal"
+        }
+    ],
+    "paging": {
+        "cursors": {
+            "before": "8",
+            "after": null
+        },
+        "total": 11
+    }
+}
