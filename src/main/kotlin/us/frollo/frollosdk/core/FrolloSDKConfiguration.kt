@@ -37,6 +37,7 @@ import us.frollo.frollosdk.network.SessionIDProvider
  * @param logLevel Level of logging for debug and error messages. Default is [LogLevel.ERROR]
  * @param sdkDBPassphrase passphrase used to encrypt the DB
  * @param networkLoggingProvider for logging SDK errors to network. (Optional)
+ * @param disableCertificatePinning for disabling certificate pinning for Android Versions below N.
  */
 data class FrolloSDKConfiguration(
     val authenticationType: AuthenticationType,
@@ -46,7 +47,8 @@ data class FrolloSDKConfiguration(
     val databaseNamePrefix: String? = null,
     val logLevel: LogLevel = LogLevel.ERROR,
     val sdkDBPassphrase: String,
-    val networkLoggingProvider: NetworkLoggingProvider? = null
+    val networkLoggingProvider: NetworkLoggingProvider? = null,
+    val disableCertificatePinning: Boolean = false
 ) {
 
     internal fun validForROPC(): Boolean {
