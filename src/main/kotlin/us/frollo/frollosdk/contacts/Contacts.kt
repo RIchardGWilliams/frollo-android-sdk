@@ -38,6 +38,8 @@ import us.frollo.frollosdk.model.api.contacts.ContactInternationalCreateUpdateRe
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
 import us.frollo.frollosdk.model.coredata.contacts.Contact
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -170,7 +172,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = accountName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ANYONE,
@@ -204,7 +205,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = billerName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.BPAY,
@@ -237,7 +237,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = payIdName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ID,
@@ -287,7 +286,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
     ) {
         val request = ContactInternationalCreateUpdateRequest(
-            name = name ?: nickName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.INTERNATIONAL,
@@ -317,6 +315,65 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
                 }
             }
         }
+    }
+
+    /**
+     * Create a new Digital Wallet contact on the host
+     *
+     * @param nickName Nickname of the contact
+     * @param description Description of the contact (Optional)
+     * @param walletName Name of the wallet or wallet provider
+     * @param walletIdentifier Identifier of the digital wallet
+     * @param walletType Type of wallet identifier; e.g. EMAIL, . Refer to [DigitalWalletType]
+     * @param walletProvider TProvider of the wallet; e.g. PAYPAL_AU. Refer to [DigitalWalletProvider]
+     * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
+     */
+    fun createDigitalWalletContact(
+        nickName: String,
+        description: String? = null,
+        walletName: String,
+        walletIdentifier: String,
+        walletType: DigitalWalletType,
+        walletProvider: DigitalWalletProvider,
+        completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
+    ) {
+        val request = ContactCreateUpdateRequest(
+            nickName = nickName,
+            description = description,
+            paymentMethod = PaymentMethod.DIGITAL_WALLET,
+            paymentDetails = PaymentDetails.DigitalWallet(
+                name = walletName,
+                identifier = walletIdentifier,
+                type = walletType,
+                provider = walletProvider
+            )
+        )
+        createContact(request, completion)
+    }
+
+    /**
+     * Create a new Digital Wallet contact on the host
+     *
+     * @param nickName Nickname of the contact
+     * @param description Description of the contact (Optional)
+     * @param maskedCardPAN Masked PAN of the Card
+     * @param completion Optional completion handler with optional error if the request fails else ID of the Contact created if success
+     */
+    fun createCardContact(
+        nickName: String,
+        description: String? = null,
+        maskedCardPAN: String,
+        completion: OnFrolloSDKCompletionListener<Resource<Long>>? = null
+    ) {
+        val request = ContactCreateUpdateRequest(
+            nickName = nickName,
+            description = description,
+            paymentMethod = PaymentMethod.CARD,
+            paymentDetails = PaymentDetails.Card(
+                maskedCardPAN = maskedCardPAN
+            )
+        )
+        createContact(request, completion)
     }
 
     private fun createContact(
@@ -357,7 +414,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = accountName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ANYONE,
@@ -393,7 +449,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = billerName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.BPAY,
@@ -428,7 +483,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactCreateUpdateRequest(
-            name = payIdName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.PAY_ID,
@@ -480,7 +534,6 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         val request = ContactInternationalCreateUpdateRequest(
-            name = name ?: nickName,
             nickName = nickName,
             description = description,
             paymentMethod = PaymentMethod.INTERNATIONAL,
@@ -510,6 +563,69 @@ class Contacts(network: NetworkService, internal val db: SDKDatabase) {
                 }
             }
         }
+    }
+
+    /**
+     * Update a Digital Wallet contact on the host
+     *
+     * @param contactId ID of the contact to be updated
+     * @param nickName Nickname of the contact
+     * @param description Description of the contact (Optional)
+     * @param walletName Name of the wallet or wallet provider
+     * @param walletIdentifier Identifier of the digital wallet
+     * @param walletType Type of wallet identifier; e.g. EMAIL, . Refer to [DigitalWalletType]
+     * @param walletProvider TProvider of the wallet; e.g. PAYPAL_AU. Refer to [DigitalWalletProvider]
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun updateDigitalWalletContact(
+        contactId: Long,
+        nickName: String,
+        description: String? = null,
+        walletName: String,
+        walletIdentifier: String,
+        walletType: DigitalWalletType,
+        walletProvider: DigitalWalletProvider,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        val request = ContactCreateUpdateRequest(
+            nickName = nickName,
+            description = description,
+            paymentMethod = PaymentMethod.DIGITAL_WALLET,
+            paymentDetails = PaymentDetails.DigitalWallet(
+                name = walletName,
+                identifier = walletIdentifier,
+                type = walletType,
+                provider = walletProvider
+            )
+        )
+        updateContact(contactId, request, completion)
+    }
+
+    /**
+     * Update a Card contact on the host
+     *
+     * @param contactId ID of the contact to be updated
+     * @param nickName Nickname of the contact
+     * @param description Description of the contact (Optional)
+     * @param maskedCardPAN Masked PAN of the Card
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun updateCardContact(
+        contactId: Long,
+        nickName: String,
+        description: String? = null,
+        maskedCardPAN: String,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        val request = ContactCreateUpdateRequest(
+            nickName = nickName,
+            description = description,
+            paymentMethod = PaymentMethod.CARD,
+            paymentDetails = PaymentDetails.Card(
+                maskedCardPAN = maskedCardPAN
+            )
+        )
+        updateContact(contactId, request, completion)
     }
 
     private fun updateContact(

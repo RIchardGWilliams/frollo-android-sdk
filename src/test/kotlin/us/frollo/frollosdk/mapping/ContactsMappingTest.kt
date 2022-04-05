@@ -19,6 +19,8 @@ package us.frollo.frollosdk.mapping
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.testContactResponseData
@@ -51,5 +53,20 @@ class ContactsMappingTest {
         assertTrue(model.paymentDetails is PaymentDetails.International)
         assertTrue((model.paymentDetails as PaymentDetails.International).beneficiary.country.isNotBlank())
         assertTrue((model.paymentDetails as PaymentDetails.International).bankDetails.country.isNotBlank())
+
+        response = testContactResponseData(contactId = 12345, paymentMethod = PaymentMethod.DIGITAL_WALLET)
+        model = response.toContact()
+        assertEquals(12345L, model.contactId)
+        assertTrue(model.paymentDetails is PaymentDetails.DigitalWallet)
+        assertTrue((model.paymentDetails as PaymentDetails.DigitalWallet).name.isNotBlank())
+        assertTrue((model.paymentDetails as PaymentDetails.DigitalWallet).identifier.isNotBlank())
+        assertEquals(DigitalWalletType.CONTACT_NAME, (model.paymentDetails as PaymentDetails.DigitalWallet).type)
+        assertEquals(DigitalWalletProvider.PAYPAL_AU, (model.paymentDetails as PaymentDetails.DigitalWallet).provider)
+
+        response = testContactResponseData(contactId = 12345, paymentMethod = PaymentMethod.CARD)
+        model = response.toContact()
+        assertEquals(12345L, model.contactId)
+        assertTrue(model.paymentDetails is PaymentDetails.Card)
+        assertTrue((model.paymentDetails as PaymentDetails.Card).maskedCardPAN.isNotBlank())
     }
 }

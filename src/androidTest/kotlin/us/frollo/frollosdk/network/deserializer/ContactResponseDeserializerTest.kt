@@ -23,6 +23,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -113,5 +115,40 @@ class ContactResponseDeserializerTest {
         assertEquals("555", paymentDetails.bankDetails.chipNumber)
         assertEquals("444", paymentDetails.bankDetails.routingNumber)
         assertEquals("123666", paymentDetails.bankDetails.legalEntityIdentifier)
+    }
+
+    @Test
+    fun testDeserializeDigitalWalletContact() {
+        val jsonString = readStringFromJson(app, R.raw.contact_digital_wallet_contact)
+        val jsonObject = JsonParser().parse(jsonString).asJsonObject
+        val contactResponse: ContactResponse = ContactResponseDeserializer.deserialize(jsonObject, ContactResponse::class.java, null)
+        assertEquals(5L, contactResponse.contactId)
+        assertEquals("Johnathan Gilbert", contactResponse.name)
+        assertEquals("Johnny", contactResponse.nickName)
+        assertEquals(PaymentMethod.DIGITAL_WALLET, contactResponse.paymentMethod)
+        assertEquals("2020-12-07T13:55:49.240+11:00", contactResponse.createdDate)
+        assertEquals("2020-12-08T10:24:42.128+11:00", contactResponse.modifiedDate)
+        assertEquals(false, contactResponse.verified)
+        val paymentDetails = contactResponse.paymentDetails as PaymentDetails.DigitalWallet
+        assertEquals("J GILBERT", paymentDetails.name)
+        assertEquals("j.gilbert@frollo.com", paymentDetails.identifier)
+        assertEquals(DigitalWalletType.EMAIL, paymentDetails.type)
+        assertEquals(DigitalWalletProvider.PAYPAL_AU, paymentDetails.provider)
+    }
+
+    @Test
+    fun testDeserializeCardContact() {
+        val jsonString = readStringFromJson(app, R.raw.contact_card_contact)
+        val jsonObject = JsonParser().parse(jsonString).asJsonObject
+        val contactResponse: ContactResponse = ContactResponseDeserializer.deserialize(jsonObject, ContactResponse::class.java, null)
+        assertEquals(8L, contactResponse.contactId)
+        assertEquals("Johnathan Gilbert", contactResponse.name)
+        assertEquals("Johnny", contactResponse.nickName)
+        assertEquals(PaymentMethod.CARD, contactResponse.paymentMethod)
+        assertEquals("2020-12-07T13:55:49.240+11:00", contactResponse.createdDate)
+        assertEquals("2020-12-08T10:24:42.128+11:00", contactResponse.modifiedDate)
+        assertEquals(false, contactResponse.verified)
+        val paymentDetails = contactResponse.paymentDetails as PaymentDetails.Card
+        assertEquals("xxxxxxxxxxxx1234", paymentDetails.maskedCardPAN)
     }
 }

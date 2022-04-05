@@ -27,7 +27,10 @@ internal fun ContactResponse.toContact(): Contact = Contact(
     relatedProviderAccountIds = relatedProviderAccountIds,
     name = name,
     nickName = nickName,
-    description = nickName,
+    description = description,
+    aggregatorType = aggregatorType,
+    consentId = consentId,
+    editable = editable,
     paymentMethod = paymentMethod,
     paymentDetails = paymentDetails
 )

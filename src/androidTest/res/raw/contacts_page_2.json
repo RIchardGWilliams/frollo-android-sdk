@@ -12,7 +12,10 @@
             },
             "created_date": "2020-12-07T14:31:03.583+11:00",
             "modified_date": "2020-12-07T14:31:03.583+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 12,
@@ -30,7 +33,10 @@
             },
             "created_date": "2020-12-07T14:30:11.625+11:00",
             "modified_date": "2020-12-07T14:30:11.625+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         },
         {
             "id": 11,
@@ -45,7 +51,10 @@
             },
             "created_date": "2020-12-07T14:29:21.112+11:00",
             "modified_date": "2020-12-07T14:29:21.112+11:00",
-            "verified": false
+            "verified": false,
+            "aggregator": "cdr",
+            "consent_id": 123,
+            "editable": false
         }
     ],
     "paging": {

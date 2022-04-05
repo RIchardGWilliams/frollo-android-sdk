@@ -75,6 +75,8 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalFrequency
@@ -600,6 +602,12 @@ internal class Converters {
                 PaymentDetails.jsonIsInternational(it) -> {
                     gson.fromJson<PaymentDetails.International>(it)
                 }
+                PaymentDetails.jsonIsDigitalWallet(it) -> {
+                    gson.fromJson<PaymentDetails.DigitalWallet>(it)
+                }
+                PaymentDetails.jsonIsCard(it) -> {
+                    gson.fromJson<PaymentDetails.Card>(it)
+                }
                 else -> {
                     null
                 }
@@ -614,12 +622,26 @@ internal class Converters {
                 is PaymentDetails.PayAnyone,
                 is PaymentDetails.Biller,
                 is PaymentDetails.PayID,
-                is PaymentDetails.International -> {
+                is PaymentDetails.International,
+                is PaymentDetails.DigitalWallet,
+                is PaymentDetails.Card -> {
                     gson.toJson(it)
                 }
             }
         }
     }
+
+    @TypeConverter
+    fun stringToDigitalWalletType(value: String?): DigitalWalletType? = value?.let { DigitalWalletType.valueOf(value) }
+
+    @TypeConverter
+    fun stringFromDigitalWalletType(value: DigitalWalletType?): String? = value?.name
+
+    @TypeConverter
+    fun stringToDigitalWalletProvider(value: String?): DigitalWalletProvider? = if (value == null) DigitalWalletProvider.OTHER else DigitalWalletProvider.valueOf(value)
+
+    @TypeConverter
+    fun stringFromDigitalWalletProvider(value: DigitalWalletProvider?): String? = value?.name ?: DigitalWalletProvider.OTHER.name
 
     // Payment
 

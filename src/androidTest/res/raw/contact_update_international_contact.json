@@ -25,5 +25,8 @@
     },
     "created_date": "2020-12-07T16:35:25.741+11:00",
     "modified_date": "2020-12-08T10:27:28.999+11:00",
-    "verified": false
+    "verified": false,
+    "aggregator": "cdr",
+    "consent_id": 123,
+    "editable": false
 }

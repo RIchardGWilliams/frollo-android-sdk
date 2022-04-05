@@ -80,6 +80,8 @@ import us.frollo.frollosdk.model.coredata.contacts.BankAddress
 import us.frollo.frollosdk.model.coredata.contacts.BankDetails
 import us.frollo.frollosdk.model.coredata.contacts.Beneficiary
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -1603,6 +1605,38 @@ class ConvertersTest {
         )
         val internationalJson = Converters.instance.stringFromPaymentDetails(internationalDetails)
         assertEquals("{\"beneficiary\":{\"name\":\"Anne Maria\",\"country\":\"New Zeland\",\"message\":\"Test message new\"},\"bank_details\":{\"country\":\"New Zeland\",\"account_number\":\"12345666\",\"bank_address\":{\"address\":\"ABC 666\"},\"bic\":\"777\",\"fed_wire_number\":\"1234566\",\"sort_code\":\"666\",\"chip_number\":\"555\",\"routing_number\":\"444\",\"legal_entity_identifier\":\"123666\"}}", internationalJson)
+    }
+
+    @Test
+    fun testStringToDigitalWalletType() {
+        val status = Converters.instance.stringToDigitalWalletType("CONTACT_NAME")
+        assertEquals(DigitalWalletType.CONTACT_NAME, status)
+
+        assertNull(Converters.instance.stringToDigitalWalletType(null))
+    }
+
+    @Test
+    fun testStringFromDigitalWalletType() {
+        val str = Converters.instance.stringFromDigitalWalletType(DigitalWalletType.CONTACT_NAME)
+        assertEquals("CONTACT_NAME", str)
+
+        assertNull(Converters.instance.stringFromDigitalWalletType(null))
+    }
+
+    @Test
+    fun testStringToDigitalWalletProvider() {
+        val status = Converters.instance.stringToDigitalWalletProvider("PAYPAL_AU")
+        assertEquals(DigitalWalletProvider.PAYPAL_AU, status)
+
+        assertEquals(DigitalWalletProvider.OTHER, Converters.instance.stringToDigitalWalletProvider(null))
+    }
+
+    @Test
+    fun testStringFromDigitalWalletProvider() {
+        val str = Converters.instance.stringFromDigitalWalletProvider(DigitalWalletProvider.PAYPAL_AU)
+        assertEquals("PAYPAL_AU", str)
+
+        assertEquals("OTHER", Converters.instance.stringFromDigitalWalletProvider(null))
     }
 
     @Test

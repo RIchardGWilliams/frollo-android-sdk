@@ -36,6 +36,8 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.mapping.toContact
 import us.frollo.frollosdk.model.coredata.contacts.CRNType
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
+import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
@@ -499,6 +501,106 @@ class ContactsTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testCreateDigitalWalletContact() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val body = readStringFromJson(app, R.raw.contact_digital_wallet_contact)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == ContactsAPI.URL_CONTACTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        contacts.createDigitalWalletContact(
+            nickName = "Johnny",
+            walletName = "J GILBERT",
+            walletIdentifier = "j.gilbert@frollo.com",
+            walletType = DigitalWalletType.EMAIL,
+            walletProvider = DigitalWalletProvider.PAYPAL_AU
+        ) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            assertEquals(5L, resource.data)
+
+            val testObserver = contacts.fetchContact(5).test()
+
+            testObserver.awaitValue()
+            val model = testObserver.value()
+            assertNotNull(model)
+            assertEquals(5L, model?.contactId)
+            val paymentDetails = model?.paymentDetails as PaymentDetails.DigitalWallet
+            assertEquals("J GILBERT", paymentDetails.name)
+            assertEquals("j.gilbert@frollo.com", paymentDetails.identifier)
+            assertEquals(DigitalWalletType.EMAIL, paymentDetails.type)
+            assertEquals(DigitalWalletProvider.PAYPAL_AU, paymentDetails.provider)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(ContactsAPI.URL_CONTACTS, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testCreateCardContact() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val body = readStringFromJson(app, R.raw.contact_card_contact)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == ContactsAPI.URL_CONTACTS) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        contacts.createCardContact(
+            nickName = "Johnny",
+            maskedCardPAN = "xxxxxxxxxxxx1234"
+        ) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            assertEquals(8L, resource.data)
+
+            val testObserver = contacts.fetchContact(8).test()
+
+            testObserver.awaitValue()
+            val model = testObserver.value()
+            assertNotNull(model)
+            assertEquals(8L, model?.contactId)
+            val paymentDetails = model?.paymentDetails as PaymentDetails.Card
+            assertEquals("xxxxxxxxxxxx1234", paymentDetails.maskedCardPAN)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(ContactsAPI.URL_CONTACTS, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testCreateContactFailsIfLoggedOut() {
         initSetup()
 
@@ -750,6 +852,122 @@ class ContactsTest : BaseAndroidTest() {
             assertEquals("New Zeland", paymentDetails.beneficiary.country)
             assertEquals("New Zeland", paymentDetails.bankDetails.country)
             assertEquals("ABC 666", paymentDetails.bankDetails.bankAddress?.address)
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateDigitalWalletContact() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val contactId: Long = 5
+        val requestPath = "contacts/$contactId"
+
+        val body = readStringFromJson(app, R.raw.contact_digital_wallet_contact)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val contact = testContactResponseData(contactId).toContact()
+
+        database.contacts().insert(contact)
+
+        contacts.updateDigitalWalletContact(
+            contactId = contactId,
+            nickName = "Johnny",
+            walletName = "J GILBERT",
+            walletIdentifier = "j.gilbert@frollo.com",
+            walletType = DigitalWalletType.EMAIL,
+            walletProvider = DigitalWalletProvider.PAYPAL_AU
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = contacts.fetchContact(contactId).test()
+
+            testObserver.awaitValue()
+            val model = testObserver.value()
+            assertNotNull(model)
+            assertEquals(contactId, model?.contactId)
+            val paymentDetails = model?.paymentDetails as PaymentDetails.DigitalWallet
+            assertEquals("J GILBERT", paymentDetails.name)
+            assertEquals("j.gilbert@frollo.com", paymentDetails.identifier)
+            assertEquals(DigitalWalletType.EMAIL, paymentDetails.type)
+            assertEquals(DigitalWalletProvider.PAYPAL_AU, paymentDetails.provider)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateCardContact() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val contactId: Long = 8
+        val requestPath = "contacts/$contactId"
+
+        val body = readStringFromJson(app, R.raw.contact_card_contact)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val contact = testContactResponseData(contactId).toContact()
+
+        database.contacts().insert(contact)
+
+        contacts.updateCardContact(
+            contactId = contactId,
+            nickName = "Johnny",
+            maskedCardPAN = "xxxxxxxxxxxx1234"
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = contacts.fetchContact(contactId).test()
+
+            testObserver.awaitValue()
+            val model = testObserver.value()
+            assertNotNull(model)
+            assertEquals(contactId, model?.contactId)
+            val paymentDetails = model?.paymentDetails as PaymentDetails.Card
+            assertEquals("xxxxxxxxxxxx1234", paymentDetails.maskedCardPAN)
+
             signal.countDown()
         }
 
