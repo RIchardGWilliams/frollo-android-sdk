@@ -518,8 +518,8 @@ class PaymentsTest : BaseAndroidTest() {
             assertEquals("2060", response?.address?.postcode)
             assertEquals(true, response?.isNppAllowed)
             assertEquals(true, response?.valid)
-            assertEquals(4, response?.nppServiceIds?.size)
-            assertEquals(true, response?.nppServiceIds?.containsAll(NPPServiceIdType.values().toList()))
+            assertEquals(4, response?.serviceTypes?.size)
+            assertEquals(true, response?.serviceTypes?.containsAll(NPPServiceIdType.values().toList()))
 
             signal.countDown()
         }
@@ -645,8 +645,8 @@ class PaymentsTest : BaseAndroidTest() {
             assertEquals("John Doe", response?.name)
             assertEquals("+61411111111", response?.payId)
             assertEquals(PayIDType.MOBILE, response?.type)
-            assertEquals(4, response?.nppServiceIds?.size)
-            assertEquals(true, response?.nppServiceIds?.containsAll(NPPServiceIdType.values().toList()))
+            assertEquals(4, response?.serviceTypes?.size)
+            assertEquals(true, response?.serviceTypes?.containsAll(NPPServiceIdType.values().toList()))
 
             signal.countDown()
         }

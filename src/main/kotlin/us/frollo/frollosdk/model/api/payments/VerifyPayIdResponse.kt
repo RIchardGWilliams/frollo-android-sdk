@@ -36,6 +36,6 @@ data class VerifyPayIdResponse(
     /** Name of the registered PayID; shown to external parties when they attempt to make a Payment */
     @SerializedName("payid_name") val name: String,
 
-    /** The service ids available on this payment (Optional) */
-    @SerializedName("npp_service_ids") val nppServiceIds: List<NPPServiceIdType>?
+    /** The service types available on this payment (Optional) */
+    @SerializedName("service_types") val serviceTypes: List<NPPServiceIdType>?
 )

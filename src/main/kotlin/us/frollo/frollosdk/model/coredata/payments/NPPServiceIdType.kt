@@ -30,13 +30,13 @@ enum class NPPServiceIdType {
     /** Variant of Single Credit Transfer */
     @SerializedName("catsct") CATSCT,
 
-    /** Any other NPP service ID e.g. future x2p2 x2p3 */
+    /** Standard Single Credit Transfer */
     @SerializedName("sct") SCT,
 
-    /** Standard Single Credit Transfer */
+    /** X2P1 overlay, branded as Osko */
     @SerializedName("x2p1") X2P1,
 
-    /** X2P1 overlay, branded as Osko */
+    /** Any other NPP service ID e.g. future x2p2 x2p3 */
     @SerializedName("other") OTHER;
 
     /** Enum to serialized string */
