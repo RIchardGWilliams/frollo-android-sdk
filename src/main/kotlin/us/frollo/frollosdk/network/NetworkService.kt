@@ -162,7 +162,10 @@ class NetworkService internal constructor(
     }
 
     private fun OkHttpClient.Builder.addCertificatePinning(): OkHttpClient.Builder {
-        if (!BuildConfig.DEBUG && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        if (!BuildConfig.DEBUG &&
+            Build.VERSION.SDK_INT < Build.VERSION_CODES.N &&
+            !oAuth2Helper.config.disableCertificatePinning
+        ) {
             val certPinner = CertificatePinner.Builder()
                 .add(PINNING_PATTERN, PublicKey.ACTIVE)
                 .add(PINNING_PATTERN, PublicKey.BACKUP)
