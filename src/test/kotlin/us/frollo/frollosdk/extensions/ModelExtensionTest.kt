@@ -491,8 +491,8 @@ class ModelExtensionTest {
 
     @Test
     fun testSQLForConsentIdsToGetStaleIds() {
-        var query = sqlForConsentIdsToGetStaleIds(after = 20, before = 10)
-        assertEquals("SELECT consent_id  FROM consent WHERE consent_id > 10 AND consent_id <= 20 ", query.sql)
+        var query = sqlForConsentIdsToGetStaleIds(status = ConsentStatus.ACTIVE, providerId = 123, providerAccountId = 235, after = 20, before = 10)
+        assertEquals("SELECT consent_id  FROM consent WHERE status = 'ACTIVE' AND provider_id = 123 AND provider_account_id = 235 AND consent_id > 10 AND consent_id <= 20 ", query.sql)
 
         query = sqlForConsentIdsToGetStaleIds()
         assertEquals("SELECT consent_id  FROM consent", query.sql)

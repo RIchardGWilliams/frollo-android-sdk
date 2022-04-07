@@ -661,12 +661,18 @@ internal fun sqlForConsents(providerId: Long? = null, providerAccountId: Long? =
 }
 
 internal fun sqlForConsentIdsToGetStaleIds(
+    status: ConsentStatus? = null,
+    providerId: Long? = null,
+    providerAccountId: Long? = null,
     before: Long? = null,
     after: Long? = null
 ): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("consent")
     sqlQueryBuilder.columns(arrayOf("consent_id"))
 
+    status?.let { sqlQueryBuilder.appendSelection(selection = "status = '${ it.name }'") }
+    providerId?.let { sqlQueryBuilder.appendSelection(selection = "provider_id = $it") }
+    providerAccountId?.let { sqlQueryBuilder.appendSelection(selection = "provider_account_id = $it") }
     before?.let { sqlQueryBuilder.appendSelection(selection = "consent_id > $it") }
     after?.let { sqlQueryBuilder.appendSelection(selection = "consent_id <= $it") }
 

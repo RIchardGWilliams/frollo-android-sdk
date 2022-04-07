@@ -2139,18 +2139,27 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     /**
      * Refresh consents from the host with pagination.
      *
+     * @param status Filter consents by status (Optional)
+     * @param providerId Filter consents by ID of the associated provider (Optional)
+     * @param providerAccountId Filter consents by ID of the associated provider account (Optional)
      * @param before Consent ID to fetch before this consent (optional)
      * @param after Consent ID to fetch upto this consent (optional)
      * @param size Count of objects to returned from the API (page size) (optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun refreshConsentsWithPagination(
+        status: ConsentStatus? = null,
+        providerId: Long? = null,
+        providerAccountId: Long? = null,
         after: Long? = null,
         before: Long? = null,
         size: Long? = null,
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
     ) {
         cdrAPI.fetchConsents(
+            status = status,
+            providerId = providerId,
+            providerAccountId = providerAccountId,
             after = after,
             before = before,
             size = size
@@ -2164,6 +2173,9 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                     val response = resource.data
                     handleConsentsWithPaginationResponse(
                         response = response?.data,
+                        status = status,
+                        providerId = providerId,
+                        providerAccountId = providerAccountId,
                         before = response?.paging?.cursors?.before?.toLong(),
                         after = response?.paging?.cursors?.after?.toLong(),
                         completion = completion
@@ -2316,6 +2328,9 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
 
     private fun handleConsentsWithPaginationResponse(
         response: List<ConsentResponse>?,
+        status: ConsentStatus? = null,
+        providerId: Long? = null,
+        providerAccountId: Long? = null,
         after: Long?,
         before: Long?,
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
@@ -2332,6 +2347,9 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 // Get IDs from database
                 val consentIds = db.consents().getIdsByQuery(
                     sqlForConsentIdsToGetStaleIds(
+                        status = status,
+                        providerId = providerId,
+                        providerAccountId = providerAccountId,
                         before = before,
                         after = after
                     )
