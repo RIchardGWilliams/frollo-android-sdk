@@ -6,7 +6,8 @@
             "provider_account_id": 15988,
             "status": "active",
             "sharing_duration": 15814800,
-            "sharing_stopped_at": "2020-03-01",
+            "sharing_expires_at": "2020-04-01T12:02:12.505+10:00",
+            "sharing_stopped_at": "2020-03-01T12:02:12.505+10:00",
             "permissions": [
                 "account_details",
                 "transaction_details"
@@ -21,9 +22,10 @@
             "provider_id": 447,
             "provider_account_id": 16356,
             "status": "withdrawn",
-            "sharing_started_at": "2020-03-10",
+            "sharing_started_at": "2020-03-10T12:02:12.505+10:00",
+            "sharing_expires_at": "2020-04-01T12:02:12.505+10:00",
             "sharing_duration": 15814800,
-            "sharing_stopped_at": "2020-02-28",
+            "sharing_stopped_at": "2020-02-28T12:02:12.505+10:00",
             "permissions": [
                 "account_details",
                 "transaction_details"
@@ -39,7 +41,8 @@
             "provider_account_id": 6234,
             "status": "pending",
             "sharing_duration": 15814800,
-            "sharing_stopped_at": "2020-05-26",
+            "sharing_expires_at": "2020-06-01T12:02:12.505+10:00",
+            "sharing_stopped_at": "2020-05-26T12:02:12.505+10:00",
             "permissions": [
                 "account_details",
                 "transaction_details"

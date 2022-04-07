@@ -3,7 +3,8 @@
     "provider_id": 632,
     "provider_account_id": 1709,
     "status": "active",
-    "sharing_started_at": "2020-03-23",
+    "sharing_started_at": "2020-03-23T12:02:12.505+10:00",
+    "sharing_expires_at": "2020-04-01T12:02:12.505+10:00",
     "permissions": [
         "account_details",
         "transaction_details"

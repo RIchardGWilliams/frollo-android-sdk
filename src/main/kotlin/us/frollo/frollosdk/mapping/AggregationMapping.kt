@@ -214,6 +214,7 @@ internal fun ConsentResponse.toConsent(): Consent =
         deleteRedundantData = deleteRedundantData,
         sharingStartedAt = sharingStartedAt,
         sharingStoppedAt = sharingStoppedAt,
+        sharingExpiresAt = sharingExpiresAt,
         sharingDuration = sharingDuration,
         status = status
     )

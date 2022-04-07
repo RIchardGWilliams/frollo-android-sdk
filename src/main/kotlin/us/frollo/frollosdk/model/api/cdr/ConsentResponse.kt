@@ -48,11 +48,31 @@ internal data class ConsentResponse(
     /** Specifies whether the data should be deleted after the consent is done */
     @SerializedName("delete_redundant_data") val deleteRedundantData: Boolean,
 
-    /** Start date of the sharing window. This date is the date when the consent officially starts on the Data Holder's end (Optional) */
-    @SerializedName("sharing_started_at") val sharingStartedAt: String?, // yyyy-MM-dd
+    /**
+     * Start date of the sharing window.
+     * This date is the date when the consent officially starts on the Data Holder's end (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    @SerializedName("sharing_started_at") val sharingStartedAt: String?,
 
-    /** Stopped sharing at date. The date the consent expired or was withdrawn (Optional) */
-    @SerializedName("sharing_stopped_at") val sharingStoppedAt: String?, // yyyy-MM-dd
+    /**
+     * Stopped sharing at date.
+     * The date the consent expired or was withdrawn (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    @SerializedName("sharing_stopped_at") val sharingStoppedAt: String?,
+
+    /**
+     * The date the consent will expire if not withdrawn sooner
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    @SerializedName("sharing_expires_at") val sharingExpiresAt: String,
 
     /** The duration (in seconds) for the consent */
     @SerializedName("sharing_duration") val sharingDuration: Long?,

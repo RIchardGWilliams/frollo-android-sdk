@@ -720,6 +720,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 1) Alter table - account - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
                 // 2) Alter table - transaction_model - Add columns service_id, service_type
                 // 3) Alter table - contact - Add columns aggregator, consent_id, editable
+                // 4) Alter table - consent - Add column sharing_expires_at
 
                 // START - Add columns related_accounts, asset, frequency, joint_account, owner_type, add_details_*
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `related_accounts` TEXT")
@@ -751,6 +752,10 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `contact` ADD COLUMN `consent_id` INTEGER")
                 database.execSQL("ALTER TABLE `contact` ADD COLUMN `editable` INTEGER NOT NULL DEFAULT 0")
                 // END - Add columns aggregator, consent_id, editable
+
+                // START - Add column sharing_expires_at
+                database.execSQL("ALTER TABLE `consent` ADD COLUMN `sharing_expires_at` TEXT NOT NULL DEFAULT ''")
+                // END - Add column sharing_expires_at
             }
         }
     }
