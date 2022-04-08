@@ -754,7 +754,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // END - Add columns aggregator, consent_id, editable
 
                 // START - Add column sharing_expires_at
-                database.execSQL("ALTER TABLE `consent` ADD COLUMN `sharing_expires_at` TEXT")
+                database.execSQL("ALTER TABLE `consent` ADD COLUMN `sharing_expires_at` TEXT NOT NULL DEFAULT ''")
                 // END - Add column sharing_expires_at
             }
         }

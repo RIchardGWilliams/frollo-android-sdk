@@ -67,12 +67,12 @@ internal data class ConsentResponse(
     @SerializedName("sharing_stopped_at") val sharingStoppedAt: String?,
 
     /**
-     * The date the consent will expire if not withdrawn sooner (Optional)
+     * The date the consent will expire if not withdrawn sooner
      *
      * Date format for this field is ISO8601
      * example 2011-12-03T10:15:30+01:00
      */
-    @SerializedName("sharing_expires_at") val sharingExpiresAt: String?,
+    @SerializedName("sharing_expires_at") val sharingExpiresAt: String,
 
     /** The duration (in seconds) for the consent */
     @SerializedName("sharing_duration") val sharingDuration: Long?,
