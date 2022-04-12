@@ -45,6 +45,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCatego
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.budgets.BudgetStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
+import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
@@ -299,11 +300,17 @@ internal fun CdrAPI.fetchProducts(
 }
 
 internal fun CdrAPI.fetchConsents(
+    status: ConsentStatus? = null,
+    providerId: Long? = null,
+    providerAccountId: Long? = null,
     after: Long? = null,
     before: Long? = null,
     size: Long? = null
 ): Call<PaginatedResponse<ConsentResponse>> {
     val queryMap = mutableMapOf<String, String>()
+    status?.let { queryMap.put("status", status.toString()) }
+    providerId?.let { queryMap["provider_id"] = it.toString() }
+    providerAccountId?.let { queryMap["provider_account_id"] = it.toString() }
     after?.let { queryMap.put("after", it.toString()) }
     before?.let { queryMap.put("before", it.toString()) }
     size?.let { queryMap.put("size", it.toString()) }

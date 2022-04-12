@@ -34,6 +34,9 @@ enum class ConsentStatus {
     /** Consent has been withdrawn */
     @SerializedName("withdrawn") WITHDRAWN,
 
+    /** Consent in use */
+    @SerializedName("in_use") IN_USE,
+
     /** Unknown status */
     @SerializedName("unknown") UNKNOWN;
 

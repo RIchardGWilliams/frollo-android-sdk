@@ -64,11 +64,31 @@ data class Consent(
     /** Specifies whether the data should be deleted after the consent is done */
     @ColumnInfo(name = "delete_redundant_data") val deleteRedundantData: Boolean,
 
-    /** Start date of the sharing window. This date is the date when the consent officially starts on the Data Holder's end */
+    /**
+     * Start date of the sharing window.
+     * This date is the date when the consent officially starts on the Data Holder's end (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
     @ColumnInfo(name = "sharing_started_at") val sharingStartedAt: String?,
 
-    /** Stopped sharing at date. The date the consent expired or was withdrawn (Optional) */
+    /**
+     * Stopped sharing at date.
+     * The date the consent expired or was withdrawn (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
     @ColumnInfo(name = "sharing_stopped_at") val sharingStoppedAt: String?,
+
+    /**
+     * The date the consent will expire if not withdrawn sooner
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    @ColumnInfo(name = "sharing_expires_at") val sharingExpiresAt: String,
 
     /** The duration (in seconds) for the consent */
     @ColumnInfo(name = "sharing_duration") val sharingDuration: Long?,
@@ -76,10 +96,4 @@ data class Consent(
     /** The new status for the consent */
     @ColumnInfo(name = "status") val status: ConsentStatus
 
-) : IAdapterModel {
-
-    companion object {
-        /** Date format for dates associated with Consent */
-        const val DATE_FORMAT_PATTERN = "yyyy-MM-dd"
-    }
-}
+) : IAdapterModel
