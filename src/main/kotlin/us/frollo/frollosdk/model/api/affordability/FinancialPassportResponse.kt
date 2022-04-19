@@ -30,14 +30,14 @@ data class FinancialPassportResponse(
     @SerializedName("from_date") val fromDate: String,
     /**  To date of financial passport */
     @SerializedName("to_date") val toDate: String,
-    /**  List of [FPAccounts] of financial passport; Optional*/
-    @SerializedName("accounts") val accounts: List<FPAccounts>?,
+    /**  List of [FPAccount] of financial passport; Optional*/
+    @SerializedName("accounts") val accounts: List<FPAccount>?,
     /**  Summary of  of financial passport; Optional */
     @SerializedName("summary") val summary: FPSummary?,
     /**  An object to represent expenses in financial passport; Optional */
-    @SerializedName("expenses") val expenses: FPIncomeExpenses?,
+    @SerializedName("expenses") val expenses: FPExpenses?,
     /**  An object to represent income in financial passport; Optional */
-    @SerializedName("income") val income: FPIncomeExpenses?,
+    @SerializedName("income") val income: FPIncome?,
     /**   An object to represent assets in financial passport; Optional */
     @SerializedName("assets") val assetsLiabilities: FPAssetsLiabilities?,
     /**  An object to represent liabilities in financial passport; Optional*/

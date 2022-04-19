@@ -15,17 +15,18 @@
  */
 
 package us.frollo.frollosdk.model.api.affordability
-
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-/** Data representation of the averages of Income or expenses of the Financial Passport */
-data class FPIncomeExpenseAverages(
+/**
+Financial Passport Expense
+ */
+data class FPExpenses(
 
-    /** The average amount earned/spent each week; Optional */
-    @SerializedName("weekly") val weekly: BigDecimal?,
-    /** The average amount earned/spent each month; Optional */
-    @SerializedName("monthly") val monthly: BigDecimal?,
-    /** The average amount earned/spent each fortnight; Optional */
-    @SerializedName("fortnightly") val fortnightly: BigDecimal?
+    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport (Optional) */
+    @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
+    /** Average over just the latest 3 months (Optional) */
+    @SerializedName("averages_3_months") val averagesThreeMonths: FPIncomeExpenseAverages?,
+    /** Average over total period provided in query parameters (Optional) */
+    @SerializedName("averages_total") val averagesTotal: FPIncomeExpenseAverages?
 )

@@ -21,11 +21,9 @@ import java.math.BigDecimal
 /**
 Financial Passport Income Expense
  */
-data class FPIncomeExpenses(
+data class FPIncome(
 
-    /**  The total of Income / Expense in financial passport; Optional */
-    @SerializedName("total") val total: BigDecimal?,
-    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport; Optional */
+    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport (Optional) */
     @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
     /** An object to represent overall average; Optional */
     @SerializedName("averages") val averages: FPIncomeExpenseAverages?

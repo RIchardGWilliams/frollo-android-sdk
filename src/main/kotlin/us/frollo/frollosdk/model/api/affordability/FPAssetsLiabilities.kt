@@ -22,8 +22,6 @@ import java.math.BigDecimal
 /** Data representation of the Assets and Liabilities of the Financial Passport */
 data class FPAssetsLiabilities(
 
-    /**  The total number of assets or liabilities over the report period; optional */
-    @SerializedName("total") val total: BigDecimal?,
     /**  The breakdown of assets or liabilities over the report period; optional */
     @SerializedName("breakdown") val breakdown: List<FPAssetLiabilityBreakdown>?
 )

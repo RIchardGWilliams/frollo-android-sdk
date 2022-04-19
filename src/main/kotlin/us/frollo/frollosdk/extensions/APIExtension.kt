@@ -401,7 +401,7 @@ internal fun StatementsAPI.fetchStatements(
 internal fun AffordabilityAPI.getFinancialPassport(
     accountIds: List<Long>? = null,
     providerAccountIDs: List<Long>? = null,
-    aggregator: AggregatorType? = null,
+    aggregators: List<AggregatorType>? = null,
     fromDate: String? = null, // 2020-09-09
     toDate: String? = null, // 2020-09-09
 ): Call<FinancialPassportResponse> {
@@ -412,8 +412,8 @@ internal fun AffordabilityAPI.getFinancialPassport(
     providerAccountIDs?.let {
         queryMap["provider_account_ids"] = it.joinToString(",")
     }
-    aggregator?.let {
-        queryMap["aggregator"] = it.toString()
+    aggregators?.let {
+        queryMap["aggregators"] = it.joinToString(",")
     }
     fromDate?.let {
         queryMap["from_date"] = it

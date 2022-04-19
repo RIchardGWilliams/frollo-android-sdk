@@ -9,6 +9,7 @@
 - Change sharing started, stopped & expired dates to ISO8601 datetime format in Consent API Response
 - Add new fields to Contact API Response
 - Add new Payment Methods - digital_wallet & card
+- Changes to Financial Passport Query & Response
 
 ### 3.16.0
 
