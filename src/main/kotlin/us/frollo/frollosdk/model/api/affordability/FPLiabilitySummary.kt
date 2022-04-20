@@ -15,15 +15,19 @@
  */
 
 package us.frollo.frollosdk.model.api.affordability
+
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
-/**
-Financial Passport Income Expense
- */
-data class FPIncome(
+/** Data representation of the Liability Summary of the Financial Passport */
+data class FPLiabilitySummary(
 
-    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport (Optional) */
-    @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
-    /** An object to represent overall average; Optional */
-    @SerializedName("averages") val averages: FPIncomeExpenseAverages?
+    /** Credit card limit (Optional) */
+    @SerializedName("credit_card_limit") val creditCardLimit: BigDecimal?,
+    /** Liabilities each week (Optional) */
+    @SerializedName("weekly") val weekly: FPLiabilityRepayment?,
+    /** Liabilities each month (Optional) */
+    @SerializedName("monthly") val monthly: FPLiabilityRepayment?,
+    /** Liabilities each fortnight (Optional) */
+    @SerializedName("fortnightly") val fortnightly: FPLiabilityRepayment?
 )

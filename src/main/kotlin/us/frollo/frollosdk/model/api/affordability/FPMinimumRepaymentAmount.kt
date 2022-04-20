@@ -15,15 +15,17 @@
  */
 
 package us.frollo.frollosdk.model.api.affordability
+
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
-/**
-Financial Passport Income Expense
- */
-data class FPIncome(
+/** Data representation of the Minimum Repayment Amount of liabilities of the Financial Passport */
+data class FPMinimumRepaymentAmount(
 
-    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport (Optional) */
-    @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
-    /** An object to represent overall average; Optional */
-    @SerializedName("averages") val averages: FPIncomeExpenseAverages?
+    /** Minimum Repayment Amount each week (Optional) */
+    @SerializedName("weekly") val weekly: BigDecimal?,
+    /** Minimum Repayment Amount each month (Optional) */
+    @SerializedName("monthly") val monthly: BigDecimal?,
+    /** Minimum Repayment Amount each fortnight (Optional) */
+    @SerializedName("fortnightly") val fortnightly: BigDecimal?
 )

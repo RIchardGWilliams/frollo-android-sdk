@@ -15,15 +15,16 @@
  */
 
 package us.frollo.frollosdk.model.api.affordability
-import com.google.gson.annotations.SerializedName
-import java.math.BigDecimal
 
-/** Data representation of the breakdown of Assets or Liabilities of the Financial Passport */
-data class FPAssetLiabilityBreakdown(
-    /**  The name of name of liabilities breakdown; optional */
-    @SerializedName("name") val name: String?,
-    /**  The closing balance of liabilities breakdown; optional */
-    @SerializedName("closing_balance") val closingBalance: BigDecimal?,
-    /**  A list of accounts in assets or liabilities breakdown; optional */
-    @SerializedName("accounts") val accounts: List<FPAssetsLiabilitiesBreakdownAccounts>?
+import com.google.gson.annotations.SerializedName
+
+/** Data representation of the Accounts of Assets of the Financial Passport */
+data class FPAssetsBreakdownAccounts(
+
+    /** The ID of the Account. You can retrieve the Account via the Get Accounts API. */
+    @SerializedName("id") val id: Long?,
+    /** Repayment frequency of an account */
+    @SerializedName("frequency") val repaymentFrequency: FPFrequency?,
+    /** Interest */
+    @SerializedName("interest") val interest: FPAccountInterest?
 )

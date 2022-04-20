@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 package us.frollo.frollosdk.model.api.affordability
-import androidx.room.ColumnInfo
+
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
@@ -28,6 +28,8 @@ data class FPAccount(
     @SerializedName("account_id") val accountId: Long?,
     /** The name of the Account (Optional) */
     @SerializedName("account_name") val accountName: String?,
+    /** The asset name of the Account (Optional) */
+    @SerializedName("name") val assetName: String?,
     /** The bsb of the Account (Optional) */
     @SerializedName("bsb") val bsb: String?,
     /** The number of the Account (Optional) */
@@ -51,7 +53,5 @@ data class FPAccount(
     /** Account owner type (Optional) */
     @SerializedName("owner_type") val ownerType: AccountOwnerType?,
     /** Account Sub Type */
-    @SerializedName("type") val accountSubType: AccountSubType,
-    /** The asset of the Account (Optional) */
-    @SerializedName("asset_name") val assetName: String?
+    @SerializedName("type") val accountSubType: AccountSubType
 )
