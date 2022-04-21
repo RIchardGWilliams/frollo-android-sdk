@@ -23,9 +23,19 @@ data class FPIncomeExpensesBreakdown(
 
     /** The category in this breakdown (Optional) */
     @SerializedName("category") val category: FPIncomeExpenseBreakdownCategory?,
-    /** The date of the first Transaction in this breakdown. See [FinancialPassportResponse.DATE_FORMAT_PATTERN]; (Optional) */
+    /**
+     * First date of transactions in the this breakdown (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
     @SerializedName("first_transaction_date") val firstTransactionDate: String?,
-    /** The date of the last Transaction in this breakdown. See [FinancialPassportResponse.DATE_FORMAT_PATTERN]; (Optional) */
+    /**
+     * Last date of transactions in the this breakdown (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
     @SerializedName("last_transaction_date") val lastTransactionDate: String?,
     /** An object to represent average of this breakdown (Optional) */
     @SerializedName("averages") val averages: FPIncomeExpenseAverages?,
