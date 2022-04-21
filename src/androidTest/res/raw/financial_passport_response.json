@@ -182,9 +182,15 @@
     }]
   },
   "income": {
-    "averages": {
+    "averages_3_months": {
+      "weekly": "-799.00",
+      "fortnightly": "-1597.99",
+      "monthly": "-2396.99"
+    },
+    "averages_total": {
       "weekly": "1453.57",
-      "monthly": "5087.50"
+      "monthly": "5087.50",
+      "fortnightly": "-2699.59"
     },
     "breakdown": [{
       "category": {
