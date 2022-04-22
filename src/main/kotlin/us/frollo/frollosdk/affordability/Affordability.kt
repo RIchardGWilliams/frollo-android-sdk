@@ -42,7 +42,7 @@ class Affordability(network: NetworkService) {
      *
      * @param accountIds: List of  accounts IDs; Optional
      * @param providerAccountIDs: List of  provider accounts IDs; Optional
-     * @param aggregator: [AggregatorType] type; Optional
+     * @param aggregators: List of [AggregatorType] types; Optional
      * @param fromDate: From date of financial passport; Optional; defaults to one year ago. See [FinancialPassportResponse.DATE_FORMAT_PATTERN]
      * @param toDate: To date of financial passport; Optional; defaults to today . See [FinancialPassportResponse.DATE_FORMAT_PATTERN]
      * @param completion: Completion handler with optional error if the request fails or [FinancialPassportResponse] if succeeds
@@ -50,7 +50,7 @@ class Affordability(network: NetworkService) {
     fun getFinancialPassport(
         accountIds: List<Long>? = null,
         providerAccountIDs: List<Long>? = null,
-        aggregator: AggregatorType? = null,
+        aggregators: List<AggregatorType>? = null,
         fromDate: String? = null, // 2021-01-01
         toDate: String? = null, // 2021-01-01
         completion: OnFrolloSDKCompletionListener<Resource<FinancialPassportResponse>>
@@ -58,7 +58,7 @@ class Affordability(network: NetworkService) {
         affordabilityAPI.getFinancialPassport(
             accountIds,
             providerAccountIDs,
-            aggregator,
+            aggregators,
             fromDate, // 2021-01-01
             toDate
         ).enqueue { resource ->

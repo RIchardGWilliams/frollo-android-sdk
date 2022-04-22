@@ -19,17 +19,13 @@ package us.frollo.frollosdk.model.api.affordability
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 
-/** Data representation of the breakdown totals of the Financial Passport's Income and Expense Totals */
-data class FPIncomeExpenseBreakdownTotals(
+/** Data representation of the Minimum Repayment Amount of liabilities of the Financial Passport */
+data class FPMinimumRepaymentAmount(
 
-    /**  The total amount spent in the last week of the reporting period. */
+    /** Minimum Repayment Amount each week (Optional) */
     @SerializedName("weekly") val weekly: BigDecimal?,
-    /**  The total amount spent in the last month of the reporting period (if applicable). */
+    /** Minimum Repayment Amount each month (Optional) */
     @SerializedName("monthly") val monthly: BigDecimal?,
-    /**  The total amount spent in the last 90 days of the reporting period (if applicable). */
-    @SerializedName("ninety_day") val ninetyDay: BigDecimal?,
-    /**  The total amount spent in the last 180 days of the reporting period (if applicable). */
-    @SerializedName("one_eighty_day") val oneEightyDay: BigDecimal?,
-    /** The total amount spent in the last year of the reporting period (if applicable). */
-    @SerializedName("yearly") val yearly: BigDecimal?
+    /** Minimum Repayment Amount each fortnight (Optional) */
+    @SerializedName("fortnightly") val fortnightly: BigDecimal?
 )

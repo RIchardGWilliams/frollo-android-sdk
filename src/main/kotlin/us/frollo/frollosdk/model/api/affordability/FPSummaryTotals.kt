@@ -29,5 +29,7 @@ data class FPSummaryTotals(
     /**  The total value of assets over the report period; Optional */
     @SerializedName("assets") val assets: BigDecimal?,
     /**  The total value of liabilities over the report period; Optional */
-    @SerializedName("liabilities") val liabilities: BigDecimal?
+    @SerializedName("liabilities") val liabilities: BigDecimal?,
+    /**  The total value of assets plus liabilities over the report period; Optional */
+    @SerializedName("net_balance") val netBalance: BigDecimal?,
 )

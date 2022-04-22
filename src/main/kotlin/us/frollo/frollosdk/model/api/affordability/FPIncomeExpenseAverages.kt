@@ -25,5 +25,7 @@ data class FPIncomeExpenseAverages(
     /** The average amount earned/spent each week; Optional */
     @SerializedName("weekly") val weekly: BigDecimal?,
     /** The average amount earned/spent each month; Optional */
-    @SerializedName("monthly") val monthly: BigDecimal?
+    @SerializedName("monthly") val monthly: BigDecimal?,
+    /** The average amount earned/spent each fortnight; Optional */
+    @SerializedName("fortnightly") val fortnightly: BigDecimal?
 )

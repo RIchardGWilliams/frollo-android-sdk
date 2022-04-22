@@ -15,15 +15,15 @@
  */
 
 package us.frollo.frollosdk.model.api.affordability
+
 import com.google.gson.annotations.SerializedName
 
-/** Data representation of Financial Passport Expense & Income */
-data class FPIncomeExpenses(
+/** Data representation of the Liabilities of the Financial Passport */
+data class FPLiabilities(
 
-    /** Array of [FPIncomeExpensesBreakdown] of Income / Expense in financial passport (Optional) */
-    @SerializedName("breakdown") val breakdown: List<FPIncomeExpensesBreakdown>?,
-    /** Average over total period provided in query parameters (Optional) */
-    @SerializedName("averages_total") val averages: FPIncomeExpenseAverages?,
-    /** Average over just the latest 3 months (Optional) */
-    @SerializedName("averages_3_months") val averagesThreeMonths: FPIncomeExpenseAverages?
+    /** The total value of liabilities over the report period (Optional) */
+    @SerializedName("summary") val summary: FPLiabilitySummary?,
+
+    /** The breakdown of liabilities over the report period (Optional) */
+    @SerializedName("breakdown") val breakdown: List<FPLiabilityBreakdown>?
 )
