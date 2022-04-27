@@ -33,9 +33,6 @@ enum class ReportPeriod(
     /** Months */
     @SerializedName("by_month") MONTH(ReportDateFormat.MONTHLY),
 
-    /** BUSINESS_MONTH */
-    @SerializedName("business_month") BUSINESS_MONTH(ReportDateFormat.MONTHLY),
-
     /** Weeks */
     @SerializedName("by_week") WEEK(ReportDateFormat.WEEKLY);
 

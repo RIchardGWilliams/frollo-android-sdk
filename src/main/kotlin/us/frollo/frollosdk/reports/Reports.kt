@@ -398,7 +398,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
 
         var newDate = this
 
-        if (period == ReportPeriod.MONTH || period == ReportPeriod.BUSINESS_MONTH) {
+        if (period == ReportPeriod.MONTH) {
             newDate = this.changeDateFormat(from = DAILY, to = MONTHLY)
         } else if (period == ReportPeriod.WEEK) {
             newDate = this.dailyToWeekly()

@@ -46,7 +46,10 @@ enum class TransactionReportPeriod {
     @SerializedName("quarterly") QUARTERLY,
 
     /** Weekly */
-    @SerializedName("weekly") WEEKLY;
+    @SerializedName("weekly") WEEKLY,
+
+    /** Business Month */
+    @SerializedName("business_month") BUSINESS_MONTH;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters
