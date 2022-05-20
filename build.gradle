@@ -16,7 +16,7 @@ android {
         minSdkVersion 26 // Android 8.0 (Oreo)
         targetSdkVersion 31
         versionCode 1
-        versionName "3.17.1"
+        versionName "3.17.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = ['appAuthRedirectScheme': 'frollo-sdk-test']
         buildConfigField "String", "SDK_VERSION_NAME", "\"$versionName\""
