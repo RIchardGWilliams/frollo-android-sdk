@@ -23,8 +23,6 @@ data class FPAssetsBreakdownAccounts(
 
     /** The ID of the Account. You can retrieve the Account via the Get Accounts API. */
     @SerializedName("id") val id: Long?,
-    /** Repayment frequency of an account */
-    @SerializedName("frequency") val repaymentFrequency: FPFrequency?,
     /** Interest */
     @SerializedName("interest") val interest: FPAccountInterest?
 )

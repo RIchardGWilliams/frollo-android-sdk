@@ -234,7 +234,6 @@
       "total": "9718.00",
       "accounts": [{
         "id": 20904,
-        "frequency": "monthly",
         "interest": {
           "rate": "0.00",
           "type": "variable",
@@ -244,7 +243,6 @@
         }
       }, {
         "id": 20906,
-        "frequency": "monthly",
         "interest": {
           "rate": "0.00",
           "type": "variable",
@@ -254,7 +252,6 @@
         }
       }, {
         "id": 20910,
-        "frequency": "monthly",
         "interest": {
           "rate": "0.00",
           "type": "variable",
@@ -290,7 +287,7 @@
       "total": "-11000.00",
       "accounts": [{
         "id": "20902",
-        "frequency": "not available",
+        "repayment_frequency": "not available",
         "repayment_type": "unknown",
         "loan_start_date": "unknown",
         "loan_end_date": "unknown",
@@ -314,7 +311,7 @@
       "total": "-1100000.00",
       "accounts": [{
         "id": "20908",
-        "frequency": "monthly",
+        "repayment_frequency": "monthly",
         "repayment_type": "principal_and_interest",
         "loan_start_date": "2020-11-30",
         "loan_end_date": "2025-11-30",

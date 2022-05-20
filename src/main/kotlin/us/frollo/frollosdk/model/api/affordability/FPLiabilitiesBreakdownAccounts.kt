@@ -24,7 +24,7 @@ data class FPLiabilitiesBreakdownAccounts(
     /** The ID of the Account. You can retrieve the Account via the Get Accounts API. */
     @SerializedName("id") val id: Long?,
     /** Repayment frequency of an account */
-    @SerializedName("frequency") val repaymentFrequency: FPFrequency?,
+    @SerializedName("repayment_frequency") val repaymentFrequency: FPFrequency?,
     /** Repayment type of an account */
     @SerializedName("repayment_type") val repaymentType: FPRepaymentType?,
     /**
