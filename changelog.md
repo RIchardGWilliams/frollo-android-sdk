@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.17.1
+
+#### Changes
+- Assets - Remove frequency field from assets breakdown
+- Liabilities - Rename frequency in liabilities breakdown
+
 ### 3.17.0
 
 #### Changes
