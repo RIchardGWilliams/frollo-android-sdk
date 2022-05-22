@@ -35,7 +35,6 @@ android {
             debuggable true
         }
     }
-    lintOptions { checkReleaseBuilds false }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -96,11 +95,14 @@ android {
             }
         }
     }
+    lint {
+        checkReleaseBuilds false
+    }
 }
 
 buildscript {
 
-    ext.kotlin_version_internal = '1.6.10'
+    ext.kotlin_version_internal = '1.6.21'
 
     repositories {
         google()
