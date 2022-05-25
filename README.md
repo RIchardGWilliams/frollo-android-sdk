@@ -2,7 +2,7 @@
 
 ### Requirements
 
-- Android Studio Bumblebee | 2021.1.1
+- Android Studio Chipmunk | 2021.2.1
 - Kotlin version 1.6.21+
 - Gradle tools plugin version 7.2.0+ - In your project level **build.gradle**
     ```
