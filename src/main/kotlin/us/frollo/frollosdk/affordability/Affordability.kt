@@ -97,14 +97,15 @@ class Affordability(network: NetworkService) {
     }
 
     /**
-     * Fetch Assets and Liabilities Hierarchy from JSON
+     * Get the configuration for the navigation hierarchy for creation of
+     * manual assets and liabilities. This allows the whitelabel to drive the
+     * UX to only create an asset or liability which conforms to Backend rules.
      *
      * @param completion Completion handler with optional error if assets & liabilities json parsing fails or if it succeeds
      */
-    fun fetchAssetLiabilitiesHierarchy(completion: OnFrolloSDKCompletionListener<Resource<AssetsLiabilitiesResponse>>) {
-        val jsonString = readStringFromJson(FrolloSDK.context, R.raw.assets_liabilities)
-
+    fun fetchAssetsLiabilitiesConfig(completion: OnFrolloSDKCompletionListener<Resource<AssetsLiabilitiesResponse>>) {
         try {
+            val jsonString = readStringFromJson(FrolloSDK.context, R.raw.assets_liabilities)
             val parsedObject = Gson().fromJson<AssetsLiabilitiesResponse>(jsonString)
             completion.invoke(Resource.success(parsedObject))
         } catch (e: Exception) {

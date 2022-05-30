@@ -181,19 +181,7 @@ class AffordabilityTest : BaseAndroidTest() {
         initSetup()
         val signal = CountDownLatch(1)
 
-        val body = readStringFromJson(app, R.raw.assets_liabilities)
-
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-            }
-            )
-
-        affordability.fetchAssetLiabilitiesHierarchy { resource ->
+        affordability.fetchAssetsLiabilitiesConfig { resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
             assertNull(resource.error)
             val model = resource.data

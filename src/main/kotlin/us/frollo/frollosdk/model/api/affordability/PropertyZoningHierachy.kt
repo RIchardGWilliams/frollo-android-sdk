@@ -8,7 +8,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.PropertyZoning
 data class PropertyZoningHierachy(
 
     /** PropertyTypes included in a zone */
-    @SerializedName("types") val propertyTypes: List<PropertyType>?,
+    @SerializedName("types") val propertyTypes: List<PropertyType>,
 
     /** Property Zone value */
     @SerializedName("type") val zone: PropertyZoning,

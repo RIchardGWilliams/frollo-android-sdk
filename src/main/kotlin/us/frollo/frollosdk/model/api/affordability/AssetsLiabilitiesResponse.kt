@@ -8,9 +8,11 @@ import com.google.gson.annotations.SerializedName
  */
 data class AssetsLiabilitiesResponse(
 
-    // Assets are an array of asset bucket, one for each of the major categories e.g. property, vehicle
+    /** Assets are an array of asset bucket,
+     * one for each of the major categories e.g. property, vehicle
+     */
     @SerializedName("assets") val assets: List<AssetBucket>,
 
-    // list of account (sub) types that are allowed to be used for manual liability
+    /** list of account (sub) types that are allowed to be used for manual liability */
     @SerializedName("liabilities") val liabilities: LiabilitiesBucket
 )
