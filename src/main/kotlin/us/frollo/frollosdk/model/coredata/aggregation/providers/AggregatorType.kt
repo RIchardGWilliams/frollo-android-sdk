@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** Aggregator with which a Provider get its data from */
-enum class   AggregatorType {
+enum class AggregatorType {
 
     /** Yodlee */
     @SerializedName("yodlee") YODLEE,

@@ -177,7 +177,7 @@ class AffordabilityTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testFetchAssetLiabilitiesHierarchy() {
+    fun testFetchAssetsLiabilitiesConfig() {
         initSetup()
         val signal = CountDownLatch(1)
 
@@ -200,22 +200,6 @@ class AffordabilityTest : BaseAndroidTest() {
             signal.countDown()
         }
 
-        tearDown()
-    }
-
-    @Test
-    fun testFetchAssetLiabilitiesHierarchyFailsIfLoggedOut() {
-        initSetup()
-        val signal = CountDownLatch(1)
-        clearLoggedInPreferences()
-
-        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
-            assertNotNull(resource)
-            assertEquals(DataErrorType.UNKNOWN, (resource.error as DataError).type)
-            assertEquals(DataErrorSubType.INVALID_DATA, (resource.error as DataError).subType)
-            signal.countDown()
-        }
-        signal.await(3, TimeUnit.SECONDS)
         tearDown()
     }
 }
