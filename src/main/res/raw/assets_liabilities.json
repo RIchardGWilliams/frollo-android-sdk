@@ -1,0 +1,114 @@
+{
+  "assets": [
+    {
+      "type": "property",
+      "display_image_url": "",
+      "zoning": [
+        {
+          "type": "residential",
+          "display_image_url": "https://picsum.photos/100",
+          "types": [
+            "company_title_unit",
+            "converted_motel_units",
+            "detached",
+            "duplex",
+            "government_rental_guarantee",
+            "holiday_home",
+            "holiday_rental",
+            "new_strata_title_unit",
+            "rental_guarantee",
+            "resort_unit",
+            "semi_detached",
+            "serviced_apartment",
+            "strata_title_unit",
+            "terrace",
+            "timeshare",
+            "townhouse",
+            "vacant_land",
+            "villa"
+          ],
+          "required_fields": ["ppor"]
+        },
+        {
+          "type": "commercial",
+          "display_image_url": "",
+          "types": [
+            "factory",
+            "non_specialised_commercial",
+            "offices",
+            "prof_chambers",
+            "residential_commercial",
+            "retirement_village",
+            "vacant_land",
+            "warehouse",
+            "other"
+          ]
+        },
+        {
+          "type": "industrial",
+          "display_image_url": "",
+          "types": [
+            "light_industrial",
+            "non_specialised_industrial",
+            "other"
+          ]
+        },
+        {
+          "type": "rural",
+          "display_image_url": "",
+          "types": [
+            "less_than_8",
+            "8_50_hectares",
+            "over_50_hectares"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "motor_vehicle",
+      "display_image_url": "https://picsum.photos/100"
+    },
+    {
+      "type": "accounts_funds",
+      "display_image_url": "https://picsum.photos/100",
+      "account_types": [
+        "cash_management",
+        "investment",
+        "managed_funds",
+        "pension",
+        "term_deposit"
+      ]
+    },
+    {
+      "type": "other_assets",
+      "display_image_url": "https://picsum.photos/100",
+      "account_types": [
+        "business",
+        "cash",
+        "collection",
+        "life_insurance",
+        "shares",
+        "stock_machinery",
+        "trade_tools"
+      ]
+    }
+  ],
+  "liabilities": {
+    "account_types": [
+      "commercial_bill",
+      "contingent_liability",
+      "credit_card",
+      "hire_purchase",
+      "lease",
+      "line_of_credit",
+      "margin",
+      "overdraft",
+      "personal",
+      "store_card",
+      "student_loan",
+      "tax_debt",
+      "term_loan",
+      "other"
+    ]
+  }
+}

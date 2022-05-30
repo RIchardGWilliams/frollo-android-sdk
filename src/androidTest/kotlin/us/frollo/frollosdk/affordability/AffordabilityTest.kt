@@ -175,4 +175,59 @@ class AffordabilityTest : BaseAndroidTest() {
         signal.await(3, TimeUnit.SECONDS)
         tearDown()
     }
+
+    @Test
+    fun testFetchAssetLiabilitiesHierarchy() {
+        initSetup()
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.assets_liabilities)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    return MockResponse()
+                        .setResponseCode(200)
+                        .setBody(body)
+                }
+            }
+            )
+
+        affordability.fetchAssetLiabilitiesHierarchy { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            val model = resource.data
+            assertNotNull(model)
+            assertEquals("PROPERTY", model?.assets?.first()?.type?.name)
+            assertEquals("https://picsum.photos/100", model?.assets?.first()?.displayImageUrl)
+            assertEquals(7, model?.assets?.first()?.zoning?.size)
+            assertEquals("residential", model?.assets?.first()?.zoning?.first()?.zone?.name)
+            assertEquals(18, model?.assets?.first()?.zoning?.first()?.propertyTypes?.size)
+            assertEquals("COMPANY_TITLE_UNIT", model?.assets?.first()?.zoning?.first()?.propertyTypes?.first()?.name)
+            assertEquals("https://picsum.photos/100", model?.assets?.first()?.zoning?.first()?.displayImageUrl)
+            assertEquals("CASH_MANAGEMENT", model?.assets?.first()?.accountSubTypes?.first()?.name)
+            assertEquals(14, model?.liabilities?.accountSubTypes?.size)
+            assertEquals("COMMERCIAL_BILL", model?.liabilities?.accountSubTypes?.first()?.name)
+
+            signal.countDown()
+        }
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchAssetLiabilitiesHierarchyFailsIfLoggedOut() {
+        initSetup()
+        val signal = CountDownLatch(1)
+        clearLoggedInPreferences()
+
+        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
+            assertNotNull(resource)
+            assertEquals(DataErrorType.UNKNOWN, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.INVALID_DATA, (resource.error as DataError).subType)
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
 }
