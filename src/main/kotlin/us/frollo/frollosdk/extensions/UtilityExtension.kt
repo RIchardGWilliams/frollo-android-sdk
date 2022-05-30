@@ -16,8 +16,10 @@
 
 package us.frollo.frollosdk.extensions
 
+import android.content.Context
 import android.content.Intent
 import android.util.Base64
+import androidx.annotation.RawRes
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -26,6 +28,8 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import okhttp3.Response
 import us.frollo.frollosdk.FrolloSDK
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.io.Serializable
 import java.nio.charset.Charset
 import java.security.KeyFactory
@@ -147,4 +151,19 @@ internal fun String.toJsonObject(): JsonObject? {
     } else {
         null
     }
+}
+
+internal fun readStringFromJson(context: Context, @RawRes resId: Int): String {
+    val stream = context.resources.openRawResource(resId)
+    val reader = BufferedReader(InputStreamReader(stream))
+    val sb = StringBuilder()
+    var line = reader.readLine()
+    while (line != null) {
+        sb.append(line).append("\n")
+        line = reader.readLine()
+    }
+    reader.close()
+    val ret = sb.toString()
+    stream.close()
+    return ret
 }

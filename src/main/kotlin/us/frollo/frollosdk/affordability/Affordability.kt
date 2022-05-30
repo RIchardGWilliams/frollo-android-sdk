@@ -16,12 +16,19 @@
 
 package us.frollo.frollosdk.affordability
 
+import com.google.gson.Gson
 import okhttp3.ResponseBody
+import us.frollo.frollosdk.FrolloSDK
+import us.frollo.frollosdk.R
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
+import us.frollo.frollosdk.error.FrolloSDKError
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.fromJson
 import us.frollo.frollosdk.extensions.getFinancialPassport
+import us.frollo.frollosdk.extensions.readStringFromJson
 import us.frollo.frollosdk.logging.Log
+import us.frollo.frollosdk.model.api.affordability.AssetsLiabilitiesResponse
 import us.frollo.frollosdk.model.api.affordability.ExportType
 import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
@@ -86,6 +93,23 @@ class Affordability(network: NetworkService) {
                     completion.invoke(resource)
                 }
             }
+        }
+    }
+
+    /**
+     * Get the configuration for the navigation hierarchy for creation of
+     * manual assets and liabilities. This allows the whitelabel to drive the
+     * UX to only create an asset or liability which conforms to Backend rules.
+     *
+     * @param completion Completion handler with optional error if assets & liabilities json parsing fails or if it succeeds
+     */
+    fun fetchAssetsLiabilitiesConfig(completion: OnFrolloSDKCompletionListener<Resource<AssetsLiabilitiesResponse>>) {
+        try {
+            val jsonString = readStringFromJson(FrolloSDK.context, R.raw.assets_liabilities)
+            val parsedObject = Gson().fromJson<AssetsLiabilitiesResponse>(jsonString)
+            completion.invoke(Resource.success(parsedObject))
+        } catch (e: Exception) {
+            completion.invoke(Resource.error(FrolloSDKError(e.message)))
         }
     }
 }
