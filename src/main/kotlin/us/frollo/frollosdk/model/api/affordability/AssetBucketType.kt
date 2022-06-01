@@ -2,10 +2,11 @@ package us.frollo.frollosdk.model.api.affordability
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import us.frollo.frollosdk.model.IAdapterModel
 
 /** Asset Bucket Types */
 @Keep
-enum class AssetBucketType {
+enum class AssetBucketType : IAdapterModel {
 
     /** ACCOUNT_FUNDS */
     @SerializedName("accounts_funds") ACCOUNT_FUNDS,
