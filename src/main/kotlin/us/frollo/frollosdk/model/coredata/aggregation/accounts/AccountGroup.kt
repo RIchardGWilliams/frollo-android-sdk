@@ -16,10 +16,12 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** What account group the account should appear in */
+@Keep
 enum class AccountGroup {
 
     /** Bank accounts */

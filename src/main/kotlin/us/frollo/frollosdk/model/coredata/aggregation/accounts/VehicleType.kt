@@ -16,10 +16,12 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** Type of Vehicle */
+@Keep
 enum class VehicleType {
 
     /** 4wd */

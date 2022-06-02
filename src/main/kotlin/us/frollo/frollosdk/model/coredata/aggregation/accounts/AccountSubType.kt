@@ -16,10 +16,12 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** Sub type of the account indicating more detail what the account is */
+@Keep
 enum class AccountSubType {
 
     /** Bank account */

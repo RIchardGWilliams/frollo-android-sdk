@@ -16,10 +16,12 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /** How often payments are made or statements are issued */
+@Keep
 enum class StatementOrPaymentFrequency {
 
     /** Annually */
