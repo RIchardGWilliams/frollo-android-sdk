@@ -1,10 +1,16 @@
 ## Changelog
 
+### 3.17.2
+
+#### Changes
+- AccountCreateUpdateRequest - Replace account type with account sub type
+
 ### 3.17.1
 
 #### Changes
 - Assets - Remove frequency field from assets breakdown
 - Liabilities - Rename frequency in liabilities breakdown
+- Remove support for Android 6 & 7
 
 ### 3.17.0
 

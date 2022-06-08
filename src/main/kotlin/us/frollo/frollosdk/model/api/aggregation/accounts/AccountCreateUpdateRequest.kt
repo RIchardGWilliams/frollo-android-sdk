@@ -19,7 +19,7 @@ package us.frollo.frollosdk.model.api.aggregation.accounts
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountAdditionalDetails
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountOwnerType
-import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
+import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.RelatedAccount
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.StatementOrPaymentFrequency
@@ -36,8 +36,8 @@ data class AccountCreateUpdateRequest(
     /** Nickname given to the account for display and identification purposes (Optional) */
     @SerializedName("nick_name") var nickName: String? = null,
 
-    /** Account Type */
-    @SerializedName("container") var accountType: AccountType,
+    /** Account Sub Type */
+    @SerializedName("account_type") var accountSubType: AccountSubType,
 
     /** Account BSB (Optional) */
     @SerializedName("bsb") var bsb: String? = null,
