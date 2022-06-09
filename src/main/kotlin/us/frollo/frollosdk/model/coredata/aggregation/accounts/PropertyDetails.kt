@@ -55,6 +55,6 @@ data class PropertyDetails(
     @SerializedName("address_id") var requestAddressId: Long?
 ) {
     // This secondary constructor is needed to be able to use @Ignore parameters in primary constructor
-    constructor(type: PropertyType, zoning: PropertyZoning, purpose: PropertyPurpose, principalResidence: Boolean?, address: UserAddress?) :
+    constructor(type: PropertyType?, zoning: PropertyZoning?, purpose: PropertyPurpose?, principalResidence: Boolean?, address: UserAddress?) :
         this(type, zoning, purpose, principalResidence, address, null)
 }
