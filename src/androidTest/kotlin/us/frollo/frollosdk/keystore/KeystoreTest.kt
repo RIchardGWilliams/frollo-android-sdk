@@ -16,14 +16,20 @@
 
 package us.frollo.frollosdk.keystore
 
+import android.app.Application
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import us.frollo.frollosdk.preferences.Preferences
 
 class KeystoreTest {
-    private val keystore = Keystore()
+
+    private val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
+    private val preferences = Preferences(app)
+    private val keystore = Keystore(preferences)
 
     @Test
     fun testKeyStoreSetup() {

@@ -289,28 +289,37 @@ object FrolloSDK {
         try {
             val deviceInfo = DeviceInfo(context)
 
-            // 1. Initialize ThreeTenABP
+            // Initialize ThreeTenABP
             initializeThreeTenABP()
 
-            // 2. Setup Keystore
-            keyStore = Keystore()
-            keyStore.setup()
-
-            // 3. Setup Preferences
+            // Setup Preferences
             preferences = Preferences(context)
-            tokenInjector = TokenInjector(keyStore, preferences)
 
-            // 4. Setup Database
-            database = SDKDatabase.getInstance(context, configuration, dbNamePrefix = configuration.databaseNamePrefix)
-
-            // 5. Setup Version Manager
+            // Setup Version Manager
             version = Version(preferences)
 
-            // 6. Setup Network Stack
+            // Migrate Legacy Initialization Vector
+            // NOTE: This is an exception from normal migration which we do at the end of this setup method
+            // because we need to do this before Keystore is initialized
+            if (version.initializationVectorMigrationNeeded()) {
+                version.migrateInitializationVector()
+            }
+
+            // Setup Keystore
+            keyStore = Keystore(preferences)
+            keyStore.setup()
+
+            // Setup Token Injector
+            tokenInjector = TokenInjector(keyStore, preferences)
+
+            // Setup Database
+            database = SDKDatabase.getInstance(context, configuration, dbNamePrefix = configuration.databaseNamePrefix)
+
+            // Setup Network Stack
             val oAuth = OAuth2Helper(config = configuration)
             network = NetworkService(oAuth2Helper = oAuth, keystore = keyStore, pref = preferences, appInfo = AppInfo(context))
 
-            // 7. Setup Logger
+            // Setup Logger
             // Initialize Log.networkLoggingProvider before Log.logLevel
             // as Log.logLevel is dependant on Log.networkLoggingProvider
             Log.networkLoggingProvider = configuration.networkLoggingProvider
@@ -318,7 +327,7 @@ object FrolloSDK {
             // Setup Log Manager
             _logger = LogManager()
 
-            // 8. Setup authentication stack
+            // Setup authentication stack
             when (configuration.authenticationType) {
                 is Custom -> {
                     network.accessTokenProvider = configuration.authenticationType.accessTokenProvider
@@ -338,72 +347,73 @@ object FrolloSDK {
                 }
             }
 
-            // 9. Setup Aggregation
+            // Setup Aggregation
             _aggregation = Aggregation(network, database, localBroadcastManager)
 
-            // 10. Setup Messages
+            // Setup Messages
             _messages = Messages(network, database)
 
-            // 11. Setup Events
+            // Setup Events
             _events = Events(network)
 
-            // 12. Setup Surveys
+            // Setup Surveys
             _surveys = Surveys(network)
 
-            // 13. Setup Reports
+            // Setup Reports
             _reports = Reports(network, database, aggregation)
 
-            // 14. Setup Bills
+            // Setup Bills
             _bills = Bills(network, database, aggregation)
 
-            // 15. Setup Goals
+            // Setup Goals
             _goals = Goals(network, database)
 
-            // 16. Setup User Management
+            // Setup User Management
             _userManagement = UserManagement(deviceInfo, network, configuration.clientId, database, preferences)
 
-            // 17. Setup Notifications
+            // Setup Notifications
             _notifications = Notifications(userManagement, events, messages)
 
-            // 18. Setup Budgets
+            // Setup Budgets
             _budgets = Budgets(network, database)
 
-            // 19. Setup Images
+            // Setup Images
             _images = Images(network, database)
 
-            // 20. Setup Payments
+            // Setup Payments
             _payments = Payments(network)
 
-            // 21. Setup Response Data API Service
+            // Setup Response Data API Service
             responseDataAPI = network.create(ResponseDataAPI::class.java)
 
-            // 22. Setup Contacts
+            // Setup Contacts
             _contacts = Contacts(network, database)
 
-            // 23. Setup KYC
+            // Setup KYC
             _kyc = KYC(network)
 
-            // 24. Setup Managed Products
+            // Setup Managed Products
             _managedProducts = ManagedProducts(network)
 
-            // 25. Setup Cards
+            // Setup Cards
             _cards = Cards(network, database)
 
-            // 26. Setup Paydays
+            // Setup Paydays
             _paydays = Paydays(network, database)
 
-            // 27. Setup Address Management
+            // Setup Address Management
             _addressManagement = AddressManagement(network, database)
 
-            // 28. Setup Statements
+            // Setup Statements
             _statements = Statements(network)
 
-            // 29. Setup Service Status Management
+            // Setup Service Status Management
             _serviceStatusManagement = ServiceStatusManagement(network, database)
 
-            // 30. Financial passport management
+            // Financial passport management
             _affordability = Affordability(network)
 
+            // Version Migration
             if (version.migrationNeeded()) {
                 version.migrateVersion()
             }

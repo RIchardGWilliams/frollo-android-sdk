@@ -1,9 +1,10 @@
 ## Changelog
 
-### 3.17.2
+### 3.18.0
 
 #### Changes
 - AccountCreateUpdateRequest - Replace account type with account sub type
+- Dynamic IV for KeyStore
 
 ### 3.17.1
 

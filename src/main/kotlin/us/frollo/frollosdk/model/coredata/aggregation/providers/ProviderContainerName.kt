@@ -46,6 +46,9 @@ enum class ProviderContainerName {
     /** Credit score */
     @SerializedName("credit_score") CREDIT_SCORE,
 
+    /** Asset */
+    @SerializedName("asset") ASSET,
+
     /** Unknown */
     @SerializedName("unknown") UNKNOWN;
 

@@ -38,9 +38,9 @@ class NetworkHelperTest {
 
     @Before
     fun setUp() {
-        keystore = Keystore()
-        keystore.setup()
         preferences = Preferences(app)
+        keystore = Keystore(preferences)
+        keystore.setup()
         authToken = AuthToken(keystore, preferences)
         appInfo = AppInfo(app)
     }

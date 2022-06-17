@@ -126,9 +126,9 @@ abstract class BaseAndroidTest {
         }
 
         appInfo = AppInfo(app)
-        keystore = Keystore()
-        keystore.setup()
         preferences = Preferences(app)
+        keystore = Keystore(preferences)
+        keystore.setup()
         database = SDKDatabase.getInstance(app, config)
         val oAuth = OAuth2Helper(config = config)
         network = NetworkService(oAuth2Helper = oAuth, keystore = keystore, pref = preferences, appInfo = appInfo)

@@ -16,7 +16,9 @@
 
 package us.frollo.frollosdk.version
 
+import io.github.g00fy2.versioncompare.Version
 import us.frollo.frollosdk.BuildConfig
+import us.frollo.frollosdk.extensions.valueToString
 import us.frollo.frollosdk.preferences.Preferences
 
 internal class Version(private val pref: Preferences) {
@@ -42,23 +44,38 @@ internal class Version(private val pref: Preferences) {
         return false
     }
 
+    private fun initialiseVersion() {
+        updatePreviousVersion(versionNumber = currentVersion)
+    }
+
     fun migrateVersion() {
         if (previousVersion == null) return
 
         // Stubbed for future. Replace null check with let and iterate through versions
 
-        updateVersion()
+        updatePreviousVersion(currentVersion)
     }
 
-    private fun initialiseVersion() {
-        updateVersion()
-    }
+    private fun updatePreviousVersion(versionNumber: String) {
+        previousVersion = versionNumber
+        versionHistory.add(versionNumber)
 
-    private fun updateVersion() {
-        previousVersion = currentVersion
-        versionHistory.add(currentVersion)
-
-        pref.sdkVersion = currentVersion
+        pref.sdkVersion = previousVersion
         pref.sdkVersionHistory = versionHistory.toMutableList()
+    }
+
+    // NOTE: This method is an exception and is out of migrateVersion() method's
+    // iteration because we need to do this before Keystore is initialized
+    fun initializationVectorMigrationNeeded(): Boolean {
+        return previousVersion?.let { lastVersion ->
+            Version(lastVersion).isLowerThan("3.18.0")
+        } ?: false
+    }
+
+    // NOTE: This method is an exception and is out of migrateVersion() method's
+    // iteration because we need to do this before Keystore is initialized
+    fun migrateInitializationVector() {
+        val legacyIV = byteArrayOf(12, -18, 46, 125, -17, -120, -38, 79, 75, 93, -78, -31, -74, -35, -42, -70)
+        pref.initialisationVector = legacyIV.valueToString()
     }
 }
