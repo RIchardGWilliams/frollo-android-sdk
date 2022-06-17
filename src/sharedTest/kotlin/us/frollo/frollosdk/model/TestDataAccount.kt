@@ -173,7 +173,7 @@ internal fun testUpdateRequestData(hidden: Boolean = false, included: Boolean = 
 
 internal fun testAccountCreateUpdateRequestData(): AccountCreateUpdateRequest {
     return AccountCreateUpdateRequest(
-        accountType = AccountType.ASSET,
+        accountSubType = AccountSubType.PROPERTY,
         accountName = randomUUID(),
         favourite = true,
         hidden = false,

@@ -16,7 +16,7 @@ android {
         minSdkVersion 26 // Android 8.0 (Oreo)
         targetSdkVersion 31
         versionCode 1
-        versionName "3.17.2"
+        versionName "3.18.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = ['appAuthRedirectScheme': 'frollo-sdk-test']
         buildConfigField "String", "SDK_VERSION_NAME", "\"$versionName\""
@@ -170,4 +170,6 @@ dependencies {
     implementation "net.zetetic:android-database-sqlcipher:4.5.0"
     implementation "androidx.sqlite:sqlite-ktx:2.2.0"
 
+    // Version Compare
+    implementation("io.github.g00fy2:versioncompare:1.4.1")
 }

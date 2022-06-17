@@ -30,12 +30,13 @@ class AuthTokenTest {
 
     private val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
     private lateinit var preferences: Preferences
-    private val keyStore = Keystore()
+    private lateinit var keyStore: Keystore
     private lateinit var authToken: AuthToken
 
     @Before
     fun setup() {
         preferences = Preferences(context)
+        keyStore = Keystore(preferences)
         keyStore.setup()
         authToken = AuthToken(keyStore, preferences)
         authToken.clearTokens()

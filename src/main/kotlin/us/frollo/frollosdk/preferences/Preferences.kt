@@ -31,6 +31,7 @@ class Preferences(context: Context) {
         private const val KEY_ENCRYPTED_REFRESH_TOKEN = "key_encrypted_refresh_token"
         private const val KEY_ENCRYPTED_ACCESS_TOKEN = "key_encrypted_access_token"
         private const val KEY_ACCESS_TOKEN_EXPIRY = "key_access_token_expiry"
+        private const val KEY_IV = "key_iv"
     }
 
     private val preferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
@@ -74,6 +75,11 @@ class Preferences(context: Context) {
         get() = preferences.getLong(KEY_ACCESS_TOKEN_EXPIRY, -1)
         set(value) = preferences.edit().putLong(KEY_ACCESS_TOKEN_EXPIRY, value).apply()
     internal fun resetAccessTokenExpiry() = preferences.edit().remove(KEY_ACCESS_TOKEN_EXPIRY).apply()
+
+    /** IV - Initialisation Vector */
+    internal var initialisationVector: String?
+        get() = preferences.getString(KEY_IV, null)
+        set(value) = preferences.edit().putString(KEY_IV, value).apply()
 
     internal fun reset() {
         resetLoggedIn()

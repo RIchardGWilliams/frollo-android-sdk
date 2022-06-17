@@ -187,13 +187,13 @@ class AffordabilityTest : BaseAndroidTest() {
             val model = resource.data
             assertNotNull(model)
             assertEquals("PROPERTY", model?.assets?.first()?.type?.name)
-            assertEquals("https://picsum.photos/100", model?.assets?.first()?.displayImageUrl)
-            assertEquals(7, model?.assets?.first()?.zoning?.size)
-            assertEquals("residential", model?.assets?.first()?.zoning?.first()?.zone?.name)
+            assertEquals(4, model?.assets?.first()?.zoning?.size)
+            assertEquals("RESIDENTIAL", model?.assets?.first()?.zoning?.first()?.zone?.name)
+            assertEquals("https://picsum.photos/100", model?.assets?.first()?.zoning?.first()?.displayImageUrl)
             assertEquals(18, model?.assets?.first()?.zoning?.first()?.propertyTypes?.size)
             assertEquals("COMPANY_TITLE_UNIT", model?.assets?.first()?.zoning?.first()?.propertyTypes?.first()?.name)
             assertEquals("https://picsum.photos/100", model?.assets?.first()?.zoning?.first()?.displayImageUrl)
-            assertEquals("CASH_MANAGEMENT", model?.assets?.first()?.accountSubTypes?.first()?.name)
+            assertEquals("CASH_MANAGEMENT", model?.assets?.get(2)?.accountSubTypes?.first()?.name)
             assertEquals(14, model?.liabilities?.accountSubTypes?.size)
             assertEquals("COMMERCIAL_BILL", model?.liabilities?.accountSubTypes?.first()?.name)
 

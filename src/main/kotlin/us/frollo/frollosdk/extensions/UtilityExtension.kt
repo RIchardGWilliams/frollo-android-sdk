@@ -33,6 +33,7 @@ import java.io.InputStreamReader
 import java.io.Serializable
 import java.nio.charset.Charset
 import java.security.KeyFactory
+import java.security.SecureRandom
 import java.security.spec.X509EncodedKeySpec
 import java.util.regex.Pattern
 import java.util.regex.PatternSyntaxException
@@ -166,4 +167,19 @@ internal fun readStringFromJson(context: Context, @RawRes resId: Int): String {
     val ret = sb.toString()
     stream.close()
     return ret
+}
+
+fun ByteArray.valueToString(): String {
+    return Base64.encodeToString(this, Base64.DEFAULT)
+}
+
+fun String.valueToByteArray(): ByteArray {
+    return Base64.decode(this, Base64.DEFAULT)
+}
+
+fun generateByteArray(size: Int): ByteArray {
+    val random = SecureRandom()
+    val salt = ByteArray(size)
+    random.nextBytes(salt)
+    return salt
 }
