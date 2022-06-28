@@ -18,19 +18,39 @@ package us.frollo.frollosdk.model.api.shared
 
 import com.google.gson.annotations.SerializedName
 
-internal data class PaginatedResponse<T>(
+/**
+ * Response with information of pagination
+ *
+ * @param data Array of data items
+ * @param paging Pagination information
+ */
+data class PaginatedResponse<T>(
     @SerializedName("data") val data: List<T>,
     @SerializedName("paging") val paging: Paging
 ) {
 
-    internal class Paging(
+    /**
+     * Pagination Information
+     *
+     * @param cursors Page cursors
+     * @param previous Previous Page URL
+     * @param next Next Page URL
+     * @param total Total number of data items in all the pages
+     */
+    class Paging(
         @SerializedName("cursors") val cursors: PagingCursors?,
         @SerializedName("previous") val previous: String?,
         @SerializedName("next") val next: String?,
         @SerializedName("total") val total: Long?
     )
 
-    internal class PagingCursors(
+    /**
+     * Page Cursors
+     *
+     * @param before Before cursor
+     * @param after After cursor
+     */
+    class PagingCursors(
         @SerializedName("before") var before: String?,
         @SerializedName("after") var after: String?
     )

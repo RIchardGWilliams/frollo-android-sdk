@@ -79,7 +79,8 @@ internal fun testMerchantDetails(merchantId: Long? = null): MerchantDetails =
         name = randomUUID(),
         phone = randomUUID(),
         website = randomUUID(),
-        location = null
+        location = null,
+        imageUrl = null
     )
 
 internal fun testTransactionsSummaryResponseData(count: Long? = null, sum: BigDecimal? = null): TransactionsSummaryResponse =

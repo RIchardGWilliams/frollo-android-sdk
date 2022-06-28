@@ -5,6 +5,8 @@
 #### Changes
 - AccountCreateUpdateRequest - Replace account type with account sub type
 - Dynamic IV for KeyStore
+- List Similar Transactions API
+- Update Bulk Transactions API
 
 ### 3.17.1
 

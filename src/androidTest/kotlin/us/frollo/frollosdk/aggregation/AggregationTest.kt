@@ -2627,6 +2627,66 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchSimilarTransactionsWithPagination() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val body = readStringFromJson(app, R.raw.transactions_similar)
+        mockServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "aggregation/transactions/5558820/similar") {
+                    return MockResponse()
+                        .setResponseCode(200)
+                        .setBody(body)
+                }
+                return MockResponse().setResponseCode(404)
+            }
+        }
+
+        aggregation.fetchSimilarTransactionsWithPagination(transactionId = 5558820) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+
+            val models = resource.data?.data
+            assertEquals(10, models?.size)
+            assertEquals(5558824L, models?.first()?.transactionId)
+
+            val paging = resource.data?.paging
+            assertEquals(11L, paging?.total)
+            assertNull(paging?.cursors?.before)
+            assertEquals("1622870276_5558894", paging?.cursors?.after)
+            assertNull(paging?.previous)
+            assertNotNull(paging?.next)
+
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchSimilarTransactionsWithPaginationFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.fetchSimilarTransactionsWithPagination(transactionId = 12345) { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testExcludeTransaction() {
         initSetup()
 

@@ -59,6 +59,7 @@ internal interface AggregationAPI {
         // Transaction URLs
         const val URL_TRANSACTIONS = "aggregation/transactions"
         const val URL_TRANSACTION = "aggregation/transactions/{transaction_id}"
+        const val URL_SIMILAR_TRANSACTIONS = "aggregation/transactions/{transaction_id}/similar"
         const val URL_TRANSACTIONS_SUMMARY = "aggregation/transactions/summary"
 
         // Tags URLs
@@ -132,6 +133,9 @@ internal interface AggregationAPI {
 
     @GET(URL_TRANSACTION)
     fun fetchTransaction(@Path("transaction_id") transactionId: Long): Call<TransactionResponse>
+
+    @GET(URL_SIMILAR_TRANSACTIONS)
+    fun fetchSimilarTransactions(@Path("transaction_id") transactionId: Long, @QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
 
     @PUT(URL_TRANSACTION)
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>

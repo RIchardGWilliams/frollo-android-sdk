@@ -48,6 +48,7 @@ import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchConsents
 import us.frollo.frollosdk.extensions.fetchMerchants
 import us.frollo.frollosdk.extensions.fetchProducts
+import us.frollo.frollosdk.extensions.fetchSimilarTransactions
 import us.frollo.frollosdk.extensions.fetchSuggestedTags
 import us.frollo.frollosdk.extensions.fetchTransactions
 import us.frollo.frollosdk.extensions.fetchTransactionsSummaryByIDs
@@ -1171,6 +1172,58 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 is PaginatedResult.Error -> {
                     Log.e("$TAG#refreshNextTransactions", result.error?.localizedDescription)
                     completion?.invoke(result)
+                }
+            }
+        }
+    }
+
+    /**
+     * A convenience method that must fetch similar transactions to the provided transaction ID from the host.
+     *
+     * @param transactionId ID of the transaction for which we have to fetch similar transactions
+     * @param excludeSelf Indicates whether the transaction ID is provided as a parameter should be excluded from the result set. If not provided, the value is assumed to be true.
+     * @param fromDate Date to filter transactions from (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param toDate Date to filter transactions to (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param after after field to get next list in pagination. Format is "<epoch_date>_<transaction_id>"
+     * @param before before field to get previous list in pagination. Format is "<epoch_date>_<transaction_id>"
+     * @param size Count of objects to returned from the API (page size)
+     * @param completion Completion handler with optional error if the request fails else paginated data if success
+     */
+    fun fetchSimilarTransactionsWithPagination(
+        transactionId: Long,
+        excludeSelf: Boolean? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        after: String? = null,
+        before: String? = null,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<Resource<PaginatedResponse<Transaction>>>
+    ) {
+        aggregationAPI.fetchSimilarTransactions(
+            transactionId = transactionId,
+            excludeSelf = excludeSelf,
+            fromDate = fromDate,
+            toDate = toDate,
+            after = after,
+            before = before,
+            size = size
+        ).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    completion.invoke(
+                        Resource.success(
+                            resource.data?.let { response ->
+                                PaginatedResponse(
+                                    data = response.data.map { it.toTransaction() },
+                                    paging = response.paging
+                                )
+                            }
+                        )
+                    )
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#fetchSimilarTransactionsWithPagination", resource.error?.localizedDescription)
+                    completion.invoke(Resource.error(resource.error))
                 }
             }
         }

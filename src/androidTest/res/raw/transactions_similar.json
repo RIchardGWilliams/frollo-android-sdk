@@ -1,0 +1,331 @@
+{
+    "data": [{
+        "id": 5558824,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-29",
+        "post_date": "2021-06-29",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558826,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-28",
+        "post_date": "2021-06-28",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558872,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-25",
+        "post_date": "2021-06-25",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558590,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-22",
+        "post_date": "2021-06-22",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558842,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-21",
+        "post_date": "2021-06-21",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558850,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-20",
+        "post_date": "2021-06-20",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558878,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-11",
+        "post_date": "2021-06-11",
+        "amount": {
+            "amount": "-10.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558884,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-10",
+        "post_date": "2021-06-10",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558892,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-06",
+        "post_date": "2021-06-06",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }, {
+        "id": 5558894,
+        "account_id": 22626,
+        "account_aggregator": "cdr",
+        "base_type": "debit",
+        "status": "posted",
+        "included": true,
+        "transaction_date": "2021-06-05",
+        "post_date": "2021-06-05",
+        "amount": {
+            "amount": "-8.00",
+            "currency": "AUD"
+        },
+        "description": {
+            "original": "MCDONALDS AUS",
+            "simple": "McDonald's"
+        },
+        "budget_category": "lifestyle",
+        "category": {
+            "id": 155,
+            "name": "Takeaway \u0026 Snacks",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+        },
+        "merchant": {
+            "id": 46,
+            "name": "McDonald's",
+            "phone": "(02) 9550 4804",
+            "website": "https://www.mcdonalds.com.au",
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+        },
+        "user_tags": [],
+        "reference": ""
+    }],
+    "paging": {
+        "cursors": {
+            "before": null,
+            "after": "1622870276_5558894"
+        },
+        "next": "https://api-staging.frollo.us/api/v2/aggregation/transactions/?after=1622870276_5558894\u0026size=10\u0026transaction_ids=5558896%2C+5558894%2C+5558892%2C+5558884%2C+5558878%2C+5558850%2C+5558842%2C+5558590%2C+5558872%2C+5558826%2C+5558824",
+        "total": 11
+    }
+}
