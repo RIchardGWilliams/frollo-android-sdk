@@ -76,6 +76,27 @@ internal fun AggregationAPI.fetchTransactions(transactionFilter: TransactionFilt
     return fetchTransactions(transactionFilter?.getQueryMap() ?: mutableMapOf())
 }
 
+internal fun AggregationAPI.fetchSimilarTransactions(
+    transactionId: Long,
+    excludeSelf: Boolean? = null,
+    fromDate: String? = null,
+    toDate: String? = null,
+    before: String? = null,
+    after: String? = null,
+    size: Long? = null
+): Call<PaginatedResponse<TransactionResponse>> {
+
+    val queryMap = mutableMapOf<String, String>()
+    fromDate?.let { queryMap.put("from_date", it) }
+    toDate?.let { queryMap.put("to_date", it) }
+    excludeSelf?.let { queryMap.put("exclude_self", it.toString()) }
+    before?.let { queryMap.put("before", it.toString()) }
+    after?.let { queryMap.put("after", it.toString()) }
+    size?.let { queryMap.put("size", it.toString()) }
+
+    return fetchSimilarTransactions(transactionId, queryMap)
+}
+
 internal fun AggregationAPI.fetchTransactionsSummaryByQuery(
     fromDate: String, // yyyy-MM-dd
     toDate: String, // yyyy-MM-dd

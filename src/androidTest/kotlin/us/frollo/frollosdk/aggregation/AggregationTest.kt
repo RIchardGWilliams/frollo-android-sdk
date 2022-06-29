@@ -87,6 +87,7 @@ import us.frollo.frollosdk.model.testConsentResponseData
 import us.frollo.frollosdk.model.testConsentUpdateFormData
 import us.frollo.frollosdk.model.testGoalPeriodResponseData
 import us.frollo.frollosdk.model.testGoalResponseData
+import us.frollo.frollosdk.model.testLargeTransactionIdsListData
 import us.frollo.frollosdk.model.testMerchantResponseData
 import us.frollo.frollosdk.model.testProviderAccountResponseData
 import us.frollo.frollosdk.model.testProviderResponseData
@@ -2627,6 +2628,66 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchSimilarTransactionsWithPagination() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val body = readStringFromJson(app, R.raw.transactions_similar)
+        mockServer.dispatcher = object : Dispatcher() {
+            override fun dispatch(request: RecordedRequest): MockResponse {
+                if (request.trimmedPath == "aggregation/transactions/5558820/similar") {
+                    return MockResponse()
+                        .setResponseCode(200)
+                        .setBody(body)
+                }
+                return MockResponse().setResponseCode(404)
+            }
+        }
+
+        aggregation.fetchSimilarTransactionsWithPagination(transactionId = 5558820) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+
+            val models = resource.data?.data
+            assertEquals(10, models?.size)
+            assertEquals(5558824L, models?.first()?.transactionId)
+
+            val paging = resource.data?.paging
+            assertEquals(11L, paging?.total)
+            assertNull(paging?.cursors?.before)
+            assertEquals("1622870276_5558894", paging?.cursors?.after)
+            assertNull(paging?.previous)
+            assertNotNull(paging?.next)
+
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchSimilarTransactionsWithPaginationFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.fetchSimilarTransactionsWithPagination(transactionId = 12345) { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testExcludeTransaction() {
         initSetup()
 
@@ -2822,6 +2883,82 @@ class AggregationTest : BaseAndroidTest() {
         clearLoggedInPreferences()
 
         aggregation.updateTransaction(194630, testTransactionResponseData().toTransaction()) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateTransactionsInBulk() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.transactions_update_in_bulk)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS_BULK) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data1 = testTransactionResponseData(transactionId = 194630).toTransaction()
+        val data2 = testTransactionResponseData(transactionId = 5555560).toTransaction()
+        val data3 = testTransactionResponseData(transactionId = 5555558).toTransaction()
+        database.transactions().insertAll(data1, data2, data3)
+
+        aggregation.updateTransactionsInBulk(
+            transactionIds = testLargeTransactionIdsListData(),
+            newCategoryId = 66,
+            newBudgetCategory = BudgetCategory.LIVING,
+            included = true,
+            createCategoryRule = true,
+            createBudgetCategoryRule = true,
+            createIncludeRule = true
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchTransactions().test()
+            testObserver.awaitValue()
+            val models = testObserver.value().data
+            assertNotNull(models)
+            assertEquals(201, models?.size)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(AggregationAPI.URL_TRANSACTIONS_BULK, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateTransactionsInBulkFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.updateTransactionsInBulk(listOf(123L)) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)

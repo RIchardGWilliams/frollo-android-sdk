@@ -34,6 +34,9 @@ data class MerchantDetails(
     /** Merchant website (optional) */
     @ColumnInfo(name = "website") @SerializedName("website") val website: String?,
 
+    /** Image URL of the transaction merchant (optional) */
+    @ColumnInfo(name = "image_url") @SerializedName("image_url") val imageUrl: String?,
+
     /** Merchant location (optional) */
     @ColumnInfo(name = "location") @SerializedName("location") val location: MerchantLocation?
 )

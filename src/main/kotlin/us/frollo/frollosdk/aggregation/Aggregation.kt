@@ -48,6 +48,7 @@ import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchConsents
 import us.frollo.frollosdk.extensions.fetchMerchants
 import us.frollo.frollosdk.extensions.fetchProducts
+import us.frollo.frollosdk.extensions.fetchSimilarTransactions
 import us.frollo.frollosdk.extensions.fetchSuggestedTags
 import us.frollo.frollosdk.extensions.fetchTransactions
 import us.frollo.frollosdk.extensions.fetchTransactionsSummaryByIDs
@@ -92,6 +93,7 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
+import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
@@ -1177,6 +1179,58 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * A convenience method that must fetch similar transactions to the provided transaction ID from the host.
+     *
+     * @param transactionId ID of the transaction for which we have to fetch similar transactions
+     * @param excludeSelf Indicates whether the transaction ID is provided as a parameter should be excluded from the result set. If not provided, the value is assumed to be true.
+     * @param fromDate Date to filter transactions from (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param toDate Date to filter transactions to (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
+     * @param after after field to get next list in pagination. Format is "<epoch_date>_<transaction_id>"
+     * @param before before field to get previous list in pagination. Format is "<epoch_date>_<transaction_id>"
+     * @param size Count of objects to returned from the API (page size)
+     * @param completion Completion handler with optional error if the request fails else paginated data if success
+     */
+    fun fetchSimilarTransactionsWithPagination(
+        transactionId: Long,
+        excludeSelf: Boolean? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        after: String? = null,
+        before: String? = null,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<Resource<PaginatedResponse<Transaction>>>
+    ) {
+        aggregationAPI.fetchSimilarTransactions(
+            transactionId = transactionId,
+            excludeSelf = excludeSelf,
+            fromDate = fromDate,
+            toDate = toDate,
+            after = after,
+            before = before,
+            size = size
+        ).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    completion.invoke(
+                        Resource.success(
+                            resource.data?.let { response ->
+                                PaginatedResponse(
+                                    data = response.data.map { it.toTransaction() },
+                                    paging = response.paging
+                                )
+                            }
+                        )
+                    )
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#fetchSimilarTransactionsWithPagination", resource.error?.localizedDescription)
+                    completion.invoke(Resource.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
      * Exclude a transaction from budgets and reports and update on the host
      *
      * @param transactionId ID of the transaction to be updated
@@ -1309,6 +1363,53 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * Update multiple transactions in bulk on the host
+     *
+     * @param transactionIds List of IDs of the transactions to be updated
+     * @param newCategoryId ID of the new transaction category for the transaction (Optional)
+     * @param newBudgetCategory New budget category for the transaction (Optional)
+     * @param included Boolean indicating if the transaction is included or not
+     * @param createCategoryRule Boolean indicating if the category rule should be applied on future transactions. Default is true.
+     * @param createBudgetCategoryRule Boolean indicating if the budget category rule should be applied on future transactions.
+     * @param createIncludeRule Boolean indicating if the include/exclude rule should be applied on future transactions.
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun updateTransactionsInBulk(
+        transactionIds: List<Long>,
+        newCategoryId: Long? = null,
+        newBudgetCategory: BudgetCategory? = null,
+        included: Boolean? = null,
+        createCategoryRule: Boolean? = null,
+        createBudgetCategoryRule: Boolean? = null,
+        createIncludeRule: Boolean? = null,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        val request = transactionIds.map {
+            TransactionBulkUpdateRequest(
+                transactionId = it,
+                categoryId = newCategoryId,
+                budgetCategory = newBudgetCategory,
+                included = included,
+                createCategoryRule = createCategoryRule,
+                createBudgetCategoryRule = createBudgetCategoryRule,
+                createIncludeRule = createIncludeRule
+            )
+        }
+
+        aggregationAPI.updateTransactionsInBulk(request).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleTransactionsByIdsResponse(response = resource.data, completion = completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#updateTransactionsInBulk", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
      * Fetch transactions summary from a certain period from the host
      *
      * @param fromDate Start date to fetch transactions summary from (inclusive). Please use [TransactionsSummary.DATE_FORMAT_PATTERN] for the format pattern.
@@ -1428,6 +1529,21 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 }
             }
         } ?: run { completion?.invoke(PaginatedResult.Success()) } // Explicitly invoke completion callback if response is null.
+    }
+
+    private fun handleTransactionsByIdsResponse(response: List<TransactionResponse>?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        response?.let {
+            doAsync {
+                // Fetch missing merchants
+                val merchantIds = response.map { model -> model.merchant.id }.toLongArray()
+                fetchMissingMerchants(merchantIds.toSet())
+
+                // Insert all transactions & fetch IDs from API response
+                insertTransactions(response)
+
+                uiThread { completion?.invoke(Result.success()) }
+            }
+        } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
     }
 
     private fun handleTransactionResponse(response: TransactionResponse?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
