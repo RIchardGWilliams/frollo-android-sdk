@@ -1,0 +1,6124 @@
+[{
+	"id": 5555560,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-31",
+	"post_date": "2022-05-31",
+	"amount": {
+		"amount": "-9.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 0050 VEGGIE HEAVEN REDBANK PLAIN",
+		"simple": "Veggie Heaven"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 8565,
+		"name": "Veggie Heaven",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555558,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-30",
+	"post_date": "2022-05-30",
+	"amount": {
+		"amount": "-16.45",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Audible Australia MELBOURNE AU AUS Card xx8202 Value Date_ 11/09/2019",
+		"simple": "Audible, Inc."
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 64,
+		"name": "Entertainment/Recreation",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 84,
+		"name": "Audible, Inc.",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/84/original/Audible-01.png?1519084885"
+	},
+	"user_tags": []
+}, {
+	"id": 5555556,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-29",
+	"post_date": "2022-05-29",
+	"amount": {
+		"amount": "-10.15",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Jimmy The Saint          South MelbourAU XXXX-XXXX-XXXX-2466",
+		"simple": "Jimmy The Saint"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 123,
+		"name": "Cafes \u0026 Coffee",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/123/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 6705,
+		"name": "Jimmy The Saint",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555554,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-28",
+	"post_date": "2022-05-28",
+	"amount": {
+		"amount": "-36.25",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DEBIT CARD PURCHASE DOMINOS ESTORE 0118 ST LEONARDS  AUS",
+		"simple": "Dominos"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 7041,
+		"name": "Dominos",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555552,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-27",
+	"post_date": "2022-05-27",
+	"amount": {
+		"amount": "-11.80",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 8071 MCDONALDS NEWCOMB NEWCOMB",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555550,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-26",
+	"post_date": "2022-05-26",
+	"amount": {
+		"amount": "-3.30",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA PURCHASE COCA-COLA AMATIL  OXENFORD 21/04 AU  AUD",
+		"simple": "Coca-cola Amatil"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 143,
+		"name": "Alcohol \u0026 Cigarette",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1653961579.png?1653961579"
+	},
+	"merchant": {
+		"id": 1300,
+		"name": "Coca-cola Amatil",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555548,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-25",
+	"post_date": "2022-05-25",
+	"amount": {
+		"amount": "-9.40",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ZAMBRERO MALAGA MALAGA AUS",
+		"simple": "Zambrero"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 1780,
+		"name": "Zambrero",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555546,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-24",
+	"post_date": "2022-05-24",
+	"amount": {
+		"amount": "-12.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ESPRESSO WARRIORS - SHELLHARBOUR NS AUS Tap and Pay xx5726 Value Date_ 02/03/2020",
+		"simple": "Espresso Warriors"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 123,
+		"name": "Cafes \u0026 Coffee",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/123/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 2350,
+		"name": "Espresso Warriors",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555544,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-23",
+	"post_date": "2022-05-23",
+	"amount": {
+		"amount": "-5.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Purchase CUPPA TURCA Northcote AU",
+		"simple": "Cuppa"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 8564,
+		"name": "Cuppa",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555542,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-22",
+	"post_date": "2022-05-22",
+	"amount": {
+		"amount": "-9.65",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EFTPOS DEBIT XXX0572 MCDONALDS NOWRA CTRL1596 NOWRA       27/08",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555540,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-21",
+	"post_date": "2022-05-21",
+	"amount": {
+		"amount": "-31.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL *DOMINOS XXXXXX7733 AUS",
+		"simple": "Dominos"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 7041,
+		"name": "Dominos",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555538,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-20",
+	"post_date": "2022-05-20",
+	"amount": {
+		"amount": "-23.45",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS PENRITH LEA PENRITH      NSWAU",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555536,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-19",
+	"post_date": "2022-05-19",
+	"amount": {
+		"amount": "-74.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "FOXTEL MANAGEMENT PTY NORTH RYDE",
+		"simple": "FOXTEL"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 64,
+		"name": "Entertainment/Recreation",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 159,
+		"name": "FOXTEL",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/159/original/AAEAAQAAAAAAAAlJAAAAJDNiZTQ4MDZiLWM0MDktNDU2Ni1hNzFlLTI1ZjA5NzYyOGFkYg.png?1519084995"
+	},
+	"user_tags": []
+}, {
+	"id": 5555534,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-18",
+	"post_date": "2022-05-18",
+	"amount": {
+		"amount": "-136.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "FIRST CHOICE ENTERTA - Visa Purchase - Receipt 1X4763In BONDI JUNCTI Date 18 Dec 2019 Card 4X2263xxxxxx1702",
+		"simple": "First Choice"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 143,
+		"name": "Alcohol \u0026 Cigarette",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1653961579.png?1653961579"
+	},
+	"merchant": {
+		"id": 8563,
+		"name": "First Choice",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555532,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-17",
+	"post_date": "2022-05-17",
+	"amount": {
+		"amount": "-8.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 1071 SUBWAY EIGHT MILE PLAINS EIGHT MILE PL",
+		"simple": "SUBWAY"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 66,
+		"name": "SUBWAY",
+		"phone": "0292401222",
+		"website": "https://www.subway.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/66/original/Screen_Shot_2017-02-17_at_1.13.06_pm.png?1519084975"
+	},
+	"user_tags": []
+}, {
+	"id": 5555530,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-16",
+	"post_date": "2022-05-16",
+	"amount": {
+		"amount": "-147.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA-SPORTSBET PTY ONLINE AU#5534(Ref.XXXXXXXX1600)",
+		"simple": "Sportsbet"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 144,
+		"name": "Gambling \u0026 Lotteries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/144/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 717,
+		"name": "Sportsbet",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555527,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-15",
+	"post_date": "2022-05-15",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "SPORTSBET P/L DARWIN NT AUS Card xx0429 Value Date_ 15/03/2020",
+		"simple": "Sportsbet"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 144,
+		"name": "Gambling \u0026 Lotteries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/144/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 717,
+		"name": "Sportsbet",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555524,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-14",
+	"post_date": "2022-05-14",
+	"amount": {
+		"amount": "-55.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "SUSHI TRAIN NEUTRAL - Visa Purchase - Receipt 1X6230In CREMORNE Date 18 Jan 2020 Card 4X2263xxxxxx5252",
+		"simple": "Sushi Train"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1554,
+		"name": "Sushi Train",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555522,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-13",
+	"post_date": "2022-05-13",
+	"amount": {
+		"amount": "-100.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BETEASY PTY LTD - Visa Purchase - Receipt 1X1155In MELBOURNE Date 27 Nov 2019 Card 4X2263xxxxxx4546",
+		"simple": "Beteasy"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 144,
+		"name": "Gambling \u0026 Lotteries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/144/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 5409,
+		"name": "Beteasy",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555520,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-12",
+	"post_date": "2022-05-12",
+	"amount": {
+		"amount": "-22.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EFTPOS BAR 951       N HILL        AU",
+		"simple": "Bar H"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 124,
+		"name": "Bars \u0026 Pubs",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 8562,
+		"name": "Bar H",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555518,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-11",
+	"post_date": "2022-05-11",
+	"amount": {
+		"amount": "-3.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS FAWKNER II  FAWKNER      VICAU",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555516,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-10",
+	"post_date": "2022-05-10",
+	"amount": {
+		"amount": "-4.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ECCO FOOD GROUP PTY DOCKLANDS",
+		"simple": "Ecco Food Group"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 6704,
+		"name": "Ecco Food Group",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555514,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-09",
+	"post_date": "2022-05-09",
+	"amount": {
+		"amount": "-10.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DEBIT CARD PURCHASE THELOTT WOOLLOONGABB AUS",
+		"simple": "Thelotter"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 144,
+		"name": "Gambling \u0026 Lotteries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/144/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 8561,
+		"name": "Thelotter",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555512,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-08",
+	"post_date": "2022-05-08",
+	"amount": {
+		"amount": "-3.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "V0204 31/05 ELWOOD NEWSAGENCY LOTTO ELWOOD XXXXXXX9151 MISCELLANEOUS DEBIT",
+		"simple": "Elwood Newsagency \u0026 Lotto"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 8560,
+		"name": "Elwood Newsagency \u0026 Lotto",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555510,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-07",
+	"post_date": "2022-05-07",
+	"amount": {
+		"amount": "-35.44",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER   *EATS Sydney AU AUS Card xx3359 Value Date_ 07/04/2020",
+		"simple": "Ubereats"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 7415,
+		"name": "Ubereats",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555508,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-06",
+	"post_date": "2022-05-06",
+	"amount": {
+		"amount": "-7.20",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS XX09 - Visa Purchase - Receipt 1X5399In NARRABEEN Date 23 Jul 2019 Card 4X2263xxxxxx0563",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5555506,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-05",
+	"post_date": "2022-05-05",
+	"amount": {
+		"amount": "-4.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "V4946 22/12 MCDONALDS WINTERGARD2    BRIS Ref: XXXXXXX0358",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555504,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-04",
+	"post_date": "2022-05-04",
+	"amount": {
+		"amount": "-9.05",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "V1633 14/04 MCDONALDS ORANGE ORANGE XXXXXXX0106 MISCELLANEOUS DEBIT",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555501,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-03",
+	"post_date": "2022-05-03",
+	"amount": {
+		"amount": "-8.01",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "POS (Cr) purchaseXX6113_UBER* EATS",
+		"simple": "Ubereats"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 7415,
+		"name": "Ubereats",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555498,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-02",
+	"post_date": "2022-05-02",
+	"amount": {
+		"amount": "-32.49",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER* EATS - Visa Purchase - Receipt 1X0831In SYDNEY Date 24 Mar 2021 Card 4X2263xxxxxx5945",
+		"simple": "Ubereats"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 7415,
+		"name": "Ubereats",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555494,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-05-01",
+	"post_date": "2022-05-01",
+	"amount": {
+		"amount": "-21.20",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 3089 BAMBOO SUSHI HOMEBUSH",
+		"simple": "Bamboo Sushi"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 8559,
+		"name": "Bamboo Sushi",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555491,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-30",
+	"post_date": "2022-04-30",
+	"amount": {
+		"amount": "-24.51",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS 6755 ROSANNA CREDIT CARD PURCHASE",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5555488,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-29",
+	"post_date": "2022-04-29",
+	"amount": {
+		"amount": "-13.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RED ROOSTER ALGESTER     ALGESTER CREDIT CARD PURCHASE",
+		"simple": "Red Rooster"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 557,
+		"name": "Red Rooster",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/557/original/red_rooster.png?1519084857"
+	},
+	"user_tags": []
+}, {
+	"id": 5555486,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-28",
+	"post_date": "2022-04-28",
+	"amount": {
+		"amount": "-38.90",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 9019 APPLE ITUNES STORE SYDNEY",
+		"simple": "Apple"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 94,
+		"name": "Electronics",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/94/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 3587,
+		"name": "Apple",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/3587/original/apple.png?1598507043"
+	},
+	"user_tags": []
+}, {
+	"id": 5555484,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-27",
+	"post_date": "2022-04-27",
+	"amount": {
+		"amount": "-6.12",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DEBIT CARD PURCHASE White Horse Hotel Surry Hills  AUS",
+		"simple": "White Horse Hotel"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 124,
+		"name": "Bars \u0026 Pubs",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 4347,
+		"name": "White Horse Hotel",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555482,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-26",
+	"post_date": "2022-04-26",
+	"amount": {
+		"amount": "-7.35",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA-MCDONALDS LISMORE LISMORE AU#3382(Ref.XXXXXXXX9625)",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555480,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-25",
+	"post_date": "2022-04-25",
+	"amount": {
+		"amount": "-30.90",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Purchase At Noodle Box Cannon Hill",
+		"simple": "Noodle Box"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 3175,
+		"name": "Noodle Box",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555478,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-24",
+	"post_date": "2022-04-24",
+	"amount": {
+		"amount": "-2.75",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Puma Kunda Park Kunda Park QL AUS Tap and Pay xx3029 Value Date_ 31/12/2019",
+		"simple": "Puma Narangba"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 9042,
+		"name": "Puma Narangba",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555476,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-23",
+	"post_date": "2022-04-23",
+	"amount": {
+		"amount": "-6.60",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS GYMPIE GYMPIE  AUS Card xx5956 Value Date_ 22/05/2019",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": []
+}, {
+	"id": 5555474,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-22",
+	"post_date": "2022-04-22",
+	"amount": {
+		"amount": "-3.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "LE PARISIEN KILLARNEY HEI CREDIT CARD PURCHASE",
+		"simple": "Le Parisien"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 123,
+		"name": "Cafes \u0026 Coffee",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/123/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 8557,
+		"name": "Le Parisien",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555472,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-21",
+	"post_date": "2022-04-21",
+	"amount": {
+		"amount": "-3.85",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Hungry Jacks             Glendale     AU",
+		"simple": "Hungry Jacks"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 1924,
+		"name": "Hungry Jacks",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1924/original/download-2.png?1554774399"
+	},
+	"user_tags": []
+}, {
+	"id": 5555470,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-20",
+	"post_date": "2022-04-20",
+	"amount": {
+		"amount": "-10.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Visa Purchase 19Feb Microsoft*Xbox Live Msbill.In",
+		"simple": "Microsoft"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 99,
+		"name": "Subscriptions/Renewals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/99/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 42,
+		"name": "Microsoft",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/42/original/Microsoft_logo.svg.png?1519084987"
+	},
+	"user_tags": []
+}, {
+	"id": 5555468,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-19",
+	"post_date": "2022-04-19",
+	"amount": {
+		"amount": "-4.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "AIRPORT RETAIL ENTERPR - Visa Purchase - Receipt 1X6437In MASCOT Date 27 Jul 2020 Card 4X2263xxxxxx6861",
+		"simple": "Airport Retail Enterprises"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1730,
+		"name": "Airport Retail Enterprises",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555466,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-18",
+	"post_date": "2022-04-18",
+	"amount": {
+		"amount": "-2.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EFTPOS 7-ELEVEN 1173 EAST MELBOUR AU",
+		"simple": "7-Eleven"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 141,
+		"name": "7-Eleven",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/141/original/7-Eleven.png?1519085018"
+	},
+	"user_tags": []
+}, {
+	"id": 5555464,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-17",
+	"post_date": "2022-04-17",
+	"amount": {
+		"amount": "-9.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RBG SYDNEY SYDNEY CREDIT CARD PURCHASE",
+		"simple": "Rb"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 74,
+		"name": "Other Expenses",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/74/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 9041,
+		"name": "Rb",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5555462,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-16",
+	"post_date": "2022-04-16",
+	"amount": {
+		"amount": "-60.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BWS 4147 RIVERDALE - Visa Purchase - Receipt 1X4349In RIVERVALE Date 31 May 2020 Card 4X2263xxxxxx4096",
+		"simple": "Bws"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 143,
+		"name": "Alcohol \u0026 Cigarette",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1653961579.png?1653961579"
+	},
+	"merchant": {
+		"id": 1311,
+		"name": "Bws",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1311/original/BWS.png?1598937112"
+	},
+	"user_tags": []
+}, {
+	"id": 5555460,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-15",
+	"post_date": "2022-04-15",
+	"amount": {
+		"amount": "-16.66",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL *UBER AU XXXXXX7733 AU AUS Card xx0674 Value Date_ 02/04/2019",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5555458,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-14",
+	"post_date": "2022-04-14",
+	"amount": {
+		"amount": "-20.30",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "XXXXX3981 EFTPOS WDL UNITED WHITTINGHAM SINGLETON AU",
+		"simple": "United Petroleum"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 2478,
+		"name": "United Petroleum",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2478/original/unitedpetroleum.png?1598933319"
+	},
+	"user_tags": []
+}, {
+	"id": 5555456,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-13",
+	"post_date": "2022-04-13",
+	"amount": {
+		"amount": "-51.55",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA PURCHASE CALTEX BRACKEN RIDGE  BRACKEN RIDG 25/09 AU  AUD",
+		"simple": "Caltex"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 53,
+		"name": "Caltex",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/53/original/Caltex_Logo.svg.png?1519085002"
+	},
+	"user_tags": []
+}, {
+	"id": 5555454,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "-30.01",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DEBIT CARD PURCHASE 7-ELEVEN 4211 ROBINA       AUS",
+		"simple": "7-Eleven"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 141,
+		"name": "7-Eleven",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/141/original/7-Eleven.png?1519085018"
+	},
+	"user_tags": []
+}, {
+	"id": 5558976,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558978,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "-7.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558980,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "-12.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558982,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "-38.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555340,
+	"account_id": 22634,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-12",
+	"post_date": "2022-04-12",
+	"amount": {
+		"amount": "8000.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Bonus",
+		"simple": "Bonus"
+	},
+	"budget_category": "income",
+	"category": {
+		"id": 86,
+		"name": "Other Income",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/86/icon/original/1637708922.png?1637708922"
+	},
+	"merchant": {
+		"id": 3095,
+		"name": "Bonus",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555452,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-25.48",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "V0485 01/07 UBER                     SYDN Ref: XXXXXXX0184",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558984,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-10.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558986,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-30.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BUNNINGS 71 AU",
+		"simple": "Bunnings"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 130,
+		"name": "Home Renovation \u0026 Maintenance",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/130/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 87,
+		"name": "Bunnings",
+		"phone": "(02) 9462 0300",
+		"website": "https://www.bunnings.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/87/original/hammer_400x400.png?1519084937"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558060,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-25.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "INTEREST CHARGES - PUR CH",
+		"simple": "INTEREST CHARGES - PUR CH"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 79,
+		"name": "Service Charges/Fees",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/79/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558062,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "450.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Credit Card Payment",
+		"simple": "Credit Card Payment"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 81,
+		"name": "Credit Card Payments",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557658,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-450.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Credit Card Payment",
+		"simple": "Credit Card Payment"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 81,
+		"name": "Credit Card Payments",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557660,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-11",
+	"post_date": "2022-04-11",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 243895 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555450,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-10",
+	"post_date": "2022-04-10",
+	"amount": {
+		"amount": "-67.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EG FUELCO 2263 MITCHEL - Visa Purchase - Receipt 1X3274In MITCHELTON Date 03 May 2019 Card 4X2263xxxxxx5470",
+		"simple": "FUELCO"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 3119,
+		"name": "FUELCO",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/3119/original/fuelco.png?1598506658"
+	},
+	"user_tags": []
+}, {
+	"id": 5558066,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-10",
+	"post_date": "2022-04-10",
+	"amount": {
+		"amount": "-120.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE OCCIDENTAL HOTEL SYDNEY",
+		"simple": "The Occidental Hotel"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 159,
+		"name": "Travel/Holidays",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1637708921.png?1637708921"
+	},
+	"merchant": {
+		"id": 226,
+		"name": "The Occidental Hotel",
+		"phone": "(02) 9299 2531",
+		"website": "https://www.theoccidental.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/226/original/occidental.png?1552340839"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557662,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-10",
+	"post_date": "2022-04-10",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555448,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-09",
+	"post_date": "2022-04-09",
+	"amount": {
+		"amount": "-16.82",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *TRIP Sydney AU",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5557664,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "credit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-09",
+	"post_date": "2022-04-09",
+	"amount": {
+		"amount": "-220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555328,
+	"account_id": 22634,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-09",
+	"post_date": "2022-04-09",
+	"amount": {
+		"amount": "220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555446,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-08",
+	"post_date": "2022-04-08",
+	"amount": {
+		"amount": "-5.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA PURCHASE COOMERA STATION  COOMERA 27/03 AU  AUD",
+		"simple": "Coomera Rail Kiosk"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 9040,
+		"name": "Coomera Rail Kiosk",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5557666,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-08",
+	"post_date": "2022-04-08",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 454666 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555444,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-07",
+	"post_date": "2022-04-07",
+	"amount": {
+		"amount": "-47.99",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD XX12 7 ELEVEN 1372 CRANBOURNE SO",
+		"simple": "7-Eleven"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 141,
+		"name": "7-Eleven",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/141/original/7-Eleven.png?1519085018"
+	},
+	"user_tags": []
+}, {
+	"id": 5559192,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-07",
+	"post_date": "2022-04-07",
+	"amount": {
+		"amount": "-85.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BURGER PROJECT SYDNEY AU",
+		"simple": "Burger Project"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 234,
+		"name": "Burger Project",
+		"phone": "(02) 9259 5600",
+		"website": "https://www.burgerproject.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/234/original/logo_new.png?1520219309"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558070,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-07",
+	"post_date": "2022-04-07",
+	"amount": {
+		"amount": "-12.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL*BUYALOT 0424030029 AU",
+		"simple": "PAYPAL*BUYALOT"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 83,
+		"name": "Transfers",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/83/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555442,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-06",
+	"post_date": "2022-04-06",
+	"amount": {
+		"amount": "-42.44",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS 1637 NORTH RYDE AU AUS Card xx6958 Value Date_ 20/07/2019",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5558072,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-06",
+	"post_date": "2022-04-06",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558074,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-06",
+	"post_date": "2022-04-06",
+	"amount": {
+		"amount": "-15.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557370,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-06",
+	"post_date": "2022-04-06",
+	"amount": {
+		"amount": "-150.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BUNNINGS 71 AU",
+		"simple": "Bunnings"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 130,
+		"name": "Home Renovation \u0026 Maintenance",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/130/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 87,
+		"name": "Bunnings",
+		"phone": "(02) 9462 0300",
+		"website": "https://www.bunnings.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/87/original/hammer_400x400.png?1519084937"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555440,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-05",
+	"post_date": "2022-04-05",
+	"amount": {
+		"amount": "-33.49",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "7-ELEVEN 2097 SHELLHARBOUR NS AUS Card xx7975 Value Date_ 31/01/2020",
+		"simple": "7-Eleven"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 141,
+		"name": "7-Eleven",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/141/original/7-Eleven.png?1519085018"
+	},
+	"user_tags": []
+}, {
+	"id": 5555438,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-04",
+	"post_date": "2022-04-04",
+	"amount": {
+		"amount": "-57.40",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS 1626 KARIONG AU",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5559194,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-04",
+	"post_date": "2022-04-04",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559196,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-04",
+	"post_date": "2022-04-04",
+	"amount": {
+		"amount": "-21.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558078,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-04",
+	"post_date": "2022-04-04",
+	"amount": {
+		"amount": "-23.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555436,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-41.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 7022 PAYPAL *UBER AU XXXXXX7733",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558082,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-22.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE TREEHOUSE HOTEL NORTH SYDNE AUS",
+		"simple": "The Treehouse Hotel"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 7422,
+		"name": "The Treehouse Hotel",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558080,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-44.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE TREEHOUSE HOTEL NORTH SYDNE AUS",
+		"simple": "The Treehouse Hotel"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 7422,
+		"name": "The Treehouse Hotel",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558084,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-11.99",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ITUNES MUSIC STORE SYDNEY AU",
+		"simple": "iTunes"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 94,
+		"name": "Electronics",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/94/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 704,
+		"name": "iTunes",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/704/original/Itunes.png?1530499983"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558086,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-27.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557668,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 443222 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557670,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "TRANSPORT FOR NSW-OPAL CHIPPENDALE AUS",
+		"simple": "Transport for NSW"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 157,
+		"name": "Public Transport",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 20,
+		"name": "Transport for NSW",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/20/original/1376949352693.png?1519084697"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557672,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555434,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-03",
+	"post_date": "2022-04-03",
+	"amount": {
+		"amount": "-65.15",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS XX35 - Visa Purchase - Receipt 1X2507In NARRE WARREN Date 17 Jun 2020 Card 4X2263xxxxxx4005",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5558098,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-02",
+	"post_date": "2022-04-02",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558088,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-02",
+	"post_date": "2022-04-02",
+	"amount": {
+		"amount": "-60.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DAN MURPHYS 1546 AUS",
+		"simple": "Dan Murphy's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 143,
+		"name": "Alcohol \u0026 Cigarette",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1653961579.png?1653961579"
+	},
+	"merchant": {
+		"id": 219,
+		"name": "Dan Murphy's",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/219/original/Brand_DM.png?1519084915"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558090,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-02",
+	"post_date": "2022-04-02",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES 693 Grocery Stores and Supermarkets",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555432,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-02",
+	"post_date": "2022-04-02",
+	"amount": {
+		"amount": "-12.90",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 3081 UBER* TRIP SYDNEY",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558064,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559062,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "-63.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558106,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "-32.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557674,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "-70.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Direct Debit 052610 OPTUS VISION P/L",
+		"simple": "Optus"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 70,
+		"name": "Cable/Satellite/Telecom",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/70/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 23,
+		"name": "Optus",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/23/original/Optus-Logo-PNG-04905.png?1519085023"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557676,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "4050.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Qantas Employee 6732433 Salary",
+		"simple": "Qantas Employee  Salary"
+	},
+	"budget_category": "income",
+	"category": {
+		"id": 84,
+		"name": "Salary/Regular Income",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555430,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-04-01",
+	"post_date": "2022-04-01",
+	"amount": {
+		"amount": "-34.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Eftpos Debit 13Mar08:25 Puma Energy Humpty D Humpty Doo Au",
+		"simple": "Puma Energy"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 4863,
+		"name": "Puma Energy",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5558092,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-31",
+	"post_date": "2022-03-31",
+	"amount": {
+		"amount": "-74.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "SUSHI TRAIN BONDI BONDI JUNCTION",
+		"simple": "Sushi Train"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1554,
+		"name": "Sushi Train",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558094,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-31",
+	"post_date": "2022-03-31",
+	"amount": {
+		"amount": "-159.41",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555428,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-31",
+	"post_date": "2022-03-31",
+	"amount": {
+		"amount": "-31.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 5039 GM CABS PTY LTD MASCOT",
+		"simple": "GM CABS"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 186,
+		"name": "GM CABS",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/186/original/gm_cabs.png?1519085012"
+	},
+	"user_tags": []
+}, {
+	"id": 5557678,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "credit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-30",
+	"post_date": "2022-03-30",
+	"amount": {
+		"amount": "-220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555330,
+	"account_id": 22634,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-30",
+	"post_date": "2022-03-30",
+	"amount": {
+		"amount": "220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555426,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-30",
+	"post_date": "2022-03-30",
+	"amount": {
+		"amount": "-39.87",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "DEBIT CARD PURCHASE METRO PETROLEUM B ST BLACKTOWN    AUS",
+		"simple": "Metro Petroleum"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 429,
+		"name": "Metro Petroleum",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/429/original/01.png?1519084853"
+	},
+	"user_tags": []
+}, {
+	"id": 5558100,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558104,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-12.60",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558096,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-15.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL*PAYPALPAYME 4029357733 AU",
+		"simple": "PAYPAL*PAYPALPAYME"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 83,
+		"name": "Transfers",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/83/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557680,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-50.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 534322 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557682,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-39.90",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "AMAYSIM AUSTRALIA PTY SYDNEY AU",
+		"simple": "Amaysim"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 70,
+		"name": "Cable/Satellite/Telecom",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/70/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 89,
+		"name": "Amaysim",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/89/original/amaysim.png?1543468367"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555424,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-29",
+	"post_date": "2022-03-29",
+	"amount": {
+		"amount": "-11.45",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER   *TRIP - Visa Purchase - Receipt 1X0099In HELP.UBER.CO Date 31 May 2019 Card 4X2263xxxxxx0809",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558102,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-28",
+	"post_date": "2022-03-28",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BIG W 0117 TOP RYDE AUS",
+		"simple": "BIG W"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 135,
+		"name": "General Merchandise",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/135/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 68,
+		"name": "BIG W",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/68/original/Big-W-logo-New-Blue-CMYK.png?1519084823"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555422,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-28",
+	"post_date": "2022-03-28",
+	"amount": {
+		"amount": "-69.96",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MOBIL TE NGAE NGAPUNA [Eff Date: 10 JUN 19]",
+		"simple": "Mobil"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 5506,
+		"name": "Mobil",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5558108,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-27",
+	"post_date": "2022-03-27",
+	"amount": {
+		"amount": "-65.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BREW HOUSE HOTEL",
+		"simple": "The Brew House Hotel"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 124,
+		"name": "Bars \u0026 Pubs",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 271,
+		"name": "The Brew House Hotel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/271/original/Brewhouse.png?1519084699"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558110,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-27",
+	"post_date": "2022-03-27",
+	"amount": {
+		"amount": "-18.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557880,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-27",
+	"post_date": "2022-03-27",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555420,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-27",
+	"post_date": "2022-03-27",
+	"amount": {
+		"amount": "-69.96",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS RANDWICK RANDWICK",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5559058,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-26",
+	"post_date": "2022-03-26",
+	"amount": {
+		"amount": "-25.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES 693 Grocery Stores and Supermarkets",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557684,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-26",
+	"post_date": "2022-03-26",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 234333 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555418,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-26",
+	"post_date": "2022-03-26",
+	"amount": {
+		"amount": "-16.26",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL *UBER AU - Visa Purchase - Receipt 1X0660In XXXXXX7733 Date 16 Oct 2020 Card 4X2263xxxxxx3455",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558112,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "-10.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES 693 Grocery Stores and Supermarkets",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559044,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "-17.99",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "NETFLIX.COM LOS GATOS CA   Cable and Other Pay Television Services",
+		"simple": "Netflix"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 64,
+		"name": "Entertainment/Recreation",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 44,
+		"name": "Netflix",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558114,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "-66.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5558116,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "450.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Credit Card Payment",
+		"simple": "Credit Card Payment"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 81,
+		"name": "Credit Card Payments",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557686,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "-450.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Credit Card Payment",
+		"simple": "Credit Card Payment"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 81,
+		"name": "Credit Card Payments",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555416,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-25",
+	"post_date": "2022-03-25",
+	"amount": {
+		"amount": "-6.85",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Visa Purchase 12Oct Paypal *Uber Au XXXXX5773",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5558118,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-24",
+	"post_date": "2022-03-24",
+	"amount": {
+		"amount": "-150.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "KANSAI",
+		"simple": "Kan"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 7535,
+		"name": "Kan",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557688,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-24",
+	"post_date": "2022-03-24",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 243895 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555414,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-24",
+	"post_date": "2022-03-24",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EFTPOS APCO SKIPTON ST BALL BALLARAT VI",
+		"simple": "Apco"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 5273,
+		"name": "Apco",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5559046,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-23",
+	"post_date": "2022-03-23",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559048,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-23",
+	"post_date": "2022-03-23",
+	"amount": {
+		"amount": "-39.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555412,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-23",
+	"post_date": "2022-03-23",
+	"amount": {
+		"amount": "-10.19",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 1043 UBER *TRIP SYDNEY",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559050,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-22",
+	"post_date": "2022-03-22",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559052,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-22",
+	"post_date": "2022-03-22",
+	"amount": {
+		"amount": "-53.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "SUSHI TRAIN BONDI BONDI JUNCTION",
+		"simple": "Sushi Train"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1554,
+		"name": "Sushi Train",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559054,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-22",
+	"post_date": "2022-03-22",
+	"amount": {
+		"amount": "-34.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555410,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-22",
+	"post_date": "2022-03-22",
+	"amount": {
+		"amount": "-10.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RETAIL PURCHASE TRANSPORTFORNSW OP",
+		"simple": "Transport for NSW"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 157,
+		"name": "Public Transport",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 20,
+		"name": "Transport for NSW",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/20/original/1376949352693.png?1519084697"
+	},
+	"user_tags": []
+}, {
+	"id": 5559056,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-21",
+	"post_date": "2022-03-21",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557690,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-21",
+	"post_date": "2022-03-21",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "TRANSPORT FOR NSW-OPAL CHIPPENDALE AUS",
+		"simple": "Transport for NSW"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 157,
+		"name": "Public Transport",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 20,
+		"name": "Transport for NSW",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/20/original/1376949352693.png?1519084697"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555408,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-21",
+	"post_date": "2022-03-21",
+	"amount": {
+		"amount": "-12.91",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER TRIP HELP.UBER.CO XXXXXXX6738 AU AUS Card xx8473 Value Date_ 05/05/2019",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559060,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-20",
+	"post_date": "2022-03-20",
+	"amount": {
+		"amount": "-26.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557692,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-20",
+	"post_date": "2022-03-20",
+	"amount": {
+		"amount": "-70.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Direct Debit 348045 AGL SALES P/L 820005441191",
+		"simple": "Agl Sales"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 90,
+		"name": "Utilities",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 2441,
+		"name": "Agl Sales",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557694,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-20",
+	"post_date": "2022-03-20",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555406,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-20",
+	"post_date": "2022-03-20",
+	"amount": {
+		"amount": "-50.43",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "7-ELEVEN XX62 - Visa Purchase - Receipt 1X8474In ELTHAM Date 09 Sep 2020 Card 4X2263xxxxxx9296",
+		"simple": "7-Eleven"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 141,
+		"name": "7-Eleven",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/141/original/7-Eleven.png?1519085018"
+	},
+	"user_tags": []
+}, {
+	"id": 5559064,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-19",
+	"post_date": "2022-03-19",
+	"amount": {
+		"amount": "-24.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557656,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-19",
+	"post_date": "2022-03-19",
+	"amount": {
+		"amount": "-50.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 233894 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555404,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-19",
+	"post_date": "2022-03-19",
+	"amount": {
+		"amount": "-51.78",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "METRO PETROLEUM FORE FORESTVILLE AU XXXX-XXXX-XXXX-7909",
+		"simple": "Metro Petroleum"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 429,
+		"name": "Metro Petroleum",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/429/original/01.png?1519084853"
+	},
+	"user_tags": []
+}, {
+	"id": 5559068,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-18",
+	"post_date": "2022-03-18",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE OCCIDENTAL HOTEL SYDNEY",
+		"simple": "The Occidental Hotel"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 159,
+		"name": "Travel/Holidays",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1637708921.png?1637708921"
+	},
+	"merchant": {
+		"id": 226,
+		"name": "The Occidental Hotel",
+		"phone": "(02) 9299 2531",
+		"website": "https://www.theoccidental.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/226/original/occidental.png?1552340839"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559066,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-18",
+	"post_date": "2022-03-18",
+	"amount": {
+		"amount": "-59.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE OCCIDENTAL HOTEL SYDNEY",
+		"simple": "The Occidental Hotel"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 159,
+		"name": "Travel/Holidays",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1637708921.png?1637708921"
+	},
+	"merchant": {
+		"id": 226,
+		"name": "The Occidental Hotel",
+		"phone": "(02) 9299 2531",
+		"website": "https://www.theoccidental.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/226/original/occidental.png?1552340839"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555402,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-18",
+	"post_date": "2022-03-18",
+	"amount": {
+		"amount": "-21.33",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "V8388 17/07 UBER TRIP HELP.UBER.COM Sydney XXXXXXX9197 MISCELLANEOUS DEBIT",
+		"simple": "UBER TRIP HELP.UBER.COM Sydney"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": []
+}, {
+	"id": 5559114,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-17",
+	"post_date": "2022-03-17",
+	"amount": {
+		"amount": "-44.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE TREEHOUSE HOTEL NORTH SYDNE AUS",
+		"simple": "The Treehouse Hotel"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 7422,
+		"name": "The Treehouse Hotel",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559070,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-17",
+	"post_date": "2022-03-17",
+	"amount": {
+		"amount": "-23.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555400,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-17",
+	"post_date": "2022-03-17",
+	"amount": {
+		"amount": "-71.32",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BP ORANGE NTH XX40 - Visa Purchase - Receipt 1X9107In ORANGE Date 20 Mar 2020 Card 4X2263xxxxxx7225",
+		"simple": "Bp"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 1286,
+		"name": "Bp",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1286/original/BP.png?1552340906"
+	},
+	"user_tags": []
+}, {
+	"id": 5559072,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-16",
+	"post_date": "2022-03-16",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES 693 Grocery Stores and Supermarkets",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557696,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "credit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-16",
+	"post_date": "2022-03-16",
+	"amount": {
+		"amount": "-220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555332,
+	"account_id": 22634,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-16",
+	"post_date": "2022-03-16",
+	"amount": {
+		"amount": "220.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Saving Habit Goal",
+		"simple": "Saving Habit Goal"
+	},
+	"budget_category": "goals",
+	"category": {
+		"id": 91,
+		"name": "Savings",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555398,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-16",
+	"post_date": "2022-03-16",
+	"amount": {
+		"amount": "-27.23",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA PURCHASE UBER *TRIP 7918",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559074,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-15",
+	"post_date": "2022-03-15",
+	"amount": {
+		"amount": "-59.69",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557698,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-15",
+	"post_date": "2022-03-15",
+	"amount": {
+		"amount": "100.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Direct Credit FLATMATE BILLS",
+		"simple": "FLATMATE BILLS"
+	},
+	"budget_category": "income",
+	"category": {
+		"id": 82,
+		"name": "Deposits",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555396,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-15",
+	"post_date": "2022-03-15",
+	"amount": {
+		"amount": "-39.18",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BP WOODVILLE 5941   WOODVILLE         AU",
+		"simple": "Bp"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 1286,
+		"name": "Bp",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1286/original/BP.png?1552340906"
+	},
+	"user_tags": []
+}, {
+	"id": 5559076,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-14",
+	"post_date": "2022-03-14",
+	"amount": {
+		"amount": "-38.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557700,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-14",
+	"post_date": "2022-03-14",
+	"amount": {
+		"amount": "-100.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 243895 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557898,
+	"account_id": 22628,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-14",
+	"post_date": "2022-03-14",
+	"amount": {
+		"amount": "-15.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555394,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-14",
+	"post_date": "2022-03-14",
+	"amount": {
+		"amount": "-14.70",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA DEBIT PURCHASE CARD 0005 DIDICHUXING FORREST",
+		"simple": "Didi"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 3504,
+		"name": "Didi",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/3504/original/DiDi.png?1598490497"
+	},
+	"user_tags": []
+}, {
+	"id": 5559078,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-13",
+	"post_date": "2022-03-13",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559080,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-13",
+	"post_date": "2022-03-13",
+	"amount": {
+		"amount": "-7.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559082,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-13",
+	"post_date": "2022-03-13",
+	"amount": {
+		"amount": "-12.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557398,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-13",
+	"post_date": "2022-03-13",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555392,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-13",
+	"post_date": "2022-03-13",
+	"amount": {
+		"amount": "-11.26",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER   TRIP - Visa Purchase - Receipt 1X8680Foreign Currency Amount: USD 7.83In XXXXXX8996 Date 02 Jul 2019 Card 4X2263xxxxxx7074",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559084,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-12",
+	"post_date": "2022-03-12",
+	"amount": {
+		"amount": "-10.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559086,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-12",
+	"post_date": "2022-03-12",
+	"amount": {
+		"amount": "-30.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BUNNINGS 71 AU",
+		"simple": "Bunnings"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 130,
+		"name": "Home Renovation \u0026 Maintenance",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/130/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 87,
+		"name": "Bunnings",
+		"phone": "(02) 9462 0300",
+		"website": "https://www.bunnings.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/87/original/hammer_400x400.png?1519084937"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559088,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-12",
+	"post_date": "2022-03-12",
+	"amount": {
+		"amount": "-25.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "INTEREST CHARGES - PUR CH",
+		"simple": "INTEREST CHARGES - PUR CH"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 79,
+		"name": "Service Charges/Fees",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/79/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557702,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-12",
+	"post_date": "2022-03-12",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 243895 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555390,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-12",
+	"post_date": "2022-03-12",
+	"amount": {
+		"amount": "-3.54",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "TRANSPORTFORNSW TAP SYDNEY  AUS Card xx7641 Value Date_ 04/05/2019",
+		"simple": "Transport for NSW"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 157,
+		"name": "Public Transport",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 20,
+		"name": "Transport for NSW",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/20/original/1376949352693.png?1519084697"
+	},
+	"user_tags": []
+}, {
+	"id": 5559090,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-11",
+	"post_date": "2022-03-11",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559092,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-11",
+	"post_date": "2022-03-11",
+	"amount": {
+		"amount": "-120.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "THE OCCIDENTAL HOTEL SYDNEY",
+		"simple": "The Occidental Hotel"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 159,
+		"name": "Travel/Holidays",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1637708921.png?1637708921"
+	},
+	"merchant": {
+		"id": 226,
+		"name": "The Occidental Hotel",
+		"phone": "(02) 9299 2531",
+		"website": "https://www.theoccidental.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/226/original/occidental.png?1552340839"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555388,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-11",
+	"post_date": "2022-03-11",
+	"amount": {
+		"amount": "-70.34",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "EG FUELCO 2319 HOPE IS   HOPE ISLAND QLD",
+		"simple": "FUELCO"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 3119,
+		"name": "FUELCO",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/3119/original/fuelco.png?1598506658"
+	},
+	"user_tags": []
+}, {
+	"id": 5559094,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-10",
+	"post_date": "2022-03-10",
+	"amount": {
+		"amount": "-12.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PAYPAL*BUYALOT 0424030029 AU",
+		"simple": "PAYPAL*BUYALOT"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 83,
+		"name": "Transfers",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/83/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555386,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-10",
+	"post_date": "2022-03-10",
+	"amount": {
+		"amount": "-12.65",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER   *TRIP - Visa Purchase - Receipt 1X6175In HELP.UBER.CO Date 12 Aug 2019 Card 4X2263xxxxxx0258",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559096,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-09",
+	"post_date": "2022-03-09",
+	"amount": {
+		"amount": "-24.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES 693 Grocery Stores and Supermarkets",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557882,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-09",
+	"post_date": "2022-03-09",
+	"amount": {
+		"amount": "-20.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ATM ANZ ATM NSW 454666 AUS",
+		"simple": "ATM ANZ ATM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 80,
+		"name": "ATM/Cash Withdrawals",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555344,
+	"account_id": 22632,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-09",
+	"post_date": "2022-03-09",
+	"amount": {
+		"amount": "1118.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Repayment/Payment",
+		"simple": "Repayment/Payment"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 72,
+		"name": "Loans",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/72/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": "Repayment/Payment"
+}, {
+	"id": 5555342,
+	"account_id": 22632,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-09",
+	"post_date": "2022-03-09",
+	"amount": {
+		"amount": "-591.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "Interest Charged",
+		"simple": "Interest Charged"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 79,
+		"name": "Service Charges/Fees",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/79/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": "Interest Charged"
+}, {
+	"id": 5555384,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-09",
+	"post_date": "2022-03-09",
+	"amount": {
+		"amount": "-35.10",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "VISA PURCHASE UBER *TRIP  SYDNEY 19/12 AU  AUD",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}, {
+	"id": 5559098,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-08",
+	"post_date": "2022-03-08",
+	"amount": {
+		"amount": "-85.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "BURGER PROJECT SYDNEY AU",
+		"simple": "Burger Project"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 77,
+		"name": "Restaurants",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923"
+	},
+	"merchant": {
+		"id": 234,
+		"name": "Burger Project",
+		"phone": "(02) 9259 5600",
+		"website": "https://www.burgerproject.com",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/234/original/logo_new.png?1520219309"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559100,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-08",
+	"post_date": "2022-03-08",
+	"amount": {
+		"amount": "-23.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555382,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-08",
+	"post_date": "2022-03-08",
+	"amount": {
+		"amount": "-21.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "GM CABS PTY LTD MASCOT CREDIT CARD PURCHASE",
+		"simple": "GM CABS"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 186,
+		"name": "GM CABS",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/186/original/gm_cabs.png?1519085012"
+	},
+	"user_tags": []
+}, {
+	"id": 5559102,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-07",
+	"post_date": "2022-03-07",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559104,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-07",
+	"post_date": "2022-03-07",
+	"amount": {
+		"amount": "-15.95",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "WOOLWORTHS 1128 Grocery Stores and Supermarkets",
+		"simple": "Woolworths"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 12,
+		"name": "Woolworths",
+		"phone": "(02) 8565 9336",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/original/16386977_1395300327208761_3607300141437791064_n.png?1600643858"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559154,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-07",
+	"post_date": "2022-03-07",
+	"amount": {
+		"amount": "-26.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559106,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-07",
+	"post_date": "2022-03-07",
+	"amount": {
+		"amount": "-27.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER *AU XUPS2 HELP.UBER.COM",
+		"simple": "UBER * XUPS2 HELP.UBER.COM"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 60,
+		"name": "Uncategorised",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Unknown",
+		"phone": "",
+		"website": "",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555380,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-07",
+	"post_date": "2022-03-07",
+	"amount": {
+		"amount": "-45.64",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "PUMA ENERGY NORTH NORTH PERTH AUS",
+		"simple": "Puma Energy"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 129,
+		"name": "Gasoline/Fuel",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401"
+	},
+	"merchant": {
+		"id": 4863,
+		"name": "Puma Energy",
+		"image_url": "https://s3-ap-southeast-2.amazonaws.com/frollo-production/merchants/default/small/logo.png"
+	},
+	"user_tags": []
+}, {
+	"id": 5559108,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-06",
+	"post_date": "2022-03-06",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557400,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-06",
+	"post_date": "2022-03-06",
+	"amount": {
+		"amount": "-40.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "TRANSPORT FOR NSW-OPAL CHIPPENDALE AUS",
+		"simple": "Transport for NSW"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 157,
+		"name": "Public Transport",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 20,
+		"name": "Transport for NSW",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/20/original/1376949352693.png?1519084697"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5557402,
+	"account_id": 22630,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-06",
+	"post_date": "2022-03-06",
+	"amount": {
+		"amount": "-185.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "RAINE\u0026HORNE - Direct Debit - Receipt",
+		"simple": "Raine \u0026 Horne"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 71,
+		"name": "Services/Supplies",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400"
+	},
+	"merchant": {
+		"id": 1852,
+		"name": "Raine \u0026 Horne",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/original/RaineAndHorne.png?1540169591"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555378,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-06",
+	"post_date": "2022-03-06",
+	"amount": {
+		"amount": "-47.27",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "COLES EXPRESS 1538 S HURSTVILL - EFTPOS Purchase - Receipt 1X6164Date 25 Jun 2020 Time 6:16AM Card 4X2263xxxxxx8789",
+		"simple": "Coles"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 2,
+		"name": "Coles",
+		"phone": "(02) 8912 3400",
+		"website": "https://www.coles.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/2/original/coles.png?1620336452"
+	},
+	"user_tags": []
+}, {
+	"id": 5559110,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-05",
+	"post_date": "2022-03-05",
+	"amount": {
+		"amount": "-8.00",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "MCDONALDS AUS",
+		"simple": "McDonald's"
+	},
+	"budget_category": "lifestyle",
+	"category": {
+		"id": 155,
+		"name": "Takeaway \u0026 Snacks",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/155/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 46,
+		"name": "McDonald's",
+		"phone": "(02) 9550 4804",
+		"website": "https://www.mcdonalds.com.au",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/46/original/mcd.png?1620337587"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5559112,
+	"account_id": 22626,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-05",
+	"post_date": "2022-03-05",
+	"amount": {
+		"amount": "-21.50",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "ROMEOS FOODHALL IGA Grocery Stores and Supermarkets",
+		"simple": "IGA"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 66,
+		"name": "Groceries",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924"
+	},
+	"merchant": {
+		"id": 725,
+		"name": "IGA",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/725/original/Iga.png?1530502984"
+	},
+	"user_tags": [],
+	"reference": ""
+}, {
+	"id": 5555376,
+	"account_id": 22636,
+	"account_aggregator": "cdr",
+	"base_type": "debit",
+	"status": "posted",
+	"included": true,
+	"transaction_date": "2022-03-05",
+	"post_date": "2022-03-05",
+	"amount": {
+		"amount": "-23.56",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "UBER   *TRIP             Sydney      AUS",
+		"simple": "Uber"
+	},
+	"budget_category": "living",
+	"category": {
+		"id": 161,
+		"name": "Taxi \u0026 Rideshare",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402"
+	},
+	"merchant": {
+		"id": 151,
+		"name": "Uber",
+		"image_url": "https://frollo-staging.s3.amazonaws.com/merchants/151/original/Uber.png?1519084998"
+	},
+	"user_tags": []
+}]

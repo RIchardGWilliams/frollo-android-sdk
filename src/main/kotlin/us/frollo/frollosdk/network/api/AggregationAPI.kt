@@ -36,6 +36,7 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
+import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionsSummaryResponse
@@ -59,6 +60,7 @@ internal interface AggregationAPI {
         // Transaction URLs
         const val URL_TRANSACTIONS = "aggregation/transactions"
         const val URL_TRANSACTION = "aggregation/transactions/{transaction_id}"
+        const val URL_TRANSACTIONS_BULK = "aggregation/transactions/bulk"
         const val URL_SIMILAR_TRANSACTIONS = "aggregation/transactions/{transaction_id}/similar"
         const val URL_TRANSACTIONS_SUMMARY = "aggregation/transactions/summary"
 
@@ -139,6 +141,9 @@ internal interface AggregationAPI {
 
     @PUT(URL_TRANSACTION)
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>
+
+    @PUT(URL_TRANSACTIONS_BULK)
+    fun updateTransactionsInBulk(@Body request: List<TransactionBulkUpdateRequest>): Call<List<TransactionResponse>>
 
     // Query parameters: {transaction_ids, account_ids, from_date, to_date, account_included, transaction_included}
     @GET(URL_TRANSACTIONS_SUMMARY)
