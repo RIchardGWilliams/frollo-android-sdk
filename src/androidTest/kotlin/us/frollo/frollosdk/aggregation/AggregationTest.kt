@@ -2791,7 +2791,7 @@ class AggregationTest : BaseAndroidTest() {
             assertNotNull(models)
             assertEquals(1, models?.size)
             assertEquals(194630L, models?.get(0)?.transactionId)
-            assertEquals(77L, models?.get(0)?.categoryId)
+            assertEquals(77L, models?.get(0)?.category?.id)
 
             signal.countDown()
         }

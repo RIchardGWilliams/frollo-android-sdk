@@ -1340,7 +1340,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     ) {
         val request = TransactionUpdateRequest(
             budgetCategory = budgetCategory,
-            categoryId = transaction.categoryId,
+            categoryId = transaction.category.id,
             included = transaction.included,
             memo = transaction.memo,
             userDescription = transaction.description?.user,

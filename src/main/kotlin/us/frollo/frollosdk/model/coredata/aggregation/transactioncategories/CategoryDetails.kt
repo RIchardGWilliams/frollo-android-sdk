@@ -16,17 +16,18 @@
 
 package us.frollo.frollosdk.model.coredata.aggregation.transactioncategories
 
+import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 
 /** Transaction Category details */
 data class CategoryDetails(
 
     /** Unique ID of the transaction category */
-    @SerializedName("id") val id: Long,
+    @ColumnInfo(name = "id") @SerializedName("id") var id: Long,
 
     /** Transaction category name */
-    @SerializedName("name") var name: String,
+    @ColumnInfo(name = "name") @SerializedName("name") val name: String,
 
     /** Image URL of the transaction category (optional) */
-    @SerializedName("image_url") val imageUrl: String?
+    @ColumnInfo(name = "image_url") @SerializedName("image_url") val imageUrl: String?
 )
