@@ -98,6 +98,7 @@ import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionRespons
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.shared.PaginatedDatedCursorResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Account
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
@@ -1198,7 +1199,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         after: String? = null,
         before: String? = null,
         size: Long? = null,
-        completion: OnFrolloSDKCompletionListener<Resource<PaginatedResponse<Transaction>>>
+        completion: OnFrolloSDKCompletionListener<Resource<PaginatedDatedCursorResponse<Transaction>>>
     ) {
         aggregationAPI.fetchSimilarTransactions(
             transactionId = transactionId,
@@ -1211,16 +1212,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         ).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    completion.invoke(
-                        Resource.success(
-                            resource.data?.let { response ->
-                                PaginatedResponse(
-                                    data = response.data.map { it.toTransaction() },
-                                    paging = response.paging
-                                )
-                            }
-                        )
-                    )
+                    handleFetchSimilarTransactionsWithPaginationResponse(resource.data, completion)
                 }
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#fetchSimilarTransactionsWithPagination", resource.error?.localizedDescription)
@@ -1340,7 +1332,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     ) {
         val request = TransactionUpdateRequest(
             budgetCategory = budgetCategory,
-            categoryId = transaction.categoryId,
+            categoryId = transaction.category.id,
             included = transaction.included,
             memo = transaction.memo,
             userDescription = transaction.description?.user,
@@ -1556,6 +1548,35 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 uiThread { completion?.invoke(Result.success()) }
             }
         } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
+    }
+
+    private fun handleFetchSimilarTransactionsWithPaginationResponse(
+        paginatedResponse: PaginatedResponse<TransactionResponse>?,
+        completion: OnFrolloSDKCompletionListener<Resource<PaginatedDatedCursorResponse<Transaction>>>
+    ) {
+        paginatedResponse?.data?.let { transactions ->
+            val firstTransaction = transactions.firstOrNull()
+            val lastTransaction = transactions.lastOrNull()
+
+            val paginationInfo = PaginationInfoDatedCursor(
+                before = paginatedResponse.paging.cursors?.before,
+                after = paginatedResponse.paging.cursors?.after,
+                total = paginatedResponse.paging.total,
+                beforeDate = firstTransaction?.transactionDate,
+                beforeId = firstTransaction?.transactionId,
+                afterDate = lastTransaction?.transactionDate,
+                afterId = lastTransaction?.transactionId
+            )
+
+            completion.invoke(
+                Resource.success(
+                    PaginatedDatedCursorResponse(
+                        data = transactions.map { it.toTransaction() },
+                        paginationInfo = paginationInfo
+                    )
+                )
+            )
+        } ?: run { completion.invoke(Resource.success(null)) } // Explicitly invoke completion callback if response is null.
     }
 
     // Do not call this method from main thread. Call this asynchronously.

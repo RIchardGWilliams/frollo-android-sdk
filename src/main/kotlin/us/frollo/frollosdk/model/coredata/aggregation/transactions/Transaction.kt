@@ -24,6 +24,7 @@ import androidx.room.PrimaryKey
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Balance
 import us.frollo.frollosdk.model.coredata.aggregation.merchants.MerchantDetails
+import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.CategoryDetails
 import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 
@@ -78,8 +79,8 @@ data class Transaction(
     /** Parent account ID */
     @ColumnInfo(name = "account_id") val accountId: Long,
 
-    /** Transaction Category ID related to the transaction */
-    @ColumnInfo(name = "category_id") var categoryId: Long,
+    /** Transaction Category details related to the transaction */
+    @Embedded(prefix = "category_") val category: CategoryDetails,
 
     /** Merchant details related to the transaction */
     @Embedded(prefix = "merchant_") val merchant: MerchantDetails,

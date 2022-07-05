@@ -25,7 +25,7 @@ import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
  * @param transactionIds List of [Transaction.transactionId] to filter transactions
  * @param accountIds List of [Transaction.accountId] to filter transactions
  * @param budgetCategory [BudgetCategory] to filter transactions on
- * @param transactionCategoryIds List of [Transaction.categoryId] to filter transactions
+ * @param transactionCategoryIds List of [Transaction.category.id] to filter transactions
  * @param merchantIds List of [MerchantDetails.id] to filter transactions
  * @param billId billID to filter the associated transactions (Optional)
  * @param goalId goalID to filter the associated transactions (Optional)

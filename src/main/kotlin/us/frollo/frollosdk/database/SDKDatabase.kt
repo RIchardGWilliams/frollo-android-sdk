@@ -768,9 +768,11 @@ abstract class SDKDatabase : RoomDatabase() {
                 // https://frollo.atlassian.net/browse/WA-3067
 
                 // New changes in this migration:
-                // 1) Alter table - transaction_model - Add columns merchant_image_url
+                // 1) Alter table - transaction_model - Add columns merchant_image_url, category_name, category_image_url
 
                 database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `merchant_image_url` TEXT")
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_name` TEXT")
+                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_image_url` TEXT")
             }
         }
     }
