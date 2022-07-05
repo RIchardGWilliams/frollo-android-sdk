@@ -2651,12 +2651,14 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals(10, models?.size)
             assertEquals(5558824L, models?.first()?.transactionId)
 
-            val paging = resource.data?.paging
-            assertEquals(11L, paging?.total)
-            assertNull(paging?.cursors?.before)
-            assertEquals("1622870276_5558894", paging?.cursors?.after)
-            assertNull(paging?.previous)
-            assertNotNull(paging?.next)
+            val paginationInfo = resource.data?.paginationInfo
+            assertEquals(11L, paginationInfo?.total)
+            assertNull(paginationInfo?.before)
+            assertEquals("2021-06-29", paginationInfo?.beforeDate)
+            assertEquals(5558824L, paginationInfo?.beforeId)
+            assertEquals("1622870276_5558894", paginationInfo?.after)
+            assertEquals("2021-06-05", paginationInfo?.afterDate)
+            assertEquals(5558894L, paginationInfo?.afterId)
 
             signal.countDown()
         }

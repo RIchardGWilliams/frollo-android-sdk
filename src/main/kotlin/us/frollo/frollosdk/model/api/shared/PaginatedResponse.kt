@@ -24,7 +24,7 @@ import com.google.gson.annotations.SerializedName
  * @param data Array of data items
  * @param paging Pagination information
  */
-data class PaginatedResponse<T>(
+internal data class PaginatedResponse<T>(
     @SerializedName("data") val data: List<T>,
     @SerializedName("paging") val paging: Paging
 ) {
