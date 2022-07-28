@@ -38,7 +38,6 @@ import us.frollo.frollosdk.core.ACTION.ACTION_REFRESH_TRANSACTIONS
 import us.frollo.frollosdk.core.ARGUMENT.ARG_TRANSACTION_IDS
 import us.frollo.frollosdk.core.LIMIT.SQLITE_MAX_VARIABLE_NUMBER
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
-import us.frollo.frollosdk.core.TagApplyAllPair
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
@@ -90,8 +89,9 @@ import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccoun
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
+import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagBulkCreateRequest
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
-import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagUpdateRequest
+import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsBulkDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
@@ -1614,81 +1614,85 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
-     * Add a tag or a list of tags to a transaction
+     * Add a tag or a list of tags to list of transactions
      *
-     * @param transactionId Transaction ID to add tags for
-     * @param tagApplyAllPairs Array of [TagApplyAllPair]
+     * @param transactionIds Transaction ID to add tags for
+     * @param tags Array of tags to be created
+     * @param createTagRuleId Transaction ID based off which a tag rule affecting future similar transactions is created
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun addTagsToTransaction(transactionId: Long, tagApplyAllPairs: Array<TagApplyAllPair>, completion: OnFrolloSDKCompletionListener<Result>) {
-        if (tagApplyAllPairs.isEmpty()) {
+    fun createTagsInBulk(transactionIds: List<Long>, tags: List<String>, createTagRuleId: Long? = null, completion: OnFrolloSDKCompletionListener<Result>) {
+        if (tags.isEmpty()) {
             val error = DataError(type = DataErrorType.API, subType = DataErrorSubType.INVALID_DATA)
-            Log.e("$TAG#addTagsToTransaction", "Empty Tags List")
+            Log.e("$TAG#createTagsInBulk", "Empty Tags List")
             completion.invoke(Result.error(error))
             return
         }
 
-        val tagNames = tagApplyAllPairs.map { it.first }.toTypedArray()
-
-        val requestArray = tagApplyAllPairs.map {
-            TransactionTagUpdateRequest(
-                name = it.first,
-                applyToAll = it.second
+        val requestArray = tags.map {
+            TransactionTagBulkCreateRequest(
+                name = it,
+                transactionIds = transactionIds,
+                createTagRuleId = createTagRuleId
             )
         }.toTypedArray()
 
-        aggregationAPI.createTags(transactionId, requestArray).enqueue { resource ->
+        aggregationAPI.createTagsInBulk(requestArray).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#addTagsToTransaction", resource.error?.localizedDescription)
+                    Log.e("$TAG#createTagsInBulk", resource.error?.localizedDescription)
                     completion.invoke(Result.error(resource.error))
                 }
                 Resource.Status.SUCCESS -> {
-                    handleUpdateTagsResponse(tagNames = tagNames, isAdd = true, transactionId = transactionId, completion = completion)
+                    for (transactionId in transactionIds) {
+                        handleUpdateTagsResponse(tagNames = tags, isAdd = true, transactionId = transactionId, completion = completion)
+                    }
                 }
             }
         }
     }
 
     /**
-     * Remove a tag or a list of tags from a transaction
+     * Remove a tag or a list of tags from a list of transactions
      *
-     * @param transactionId Transaction ID to remove tags from
-     * @param tagApplyAllPairs Array of [TagApplyAllPair]
+     * @param transactionIds Transaction IDs to remove tags from
+     * @param tags Array of tags to be removed
+     * @param removeTagRuleId Transaction ID based off which a tag rule affecting future similar transactions is removed
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun removeTagsFromTransaction(transactionId: Long, tagApplyAllPairs: Array<TagApplyAllPair>, completion: OnFrolloSDKCompletionListener<Result>) {
-        if (tagApplyAllPairs.isEmpty()) {
+    fun deleteTagsInBulk(transactionIds: List<Long>, tags: List<String>, removeTagRuleId: Long? = null, completion: OnFrolloSDKCompletionListener<Result>) {
+        if (tags.isEmpty()) {
             val error = DataError(type = DataErrorType.API, subType = DataErrorSubType.INVALID_DATA)
-            Log.e("$TAG#removeTagsFromTransaction", "Empty Tags List")
+            Log.e("$TAG#deleteTagsInBulk", "Empty Tags List")
             completion.invoke(Result.error(error))
             return
         }
 
-        val tagNames = tagApplyAllPairs.map { it.first }.toTypedArray()
-
-        val requestArray = tagApplyAllPairs.map {
-            TransactionTagUpdateRequest(
-                name = it.first,
-                applyToAll = it.second
+        val requestArray = tags.map {
+            TransactionTagsBulkDeleteRequest(
+                name = it,
+                transactionIds = transactionIds,
+                removeTagRuleId = removeTagRuleId
             )
         }.toTypedArray()
 
-        aggregationAPI.deleteTags(transactionId, requestArray).enqueue { resource ->
+        aggregationAPI.deleteTagsInBulk(requestArray).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#removeTagsFromTransaction", resource.error?.localizedDescription)
+                    Log.e("$TAG#deleteTagsInBulk", resource.error?.localizedDescription)
                     completion.invoke(Result.error(resource.error))
                 }
                 Resource.Status.SUCCESS -> {
-                    handleUpdateTagsResponse(tagNames = tagNames, isAdd = false, transactionId = transactionId, completion = completion)
+                    for (transactionId in transactionIds) {
+                        handleUpdateTagsResponse(tagNames = tags, isAdd = false, transactionId = transactionId, completion = completion)
+                    }
                 }
             }
         }
     }
 
     private fun handleUpdateTagsResponse(
-        tagNames: Array<String>,
+        tagNames: List<String>,
         isAdd: Boolean = true,
         transactionId: Long,
         completion: OnFrolloSDKCompletionListener<Result>

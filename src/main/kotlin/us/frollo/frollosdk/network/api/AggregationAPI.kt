@@ -33,8 +33,9 @@ import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccoun
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
+import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagBulkCreateRequest
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
-import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagUpdateRequest
+import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsBulkDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
@@ -66,6 +67,7 @@ internal interface AggregationAPI {
 
         // Tags URLs
         const val URL_TRANSACTION_TAGS = "$URL_TRANSACTIONS/{transaction_id}/tags"
+        const val URL_TRANSACTION_TAGS_BULK = "$URL_TRANSACTIONS/tags"
         const val URL_USER_TAGS = "$URL_TRANSACTIONS/tags/user"
         const val URL_SUGGESTED_TAGS = "$URL_TRANSACTIONS/tags/suggested"
 
@@ -168,12 +170,12 @@ internal interface AggregationAPI {
     @GET(URL_TRANSACTION_TAGS)
     fun fetchTags(@Path("transaction_id") transactionId: Long): Call<List<TransactionTagResponse>>
 
-    @POST(URL_TRANSACTION_TAGS)
-    fun createTags(@Path("transaction_id") transactionId: Long, @Body requestArray: Array<TransactionTagUpdateRequest>): Call<Void>
+    @POST(URL_TRANSACTION_TAGS_BULK)
+    fun createTagsInBulk(@Body requestArray: Array<TransactionTagBulkCreateRequest>): Call<Void>
 
     // Workaround with HTTP instead of DELETE as DELETE does not support a body
     @HTTP(method = "DELETE", path = URL_TRANSACTION_TAGS, hasBody = true)
-    fun deleteTags(@Path("transaction_id") transactionId: Long, @Body requestArray: Array<TransactionTagUpdateRequest>): Call<Void>
+    fun deleteTagsInBulk(@Body requestArray: Array<TransactionTagsBulkDeleteRequest>): Call<Void>
 
     @GET(URL_USER_TAGS)
     fun fetchUserTags(@QueryMap queryParams: Map<String, String>): Call<List<TransactionTagResponse>>
