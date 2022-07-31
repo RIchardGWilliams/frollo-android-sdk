@@ -194,7 +194,7 @@ class AffordabilityTest : BaseAndroidTest() {
             assertEquals("COMPANY_TITLE_UNIT", model?.assets?.first()?.zoning?.first()?.propertyTypes?.first()?.name)
             assertEquals("https://picsum.photos/100", model?.assets?.first()?.zoning?.first()?.displayImageUrl)
             assertEquals("CASH_MANAGEMENT", model?.assets?.get(2)?.accountSubTypes?.first()?.name)
-            assertEquals(14, model?.liabilities?.accountSubTypes?.size)
+            assertEquals(13, model?.liabilities?.accountSubTypes?.size)
             assertEquals("COMMERCIAL_BILL", model?.liabilities?.accountSubTypes?.first()?.name)
 
             signal.countDown()

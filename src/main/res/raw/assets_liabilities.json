@@ -108,8 +108,7 @@
       "store_card",
       "student_loan",
       "tax_debt",
-      "term_loan",
-      "other"
+      "term_loan"
     ]
   }
 }
