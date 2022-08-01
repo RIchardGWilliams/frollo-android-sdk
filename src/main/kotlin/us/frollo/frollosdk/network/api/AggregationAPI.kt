@@ -174,7 +174,7 @@ internal interface AggregationAPI {
     fun createTagsInBulk(@Body requestArray: Array<TransactionTagBulkCreateRequest>): Call<Void>
 
     // Workaround with HTTP instead of DELETE as DELETE does not support a body
-    @HTTP(method = "DELETE", path = URL_TRANSACTION_TAGS, hasBody = true)
+    @HTTP(method = "DELETE", path = URL_TRANSACTION_TAGS_BULK, hasBody = true)
     fun deleteTagsInBulk(@Body requestArray: Array<TransactionTagsBulkDeleteRequest>): Call<Void>
 
     @GET(URL_USER_TAGS)
