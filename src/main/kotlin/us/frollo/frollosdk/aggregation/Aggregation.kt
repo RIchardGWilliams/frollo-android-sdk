@@ -89,9 +89,8 @@ import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccoun
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
-import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagBulkCreateRequest
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
-import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsBulkDeleteRequest
+import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsCreateDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
@@ -1630,7 +1629,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
 
         val requestArray = tags.map {
-            TransactionTagBulkCreateRequest(
+            TransactionTagsCreateDeleteRequest(
                 name = it,
                 transactionIds = transactionIds,
                 createTagRuleId = createTagRuleId
@@ -1644,9 +1643,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                     completion.invoke(Result.error(resource.error))
                 }
                 Resource.Status.SUCCESS -> {
-                    for (transactionId in transactionIds) {
-                        handleUpdateTagsResponse(tagNames = tags, isAdd = true, transactionId = transactionId, completion = completion)
-                    }
+                    handleUpdateTagsResponse(tagNames = tags, isAdd = true, transactionIds = transactionIds, completion = completion)
                 }
             }
         }
@@ -1669,7 +1666,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
 
         val requestArray = tags.map {
-            TransactionTagsBulkDeleteRequest(
+            TransactionTagsCreateDeleteRequest(
                 name = it,
                 transactionIds = transactionIds,
                 removeTagRuleId = removeTagRuleId
@@ -1683,9 +1680,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                     completion.invoke(Result.error(resource.error))
                 }
                 Resource.Status.SUCCESS -> {
-                    for (transactionId in transactionIds) {
-                        handleUpdateTagsResponse(tagNames = tags, isAdd = false, transactionId = transactionId, completion = completion)
-                    }
+                    handleUpdateTagsResponse(tagNames = tags, isAdd = false, transactionIds = transactionIds, completion = completion)
                 }
             }
         }
@@ -1694,18 +1689,20 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     private fun handleUpdateTagsResponse(
         tagNames: List<String>,
         isAdd: Boolean = true,
-        transactionId: Long,
+        transactionIds: List<Long>,
         completion: OnFrolloSDKCompletionListener<Result>
     ) {
         doAsync {
-            val model = db.transactions().loadTransaction(transactionId)
-            model?.let {
-                val tags = if (isAdd)
-                    it.userTags?.plus(tagNames)?.toSet()
-                else
-                    it.userTags?.minus(tagNames)?.toSet()
-                it.userTags = tags?.toList()
-                db.transactions().update(it)
+            for (transactionId in transactionIds) {
+                val model = db.transactions().loadTransaction(transactionId)
+                model?.let {
+                    val tags = if (isAdd)
+                        it.userTags?.plus(tagNames)?.toSet()
+                    else
+                        it.userTags?.minus(tagNames)?.toSet()
+                    it.userTags = tags?.toList()
+                    db.transactions().update(it)
+                }
             }
 
             uiThread { completion.invoke(Result.success()) }
