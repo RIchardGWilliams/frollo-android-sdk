@@ -33,7 +33,6 @@ import us.frollo.frollosdk.base.PaginatedResult
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
-import us.frollo.frollosdk.core.TagApplyAllPair
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
@@ -3169,7 +3168,7 @@ class AggregationTest : BaseAndroidTest() {
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_TAGS_BULK) {
                         return MockResponse()
                             .setResponseCode(200)
                     }
@@ -3178,31 +3177,33 @@ class AggregationTest : BaseAndroidTest() {
             }
             )
 
-        val data = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagfive"))
-        database.transactions().insert(data.toTransaction())
+        val data1 = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo"))
+        val data2 = testTransactionResponseData(transactionId = 6789, userTags = listOf("tagone", "tagthree", "tagfive"))
 
-        val tagPairs = arrayOf(
-            TagApplyAllPair("tagone", true),
-            TagApplyAllPair("tagtwo", true),
-            TagApplyAllPair("tagthree", true),
-            TagApplyAllPair("tagfour", true)
-        )
+        val list = mutableListOf(data1, data2)
+        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
 
-        aggregation.addTagsToTransaction(transactionId = 12345, tagApplyAllPairs = tagPairs) { result ->
+        aggregation.createTagsInBulk(transactionIds = listOf(12345, 6789), tags = listOf("tagone", "tagfour")) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = aggregation.fetchTransaction(transactionId = 12345).test()
-            testObserver.awaitValue()
-            val model = testObserver.value().data
-            assertNotNull(model)
-            assertEquals(5, model?.userTags?.size)
+            val testObserver1 = aggregation.fetchTransaction(transactionId = 12345).test()
+            testObserver1.awaitValue()
+            val model1 = testObserver1.value().data
+            assertNotNull(model1)
+            assertEquals(3, model1?.userTags?.size)
+
+            val testObserver2 = aggregation.fetchTransaction(transactionId = 6789).test()
+            testObserver2.awaitValue()
+            val model2 = testObserver2.value().data
+            assertNotNull(model2)
+            assertEquals(4, model2?.userTags?.size)
 
             signal.countDown()
         }
 
         val request = mockServer.takeRequest()
-        assertEquals("${AggregationAPI.URL_TRANSACTIONS}/12345/tags", request.trimmedPath)
+        assertEquals(AggregationAPI.URL_TRANSACTION_TAGS_BULK, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -3217,7 +3218,7 @@ class AggregationTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        aggregation.addTagsToTransaction(transactionId = 12345, tagApplyAllPairs = arrayOf(TagApplyAllPair("tag1", true))) { result ->
+        aggregation.createTagsInBulk(transactionIds = listOf(12345), tags = listOf("tagone", "tagfive")) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
@@ -3237,7 +3238,7 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        aggregation.addTagsToTransaction(transactionId = 12345, tagApplyAllPairs = arrayOf()) { result ->
+        aggregation.createTagsInBulk(transactionIds = listOf(12345), tags = listOf()) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.API, (result.error as DataError).type)
@@ -3260,7 +3261,7 @@ class AggregationTest : BaseAndroidTest() {
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}/12345/tags") {
+                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_TAGS_BULK) {
                         return MockResponse()
                             .setResponseCode(200)
                     }
@@ -3269,31 +3270,34 @@ class AggregationTest : BaseAndroidTest() {
             }
             )
 
-        val data = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo", "tagfive"))
-        database.transactions().insert(data.toTransaction())
+        val data1 = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo", "tagsix"))
+        val data2 = testTransactionResponseData(transactionId = 6789, userTags = listOf("tagone", "tagthree"))
+        val list = mutableListOf(data1, data2)
 
-        val tagPairs = arrayOf(
-            TagApplyAllPair("tagone", true),
-            TagApplyAllPair("tagtwo", true),
-            TagApplyAllPair("tagthree", true),
-            TagApplyAllPair("tagfour", true)
-        )
+        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
 
-        aggregation.removeTagsFromTransaction(transactionId = 12345, tagApplyAllPairs = tagPairs) { result ->
+        aggregation.deleteTagsInBulk(transactionIds = listOf(12345, 6789), tags = listOf("tagone", "tagtwo", "tagthree", "tagfour")) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = aggregation.fetchTransaction(transactionId = 12345).test()
-            testObserver.awaitValue()
-            val model = testObserver.value().data
-            assertNotNull(model)
-            assertEquals(1, model?.userTags?.size)
+            val testObserver1 = aggregation.fetchTransaction(transactionId = 12345).test()
+            testObserver1.awaitValue()
+            val model1 = testObserver1.value().data
+            assertNotNull(model1)
+            assertEquals(1, model1?.userTags?.size)
+            assertEquals("tagsix", model1?.userTags?.get(0).toString())
+
+            val testObserver2 = aggregation.fetchTransaction(transactionId = 6789).test()
+            testObserver2.awaitValue()
+            val model2 = testObserver2.value().data
+            assertNotNull(model2)
+            assertEquals(0, model2?.userTags?.size)
 
             signal.countDown()
         }
 
         val request = mockServer.takeRequest()
-        assertEquals("${AggregationAPI.URL_TRANSACTIONS}/12345/tags", request.trimmedPath)
+        assertEquals(AggregationAPI.URL_TRANSACTION_TAGS_BULK, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -3308,7 +3312,7 @@ class AggregationTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        aggregation.removeTagsFromTransaction(transactionId = 12345, tagApplyAllPairs = arrayOf(TagApplyAllPair("tag1", true))) { result ->
+        aggregation.deleteTagsInBulk(transactionIds = listOf(12345), tags = listOf("tagone", "tagtwo", "tagfive")) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
@@ -3328,7 +3332,7 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        aggregation.removeTagsFromTransaction(transactionId = 12345, tagApplyAllPairs = arrayOf()) { result ->
+        aggregation.deleteTagsInBulk(transactionIds = listOf(12345), tags = listOf()) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.API, (result.error as DataError).type)

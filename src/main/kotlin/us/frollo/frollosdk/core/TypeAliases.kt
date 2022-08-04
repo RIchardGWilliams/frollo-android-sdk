@@ -27,8 +27,3 @@ typealias OnFrolloSDKCompletionListener<T> = (T) -> Unit
  * Frollo SDK Validation Completion Handler with valid result and optional error if validation fails
  */
 typealias FormValidationCompletionListener = (valid: Boolean, error: LoginFormError?) -> Unit
-
-/**
- * Pair of tag name (String) and apply to all similar transactions (Boolean)
- */
-typealias TagApplyAllPair = Pair<String, Boolean>
