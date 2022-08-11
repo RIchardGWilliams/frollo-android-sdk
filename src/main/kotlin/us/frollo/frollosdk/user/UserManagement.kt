@@ -588,15 +588,18 @@ class UserManagement(
      * Send user feedback to the host
      *
      * @param message Value of the message sent as feedback
+     * @param details More information on the message sent as feedback (optional)
      * @param completion Completion handler with optional error if the request fails
      */
     fun sendFeedback(
         message: String,
+        details: String? = null,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         deviceAPI.createLog(
             LogRequest(
                 message = message,
+                details = details,
                 score = 0, // 0 is the value for Feedback
                 deviceId = di.deviceId,
                 deviceType = di.deviceType,
