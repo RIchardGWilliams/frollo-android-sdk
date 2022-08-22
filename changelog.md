@@ -7,6 +7,7 @@
 - Dynamic IV for KeyStore
 - List Similar Transactions API
 - Update Bulk Transactions API
+- Quick Sync API
 
 ### 3.17.1
 
