@@ -52,6 +52,7 @@ internal interface AggregationAPI {
         // Provider Account URLs
         const val URL_PROVIDER_ACCOUNTS = "aggregation/provideraccounts"
         const val URL_PROVIDER_ACCOUNT = "aggregation/provideraccounts/{provider_account_id}"
+        const val URL_PROVIDER_ACCOUNTS_QUICK_SYNC = "aggregation/provideraccounts/sync"
 
         // Account URLs
         const val URL_ACCOUNTS = "aggregation/accounts"
@@ -99,6 +100,9 @@ internal interface AggregationAPI {
 
     @PUT(URL_PROVIDER_ACCOUNTS)
     fun refreshProviderAccounts(@QueryMap queryParams: Map<String, String>): Call<List<ProviderAccountResponse>>
+
+    @POST(URL_PROVIDER_ACCOUNTS_QUICK_SYNC)
+    fun quickSyncProviderAccounts(): Call<Void>
 
     @POST(URL_PROVIDER_ACCOUNTS)
     fun createProviderAccount(@Body request: ProviderAccountCreateRequest): Call<ProviderAccountResponse>

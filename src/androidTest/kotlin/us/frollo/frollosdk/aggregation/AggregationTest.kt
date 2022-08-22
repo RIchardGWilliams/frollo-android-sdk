@@ -672,6 +672,60 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testQuickSyncProviderAccounts() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AggregationAPI.URL_PROVIDER_ACCOUNTS_QUICK_SYNC) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        aggregation.quickSyncProviderAccounts { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(AggregationAPI.URL_PROVIDER_ACCOUNTS_QUICK_SYNC, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testQuickSyncProviderAccountsFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.quickSyncProviderAccounts { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testRefreshProviderAccountByID() {
         initSetup()
 
