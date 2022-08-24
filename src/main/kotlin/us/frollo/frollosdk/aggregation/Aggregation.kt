@@ -480,6 +480,26 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * Quick sync all Provider Accounts for a user. Provider Accounts represent a customer login
+     * to a Provider and aggregates the Accounts for that login.
+     *
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun quickSyncProviderAccounts(completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        aggregationAPI.quickSyncProviderAccounts().enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    completion?.invoke(Result.success())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#quickSyncProviderAccounts", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
      * Create a provider account
      *
      * @param providerId ID of the provider which an account should be created for
