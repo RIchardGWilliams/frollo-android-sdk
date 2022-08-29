@@ -356,6 +356,7 @@ class NetworkExtensionTest {
             assertNotNull(result.error)
             assertTrue(result.error is OAuth2Error)
             assertEquals(OAuth2ErrorType.INVALID_CLIENT, (result.error as OAuth2Error).type)
+            assertEquals(401, (result.error as OAuth2Error).statusCode)
         }
 
         tearDown()
