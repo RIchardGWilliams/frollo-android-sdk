@@ -450,7 +450,7 @@ class UserManagement(
     }
 
     internal fun reset(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        if (FrolloSDK.isSetup) FrolloSDK.reset(completion)
+        if (FrolloSDK.isSetup) FrolloSDK.reset(completion = completion)
     }
 
     // PayID Management

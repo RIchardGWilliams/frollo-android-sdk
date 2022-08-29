@@ -21,6 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import us.frollo.frollosdk.FrolloSDK
 import us.frollo.frollosdk.base.Resource
+import us.frollo.frollosdk.core.ACTION
 import us.frollo.frollosdk.error.APIError
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.FrolloSDKError
@@ -34,7 +35,7 @@ import us.frollo.frollosdk.network.ErrorResponseType
 
 internal fun <T> Call<T>.enqueue(errorResponseType: ErrorResponseType = ErrorResponseType.NORMAL, completion: (Resource<T>) -> Unit) {
     this.enqueue(object : Callback<T> {
-        override fun onResponse(call: Call<T>?, response: Response<T>?) {
+        override fun onResponse(call: Call<T>, response: Response<T>) {
             val apiResponse = ApiResponse(response)
             if (apiResponse.isSuccessful) {
                 completion.invoke(Resource.success(data = apiResponse.body, responseStatusCode = apiResponse.code))
@@ -43,7 +44,7 @@ internal fun <T> Call<T>.enqueue(errorResponseType: ErrorResponseType = ErrorRes
             }
         }
 
-        override fun onFailure(call: Call<T>?, t: Throwable?) {
+        override fun onFailure(call: Call<T>, t: Throwable) {
             val errorResponse = ApiResponse<T>(t)
             handleFailure(errorResponseType, errorResponse, t, completion)
         }
@@ -57,10 +58,14 @@ internal fun <T> handleFailure(errorResponseType: ErrorResponseType, errorRespon
     val oAuth2ErrorResponse = errorMsg?.toOAuth2ErrorResponse()
     val dataError = errorMsg?.toDataError()
 
+    if (code == 410) {
+        notify(action = ACTION.ACTION_410_ERROR)
+    }
+
     if (dataError != null) {
         completion.invoke(Resource.error(error = DataError(dataError.type, dataError.subType))) // Re-create new DataError as the json converter does not has the context object
     } else if (errorResponseType == ErrorResponseType.OAUTH2 && oAuth2ErrorResponse != null) {
-        val oAuth2Error = OAuth2Error(response = errorMsg)
+        val oAuth2Error = OAuth2Error(statusCode = code, response = errorMsg)
         handleOAuth2Failure(oAuth2Error)
         completion.invoke(Resource.error(error = oAuth2Error))
     } else if (errorResponseType == ErrorResponseType.NORMAL && code != null) {

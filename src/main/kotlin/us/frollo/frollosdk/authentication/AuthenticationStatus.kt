@@ -23,5 +23,7 @@ enum class AuthenticationStatus {
     /** User Authenticated */
     AUTHENTICATED,
     /** User logged out */
-    LOGGED_OUT
+    LOGGED_OUT,
+    /** User logged out with 410 error */
+    LOGGED_OUT_410_ERROR
 }

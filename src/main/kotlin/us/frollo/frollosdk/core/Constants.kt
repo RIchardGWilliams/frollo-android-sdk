@@ -70,6 +70,12 @@ object ACTION {
      * Listen to this to detect when an Onboarding Step is completed.
      */
     const val ACTION_ONBOARDING_STEP_COMPLETED = "us.frollo.frollosdk.ACTION_ONBOARDING_STEP_COMPLETED"
+
+    /**
+     * Local Broadcast triggered when ever the API returns 410 error.
+     * Listen to this to detect the 410 error
+     */
+    const val ACTION_410_ERROR = "us.frollo.frollosdk.ACTION_410_ERROR"
 }
 
 internal object LIMIT {
