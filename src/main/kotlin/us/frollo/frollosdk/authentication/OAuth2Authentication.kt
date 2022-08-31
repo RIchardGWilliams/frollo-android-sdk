@@ -391,12 +391,14 @@ class OAuth2Authentication(
      * Logout the user by revoking the refresh token if possible followed by local cleanup by calling reset
      *
      * @param is410Error Indicates if this logout is being called due to 410 error. Default is false.
+     * @param notifyAuthenticationStatus If true sends a notification to the app regarding the change in AuthenticationStatus. Default is true.
      * @param completion Completion handler with option error if something goes wrong (optional)
      *
      * See also [FrolloSDK.reset]
      */
     fun logout(
         is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         // Revoke token only if is410Error = false as there is a chance that revokeToken API may
@@ -415,6 +417,7 @@ class OAuth2Authentication(
 
         forcedReset(
             is410Error = is410Error,
+            notifyAuthenticationStatus = notifyAuthenticationStatus,
             completion = completion
         )
     }
@@ -478,10 +481,17 @@ class OAuth2Authentication(
 
     private fun forcedReset(
         is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
         reset()
 
-        if (FrolloSDK.isSetup) FrolloSDK.reset(is410Error = is410Error, completion = completion)
+        if (FrolloSDK.isSetup) {
+            FrolloSDK.reset(
+                is410Error = is410Error,
+                notifyAuthenticationStatus = notifyAuthenticationStatus,
+                completion = completion
+            )
+        }
     }
 }
