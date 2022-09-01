@@ -25,7 +25,12 @@ import java.lang.StringBuilder
 /**
  * Represents OAuth2 error that can be returned from the authentication server
  */
-class OAuth2Error(private val exception: AuthorizationException? = null, response: String? = null) : FrolloSDKError(exception?.message ?: response) {
+class OAuth2Error(
+    private val exception: AuthorizationException? = null,
+    response: String? = null,
+    /** Status code received from the API (Optional) */
+    val statusCode: Int? = null
+) : FrolloSDKError(exception?.message ?: response) {
 
     private var oAuth2ErrorResponse: OAuth2ErrorResponse? = null
 

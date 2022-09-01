@@ -452,13 +452,19 @@ object FrolloSDK {
     /**
      * Reset the SDK. Clears all caches, databases, tokens, keystore and preferences.
      *
+     * @param is410Error Indicates if this logout is being called due to 410 error. Default is false.
+     * @param notifyAuthenticationStatus If true sends a notification to the app regarding the change in AuthenticationStatus. Default is true.
      * @param completion Completion handler with option error if something goes wrong (optional)
      *
      * @throws IllegalAccessException if SDK is not setup
      */
     @Throws(IllegalAccessException::class)
-    fun reset(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        internalReset(completion)
+    fun reset(
+        is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        internalReset(is410Error, notifyAuthenticationStatus, completion)
     }
 
     /**
@@ -466,7 +472,11 @@ object FrolloSDK {
      *
      * Triggers the internal cleanup of the SDK. Called from public logout/reset methods and also forced logout
      */
-    private fun internalReset(completion: OnFrolloSDKCompletionListener<Result>? = null) {
+    private fun internalReset(
+        is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
         if (!_setup) throw IllegalAccessException(SDK_NOT_SETUP)
 
         pauseScheduledRefreshing()
@@ -477,11 +487,17 @@ object FrolloSDK {
         database.clearAllTables()
         completion?.invoke(Result.success())
 
-        notify(
-            action = ACTION_AUTHENTICATION_CHANGED,
-            extrasKey = ARG_AUTHENTICATION_STATUS,
-            extrasData = AuthenticationStatus.LOGGED_OUT
-        )
+        if (notifyAuthenticationStatus) {
+            notify(
+                action = ACTION_AUTHENTICATION_CHANGED,
+                extrasKey = ARG_AUTHENTICATION_STATUS,
+                extrasData = if (is410Error) {
+                    AuthenticationStatus.LOGGED_OUT_410_ERROR
+                } else {
+                    AuthenticationStatus.LOGGED_OUT
+                }
+            )
+        }
     }
 
     private fun initializeThreeTenABP() {

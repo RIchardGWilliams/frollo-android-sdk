@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.19.0
+
+#### Changes
+- Handle 410 Error and notify app
+
 ### 3.18.0
 
 #### Changes

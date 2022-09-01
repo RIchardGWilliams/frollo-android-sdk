@@ -390,22 +390,36 @@ class OAuth2Authentication(
      *
      * Logout the user by revoking the refresh token if possible followed by local cleanup by calling reset
      *
+     * @param is410Error Indicates if this logout is being called due to 410 error. Default is false.
+     * @param notifyAuthenticationStatus If true sends a notification to the app regarding the change in AuthenticationStatus. Default is true.
      * @param completion Completion handler with option error if something goes wrong (optional)
      *
      * See also [FrolloSDK.reset]
      */
-    fun logout(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        // Revoke the refresh token if possible
-        authToken?.getRefreshToken()?.let { refreshToken ->
-            val request = oAuth2Helper.getTokenRevokeRequest(refreshToken)
-            revokeTokenAPI?.revokeToken(request)?.enqueue { resource ->
-                if (resource.status == Resource.Status.ERROR) {
-                    Log.d("$TAG#logout", resource.error?.localizedDescription)
+    fun logout(
+        is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        // Revoke token only if is410Error = false as there is a chance that revokeToken API may
+        // return 410 and this will go in loop.
+        if (!is410Error) {
+            // Revoke the refresh token if possible
+            authToken?.getRefreshToken()?.let { refreshToken ->
+                val request = oAuth2Helper.getTokenRevokeRequest(refreshToken)
+                revokeTokenAPI?.revokeToken(request)?.enqueue { resource ->
+                    if (resource.status == Resource.Status.ERROR) {
+                        Log.d("$TAG#logout", resource.error?.localizedDescription)
+                    }
                 }
             }
         }
 
-        forcedReset(completion)
+        forcedReset(
+            is410Error = is410Error,
+            notifyAuthenticationStatus = notifyAuthenticationStatus,
+            completion = completion
+        )
     }
 
     override fun accessTokenExpired() {
@@ -465,9 +479,19 @@ class OAuth2Authentication(
         clearTokens()
     }
 
-    private fun forcedReset(completion: OnFrolloSDKCompletionListener<Result>? = null) {
+    private fun forcedReset(
+        is410Error: Boolean = false,
+        notifyAuthenticationStatus: Boolean = true,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
         reset()
 
-        if (FrolloSDK.isSetup) FrolloSDK.reset(completion)
+        if (FrolloSDK.isSetup) {
+            FrolloSDK.reset(
+                is410Error = is410Error,
+                notifyAuthenticationStatus = notifyAuthenticationStatus,
+                completion = completion
+            )
+        }
     }
 }
