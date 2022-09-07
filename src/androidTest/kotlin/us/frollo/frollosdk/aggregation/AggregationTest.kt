@@ -4892,6 +4892,7 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("CDR Policy", model?.relatedParties?.first()?.policy?.name)
             assertEquals("https://example.com", model?.relatedParties?.first()?.policy?.url)
             assertEquals(7890000L, model?.sharingUseDuration)
+            assertEquals(53, model?.initialSyncWindowWeeks)
 
             signal.countDown()
         }

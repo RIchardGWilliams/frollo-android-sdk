@@ -66,5 +66,8 @@ data class CDRConfiguration(
     @ColumnInfo(name = "related_parties") val relatedParties: List<CDRParty>,
 
     /** Duration of one time consents data holding */
-    @ColumnInfo(name = "sharing_use_duration") val sharingUseDuration: Long
+    @ColumnInfo(name = "sharing_use_duration") val sharingUseDuration: Long,
+
+    /** How many weeks of transactions to be retrieved during initial sync (Optional) */
+    @ColumnInfo(name = "initial_sync_window_weeks") val initialSyncWindowWeeks: Int?
 )
