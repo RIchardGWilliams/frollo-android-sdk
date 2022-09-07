@@ -34,5 +34,6 @@ internal data class CDRConfigurationResponse(
     @SerializedName("cdr_policy_url") val cdrPolicyUrl: String,
     @SerializedName("model") val model: CDRModel,
     @SerializedName("related_parties") val relatedParties: List<CDRParty>,
-    @SerializedName("sharing_use_duration") val sharingUseDuration: Long
+    @SerializedName("sharing_use_duration") val sharingUseDuration: Long,
+    @SerializedName("initial_sync_window_weeks") val initialSyncWindowWeeks: Int?,
 )

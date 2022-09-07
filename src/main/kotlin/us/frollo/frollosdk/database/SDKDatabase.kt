@@ -102,7 +102,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         Address::class,
         ServiceOutage::class
     ],
-    version = 19, exportSchema = true
+    version = 20, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -177,7 +177,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_15_16,
                     MIGRATION_16_17,
                     MIGRATION_17_18,
-                    MIGRATION_18_19
+                    MIGRATION_18_19,
+                    MIGRATION_19_20
                 )
                 .build()
         }
@@ -745,6 +746,20 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `merchant_image_url` TEXT")
                 database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_name` TEXT")
                 database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_image_url` TEXT")
+            }
+        }
+
+        private val MIGRATION_19_20: Migration = object : Migration(19, 20) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) Alter table - cdr_configuration - Add column initial_sync_window_weeks
+
+                database.execSQL("ALTER TABLE `cdr_configuration` ADD COLUMN `initial_sync_window_weeks` INTEGER")
             }
         }
     }
