@@ -28,17 +28,20 @@ import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
+import us.frollo.frollosdk.base.PaginatedResult
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.messages.MessageHTML
 import us.frollo.frollosdk.model.coredata.messages.MessageImage
 import us.frollo.frollosdk.model.coredata.messages.MessageText
 import us.frollo.frollosdk.model.coredata.messages.MessageVideo
 import us.frollo.frollosdk.model.testMessageNotificationPayload
 import us.frollo.frollosdk.model.testMessageResponseData
+import us.frollo.frollosdk.network.api.ContactsAPI
 import us.frollo.frollosdk.network.api.MessagesAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.readStringFromJson
@@ -105,7 +108,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(read = false).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value().data)
         assertEquals(2, testObserver.value().data?.size)
@@ -125,7 +128,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(messageTypes = mutableListOf("survey")).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(messageType = "survey")).test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value().data)
         assertEquals(2, testObserver.value().data?.size)
@@ -145,7 +148,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(read = false, contentType = ContentType.TEXT).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false, contentType = ContentType.TEXT)).test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value().data)
         assertEquals(2, testObserver.value().data?.size)
@@ -165,7 +168,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        messages.fetchMessagesCount(read = true) { resource ->
+        messages.fetchMessagesCount(messageFilter = MessageFilter(read = true)) { resource ->
             assertEquals(2L, resource.data)
         }
 
@@ -173,52 +176,78 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshMessages() {
+    fun testRefreshMessagesWithPaginationOrderDesc() {
         initSetup()
+
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?size=24"
+        val requestPath2 = "${ContactsAPI.URL_CONTACTS}?sort=created_at&order=desc&after=842731&size=24"
+        val requestPath3 = "${ContactsAPI.URL_CONTACTS}?sort=created_at&order=desc&after=846785&size=24"
 
         val signal = CountDownLatch(1)
 
-        val body = readStringFromJson(app, R.raw.messages_valid)
         mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
+                object : Dispatcher() {
+                    override fun dispatch(request: RecordedRequest): MockResponse {
+                        if (request.trimmedPath == requestPath1) {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.messages_desc_page1))
+                        } else if (request.trimmedPath == requestPath2) {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.messages_desc_page2))
+                        } else if (request.trimmedPath == requestPath3) {
+                            return MockResponse()
+                                .setResponseCode(200)
+                                .setBody(readStringFromJson(app, R.raw.messages_desc_page3))
+                        }
+                        return MockResponse().setResponseCode(404)
                     }
-                    return MockResponse().setResponseCode(404)
                 }
+                )
+
+        // Insert some stale contacts
+        // TODO: **** do we delete the stale messages whose created_date is before the page1 first message
+        //  and created_date is after the page3 last message? basically those which gets left out when we do the filter
+        //  of dates ****
+        val data1 = testContactResponseData(contactId = 14)
+        val data2 = testContactResponseData(contactId = 15)
+        val list = mutableListOf(data1, data2)
+        database.contacts().insertAll(*list.map { it.toContact() }.toList().toTypedArray())
+
+        contacts.refreshContactsWithPagination(size = 10) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(10L, result1.paginationInfo?.after)
+
+            contacts.refreshContactsWithPagination(size = 10, after = result1.paginationInfo?.after) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(10L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertNull(result2.paginationInfo?.after)
+
+                val testObserver = contacts.fetchContacts().test()
+                testObserver.awaitValue()
+                val models = testObserver.value()
+                assertNotNull(models)
+                assertEquals(13, models?.size)
+
+                // Verify that the stale contacts are deleted from the database
+                assertEquals(0, models?.filter { it.contactId == 14L && it.contactId == 15L }?.size)
+
+                signal.countDown()
             }
-            )
-
-        messages.refreshMessages { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = messages.fetchMessages().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(39, models?.size)
-            models?.forEach { message ->
-                when (message.contentType) {
-                    ContentType.HTML -> assertTrue(message is MessageHTML)
-                    ContentType.VIDEO -> assertTrue(message is MessageVideo)
-                    ContentType.IMAGE -> assertTrue(message is MessageImage)
-                    ContentType.TEXT -> assertTrue(message is MessageText)
-                }
-            }
-
-            signal.countDown()
         }
-
-        val request = mockServer.takeRequest()
-        assertEquals(MessagesAPI.URL_MESSAGES, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
+        assertEquals(2, mockServer.requestCount)
+
         tearDown()
+    }
+
+    @Test
+    fun testRefreshMessagesWithPaginationOrderAsc() {
+
     }
 
     @Test
@@ -229,7 +258,7 @@ class MessagesTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        messages.refreshMessages { result ->
+        messages.refreshMessagesWithPagination(MessageFilter()) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
@@ -379,7 +408,7 @@ class MessagesTest : BaseAndroidTest() {
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = messages.fetchMessages(read = false).test()
+            val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
             testObserver.awaitValue()
             val models = testObserver.value().data
             assertNotNull(models)

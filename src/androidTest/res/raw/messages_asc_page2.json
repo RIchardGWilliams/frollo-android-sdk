@@ -1,0 +1,612 @@
+{
+  "data": [{
+    "id": 608836,
+    "event": "BILL_DUE",
+    "user_event_id": 817194,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-12T08:00:42.330+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "Bill reminder",
+    "metadata": {},
+    "content": {
+      "text": "Don't forget - your GIO Insurance bill is due tomorrow!",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/94/thumb/preview-gio.png?1519084860",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "View your bill now",
+      "link": "frollo-staging://bills/7239",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 608872,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 817212,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-12T08:30:57.021+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610239,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 819074,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T08:31:41.723+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610442,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819495,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:37.655+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610444,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819496,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:37.776+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610446,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819497,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.227+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610447,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819498,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.352+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610450,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819499,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.508+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610452,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819500,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.591+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610453,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819501,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.639+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610455,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819502,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.687+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610458,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819503,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.780+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610459,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819504,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:45.836+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610462,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 819505,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T15:12:52.091+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 612375,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 821870,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-17T08:30:25.658+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 613062,
+    "event": "BILL_DUE",
+    "user_event_id": 822455,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-18T08:00:26.720+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "Bill reminder",
+    "metadata": {},
+    "content": {
+      "text": "Don't forget - your Woolworths Insurance bill is due tomorrow!",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/thumb/16386977_1395300327208761_3607300141437791064_n.png?1600643858",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "View your bill now",
+      "link": "frollo-staging://bills/7241",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 613368,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 822593,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-18T08:30:31.251+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 614566,
+    "event": "BILL_DUE",
+    "user_event_id": 823395,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-19T08:00:22.570+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "Bill reminder",
+    "metadata": {},
+    "content": {
+      "text": "Don't forget - your AGL bill is due tomorrow!",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/39/thumb/AGL.png?1519084864",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "View your bill now",
+      "link": "frollo-staging://bills/7240",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 614820,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 823519,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-19T08:31:10.105+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 615120,
+    "event": "U_STEP_SETBUDGET",
+    "user_event_id": 823787,
+    "placement": 1,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-19T12:36:59.438+10:00",
+    "delivered_date": "2022-04-21T13:10:05.717+10:00",
+    "message_types": ["nextstep_alert"],
+    "content_type": "text",
+    "title": "Set up a budget",
+    "metadata": {},
+    "content": {
+      "text": "Want to keep track of - or limit - your spend on certain things? Simply create a budget for a spend category.",
+      "header": "Step 3 of 5: Budgeting",
+      "design_type": "nextstep_alert"
+    },
+    "action": {
+      "title": "Set budget",
+      "link": "frollo-staging://budgets/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 619075,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 827442,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-23T08:31:02.734+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 619645,
+    "event": "BILL_DUE",
+    "user_event_id": 827943,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-24T08:00:29.075+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "Bill reminder",
+    "metadata": {},
+    "content": {
+      "text": "Don't forget - your Netflix bill is due tomorrow!",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/thumb/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "View your bill now",
+      "link": "frollo-staging://bills/7236",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 619899,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 828070,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-24T08:31:19.008+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 620708,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 828762,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-25T08:30:28.353+10:00",
+    "delivered_date": "2022-04-26T12:12:05.190+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": "608835",
+      "after": null
+    },
+    "previous": "https://api-staging.frollo.us/api/v2/messages/?before=608835\u0026size=25\u0026order=asc\u0026sort=created_at",
+    "next": "https://api-staging.frollo.us/api/v2/messages/?after=621589\u0026size=25\u0026order=asc\u0026sort=created_at",
+    "total": 49
+  }
+}

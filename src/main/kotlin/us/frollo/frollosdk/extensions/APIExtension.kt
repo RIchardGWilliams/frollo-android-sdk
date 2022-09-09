@@ -32,6 +32,7 @@ import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
+import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
@@ -50,6 +51,7 @@ import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProduct
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
@@ -66,6 +68,7 @@ import us.frollo.frollosdk.network.api.ContactsAPI
 import us.frollo.frollosdk.network.api.GoalsAPI
 import us.frollo.frollosdk.network.api.ImagesAPI
 import us.frollo.frollosdk.network.api.ManagedProductsAPI
+import us.frollo.frollosdk.network.api.MessagesAPI
 import us.frollo.frollosdk.network.api.ReportsAPI
 import us.frollo.frollosdk.network.api.StatementsAPI
 import us.frollo.frollosdk.network.api.SurveysAPI
@@ -443,4 +446,10 @@ internal fun AffordabilityAPI.getFinancialPassport(
         queryMap["to_date"] = it
     }
     return getFinancialPassport(queryMap)
+}
+
+internal fun MessagesAPI.fetchMessages(
+    messageFilter: MessageFilter? = null
+): Call<PaginatedResponse<MessageResponse>> {
+    return fetchMessages(messageFilter?.getQueryMap() ?: mutableMapOf())
 }

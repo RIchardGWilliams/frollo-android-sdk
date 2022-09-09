@@ -47,10 +47,13 @@ import us.frollo.frollosdk.model.coredata.goals.GoalTarget
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
+import us.frollo.frollosdk.model.coredata.messages.MessageSortType
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
+import us.frollo.frollosdk.model.testMessageResponseData
 
 class ModelExtensionTest {
 
@@ -532,5 +535,46 @@ class ModelExtensionTest {
 
         query = sqlForExistingOutage(type = ServiceOutageType.OUTAGE, startDate = "2011-12-03T10:15:30+01:00", endDate = null)
         assertEquals("SELECT  *  FROM service_outage WHERE type = 'OUTAGE' AND start_date = '2011-12-03T10:15:30+01:00' AND end_date IS NULL ", query.sql)
+    }
+
+    @Test
+    fun testSQLForMessageIdsToGetStaleIds() {
+        val messageFilter = MessageFilter(
+            messageType = "message_task",
+            contentType = ContentType.TEXT,
+            event = "PA_LINKED",
+            read = false,
+            interacted = true,
+            sortBy = MessageSortType.CREATED_AT,
+            orderBy = OrderType.DESC
+        )
+        val message1 = testMessageResponseData(createdDate = "2022-08-04T10:15:30.345+10:00")
+        val message2 = testMessageResponseData(createdDate = "2022-07-02T08:30:40.367+10:00")
+
+        // With filters DESC
+        var query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2
+        )
+        assertEquals("SELECT msg_id  FROM message  WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|'||message_task||'|%' AND content_type = 'text' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1 ORDER BY created_date DESC ", query.sql)
+
+        // With filters ASC
+        messageFilter.orderBy = OrderType.ASC
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2
+        )
+        assertEquals("SELECT msg_id  FROM message  WHERE (created_date >= '2022-08-04T10:15:30.345+10:00' AND created_date <= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|'||message_task||'|%' AND content_type = 'text' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1 ORDER BY created_date DESC ", query.sql)
+
+
+        // Default filters
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = MessageFilter(),
+            firstMessageInPage = message1,
+            lastMessageInPage = message2
+        )
+        assertEquals("SELECT msg_id  FROM message  WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') ORDER BY created_date DESC ", query.sql)
     }
 }

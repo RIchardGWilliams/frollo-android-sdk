@@ -79,6 +79,30 @@ data class MessageVideo(
     val url: String,
 
     /** Metadata - custom JSON associated with the message (Optional) */
-    override val metadata: JsonObject?
+    override val metadata: JsonObject?,
 
-) : Message(messageId, event, userEventId, placement, autoDismiss, persists, read, interacted, messageTypes, title, contentType, action, metadata)
+    /**
+     * Date the message was generated (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    override val createdDate: String?,
+
+    /**
+     * Date the message was delivered (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    override val deliveredDate: String?,
+
+    /**
+     * Date the message was interacted with (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    override val interactedDate: String?
+
+) : Message(messageId, event, userEventId, placement, autoDismiss, persists, read, interacted, messageTypes, title, contentType, action, metadata, createdDate, deliveredDate, interactedDate)

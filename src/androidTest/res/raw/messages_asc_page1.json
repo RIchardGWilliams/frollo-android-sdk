@@ -1,0 +1,625 @@
+{
+  "data": [{
+    "id": 606518,
+    "event": "U_REGISTERED",
+    "user_event_id": 814276,
+    "placement": 10001,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:27:13.322+10:00",
+    "delivered_date": "2022-04-07T16:28:16.287+10:00",
+    "message_types": ["message_task"],
+    "content_type": "text",
+    "title": "Welcome to Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Start turning around your finances",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2800/icon/app/1602458920.png?1602458920",
+      "design_type": "information"
+    },
+    "action": {
+      "title": "Learn more",
+      "link": "https://api-staging.frollo.us/api/pages/welcome_benefits",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606519,
+    "event": "U_WHERE_SPEND",
+    "user_event_id": 814293,
+    "placement": 10000,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:28:03.880+10:00",
+    "delivered_date": "2022-04-07T16:28:16.287+10:00",
+    "message_types": ["message_task"],
+    "content_type": "text",
+    "title": "Why Choose Us",
+    "metadata": {},
+    "content": {
+      "text": "An important step to find out where you spend is understanding more about how we can help",
+      "design_type": "dash_gradient_1"
+    },
+    "action": {
+      "title": "Read More",
+      "link": "https://frollo.com.au/app/",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606521,
+    "event": "U_WHERE_SPEND_CONNECT",
+    "user_event_id": 814294,
+    "placement": 1000,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:28:04.990+10:00",
+    "delivered_date": "2022-04-07T16:28:16.287+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "1 of 6 - See where your money is going",
+    "metadata": {},
+    "content": {
+      "text": "in 6 steps.\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2766/icon/app/1602197939.png?1602197939",
+      "design_type": "dash_gradient_brand"
+    },
+    "action": {
+      "title": "Get Started",
+      "link": "https://api-staging.frollo.us/pages/messages?user_event_id=814294",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606522,
+    "event": "U_ACC_REQUIRED",
+    "user_event_id": 814296,
+    "placement": 9005,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": true,
+    "created_date": "2022-04-07T16:28:14.907+10:00",
+    "delivered_date": "2022-04-07T16:28:16.287+10:00",
+    "interacted_date": "2022-04-07T16:28:54.425+10:00",
+    "message_types": ["message_task"],
+    "content_type": "text",
+    "title": "Connect your bank accounts",
+    "metadata": {},
+    "content": {
+      "text": "Get the most out of Frollo by connecting your bank accounts.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Connect Bank Account",
+      "link": "frollo-staging://spending_insights/accounts/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606523,
+    "event": "PA_LINKING",
+    "user_event_id": 814298,
+    "placement": 20,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:29:14.461+10:00",
+    "delivered_date": "2022-04-07T16:29:46.936+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Linking your accounts",
+    "metadata": {},
+    "content": {
+      "text": "We are still processing your account and transactions. Sorry for the delay.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/providers/30777/small/Frollo_Mock_Bank.png?1642546243",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "link": "frollo-staging://provider_accounts/49830",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606525,
+    "event": "U_ACC_ADDED",
+    "user_event_id": 814299,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:29:40.488+10:00",
+    "delivered_date": "2022-04-07T16:29:46.936+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "How to get the most out of Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Please check out our FAQ articles for quick help options",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Find your answer now",
+      "link": "frollo-staging://contact/faq",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606526,
+    "event": "U_FIRST_ACCOUNT_CONNECTION",
+    "user_event_id": 814300,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:29:41.612+10:00",
+    "delivered_date": "2022-04-07T16:29:46.936+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "New Feature Activated",
+    "metadata": {},
+    "content": {
+      "text": "Now see your product features and fees in Frollo against your account",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/providers/30777/small/Frollo_Mock_Bank.png?1642546243",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Show me",
+      "link": "frollo-staging://spending_insights/accounts/20516",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606531,
+    "event": "U_ACC_REQUIRED",
+    "user_event_id": 814326,
+    "placement": 9005,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:30:38.580+10:00",
+    "delivered_date": "2022-04-07T16:35:32.193+10:00",
+    "message_types": ["message_task"],
+    "content_type": "text",
+    "title": "Connect your bank accounts",
+    "metadata": {},
+    "content": {
+      "text": "Get the most out of Frollo by connecting your bank accounts.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Connect Bank Account",
+      "link": "frollo-staging://spending_insights/accounts/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606618,
+    "event": "CDR_INTRO_NEW_USERS",
+    "user_event_id": 814539,
+    "placement": 999,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T00:28:19.924+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts", "home_nudge"],
+    "content_type": "text",
+    "title": "Link your accounts using CDR",
+    "metadata": {},
+    "content": {
+      "text": "Get real time transaction updates, better security and better insights",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2880/icon/app/1605590011.png?1605590011",
+      "design_type": "information"
+    },
+    "action": {
+      "title": "Learn More",
+      "link": "https://api-staging.frollo.us/pages/messages?user_event_id=814539",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606621,
+    "event": "CDR_INTRO_NEW_USERS",
+    "user_event_id": 814540,
+    "placement": 999,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T00:30:43.376+10:00",
+    "delivered_date": "2022-04-08T11:33:52.775+10:00",
+    "message_types": ["dashboard_alerts", "home_nudge"],
+    "content_type": "text",
+    "title": "Link your accounts using CDR",
+    "metadata": {},
+    "content": {
+      "text": "Get real time transaction updates, better security and better insights",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2880/icon/app/1605590011.png?1605590011",
+      "design_type": "information"
+    },
+    "action": {
+      "title": "Learn More",
+      "link": "https://api-staging.frollo.us/pages/messages?user_event_id=814540",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607051,
+    "event": "U_STREAK",
+    "user_event_id": 815057,
+    "placement": 800,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T11:33:52.056+10:00",
+    "delivered_date": "2022-04-08T11:33:52.775+10:00",
+    "message_types": ["dashboard_alerts", "home_nudge"],
+    "content_type": "text",
+    "title": "Well done!",
+    "metadata": {},
+    "content": {
+      "text": "Your current streak is 2 days",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3041/icon/app/1608326942.png?1608326942",
+      "design_type": "dash_2"
+    }
+  }, {
+    "id": 607080,
+    "event": "PA_LINKING",
+    "user_event_id": 815114,
+    "placement": 20,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:09:31.406+10:00",
+    "delivered_date": "2022-04-08T15:10:01.989+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Linking your accounts",
+    "metadata": {},
+    "content": {
+      "text": "We are still processing your account and transactions. Sorry for the delay.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/providers/30777/small/Frollo_Mock_Bank.png?1642546243",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "link": "frollo-staging://provider_accounts/49850",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607082,
+    "event": "U_ACC_ADDED",
+    "user_event_id": 815115,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:09:58.296+10:00",
+    "delivered_date": "2022-04-08T15:10:01.989+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "How to get the most out of Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Please check out our FAQ articles for quick help options",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Find your answer now",
+      "link": "frollo-staging://contact/faq",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607089,
+    "event": "PA_LINKED",
+    "user_event_id": 815139,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:11:58.876+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["message_notification"],
+    "content_type": "text",
+    "title": "Woo hoo!",
+    "metadata": {},
+    "content": {
+      "text": "Your account has synced successfully. Let's start looking at ways for you to get ahead!",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/providers/30777/small/Frollo_Mock_Bank.png?1642546243",
+      "design_type": "dash_gradient_1"
+    },
+    "action": {
+      "title": "View account",
+      "link": "frollo-staging://spending_insights/accounts",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607090,
+    "event": "B_READY",
+    "user_event_id": 815140,
+    "placement": 10,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:11:58.922+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Spending Insight",
+    "metadata": {},
+    "content": {
+      "text": "See where your money is going by category and compare with previous months.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2976/icon/original/1608190536.png?1608190536",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "View Summary ",
+      "link": "frollo-staging://expenses/category?period=history\u0026date=2022-03",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607093,
+    "event": "U_STEP_COMMIT",
+    "user_event_id": 815144,
+    "placement": 1,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:11:59.099+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["nextstep_alert"],
+    "content_type": "text",
+    "title": "Step 2 of 5: Commitment",
+    "metadata": {},
+    "content": {
+      "text": "The last step to get started with Frollo is perhaps the most important one. Making a commitment to stay on top of your finances. We’ve made it easy for you.",
+      "design_type": "nextstep_alert"
+    },
+    "action": {
+      "title": "Make commitment",
+      "link": "frollo-staging://survey?key=COMMITMENT_SURVEY",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607094,
+    "event": "U_ACCOUNT_MINI_SUMMARY",
+    "user_event_id": 815143,
+    "placement": 100,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:11:59.414+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Success!",
+    "metadata": {},
+    "content": {
+      "text": "Your account is linked and your first summary is ready.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2723/icon/app/1600321263.png?1600321263",
+      "design_type": "dash_gradient_brand"
+    },
+    "action": {
+      "title": "Show me",
+      "link": "https://api-staging.frollo.us/pages/messages?user_event_id=815143",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607098,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815148,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:37.434+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Netflix bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Netflix bill for $17 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/thumb/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7236",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607099,
+    "event": "BILL_SETUP_BUDGET",
+    "user_event_id": 815150,
+    "placement": 9005,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:38.478+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["welcome_nudge"],
+    "content_type": "html",
+    "title": "Be a Budget Hero in 2 Mins!",
+    "content": {
+      "main": "\u003c!doctype html\u003e\r\n\u003chtml\u003e\r\n\u003chead\u003e\r\n\u003cmeta charset=\"utf-8\"\u003e\r\n\u003cmeta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"\u003e\r\n\u003cmeta name=\"description\" content=\"\"\u003e\r\n\u003cmeta name=\"author\" content=\"\"\u003e\r\n\u003ctitle\u003eBlock 5\u003c/title\u003e\r\n\u003clink href=\"https://fonts.googleapis.com/css?family=Open+Sans:400,600,700\" rel=\"stylesheet\"\u003e\r\n\u003clink href=\"https://fonts.googleapis.com/css?family=Poppins:400,500,600,700\" rel=\"stylesheet\"\u003e\r\n\u003cstyle type=\"text/css\"\u003e\r\nbody{ margin:0px; padding:0px;}\r\n/*--------------- FREE_CREDIT_SCORE_BOX_START --------------*/\r\n.free-credit-box-main-lp{ padding:0;}\r\n.free-credit-box-inner-lp{ width:100%; border-radius:10px; }\r\n.free-credit-top-lp{ margin:0px; padding:0px; width:100%; border-radius:10px 10px 0px 0px; display:table; }\r\n.free-credit-img-lp{ display:table-cell; vertical-align:middle; text-align:center; width:100%;  border-bottom:0px; background: white;}\r\n.free-credit-img-lp img{ width: 30%;background: white; border-radius:10px 10px 0px 0px; padding-top: 20px;}\r\n.free-credit-info-lp{  margin:0px; padding:20px 25px 25px; background:#fff;  border-top:0px;}\r\n.free-credit-info-lp h2{ font-size:40px; line-height:40px; color:#3f4c5e; padding:0px 0px 0px 10px; margin:0px; font-weight:700; font-family: 'Poppins', sans-serif; text-align: center;}\r\n.free-credit-info-lp p{ font-size:28px; line-height:30px; color:#627484; padding:13px 0px 0px 10px; margin:0px; font-weight:normal; font-family: 'Open Sans', sans-serif; text-align: center;}\r\n.free-credit-btns{ padding:25px 0 0px 0; overflow:hidden;}\r\n.free-btns{ color:#fff; text-decoration:none; float:left; font-size:26px; background:#424073; border-radius:10px; width:190px; height:70px; line-height:70px; font-family: 'Open Sans', sans-serif; font-weight:700; text-align:center;  -webkit-transition: all 0.3s linear; -moz-transition: all 0.3s linear; -o-transition: all 0.3s linear; -ms-transition: all 0.3s linear; transition: all 0.3s linear; }\r\n.free-btns a{ display:block; color:#fff; text-decoration:none; }\r\n/*--------------- FREE_CREDIT_SCORE_BOX_END --------------*/\r\n@media(min-width:0px) and (max-width:479px){\r\n/*--------------- FREE_CREDIT_SCORE_BOX_START --------------*/\r\n.free-credit-info-lp{ padding:12px;}\r\n.free-credit-info-lp h2{ font-size:18px; line-height:22px; padding-left:0px;}\r\n.free-credit-info-lp p{ font-size:14px; line-height:20px; padding-top:10px;  padding-left:0px;}\r\n.free-credit-btns{ padding-top:15px; }\r\n.free-btns{ border-radius:5px; font-size:12px; width:100%; height:50px; line-height:50px; }\r\n/*--------------- FREE_CREDIT_SCORE_BOX_END --------------*/\r\n}\r\n\r\n@media(min-width:480px) and (max-width:767px){\r\n/*--------------- FREE_CREDIT_SCORE_BOX_START --------------*/\r\n.free-credit-info-lp{ padding:17px;}\r\n.free-credit-info-lp h2{ font-size:26px; line-height:30px; padding-left:0px;}\r\n.free-credit-info-lp p{ font-size:18px; line-height:24px; padding-top:10px;  padding-left:0px;}\r\n.free-credit-btns{ padding-top:20px; }\r\n.free-btns{ font-size:17px; width:100%; height:65px; line-height:65px; }\r\n/*--------------- FREE_CREDIT_SCORE_BOX_END --------------*/\r\n}\r\n\u003c/style\u003e\r\n\u003c/head\u003e\r\n\r\n\u003cbody\u003e\r\n\u003cdiv class=\"wrapper\"\u003e\r\n    \u003c!-- FREE_CREDIT_SCORE_BOX_START --\u003e\r\n    \u003cdiv class=\"free-credit-box-main-lp\"\u003e\r\n        \u003cdiv class=\"free-credit-box-inner-lp\"\u003e\r\n            \u003cdiv class=\"free-credit-top-lp\"\u003e\r\n            \t\u003cdiv class=\"free-credit-img-lp\"\u003e\u003cimg src=\"https://content.frollo.us/images/nudges/revamp-04-12-18/Budget-icon.png\" alt=\"\"\u003e\u003c/div\u003e\r\n            \u003c/div\u003e\r\n            \u003cdiv class=\"free-credit-info-lp\"\u003e\r\n            \t\u003ch2\u003eBe a Budget Hero in 2 Mins!\u003c/h2\u003e\r\n                \u003cp\u003eWe’ve made it super easy to setup a budget with our quick and interactive workflow. Tap below and you’ll have a budget setup in under 2 minutes!\u003c/p\u003e\r\n               \u003ca href=\"frollo://dashboard/\" style=\"font-family: 'Open Sans'; font-size: 14px; display: block; text-align: center; color: #2892D7; padding-top: 10px;\"\u003eI already have a budget\u003c/a\u003e\r\n                \u003cdiv class=\"free-credit-btns\"\u003e\r\n                \t\u003ca href=\"frollo://budget/edit\"\u003e\u003cdiv class=\"free-btns\"\u003eSetup my budget\u003c/div\u003e\u003c/a\u003e\r\n                \r\n                \u003c/div\u003e\r\n            \u003c/div\u003e\r\n        \u003c/div\u003e\r\n    \u003c/div\u003e\r\n    \u003c!-- FREE_CREDIT_SCORE_BOX_END --\u003e\r\n\u003c/div\u003e\r\n\u003c/body\u003e\r\n\u003c/html\u003e\r\n"
+    },
+    "action": {
+      "title": "Setup my budget",
+      "link": "frollo://budget/edit",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607100,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815152,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:39.514+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Amaysim bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Amaysim bill for $39 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/89/thumb/amaysim.png?1543468367",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7237",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607101,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815153,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:40.568+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Optus bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Optus bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/23/thumb/Optus-Logo-PNG-04905.png?1519085023",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7238",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607102,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815154,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:42.725+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "GIO Insurance bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your GIO Insurance bill for $1,200 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/94/thumb/preview-gio.png?1519084860",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7239",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607103,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815155,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:43.770+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "AGL bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your AGL bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/39/thumb/AGL.png?1519084864",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7240",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607106,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815158,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:48.149+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Woolworths Insurance bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Woolworths Insurance bill for $12 weekly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/thumb/16386977_1395300327208761_3607300141437791064_n.png?1600643858",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7241",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 608281,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 816533,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-11T08:31:25.825+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": null,
+      "after": "608281"
+    },
+    "next": "https://api-staging.frollo.us/api/v2/messages/?after=608281\u0026size=25\u0026order=asc\u0026sort=created_at",
+    "total": 49
+  }
+}

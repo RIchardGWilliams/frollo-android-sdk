@@ -18,6 +18,7 @@ package us.frollo.frollosdk.database.dao
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.jraska.livedata.test
@@ -31,6 +32,7 @@ import org.junit.Test
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.extensions.sqlForMessages
+import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.testMessageResponseData
 import us.frollo.frollosdk.model.testModifyUserResponseData
 
@@ -189,6 +191,23 @@ class MessageDaoTest {
         val staleIds = db.messages().getUnreadStaleIds(longArrayOf(101)).sorted()
         assertEquals(2, staleIds.size)
         assertTrue(staleIds.containsAll(mutableListOf<Long>(102, 103)))
+    }
+
+    @Test
+    fun testGetIdsByQuery() {
+        val data1 = testMessageResponseData(contactId = 100, types = listOf("message_task"))
+        val data2 = testMessageResponseData(contactId = 101, types = listOf("message_notification"))
+        val data3 = testMessageResponseData(contactId = 102, types = listOf("message_task, message_notification"))
+        val data4 = testMessageResponseData(contactId = 103, types = listOf("message_task"))
+        val list = mutableListOf(data1, data2, data3, data4)
+
+        db.messages().insertAll(*list.toTypedArray())
+
+        val query = SimpleSQLiteQuery("SELECT msg_id FROM message WHERE msg_id IN (101,102)")
+        val ids = db.messages().getIdsByQuery(query).sorted()
+
+        assertEquals(2, ids.size)
+        assertTrue(ids.containsAll(mutableListOf(101L, 102L)))
     }
 
     @Test

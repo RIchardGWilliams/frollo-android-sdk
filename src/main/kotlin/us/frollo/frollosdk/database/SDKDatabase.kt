@@ -758,8 +758,17 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 // New changes in this migration:
                 // 1) Alter table - cdr_configuration - Add column initial_sync_window_weeks
+                // 2) Alter table - message - Add columns created_date, delivered_date, interacted_date
 
+                // START - Add column initial_sync_window_weeks
                 database.execSQL("ALTER TABLE `cdr_configuration` ADD COLUMN `initial_sync_window_weeks` INTEGER")
+                // END - Add column initial_sync_window_weeks
+
+                // START - Add columns created_date, delivered_date, interacted_date
+                database.execSQL("ALTER TABLE `message` ADD COLUMN `created_date` TEXT")
+                database.execSQL("ALTER TABLE `message` ADD COLUMN `delivered_date` TEXT")
+                database.execSQL("ALTER TABLE `message` ADD COLUMN `interacted_date` TEXT")
+                // END - Add columns created_date, delivered_date, interacted_date
             }
         }
     }

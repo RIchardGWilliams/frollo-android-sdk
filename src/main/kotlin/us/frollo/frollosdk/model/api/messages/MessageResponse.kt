@@ -48,5 +48,8 @@ internal data class MessageResponse(
     @Embedded(prefix = "content_") @SerializedName("content") val content: MessageContent?,
     @Embedded(prefix = "action_") @SerializedName("action") val action: Action?,
     @ColumnInfo(name = "auto_dismiss") @SerializedName("auto_dismiss") val autoDismiss: Boolean,
-    @ColumnInfo(name = "metadata") @SerializedName("metadata") val metadata: JsonObject?
+    @ColumnInfo(name = "metadata") @SerializedName("metadata") val metadata: JsonObject?,
+    @ColumnInfo(name = "created_date") @SerializedName("created_date") val createdDate: String?, // ISO8601 format Eg: 2011-12-03T10:15:30.097+01:00
+    @ColumnInfo(name = "delivered_date") @SerializedName("delivered_date") val deliveredDate: String?, // ISO8601 format Eg: 2011-12-03T10:15:30.097+01:00
+    @ColumnInfo(name = "interacted_date") @SerializedName("interacted_date") val interactedDate: String? // ISO8601 format Eg: 2011-12-03T10:15:30.097+01:00
 )

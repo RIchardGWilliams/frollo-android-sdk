@@ -19,6 +19,8 @@ package us.frollo.frollosdk.messages
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.sqlite.db.SimpleSQLiteQuery
+import us.frollo.frollosdk.base.PaginatedResult
+import us.frollo.frollosdk.base.PaginationInfo
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
@@ -27,14 +29,18 @@ import us.frollo.frollosdk.base.uiThread
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.fetchMessages
+import us.frollo.frollosdk.extensions.sqlForMessageIdsToGetStaleIds
 import us.frollo.frollosdk.extensions.sqlForMessages
 import us.frollo.frollosdk.extensions.sqlForMessagesCount
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toMessage
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.messages.MessageUpdateRequest
+import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.Message
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.notifications.NotificationPayload
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.MessagesAPI
@@ -63,19 +69,17 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
         }
 
     /**
-     * Fetch messages from the cache
+     * Fetch messages from the cache with filters
      *
      * Fetches all messages if no params are passed.
      *
-     * @param messageTypes List of message types to find matching Messages for (optional)
-     * @param read Fetch only read/unread messages (optional)
-     * @param contentType Filter the message by the type of content it contains (optional)
+     * @param messageFilter [MessageFilter] object to apply filters
      *
-     * @return LiveData object of Resource<List<Message>> which can be observed using an Observer for future changes as well.
+     * @return LiveData object of List<Message> which can be observed using an Observer for future changes as well.
      */
-    fun fetchMessages(messageTypes: List<String>? = null, read: Boolean? = null, contentType: ContentType? = null): LiveData<Resource<List<Message>>> =
-        Transformations.map(db.messages().loadByQuery(sqlForMessages(messageTypes, read, contentType))) { response ->
-            Resource.success(mapMessageResponse(response))
+    fun fetchMessages(messageFilter: MessageFilter = MessageFilter()): LiveData<List<Message>> =
+        Transformations.map(db.messages().loadByQuery(sqlForMessages(messageFilter))) { models ->
+            mapMessageResponse(models)
         }
 
     /**
@@ -95,19 +99,15 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Fetch messages count from the cache
      *
-     * @param messageTypes Filter by message types (optional)
-     * @param read Filter by read/unread messages (optional)
-     * @param contentType Filter the message by the type of content it contains (optional)
+     * @param messageFilter [MessageFilter] object to apply filters
      * @param completion Completion handler with optional error if the request fails or the messages count if success
      */
     fun fetchMessagesCount(
-        messageTypes: List<String>? = null,
-        read: Boolean? = null,
-        contentType: ContentType? = null,
+        messageFilter: MessageFilter = MessageFilter(),
         completion: OnFrolloSDKCompletionListener<Resource<Long>>
     ) {
         doAsync {
-            val count = db.messages().loadMessageCount(sqlForMessagesCount(messageTypes, read, contentType))
+            val count = db.messages().loadMessageCount(sqlForMessagesCount(messageFilter))
             uiThread { completion.invoke(Resource.success(count)) }
         }
     }
@@ -135,17 +135,21 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Refresh all available messages from the host.
      *
+     * @param messageFilter messageFilter to filter messages
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun refreshMessages(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        messagesAPI.fetchMessages().enqueue { resource ->
+    fun refreshMessagesWithPagination(
+        messageFilter: MessageFilter,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+    ) {
+        messagesAPI.fetchMessages(messageFilter).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    handleMessagesResponse(response = resource.data, completion = completion)
+                    handleMessagesResponseWithPaginationResponse(resource.data, messageFilter, completion)
                 }
                 Resource.Status.ERROR -> {
-                    Log.e("$TAG#refreshMessages", resource.error?.localizedDescription)
-                    completion?.invoke(Result.error(resource.error))
+                    Log.e("$TAG#refreshMessagesWithPagination", resource.error?.localizedDescription)
+                    completion?.invoke(PaginatedResult.Error(resource.error))
                 }
             }
         }
@@ -169,6 +173,10 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
             }
         }
     }
+
+    // TODO: Implement convenience method to update messages in bulk to mark them as read by message type
+    //  Make sure to have fail safe variables like messageIDsUpdating so that repeated calls
+    //  won't execute if its being handled (and also if its already read in DB??)
 
     /**
      * Update a message on the host
@@ -216,6 +224,55 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
                 uiThread { completion?.invoke(Result.success()) }
             }
         } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
+    }
+
+    private fun handleMessagesResponseWithPaginationResponse(
+        paginatedResponse: PaginatedResponse<MessageResponse>?,
+        messageFilter: MessageFilter,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
+    ) {
+        paginatedResponse?.data?.let { messages ->
+            if (messages.isEmpty()) {
+                completion?.invoke(PaginatedResult.Success())
+                return
+            }
+            doAsync {
+                val firstMessageInPage = messages.first()
+                val lastMessageInPage = messages.last()
+
+                // Insert all messages from API response
+                db.messages().insertAll(*messages.toTypedArray())
+
+                // Fetch IDs from API response
+                val apiIds = messages.map { it.messageId }.toHashSet()
+
+                // Get IDs from database
+                val messagesIds = db.messages().getIdsByQuery(
+                    sqlForMessageIdsToGetStaleIds(
+                        messageFilter = messageFilter,
+                        firstMessageInPage = firstMessageInPage,
+                        lastMessageInPage = lastMessageInPage
+                    )
+                ).toHashSet()
+
+                // Get stale IDs that are not present in the API response
+                val staleIds = messagesIds.minus(apiIds)
+
+                // Delete the entries for these stale IDs from database if they exist
+                if (staleIds.isNotEmpty()) {
+                    db.messages().deleteMany(staleIds.toLongArray())
+                }
+
+                uiThread {
+                    val paginationInfo = PaginationInfo(
+                        before = paginatedResponse.paging.cursors?.before?.toLong(),
+                        after = paginatedResponse.paging.cursors?.after?.toLong(),
+                        total = paginatedResponse.paging.total
+                    )
+                    completion?.invoke(PaginatedResult.Success(paginationInfo))
+                }
+            }
+        } ?: run { completion?.invoke(PaginatedResult.Success()) } // Explicitly invoke completion callback if response is null.
     }
 
     private fun handleMessageResponse(response: MessageResponse?, completion: OnFrolloSDKCompletionListener<Result>? = null) {

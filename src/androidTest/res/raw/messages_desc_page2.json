@@ -1,0 +1,586 @@
+{
+  "data": [{
+    "id": 846786,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086398,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:40.097+10:00",
+    "delivered_date": "2022-09-07T14:18:11.273+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846769,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086390,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:39.300+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846765,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086388,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:39.241+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846761,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086387,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:39.181+10:00",
+    "delivered_date": "2022-09-07T14:18:11.273+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846662,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086335,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:17.333+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846651,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086331,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:15.102+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846629,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086319,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:11.382+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846616,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086317,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:11.306+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846473,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086241,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:39.348+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846464,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086236,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:37.111+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846426,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086215,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:35.152+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846418,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086214,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:35.053+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846416,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086213,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:35.030+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846377,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086163,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:26.931+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846347,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086165,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:26.489+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 846346,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086164,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T12:05:26.471+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 843014,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084474,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:56:00.579+10:00",
+    "delivered_date": "2022-09-07T11:57:55.551+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842989,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084463,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:56:00.287+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842978,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084460,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:56:00.154+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842976,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084459,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:56:00.128+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842800,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084370,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:55:34.532+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842795,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084362,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-09-07T11:55:34.431+10:00",
+    "delivered_date": "2022-09-07T11:57:55.551+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 842746,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1084353,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-09-07T11:55:32.719+10:00",
+    "delivered_date": "2022-09-09T10:44:39.132+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": "846785",
+      "after": null
+    },
+    "previous": "https://api-staging.frollo.us/api/v2/messages/?before=846785\u0026size=24\u0026order=desc\u0026sort=created_at",
+    "total": 49
+  }
+}

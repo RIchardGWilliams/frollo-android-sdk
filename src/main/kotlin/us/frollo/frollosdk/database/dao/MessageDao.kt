@@ -58,6 +58,9 @@ internal interface MessageDao {
     @Query("SELECT msg_id FROM message WHERE (msg_id NOT IN (:apiIds)) AND (read = 0)")
     fun getUnreadStaleIds(apiIds: LongArray): List<Long>
 
+    @RawQuery
+    fun getIdsByQuery(queryStr: SupportSQLiteQuery): MutableList<Long>
+
     @Query("DELETE FROM message WHERE msg_id IN (:messageIds)")
     fun deleteMany(messageIds: LongArray)
 

@@ -1,0 +1,36 @@
+{
+  "data": [{
+    "id": 846786,
+    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
+    "user_event_id": 1086398,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-09-07T12:06:40.097+10:00",
+    "delivered_date": "2022-09-07T14:18:11.273+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Save on your subscriptions",
+    "metadata": {},
+    "content": {
+      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Review your subscriptions",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": "846785",
+      "after": null
+    },
+    "previous": "https://api-staging.frollo.us/api/v2/messages/?before=846785\u0026size=24\u0026order=desc\u0026sort=created_at",
+    "total": 49
+  }
+}

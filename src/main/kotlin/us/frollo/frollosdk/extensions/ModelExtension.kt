@@ -19,6 +19,7 @@ package us.frollo.frollosdk.extensions
 import android.os.Bundle
 import androidx.sqlite.db.SimpleSQLiteQuery
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
+import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountStatus
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountSubType
@@ -48,6 +49,8 @@ import us.frollo.frollosdk.model.coredata.goals.GoalTarget
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
+import us.frollo.frollosdk.model.coredata.messages.MessageSortType
 import us.frollo.frollosdk.model.coredata.notifications.NotificationPayload
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
@@ -79,29 +82,10 @@ internal fun sqlForMessages(messageTypes: List<String>? = null, read: Boolean? =
     return sqlQueryBuilder.create()
 }
 
-internal fun sqlForMessagesCount(messageTypes: List<String>? = null, read: Boolean? = null, contentType: ContentType? = null): SimpleSQLiteQuery {
+internal fun sqlForMessagesCount(messageFilter: MessageFilter): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("message")
-
-    if (messageTypes != null && messageTypes.isNotEmpty()) {
-        val sb = StringBuilder()
-        sb.append("(")
-
-        messageTypes.forEachIndexed { index, str ->
-            sb.append("(message_types LIKE '%|$str|%')")
-            if (index < messageTypes.size - 1) sb.append(" OR ")
-        }
-
-        sb.append(")")
-
-        sqlQueryBuilder.appendSelection(selection = sb.toString())
-    }
-
-    read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
-
-    contentType?.let { sqlQueryBuilder.appendSelection(selection = "content_type = '${ it.name }'") }
-
+    appendMessageFilterToSqlQuery(sqlQueryBuilder, messageFilter)
     sqlQueryBuilder.columns(columns = arrayOf("COUNT(msg_id)"))
-
     return sqlQueryBuilder.create()
 }
 
@@ -720,4 +704,45 @@ internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, en
     sqlQueryBuilder.appendSelection(selection = endDateSelection)
 
     return sqlQueryBuilder.create()
+}
+
+internal fun sqlForMessageIdsToGetStaleIds(
+    messageFilter: MessageFilter,
+    firstMessageInPage: MessageResponse,
+    lastMessageInPage: MessageResponse
+): SimpleSQLiteQuery {
+
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder(tableName = "message")
+    sqlQueryBuilder.columns(arrayOf("msg_id"))
+
+    when (messageFilter.sortBy) {
+        MessageSortType.CREATED_AT -> {
+            when (messageFilter.orderBy) {
+                OrderType.DESC -> {
+                    sqlQueryBuilder.appendSelection(selection = "(created_date <= '${firstMessageInPage.createdDate}' AND created_date >= '${lastMessageInPage.createdDate}')")
+                }
+                OrderType.ASC -> {
+                    sqlQueryBuilder.appendSelection(selection = "(created_date >= '${firstMessageInPage.createdDate}' AND created_date <= '${lastMessageInPage.createdDate}')")
+                }
+            }
+        }
+    }
+
+    appendMessageFilterToSqlQuery(sqlQueryBuilder, messageFilter)
+    return sqlQueryBuilder.create()
+}
+
+internal fun sqlForMessages(messageFilter: MessageFilter): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder(tableName = "message")
+    appendMessageFilterToSqlQuery(sqlQueryBuilder, messageFilter)
+    return sqlQueryBuilder.create()
+}
+
+private fun appendMessageFilterToSqlQuery(sqlQueryBuilder: SimpleSQLiteQueryBuilder, filter: MessageFilter) {
+    filter.messageType?.let { sqlQueryBuilder.appendSelection(selection = "message_types LIKE '%|'||$it||'|%'") }
+    filter.contentType?.let { sqlQueryBuilder.appendSelection(selection = "content_type = '${ it.name }'") }
+    filter.event?.let { sqlQueryBuilder.appendSelection(selection = "event = '$it'") }
+    filter.read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
+    filter.interacted?.let { sqlQueryBuilder.appendSelection(selection = "interacted = ${ it.toInt() }") }
+    sqlQueryBuilder.orderBy(orderBy = "${filter.sortBy.dbColumnName} ${filter.orderBy}")
 }

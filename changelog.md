@@ -4,6 +4,7 @@
 
 #### Changes
 - Handle 410 Error and notify app
+- List Messages API with Pagination
 
 ### 3.18.0
 
