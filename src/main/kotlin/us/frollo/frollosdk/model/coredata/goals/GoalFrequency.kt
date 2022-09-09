@@ -40,6 +40,9 @@ enum class GoalFrequency {
     /** Monthly */
     @SerializedName("monthly") MONTHLY,
 
+    /** Bimonthly */
+    @SerializedName("bimonthly") BIMONTHLY,
+
     /** Quarterly */
     @SerializedName("quarterly") QUARTERLY,
 
