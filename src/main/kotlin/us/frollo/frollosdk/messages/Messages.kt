@@ -38,7 +38,6 @@ import us.frollo.frollosdk.mapping.toMessage
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.messages.MessageUpdateRequest
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
-import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.Message
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.notifications.NotificationPayload

@@ -32,7 +32,7 @@ import org.junit.Test
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.extensions.sqlForMessages
-import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.testMessageResponseData
 import us.frollo.frollosdk.model.testModifyUserResponseData
 
@@ -112,13 +112,12 @@ class MessageDaoTest {
 
         db.messages().insertAll(*list.toTypedArray())
 
-        val messageTypes = mutableListOf("survey", "dashboard_event")
-        val query = sqlForMessages(messageTypes, false)
+        val query = sqlForMessages(MessageFilter(messageType = "survey", read = false))
 
         val testObserver = db.messages().loadByQuery(query).test()
         testObserver.awaitValue()
         assertTrue(testObserver.value().isNotEmpty())
-        assertEquals(3, testObserver.value().size)
+        assertEquals(2, testObserver.value().size)
     }
 
     @Test
@@ -195,10 +194,10 @@ class MessageDaoTest {
 
     @Test
     fun testGetIdsByQuery() {
-        val data1 = testMessageResponseData(contactId = 100, types = listOf("message_task"))
-        val data2 = testMessageResponseData(contactId = 101, types = listOf("message_notification"))
-        val data3 = testMessageResponseData(contactId = 102, types = listOf("message_task, message_notification"))
-        val data4 = testMessageResponseData(contactId = 103, types = listOf("message_task"))
+        val data1 = testMessageResponseData(msgId = 100, types = listOf("message_task"))
+        val data2 = testMessageResponseData(msgId = 101, types = listOf("message_notification"))
+        val data3 = testMessageResponseData(msgId = 102, types = listOf("message_task, message_notification"))
+        val data4 = testMessageResponseData(msgId = 103, types = listOf("message_task"))
         val list = mutableListOf(data1, data2, data3, data4)
 
         db.messages().insertAll(*list.toTypedArray())

@@ -48,7 +48,6 @@ import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTarget
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingType
-import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.messages.MessageSortType
 import us.frollo.frollosdk.model.coredata.notifications.NotificationPayload
@@ -57,30 +56,6 @@ import us.frollo.frollosdk.model.coredata.servicestatus.ServiceOutageType
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.notifications.NotificationPayloadNames
-
-internal fun sqlForMessages(messageTypes: List<String>? = null, read: Boolean? = null, contentType: ContentType? = null): SimpleSQLiteQuery {
-    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("message")
-
-    if (messageTypes != null && messageTypes.isNotEmpty()) {
-        val sb = StringBuilder()
-        sb.append("(")
-
-        messageTypes.forEachIndexed { index, str ->
-            sb.append("(message_types LIKE '%|$str|%')")
-            if (index < messageTypes.size - 1) sb.append(" OR ")
-        }
-
-        sb.append(")")
-
-        sqlQueryBuilder.appendSelection(selection = sb.toString())
-    }
-
-    read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
-
-    contentType?.let { sqlQueryBuilder.appendSelection(selection = "content_type = '${ it.name }'") }
-
-    return sqlQueryBuilder.create()
-}
 
 internal fun sqlForMessagesCount(messageFilter: MessageFilter): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("message")
@@ -739,10 +714,10 @@ internal fun sqlForMessages(messageFilter: MessageFilter): SimpleSQLiteQuery {
 }
 
 private fun appendMessageFilterToSqlQuery(sqlQueryBuilder: SimpleSQLiteQueryBuilder, filter: MessageFilter) {
-    filter.messageType?.let { sqlQueryBuilder.appendSelection(selection = "message_types LIKE '%|'||$it||'|%'") }
+    filter.messageType?.let { sqlQueryBuilder.appendSelection(selection = "message_types LIKE '%|$it|%'") }
     filter.contentType?.let { sqlQueryBuilder.appendSelection(selection = "content_type = '${ it.name }'") }
     filter.event?.let { sqlQueryBuilder.appendSelection(selection = "event = '$it'") }
     filter.read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
     filter.interacted?.let { sqlQueryBuilder.appendSelection(selection = "interacted = ${ it.toInt() }") }
-    sqlQueryBuilder.orderBy(orderBy = "${filter.sortBy.dbColumnName} ${filter.orderBy}")
+    sqlQueryBuilder.orderBy(orderBy = "${filter.sortBy.dbColumnName} ${filter.orderBy.name}")
 }

@@ -1,611 +1,636 @@
 {
   "data": [{
-    "id": 846786,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086398,
-    "placement": 111,
-    "persists": false,
-    "auto_dismiss": false,
-    "read": false,
-    "interacted": false,
-    "created_date": "2022-09-07T12:06:40.097+10:00",
-    "delivered_date": "2022-09-07T14:18:11.273+10:00",
-    "message_types": ["dashboard_alerts"],
-    "content_type": "text",
-    "title": "Save on your subscriptions",
-    "metadata": {},
-    "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
-    },
-    "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
-      "open_mode": "internal"
-    }
-  }, {
-    "id": 846769,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086390,
-    "placement": 111,
+    "id": 828857,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063137,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:39.300+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:30:33.104+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Zwift bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Zwift bill for $8 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33315",
       "open_mode": "internal"
     }
   }, {
-    "id": 846765,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086388,
-    "placement": 111,
+    "id": 828854,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063134,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:39.241+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:30:17.412+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Yarra City Council bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Yarra City Council bill for $24 weekly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33314",
       "open_mode": "internal"
     }
   }, {
-    "id": 846761,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086387,
-    "placement": 111,
-    "persists": false,
-    "auto_dismiss": false,
-    "read": false,
-    "interacted": false,
-    "created_date": "2022-09-07T12:06:39.181+10:00",
-    "delivered_date": "2022-09-07T14:18:11.273+10:00",
-    "message_types": ["dashboard_alerts"],
-    "content_type": "text",
-    "title": "Save on your subscriptions",
-    "metadata": {},
-    "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
-    },
-    "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
-      "open_mode": "internal"
-    }
-  }, {
-    "id": 846662,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086335,
-    "placement": 111,
+    "id": 828853,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063132,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:17.333+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:30:02.497+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Woolworths Insurance bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Woolworths Insurance bill for $12 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/thumb/16386977_1395300327208761_3607300141437791064_n.png?1600643858",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33312",
       "open_mode": "internal"
     }
   }, {
-    "id": 846651,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086331,
-    "placement": 111,
+    "id": 828852,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063131,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:15.102+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:29:48.791+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "AGL bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your AGL bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/39/thumb/AGL.png?1519084864",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33310",
       "open_mode": "internal"
     }
   }, {
-    "id": 846629,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086319,
-    "placement": 111,
+    "id": 828851,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063130,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:11.382+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:29:45.513+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Stan bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Stan bill for $14 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/798/thumb/stan.png?1598937835",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33309",
       "open_mode": "internal"
     }
   }, {
-    "id": 846616,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086317,
-    "placement": 111,
+    "id": 828850,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063129,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:06:11.306+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:29:40.335+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Optus bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Optus bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/23/thumb/Optus-Logo-PNG-04905.png?1519085023",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33306",
       "open_mode": "internal"
     }
   }, {
-    "id": 846473,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086241,
-    "placement": 111,
+    "id": 828849,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063128,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:39.348+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:29:37.722+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Amaysim bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Amaysim bill for $39 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/89/thumb/amaysim.png?1543468367",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33305",
       "open_mode": "internal"
     }
   }, {
-    "id": 846464,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086236,
-    "placement": 111,
+    "id": 828848,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1063127,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:37.111+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-31T12:29:35.103+10:00",
+    "delivered_date": "2022-08-31T14:09:55.247+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Netflix bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Netflix bill for $17 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/thumb/netflix_original_logo.png?1656489441",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/33304",
       "open_mode": "internal"
     }
   }, {
-    "id": 846426,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086215,
-    "placement": 111,
+    "id": 804477,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037132,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:35.152+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:37.632+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Translink bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Translink bill for $39 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32050",
       "open_mode": "internal"
     }
   }, {
-    "id": 846418,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086214,
-    "placement": 111,
+    "id": 804476,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037131,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:35.053+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:32.103+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Thorn Group bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Thorn Group bill for $27 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/4771/thumb/ThornGroup.png?1598932946",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32049",
       "open_mode": "internal"
     }
   }, {
-    "id": 846416,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086213,
-    "placement": 111,
+    "id": 804475,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037130,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:35.030+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:26.878+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The YMCA bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The YMCA bill for $71 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/249/thumb/YMCA.png?1530576681",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32048",
       "open_mode": "internal"
     }
   }, {
-    "id": 846377,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086163,
-    "placement": 111,
+    "id": 804474,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037129,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:26.931+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:21.449+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The Tree House bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The Tree House bill for $21 fortnightly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/231/thumb/Tree_House.png?1519084987",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32047",
       "open_mode": "internal"
     }
   }, {
-    "id": 846347,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086165,
-    "placement": 111,
+    "id": 804472,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037127,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:26.489+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:15.986+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The Salvation Army bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The Salvation Army bill for $51 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32046",
       "open_mode": "internal"
     }
   }, {
-    "id": 846346,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1086164,
-    "placement": 111,
+    "id": 804471,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037126,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T12:05:26.471+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:10.719+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The New York Times bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The New York Times bill for $50 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/82/thumb/Screen_Shot_2017-02-27_at_12.28.10_pm.png?1519084723",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32045",
       "open_mode": "internal"
     }
   }, {
-    "id": 843014,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084474,
-    "placement": 111,
+    "id": 804470,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037125,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:56:00.579+10:00",
-    "delivered_date": "2022-09-07T11:57:55.551+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:12:05.400+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The Hillsong Foundation bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The Hillsong Foundation bill for $12 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32044",
       "open_mode": "internal"
     }
   }, {
-    "id": 842989,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084463,
-    "placement": 111,
+    "id": 804469,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037124,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:56:00.287+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:59.923+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The Hills Shire Council bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The Hills Shire Council bill for $10 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1637708924.png?1637708924",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32043",
       "open_mode": "internal"
     }
   }, {
-    "id": 842978,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084460,
-    "placement": 111,
+    "id": 804468,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037123,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:56:00.154+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:54.511+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "The Britbox bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your The Britbox bill for $40 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1623295400.png?1623295400",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32042",
       "open_mode": "internal"
     }
   }, {
-    "id": 842976,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084459,
-    "placement": 111,
+    "id": 804467,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037122,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:56:00.128+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:49.109+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Terri Scheer bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Terri Scheer bill for $150 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32041",
       "open_mode": "internal"
     }
   }, {
-    "id": 842800,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084370,
-    "placement": 111,
+    "id": 804466,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037121,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:55:34.532+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:46.894+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Telmate bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Telmate bill for $6 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32040",
       "open_mode": "internal"
     }
   }, {
-    "id": 842795,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084362,
-    "placement": 111,
-    "persists": false,
-    "auto_dismiss": false,
-    "read": false,
-    "interacted": false,
-    "created_date": "2022-09-07T11:55:34.431+10:00",
-    "delivered_date": "2022-09-07T11:57:55.551+10:00",
-    "message_types": ["dashboard_alerts"],
-    "content_type": "text",
-    "title": "Save on your subscriptions",
-    "metadata": {},
-    "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
-    },
-    "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
-      "open_mode": "internal"
-    }
-  }, {
-    "id": 842746,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084353,
-    "placement": 111,
+    "id": 804465,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037120,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:55:32.719+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:41.610+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Synergy bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Synergy bill for $17 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1637708923.png?1637708923",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32039",
       "open_mode": "internal"
     }
   }, {
-    "id": 842731,
-    "event": "INSIGHT_ENTERTAINMENT_SUB_ALERT",
-    "user_event_id": 1084333,
-    "placement": 111,
+    "id": 804464,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037119,
+    "placement": 20,
     "persists": false,
     "auto_dismiss": false,
     "read": true,
     "interacted": false,
-    "created_date": "2022-09-07T11:55:22.742+10:00",
-    "delivered_date": "2022-09-09T10:44:39.132+10:00",
-    "message_types": ["dashboard_alerts"],
+    "created_date": "2022-08-22T13:11:39.069+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
     "content_type": "text",
-    "title": "Save on your subscriptions",
+    "title": "Surf Life Saving Foundation bill found",
     "metadata": {},
     "content": {
-      "text": "We found a new subscription from Netflix, Stan. Are you using all of your subscriptions?\r\n",
-      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/original/netflix_original_logo.png?1656489441",
-      "design_type": "dash_2"
+      "text": "We're now tracking your Surf Life Saving Foundation bill for $16 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
+      "design_type": "dash_1"
     },
     "action": {
-      "title": "Review your subscriptions",
-      "link": "frollo-staging://bills",
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32038",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 804463,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037118,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-08-22T13:11:33.668+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Store City Pty. Ltd bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Store City Pty. Ltd bill for $69 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32037",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 804462,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037117,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-08-22T13:11:27.989+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Spriggy bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Spriggy bill for $65 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1623295401.png?1623295401",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32036",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 804461,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037116,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-08-22T13:11:25.568+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Spotify Ltd bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Spotify Ltd bill for $69 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/58/thumb/1024x1024bb.png?1519084902",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32035",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 804460,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037115,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-08-22T13:11:20.040+10:00",
+    "delivered_date": "2022-08-22T13:57:19.550+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Southern Phone bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Southern Phone bill for $40 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/135/icon/original/1623295402.png?1623295402",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32034",
       "open_mode": "internal"
     }
   }],
   "paging": {
     "cursors": {
       "before": null,
-      "after": "842731"
+      "after": "804460"
     },
-    "next": "https://api-staging.frollo.us/api/v2/messages/?after=842731\u0026size=24\u0026order=desc\u0026sort=created_at",
-    "total": 49
+    "next": "https://api-staging.frollo.us/api/v2/messages/?after=804460\u0026size=25\u0026design_types=dash_1\u0026order=desc\u0026sort=created_at",
+    "total": 51
   }
 }

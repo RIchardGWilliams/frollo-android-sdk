@@ -58,27 +58,12 @@ import us.frollo.frollosdk.model.testMessageResponseData
 class ModelExtensionTest {
 
     @Test
-    fun testSQLForMessages() {
-        var query = sqlForMessages(mutableListOf("survey", "event"), false)
-        assertEquals("SELECT  *  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|event|%')) AND read = 0 ", query.sql)
-
-        query = sqlForMessages(mutableListOf("survey", "event"), false, ContentType.VIDEO)
-        assertEquals("SELECT  *  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|event|%')) AND read = 0 AND content_type = 'VIDEO' ", query.sql)
-
-        query = sqlForMessages(mutableListOf("survey", "event"))
-        assertEquals("SELECT  *  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|event|%')) ", query.sql)
-
-        query = sqlForMessages()
-        assertEquals("SELECT  *  FROM message", query.sql)
-    }
-
-    @Test
     fun testSQLForMessagesCount() {
-        var query = sqlForMessagesCount(mutableListOf("survey", "event"), false, ContentType.VIDEO)
-        assertEquals("SELECT COUNT(msg_id)  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|event|%')) AND read = 0 AND content_type = 'VIDEO' ", query.sql)
+        var query = sqlForMessagesCount(MessageFilter(messageType = "survey", read = false, contentType = ContentType.VIDEO))
+        assertEquals("SELECT COUNT(msg_id)  FROM message WHERE message_types LIKE '%|survey|%' AND content_type = 'VIDEO' AND read = 0  ORDER BY created_date DESC", query.sql)
 
-        query = sqlForMessagesCount()
-        assertEquals("SELECT COUNT(msg_id)  FROM message", query.sql)
+        query = sqlForMessagesCount(MessageFilter())
+        assertEquals("SELECT COUNT(msg_id)  FROM message ORDER BY created_date DESC", query.sql)
     }
 
     @Test
@@ -557,7 +542,7 @@ class ModelExtensionTest {
             firstMessageInPage = message1,
             lastMessageInPage = message2
         )
-        assertEquals("SELECT msg_id  FROM message  WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|'||message_task||'|%' AND content_type = 'text' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1 ORDER BY created_date DESC ", query.sql)
+        assertEquals("SELECT msg_id  FROM message WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|message_task|%' AND content_type = 'TEXT' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
 
         // With filters ASC
         messageFilter.orderBy = OrderType.ASC
@@ -566,8 +551,7 @@ class ModelExtensionTest {
             firstMessageInPage = message1,
             lastMessageInPage = message2
         )
-        assertEquals("SELECT msg_id  FROM message  WHERE (created_date >= '2022-08-04T10:15:30.345+10:00' AND created_date <= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|'||message_task||'|%' AND content_type = 'text' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1 ORDER BY created_date DESC ", query.sql)
-
+        assertEquals("SELECT msg_id  FROM message WHERE (created_date >= '2022-08-04T10:15:30.345+10:00' AND created_date <= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|message_task|%' AND content_type = 'TEXT' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date ASC", query.sql)
 
         // Default filters
         query = sqlForMessageIdsToGetStaleIds(
@@ -575,6 +559,6 @@ class ModelExtensionTest {
             firstMessageInPage = message1,
             lastMessageInPage = message2
         )
-        assertEquals("SELECT msg_id  FROM message  WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') ORDER BY created_date DESC ", query.sql)
+        assertEquals("SELECT msg_id  FROM message WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00')  ORDER BY created_date DESC", query.sql)
     }
 }

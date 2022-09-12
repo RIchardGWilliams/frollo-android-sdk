@@ -21,7 +21,6 @@ import io.reactivex.Observable
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
 import us.frollo.frollosdk.extensions.sqlForMessages
 import us.frollo.frollosdk.mapping.toMessage
-import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.Message
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 
