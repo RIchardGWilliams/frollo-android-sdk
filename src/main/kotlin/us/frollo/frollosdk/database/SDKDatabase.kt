@@ -740,11 +740,20 @@ abstract class SDKDatabase : RoomDatabase() {
                 // https://frollo.atlassian.net/browse/WA-3067
 
                 // New changes in this migration:
-                // 1) Alter table - transaction_model - Add columns merchant_image_url, category_name, category_image_url
+                // 1) Alter table - transaction_model - Drop & re-create column category_id and Add columns merchant_image_url, category_name, category_image_url
 
-                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `merchant_image_url` TEXT")
-                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_name` TEXT")
-                database.execSQL("ALTER TABLE `transaction_model` ADD COLUMN `category_image_url` TEXT")
+                // START - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - Add columns merchant_image_url, category_id, category_name, category_image_url
+                database.execSQL("DROP TABLE `transaction_model`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_transaction_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_account_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_category_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_merchant_id`")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_model` (`transaction_id` INTEGER NOT NULL, `base_type` TEXT NOT NULL, `status` TEXT NOT NULL, `transaction_date` TEXT NOT NULL, `post_date` TEXT, `budget_category` TEXT NOT NULL, `included` INTEGER NOT NULL, `memo` TEXT, `account_id` INTEGER NOT NULL, `bill_id` INTEGER, `bill_payment_id` INTEGER, `user_tags` TEXT, `external_id` TEXT NOT NULL, `goal_id` INTEGER, `reference` TEXT, `reason` TEXT, `service_id` TEXT, `service_type` TEXT, `amount_amount` TEXT NOT NULL, `amount_currency` TEXT NOT NULL, `description_original` TEXT, `description_user` TEXT, `description_simple` TEXT, `category_id` INTEGER NOT NULL, `category_name` TEXT NOT NULL, `category_image_url` TEXT, `merchant_id` INTEGER NOT NULL, `merchant_name` TEXT NOT NULL, `merchant_phone` TEXT, `merchant_website` TEXT, `merchant_image_url` TEXT, `merchant_location` TEXT, PRIMARY KEY(`transaction_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_transaction_id` ON `transaction_model` (`transaction_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_account_id` ON `transaction_model` (`account_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_category_id` ON `transaction_model` (`category_id`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_transaction_model_merchant_id` ON `transaction_model` (`merchant_id`)")
+                // END - Delete & Re-create (NOT A STANDARD WAY. Only for this migration.) transaction_model table - Add columns merchant_image_url, category_id, category_name, category_image_url
             }
         }
     }
