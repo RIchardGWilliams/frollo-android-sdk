@@ -56,6 +56,9 @@ internal interface ProviderDao {
     @Query("SELECT provider_id FROM provider WHERE provider_status NOT IN ('DISABLED','UNSUPPORTED')")
     fun getIdsByStatus(): List<Long>
 
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIds(providerIds: LongArray): LiveData<List<Provider>>
+
     @Query("DELETE FROM provider WHERE provider_id IN (:providerIds)")
     fun deleteMany(providerIds: LongArray)
 
@@ -78,6 +81,10 @@ internal interface ProviderDao {
     @androidx.room.Transaction
     @RawQuery(observedEntities = [Provider::class])
     fun loadByQueryWithRelation(queryStr: SupportSQLiteQuery): LiveData<List<ProviderRelation>>
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIdsWithRelation(providerIds: LongArray): LiveData<List<ProviderRelation>>
 
     /**
      * RxJava Return Types
@@ -105,4 +112,12 @@ internal interface ProviderDao {
     @androidx.room.Transaction
     @RawQuery(observedEntities = [Provider::class])
     fun loadByQueryWithRelationRx(queryStr: SupportSQLiteQuery): Observable<List<ProviderRelation>>
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIdsRx(providerIds: LongArray): Observable<List<Provider>>
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIdsWithRelationRx(providerIds: LongArray): Observable<List<ProviderRelation>>
 }
