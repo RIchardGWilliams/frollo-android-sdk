@@ -10,14 +10,14 @@
     "interacted": false,
     "created_date": "2022-08-22T13:11:17.837+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Soulara bill found",
     "metadata": {},
     "content": {
       "text": "We're now tracking your Soulara bill for $11 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -35,7 +35,7 @@
     "interacted": false,
     "created_date": "2022-08-22T13:11:12.099+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Skype bill found",
     "metadata": {},
@@ -67,7 +67,7 @@
     "content": {
       "text": "We're now tracking your shutterstock bill for $39 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -117,7 +117,7 @@
     "content": {
       "text": "We're now tracking your Service Sa bill for $74 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -167,7 +167,7 @@
     "content": {
       "text": "We're now tracking your Roam bill for $65 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -185,7 +185,7 @@
     "interacted": false,
     "created_date": "2022-08-22T13:10:43.354+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Roads And Maritime Services bill found",
     "metadata": {},
@@ -210,7 +210,7 @@
     "interacted": false,
     "created_date": "2022-08-22T13:10:40.590+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Ring bill found",
     "metadata": {},
@@ -267,7 +267,7 @@
     "content": {
       "text": "We're now tracking your Raine \u0026 Horne bill for $57 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1852/thumb/RaineAndHorne.png?1540169591",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -310,7 +310,7 @@
     "interacted": false,
     "created_date": "2022-08-22T13:10:21.509+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Strava Inc bill found",
     "metadata": {},
@@ -360,14 +360,14 @@
     "interacted": false,
     "created_date": "2022-08-22T13:10:13.548+10:00",
     "delivered_date": "2022-08-22T13:57:19.550+10:00",
-    "message_types": ["bill_alerts"],
+    "message_types": ["dashboard_alerts"],
     "content_type": "text",
     "title": "Powerdirect bill found",
     "metadata": {},
     "content": {
       "text": "We're now tracking your Powerdirect bill for $47 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1637708924.png?1637708924",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",
@@ -492,7 +492,7 @@
     "content": {
       "text": "We're now tracking your Northern Beaches Council bill for $67 monthly",
       "image_url": "https://frollo-staging.s3.amazonaws.com/categories/129/icon/original/1623295401.png?1623295401",
-      "design_type": "dash_1"
+      "design_type": "dash_2"
     },
     "action": {
       "title": "Change bill details",

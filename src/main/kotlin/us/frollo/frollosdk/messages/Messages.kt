@@ -173,10 +173,6 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
         }
     }
 
-    // TODO: Implement convenience method to update messages in bulk to mark them as read by message type
-    //  Make sure to have fail safe variables like messageIDsUpdating so that repeated calls
-    //  won't execute if its being handled (and also if its already read in DB??)
-
     /**
      * Update a message on the host
      *
@@ -199,6 +195,9 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
             }
         }
     }
+    // TODO: Implement convenience method to update messages in bulk to mark them as read by message type
+    //  Make sure to have fail safe variables like messageIDsUpdating so that repeated calls
+    //  won't execute if its being handled (and also if its already read in DB??)
 
     internal fun handleMessageNotification(notification: NotificationPayload, completion: OnFrolloSDKCompletionListener<Result>? = null) {
         if (notification.userMessageID == null)
@@ -214,6 +213,7 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
 
                 val apiIds = response.map { it.messageId }.toList()
                 val staleIds = if (unread) db.messages().getUnreadStaleIds(apiIds.toLongArray())
+                // TODO remove getStaleIds in DAO
                 else db.messages().getStaleIds(apiIds.toLongArray())
 
                 if (staleIds.isNotEmpty()) {
@@ -250,7 +250,9 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
                     sqlForMessageIdsToGetStaleIds(
                         messageFilter = messageFilter,
                         firstMessageInPage = firstMessageInPage,
-                        lastMessageInPage = lastMessageInPage
+                        lastMessageInPage = lastMessageInPage,
+                        after = paginatedResponse.paging.cursors?.after?.toLong(),
+                        before = paginatedResponse.paging.cursors?.before?.toLong()
                     )
                 ).toHashSet()
 

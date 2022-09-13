@@ -33,7 +33,8 @@ internal fun testMessageResponseData(
     msgId: Long? = null,
     createdDate: String? = null,
     deliveredDate: String? = null,
-    interactedDate: String? = null
+    interactedDate: String? = null,
+    designType: String? = null
 ): MessageResponse {
     val htmlContent = MessageContent(
         footer = randomString(20),
@@ -46,7 +47,7 @@ internal fun testMessageResponseData(
         width = randomNumber(1..1000).toDouble()
     )
     val textContent = MessageContent(
-        designType = "information",
+        designType = designType ?: "information",
         footer = randomString(20),
         header = randomString(20),
         imageUrl = "https://example.com/image.png",

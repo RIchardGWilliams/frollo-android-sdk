@@ -59,8 +59,14 @@ class ModelExtensionTest {
 
     @Test
     fun testSQLForMessagesCount() {
-        var query = sqlForMessagesCount(MessageFilter(messageType = "survey", read = false, contentType = ContentType.VIDEO))
-        assertEquals("SELECT COUNT(msg_id)  FROM message WHERE message_types LIKE '%|survey|%' AND content_type = 'VIDEO' AND read = 0  ORDER BY created_date DESC", query.sql)
+        var query = sqlForMessagesCount(
+            MessageFilter(
+                messageTypes = listOf("survey", "dashboard_alerts"),
+                read = false,
+                contentTypes = listOf(ContentType.VIDEO, ContentType.TEXT)
+            )
+        )
+        assertEquals("SELECT COUNT(msg_id)  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND read = 0  ORDER BY created_date DESC", query.sql)
 
         query = sqlForMessagesCount(MessageFilter())
         assertEquals("SELECT COUNT(msg_id)  FROM message ORDER BY created_date DESC", query.sql)
@@ -525,8 +531,9 @@ class ModelExtensionTest {
     @Test
     fun testSQLForMessageIdsToGetStaleIds() {
         val messageFilter = MessageFilter(
-            messageType = "message_task",
-            contentType = ContentType.TEXT,
+            messageTypes = listOf("survey", "dashboard_alerts"),
+            contentTypes = listOf(ContentType.VIDEO, ContentType.TEXT),
+            designTypes = listOf("dash_1", "dash_2"),
             event = "PA_LINKED",
             read = false,
             interacted = true,
@@ -535,30 +542,82 @@ class ModelExtensionTest {
         )
         val message1 = testMessageResponseData(createdDate = "2022-08-04T10:15:30.345+10:00")
         val message2 = testMessageResponseData(createdDate = "2022-07-02T08:30:40.367+10:00")
+        val after = 12345L
+        val before = 67890L
 
         // With filters DESC
+
+        // First page
         var query = sqlForMessageIdsToGetStaleIds(
             messageFilter = messageFilter,
             firstMessageInPage = message1,
-            lastMessageInPage = message2
+            lastMessageInPage = message2,
+            after = after,
+            before = null
         )
-        assertEquals("SELECT msg_id  FROM message WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|message_task|%' AND content_type = 'TEXT' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
+        assertEquals("SELECT msg_id  FROM message WHERE created_date >= '2022-07-02T08:30:40.367+10:00' AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
 
-        // With filters ASC
-        messageFilter.orderBy = OrderType.ASC
+        // Middle page
         query = sqlForMessageIdsToGetStaleIds(
             messageFilter = messageFilter,
             firstMessageInPage = message1,
-            lastMessageInPage = message2
+            lastMessageInPage = message2,
+            after = after,
+            before = before
         )
-        assertEquals("SELECT msg_id  FROM message WHERE (created_date >= '2022-08-04T10:15:30.345+10:00' AND created_date <= '2022-07-02T08:30:40.367+10:00') AND message_types LIKE '%|message_task|%' AND content_type = 'TEXT' AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date ASC", query.sql)
+        assertEquals("SELECT msg_id  FROM message WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00') AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
 
-        // Default filters
+        // Last page
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2,
+            after = null,
+            before = before
+        )
+        assertEquals("SELECT msg_id  FROM message WHERE created_date <= '2022-08-04T10:15:30.345+10:00' AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
+
+        // With filters ASC
+        messageFilter.orderBy = OrderType.ASC
+
+        // First page
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2,
+            after = after,
+            before = null
+        )
+        assertEquals("SELECT msg_id  FROM message WHERE created_date <= '2022-07-02T08:30:40.367+10:00' AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date ASC", query.sql)
+
+        // Middle page
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2,
+            after = after,
+            before = before
+        )
+        assertEquals("SELECT msg_id  FROM message WHERE (created_date >= '2022-08-04T10:15:30.345+10:00' AND created_date <= '2022-07-02T08:30:40.367+10:00') AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date ASC", query.sql)
+
+        // Last page
+        query = sqlForMessageIdsToGetStaleIds(
+            messageFilter = messageFilter,
+            firstMessageInPage = message1,
+            lastMessageInPage = message2,
+            after = null,
+            before = before
+        )
+        assertEquals("SELECT msg_id  FROM message WHERE created_date >= '2022-08-04T10:15:30.345+10:00' AND ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date ASC", query.sql)
+
+        // Default filters - First page, DESC
         query = sqlForMessageIdsToGetStaleIds(
             messageFilter = MessageFilter(),
             firstMessageInPage = message1,
-            lastMessageInPage = message2
+            lastMessageInPage = message2,
+            after = after,
+            before = null
         )
-        assertEquals("SELECT msg_id  FROM message WHERE (created_date <= '2022-08-04T10:15:30.345+10:00' AND created_date >= '2022-07-02T08:30:40.367+10:00')  ORDER BY created_date DESC", query.sql)
+        assertEquals("SELECT msg_id  FROM message WHERE created_date >= '2022-07-02T08:30:40.367+10:00'  ORDER BY created_date DESC", query.sql)
     }
 }

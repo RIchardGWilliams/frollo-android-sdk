@@ -21,8 +21,9 @@ import us.frollo.frollosdk.model.coredata.shared.OrderType
 /**
  * Represents a model that contains all the filters to apply on list of messages
  *
- * @param messageType Filter messages by message type (Optional)
- * @param contentType Filter messages by [ContentType] (Optional)
+ * @param messageTypes Filter messages by list of message types (Optional)
+ * @param contentTypes Filter messages by list of [ContentType] (Optional)
+ * @param designTypes Filter messages by list of design types (Optional)
  * @param event Filter messages by triggering event name (Optional)
  * @param read Filter the messages by read state (Optional)
  * @param interacted Filter the messages by interacted state (Optional)
@@ -33,8 +34,9 @@ import us.frollo.frollosdk.model.coredata.shared.OrderType
  * @param size Count of objects to returned from the API (page size)
  **/
 data class MessageFilter(
-    var messageType: String? = null,
-    var contentType: ContentType? = null,
+    var messageTypes: List<String>? = null,
+    var contentTypes: List<ContentType>? = null,
+    var designTypes: List<String>? = null,
     var event: String? = null,
     var read: Boolean? = null,
     var interacted: Boolean? = null,
@@ -50,12 +52,13 @@ data class MessageFilter(
      */
     fun getQueryMap(): Map<String, String> {
         val queryMap = mutableMapOf<String, String>()
-        // Supporting filter by only 1 message type as we don't want to
-        // complicate the DB fetch logic in appendMessageFilterToSqlQuery
-        messageType?.let { queryMap["message_types"] = it }
-        // Supporting filter by only 1 content type as we don't want to
-        // complicate the DB fetch logic in appendMessageFilterToSqlQuery
-        contentType?.let { queryMap["content_types"] = it.toString() }
+        messageTypes?.let { queryMap["message_types"] = it.joinToString(",") }
+        contentTypes?.let {
+            queryMap["content_types"] = it.joinToString(",") { type ->
+                type.toString()
+            }
+        }
+        designTypes?.let { queryMap["design_types"] = it.joinToString(",") }
         event?.let { queryMap["event"] = it }
         read?.let { queryMap["read"] = it.toString() }
         interacted?.let { queryMap["interacted"] = it.toString() }

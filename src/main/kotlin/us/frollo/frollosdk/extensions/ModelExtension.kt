@@ -684,7 +684,9 @@ internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, en
 internal fun sqlForMessageIdsToGetStaleIds(
     messageFilter: MessageFilter,
     firstMessageInPage: MessageResponse,
-    lastMessageInPage: MessageResponse
+    lastMessageInPage: MessageResponse,
+    after: Long?,
+    before: Long?
 ): SimpleSQLiteQuery {
 
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder(tableName = "message")
@@ -694,10 +696,28 @@ internal fun sqlForMessageIdsToGetStaleIds(
         MessageSortType.CREATED_AT -> {
             when (messageFilter.orderBy) {
                 OrderType.DESC -> {
-                    sqlQueryBuilder.appendSelection(selection = "(created_date <= '${firstMessageInPage.createdDate}' AND created_date >= '${lastMessageInPage.createdDate}')")
+                    if (before == null && after != null) {
+                        // Consider only lower limit for first page
+                        sqlQueryBuilder.appendSelection(selection = "created_date >= '${lastMessageInPage.createdDate}'")
+                    } else if (before != null && after != null) {
+                        // Consider both upper and lower limit for middle pages
+                        sqlQueryBuilder.appendSelection(selection = "(created_date <= '${firstMessageInPage.createdDate}' AND created_date >= '${lastMessageInPage.createdDate}')")
+                    } else if (before != null && after == null) {
+                        // Consider only upper limit for last page
+                        sqlQueryBuilder.appendSelection(selection = "created_date <= '${firstMessageInPage.createdDate}'")
+                    }
                 }
                 OrderType.ASC -> {
-                    sqlQueryBuilder.appendSelection(selection = "(created_date >= '${firstMessageInPage.createdDate}' AND created_date <= '${lastMessageInPage.createdDate}')")
+                    if (before == null && after != null) {
+                        // Consider only lower limit for first page
+                        sqlQueryBuilder.appendSelection(selection = "created_date <= '${lastMessageInPage.createdDate}'")
+                    } else if (before != null && after != null) {
+                        // Consider both upper and lower limit for middle pages
+                        sqlQueryBuilder.appendSelection(selection = "(created_date >= '${firstMessageInPage.createdDate}' AND created_date <= '${lastMessageInPage.createdDate}')")
+                    } else if (before != null && after == null) {
+                        // Consider only upper limit for last page
+                        sqlQueryBuilder.appendSelection(selection = "created_date >= '${firstMessageInPage.createdDate}'")
+                    }
                 }
             }
         }
@@ -714,8 +734,28 @@ internal fun sqlForMessages(messageFilter: MessageFilter): SimpleSQLiteQuery {
 }
 
 private fun appendMessageFilterToSqlQuery(sqlQueryBuilder: SimpleSQLiteQueryBuilder, filter: MessageFilter) {
-    filter.messageType?.let { sqlQueryBuilder.appendSelection(selection = "message_types LIKE '%|$it|%'") }
-    filter.contentType?.let { sqlQueryBuilder.appendSelection(selection = "content_type = '${ it.name }'") }
+    val messageTypes = filter.messageTypes
+    if (messageTypes != null && messageTypes.isNotEmpty()) {
+        val sb = StringBuilder()
+        sb.append("(")
+        messageTypes.forEachIndexed { index, str ->
+            sb.append("(message_types LIKE '%|$str|%')")
+            if (index < messageTypes.size - 1) sb.append(" OR ")
+        }
+        sb.append(")")
+        sqlQueryBuilder.appendSelection(selection = sb.toString())
+    }
+
+    val contentTypes = filter.contentTypes
+    if (contentTypes != null && contentTypes.isNotEmpty()) {
+        sqlQueryBuilder.appendSelection(selection = "content_type IN ('${contentTypes.joinToString("','") { it.name }}')")
+    }
+
+    val designTypes = filter.designTypes
+    if (designTypes != null && designTypes.isNotEmpty()) {
+        sqlQueryBuilder.appendSelection(selection = "content_design_type IN ('${designTypes.joinToString("','") { it }}')")
+    }
+
     filter.event?.let { sqlQueryBuilder.appendSelection(selection = "event = '$it'") }
     filter.read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
     filter.interacted?.let { sqlQueryBuilder.appendSelection(selection = "interacted = ${ it.toInt() }") }

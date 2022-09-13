@@ -112,12 +112,12 @@ class MessageDaoTest {
 
         db.messages().insertAll(*list.toTypedArray())
 
-        val query = sqlForMessages(MessageFilter(messageType = "survey", read = false))
+        val query = sqlForMessages(MessageFilter(messageTypes = listOf("survey", "dashboard_event"), read = false))
 
         val testObserver = db.messages().loadByQuery(query).test()
         testObserver.awaitValue()
         assertTrue(testObserver.value().isNotEmpty())
-        assertEquals(2, testObserver.value().size)
+        assertEquals(3, testObserver.value().size)
     }
 
     @Test

@@ -129,7 +129,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(messageType = "survey")).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(messageTypes = listOf("survey"))).test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value())
         assertEquals(2, testObserver.value()?.size)
@@ -149,7 +149,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false, contentType = ContentType.TEXT)).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false, contentTypes = listOf(ContentType.TEXT))).test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value())
         assertEquals(2, testObserver.value()?.size)
@@ -180,9 +180,9 @@ class MessagesTest : BaseAndroidTest() {
     fun testRefreshMessagesWithPaginationOrderDesc() {
         initSetup()
 
-        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&sort=created_at&order=desc&size=25"
-        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&sort=created_at&order=desc&after=804460&size=25"
-        val requestPath3 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&sort=created_at&order=desc&after=786537&size=25"
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&size=25"
+        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&after=804460&size=25"
+        val requestPath3 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&after=786537&size=25"
 
         val signal = CountDownLatch(1)
 
@@ -207,14 +207,32 @@ class MessagesTest : BaseAndroidTest() {
             }
             )
 
-        // Insert some stale contacts
-        val data1 = testMessageResponseData(msgId = 14, createdDate = "2022-08-24T12:29:35.103+10:00", types = listOf("bill_alerts"))
-        val data2 = testMessageResponseData(msgId = 15, createdDate = "2022-08-23T10:29:35.103+10:00", types = listOf("bill_alerts"))
-        val list = mutableListOf(data1, data2)
+        // Insert some stale messages greater than first page first message's created_date
+        val data1 = testMessageResponseData(msgId = 101, createdDate = "2022-09-01T12:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages lesser than first page first message's created_date
+        // and greater than first page last message's created_date
+        val data2 = testMessageResponseData(msgId = 102, createdDate = "2022-08-23T10:29:35.103+10:00", types = listOf("dashboard_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between second page first message's created_date
+        // and second page last message's created_date
+        val data3 = testMessageResponseData(msgId = 103, createdDate = "2022-08-14T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_2")
+
+        // Insert some stale messages lesser than last page last message's created_date
+        val data4 = testMessageResponseData(msgId = 104, createdDate = "2022-08-11T10:29:35.103+10:00", types = listOf("dashboard_alerts"), type = ContentType.TEXT, designType = "dash_2")
+
+        // Insert some stale messages between first page first message's created_date and
+        // and first page last message's created_date but different message type
+        // and ensure that this message is not deleted after refresh
+        val data5 = testMessageResponseData(msgId = 105, createdDate = "2022-08-23T10:29:35.103+10:00", types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1")
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
         database.messages().insertAll(*list.toTypedArray())
 
         val messageFilter = MessageFilter(
-            messageType = "bill_alerts",
+            messageTypes = listOf("bill_alerts", "dashboard_alerts"),
+            contentTypes = listOf(ContentType.TEXT),
+            designTypes = listOf("dash_1", "dash_2"),
             size = 25,
             sortBy = MessageSortType.CREATED_AT,
             orderBy = OrderType.DESC
@@ -236,21 +254,25 @@ class MessagesTest : BaseAndroidTest() {
                     assertEquals(786536L, (result3 as PaginatedResult.Success).paginationInfo?.before)
                     assertNull(result3.paginationInfo?.after)
 
-                    val testObserver = messages.fetchMessages(messageFilter).test()
+                    // Fetch all messages in DB
+                    val testObserver = messages.fetchMessages(MessageFilter()).test()
                     testObserver.awaitValue()
                     val models = testObserver.value()
                     assertNotNull(models)
-                    assertEquals(51, models?.size)
+                    assertEquals(52, models?.size)
 
-                    // Verify that the stale contacts are deleted from the database
-                    assertEquals(0, models?.filter { it.messageId == 14L && it.messageId == 15L }?.size)
+                    // Verify that the stale messages are deleted from the database
+                    assertEquals(0, models?.filter { it.messageId in listOf(101L, 102L, 103L, 104L) }?.size)
+
+                    // Verify that the message_id = 105 in not deleted from the database
+                    assertEquals(1, models?.filter { it.messageId == 105L }?.size)
 
                     signal.countDown()
                 }
             }
         }
 
-        signal.await(3, TimeUnit.SECONDS)
+        signal.await(120, TimeUnit.SECONDS)
 
         assertEquals(3, mockServer.requestCount)
 
@@ -261,8 +283,8 @@ class MessagesTest : BaseAndroidTest() {
     fun testRefreshMessagesWithPaginationOrderAsc() {
         initSetup()
 
-        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&sort=created_at&order=asc&size=25"
-        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&sort=created_at&order=asc&after=644589&size=25"
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&content_types=text&design_types=dash_1&sort=created_at&order=asc&size=25"
+        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&content_types=text&design_types=dash_1&sort=created_at&order=asc&after=644589&size=25"
 
         val signal = CountDownLatch(1)
 
@@ -283,14 +305,32 @@ class MessagesTest : BaseAndroidTest() {
             }
             )
 
-        // Insert some stale contacts
-        val data1 = testMessageResponseData(msgId = 14, createdDate = "2022-04-18T10:30:31.251+10:00", types = listOf("bill_alerts"))
-        val data2 = testMessageResponseData(msgId = 15, createdDate = "2022-05-25T12:41:41.462+10:00", types = listOf("bill_alerts"))
-        val list = mutableListOf(data1, data2)
+        // Insert some stale messages lesser than first page first message's created_date
+        val data1 = testMessageResponseData(msgId = 101, createdDate = "2022-04-05T12:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages greater than first page first message's created_date
+        // and lesser than first page last message's created_date
+        val data2 = testMessageResponseData(msgId = 102, createdDate = "2022-04-18T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between second page first message's created_date
+        // and second page last message's created_date
+        val data3 = testMessageResponseData(msgId = 103, createdDate = "2022-05-25T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages greater than last page last message's created_date
+        val data4 = testMessageResponseData(msgId = 104, createdDate = "2022-05-27T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between first page first message's created_date and
+        // and first page last message's created_date but different message type
+        // and ensure that this message is not deleted after refresh
+        val data5 = testMessageResponseData(msgId = 105, createdDate = "2022-04-11T10:29:35.103+10:00", types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1")
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
         database.messages().insertAll(*list.toTypedArray())
 
         val messageFilter = MessageFilter(
-            messageType = "bill_alerts",
+            messageTypes = listOf("bill_alerts"),
+            contentTypes = listOf(ContentType.TEXT),
+            designTypes = listOf("dash_1"),
             size = 25,
             sortBy = MessageSortType.CREATED_AT,
             orderBy = OrderType.ASC
@@ -306,14 +346,18 @@ class MessagesTest : BaseAndroidTest() {
                 assertEquals(644590L, (result2 as PaginatedResult.Success).paginationInfo?.before)
                 assertNull(result2.paginationInfo?.after)
 
-                val testObserver = messages.fetchMessages(messageFilter).test()
+                // Fetch all messages in DB
+                val testObserver = messages.fetchMessages(MessageFilter()).test()
                 testObserver.awaitValue()
                 val models = testObserver.value()
                 assertNotNull(models)
-                assertEquals(49, models?.size)
+                assertEquals(50, models?.size)
 
-                // Verify that the stale contacts are deleted from the database
-                assertEquals(0, models?.filter { it.messageId == 14L && it.messageId == 15L }?.size)
+                // Verify that the stale messages are deleted from the database
+                assertEquals(0, models?.filter { it.messageId in listOf(101L, 102L, 103L, 104L) }?.size)
+
+                // Verify that the message_id = 105 in not deleted from the database
+                assertEquals(1, models?.filter { it.messageId == 105L }?.size)
 
                 signal.countDown()
             }
