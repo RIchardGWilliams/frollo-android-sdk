@@ -5,6 +5,8 @@
 #### Changes
 - Handle 410 Error and notify app
 - List Messages API with Pagination
+- Bulk Update Messages API
+- Remove Unread Messages API
 
 ### 3.18.0
 
