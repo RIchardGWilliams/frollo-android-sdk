@@ -1,0 +1,86 @@
+{
+  "data": [{
+    "id": 804459,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1037114,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-08-21T13:11:17.837+10:00",
+    "delivered_date": "2022-08-21T13:57:19.550+10:00",
+    "message_types": ["dashboard_alerts"],
+    "content_type": "text",
+    "title": "Soulara bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Soulara bill for $11 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
+      "design_type": "dash_2"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/32030",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 794216,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 1023028,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-08-16T08:30:21.136+10:00",
+    "delivered_date": "2022-08-16T09:17:19.663+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 786537,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1013924,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": false,
+    "interacted": false,
+    "created_date": "2022-08-12T11:01:26.676+10:00",
+    "delivered_date": "2022-08-12T11:06:36.633+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Unitywater bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Unitywater bill for $31 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1623295401.png?1623295401",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/31092",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": "804459",
+      "after": null
+    },
+    "previous": "https://api-staging.frollo.us/api/v2/messages/?before=804459\u0026message_types=bill_alerts,dashboard_alerts\u0026read=false\u0026order=desc\u0026sort=created_at",
+    "total": 6
+  }
+}

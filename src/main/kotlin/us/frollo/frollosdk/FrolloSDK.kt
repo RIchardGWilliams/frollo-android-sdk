@@ -61,6 +61,7 @@ import us.frollo.frollosdk.logging.LogManager
 import us.frollo.frollosdk.managedproducts.ManagedProducts
 import us.frollo.frollosdk.messages.Messages
 import us.frollo.frollosdk.model.coredata.bills.BillPayment
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.DATokenAPI
 import us.frollo.frollosdk.network.api.ResponseDataAPI
@@ -563,7 +564,7 @@ object FrolloSDK {
         aggregation.refreshTransactionsWithPagination()
         aggregation.refreshConsentsWithPagination()
         userManagement.refreshUser()
-        messages.refreshUnreadMessages()
+        messages.refreshMessagesWithPagination(MessageFilter())
         budgets.refreshBudgets()
     }
 

@@ -1,0 +1,151 @@
+[{
+  "id": 828857,
+  "event": "BILL_CONFIRMED",
+  "user_event_id": 1063137,
+  "placement": 20,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-31T12:30:33.104+10:00",
+  "delivered_date": "2022-08-31T14:09:55.247+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "Zwift bill found",
+  "metadata": {},
+  "content": {
+    "text": "We're now tracking your Zwift bill for $8 monthly",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1637708923.png?1637708923",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Change bill details",
+    "link": "frollo-staging://bills/33315",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 804476,
+  "event": "BILL_CONFIRMED",
+  "user_event_id": 1037131,
+  "placement": 20,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-22T13:12:32.103+10:00",
+  "delivered_date": "2022-08-22T13:57:19.550+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "Thorn Group bill found",
+  "metadata": {},
+  "content": {
+    "text": "We're now tracking your Thorn Group bill for $27 monthly",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/4771/thumb/ThornGroup.png?1598932946",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Change bill details",
+    "link": "frollo-staging://bills/32049",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 804475,
+  "event": "BILL_CONFIRMED",
+  "user_event_id": 1037130,
+  "placement": 20,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-22T13:12:26.878+10:00",
+  "delivered_date": "2022-08-22T13:57:19.550+10:00",
+  "message_types": ["dashboard_alerts"],
+  "content_type": "text",
+  "title": "The YMCA bill found",
+  "metadata": {},
+  "content": {
+    "text": "We're now tracking your The YMCA bill for $71 monthly",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/249/thumb/YMCA.png?1530576681",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Change bill details",
+    "link": "frollo-staging://bills/32048",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 804459,
+  "event": "BILL_CONFIRMED",
+  "user_event_id": 1037114,
+  "placement": 20,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-21T13:11:17.837+10:00",
+  "delivered_date": "2022-08-21T13:57:19.550+10:00",
+  "message_types": ["dashboard_alerts"],
+  "content_type": "text",
+  "title": "Soulara bill found",
+  "metadata": {},
+  "content": {
+    "text": "We're now tracking your Soulara bill for $11 monthly",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1623295402.png?1623295402",
+    "design_type": "dash_2"
+  },
+  "action": {
+    "title": "Change bill details",
+    "link": "frollo-staging://bills/32030",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 794216,
+  "event": "BILL_INSUFFICIENT_AMOUNT",
+  "user_event_id": 1023028,
+  "placement": 111,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-16T08:30:21.136+10:00",
+  "delivered_date": "2022-08-16T09:17:19.663+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "Insufficient funds alert",
+  "metadata": {},
+  "content": {
+    "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+    "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Check your upcoming bills",
+    "link": "frollo-staging://bills",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 786537,
+  "event": "BILL_CONFIRMED",
+  "user_event_id": 1013924,
+  "placement": 20,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-08-12T11:01:26.676+10:00",
+  "delivered_date": "2022-08-12T11:06:36.633+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "Unitywater bill found",
+  "metadata": {},
+  "content": {
+    "text": "We're now tracking your Unitywater bill for $31 monthly",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1623295401.png?1623295401",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Change bill details",
+    "link": "frollo-staging://bills/31092",
+    "open_mode": "internal"
+  }
+}]

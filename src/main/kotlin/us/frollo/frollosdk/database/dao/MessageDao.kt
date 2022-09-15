@@ -43,6 +43,9 @@ internal interface MessageDao {
     @RawQuery(observedEntities = [MessageResponse::class])
     fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<List<MessageResponse>>
 
+    @RawQuery(observedEntities = [MessageResponse::class])
+    fun loadMessagesByQuery(queryStr: SupportSQLiteQuery): List<MessageResponse>
+
     @RawQuery
     fun loadMessageCount(queryStr: SupportSQLiteQuery): Long
 

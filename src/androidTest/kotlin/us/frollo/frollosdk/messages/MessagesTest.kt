@@ -35,11 +35,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
-import us.frollo.frollosdk.model.coredata.messages.MessageHTML
-import us.frollo.frollosdk.model.coredata.messages.MessageImage
 import us.frollo.frollosdk.model.coredata.messages.MessageSortType
-import us.frollo.frollosdk.model.coredata.messages.MessageText
-import us.frollo.frollosdk.model.coredata.messages.MessageVideo
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.testMessageNotificationPayload
 import us.frollo.frollosdk.model.testMessageResponseData
@@ -272,7 +268,7 @@ class MessagesTest : BaseAndroidTest() {
             }
         }
 
-        signal.await(120, TimeUnit.SECONDS)
+        signal.await(3, TimeUnit.SECONDS)
 
         assertEquals(3, mockServer.requestCount)
 
@@ -456,80 +452,6 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshUnreadMessages() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.messages_unread)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == MessagesAPI.URL_UNREAD) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        messages.refreshUnreadMessages { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
-            testObserver.awaitValue()
-            val models = testObserver.value()
-            assertNotNull(models)
-            assertEquals(7, models?.size)
-            models?.forEach { message ->
-                when (message.contentType) {
-                    ContentType.HTML -> assertTrue(message is MessageHTML)
-                    ContentType.VIDEO -> assertTrue(message is MessageVideo)
-                    ContentType.IMAGE -> assertTrue(message is MessageImage)
-                    ContentType.TEXT -> assertTrue(message is MessageText)
-                }
-            }
-            val metadata = models?.last()?.metadata
-            assertEquals("holiday", metadata?.get("category")?.asString)
-            assertEquals(true, metadata?.get("subcategory")?.asBoolean)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(MessagesAPI.URL_UNREAD, request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshUnreadMessagesFailsIfLoggedOut() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        clearLoggedInPreferences()
-
-        messages.refreshUnreadMessages { result ->
-            assertEquals(Result.Status.ERROR, result.status)
-            assertNotNull(result.error)
-            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
-            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
     fun testUpdateMessage() {
         initSetup()
 
@@ -588,6 +510,143 @@ class MessagesTest : BaseAndroidTest() {
         }
 
         signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateMessagesInBulk() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.messages_update_in_bulk)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES_BULK) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data1 = testMessageResponseData(msgId = 606522, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data2 = testMessageResponseData(msgId = 606525, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data3 = testMessageResponseData(msgId = 606531, types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data4 = testMessageResponseData(msgId = 104, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data5 = testMessageResponseData(msgId = 105, types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.messages().insertAll(*list.toTypedArray())
+
+        messages.updateMessagesInBulk(listOf(606522, 606525, 606531), true) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = messages.fetchMessages(messageFilter = MessageFilter()).test()
+            testObserver.awaitValue()
+            val models = testObserver.value()
+            assertNotNull(models)
+
+            assertEquals(5, models?.size)
+
+            assertEquals(
+                3,
+                models?.filter {
+                    it.messageId in listOf(606522L, 606525L, 606531L)
+                }?.filter {
+                    it.read
+                }?.size
+            )
+
+            assertEquals(
+                2,
+                models?.filter {
+                    it.messageId in listOf(104L, 105L)
+                }?.filter {
+                    !it.read
+                }?.size
+            )
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(MessagesAPI.URL_MESSAGES_BULK, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testMarkMessagesAsRead() {
+        initSetup()
+
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&read=false&sort=created_at&order=desc"
+        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&read=false&sort=created_at&order=desc&after=804460"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_unread_page1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_unread_page2))
+                    } else if (request.trimmedPath == MessagesAPI.URL_MESSAGES_BULK) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_update_read))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data1 = testMessageResponseData(msgId = 828857, types = listOf("bill_alerts"))
+        val data2 = testMessageResponseData(msgId = 804476, types = listOf("bill_alerts"))
+        val data3 = testMessageResponseData(msgId = 804459, types = listOf("dashboard_alerts"))
+        val data4 = testMessageResponseData(msgId = 106, types = listOf("message_task"), read = false)
+        val list = mutableListOf(data1, data2, data3, data4)
+        database.messages().insertAll(*list.toTypedArray())
+
+        messages.markMessagesAsRead(listOf("bill_alerts", "dashboard_alerts")) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = messages.fetchMessages(messageFilter = MessageFilter()).test()
+            testObserver.awaitValue()
+            val models = testObserver.value()
+            assertNotNull(models)
+
+            assertEquals(7, models?.size)
+
+            assertEquals(
+                6,
+                models?.filter {
+                    it.messageId in listOf(828857L, 804476L, 804475L, 804459L, 794216L, 786537)
+                }?.filter {
+                    it.read
+                }?.size
+            )
+
+            assertEquals(false, models?.find { it.messageId == 106L }?.read)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(3, mockServer.requestCount)
 
         tearDown()
     }
