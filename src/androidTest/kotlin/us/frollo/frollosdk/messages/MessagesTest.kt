@@ -35,11 +35,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
-import us.frollo.frollosdk.model.coredata.messages.MessageHTML
-import us.frollo.frollosdk.model.coredata.messages.MessageImage
 import us.frollo.frollosdk.model.coredata.messages.MessageSortType
-import us.frollo.frollosdk.model.coredata.messages.MessageText
-import us.frollo.frollosdk.model.coredata.messages.MessageVideo
 import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.testMessageNotificationPayload
 import us.frollo.frollosdk.model.testMessageResponseData
@@ -442,80 +438,6 @@ class MessagesTest : BaseAndroidTest() {
         clearLoggedInPreferences()
 
         messages.refreshMessage(12345L) { result ->
-            assertEquals(Result.Status.ERROR, result.status)
-            assertNotNull(result.error)
-            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
-            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshUnreadMessages() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.messages_unread)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == MessagesAPI.URL_UNREAD) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        messages.refreshUnreadMessages { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
-            testObserver.awaitValue()
-            val models = testObserver.value()
-            assertNotNull(models)
-            assertEquals(7, models?.size)
-            models?.forEach { message ->
-                when (message.contentType) {
-                    ContentType.HTML -> assertTrue(message is MessageHTML)
-                    ContentType.VIDEO -> assertTrue(message is MessageVideo)
-                    ContentType.IMAGE -> assertTrue(message is MessageImage)
-                    ContentType.TEXT -> assertTrue(message is MessageText)
-                }
-            }
-            val metadata = models?.last()?.metadata
-            assertEquals("holiday", metadata?.get("category")?.asString)
-            assertEquals(true, metadata?.get("subcategory")?.asBoolean)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(MessagesAPI.URL_UNREAD, request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshUnreadMessagesFailsIfLoggedOut() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        clearLoggedInPreferences()
-
-        messages.refreshUnreadMessages { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)

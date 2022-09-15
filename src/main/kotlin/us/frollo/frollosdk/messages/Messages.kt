@@ -160,25 +160,6 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
     }
 
     /**
-     * Refresh all unread messages from the host.
-     *
-     * @param completion Optional completion handler with optional error if the request fails
-     */
-    fun refreshUnreadMessages(completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        messagesAPI.fetchUnreadMessages().enqueue { resource ->
-            when (resource.status) {
-                Resource.Status.SUCCESS -> {
-                    handleMessagesResponse(response = resource.data, unread = true, completion = completion)
-                }
-                Resource.Status.ERROR -> {
-                    Log.e("$TAG#refreshUnreadMessages", resource.error?.localizedDescription)
-                    completion?.invoke(Result.error(resource.error))
-                }
-            }
-        }
-    }
-
-    /**
      * Update a message on the host
      *
      * @param messageId ID of the message to be updated
@@ -354,27 +335,6 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
             return
 
         updateMessage(notification.userMessageID, read = true, interacted = true, completion = completion)
-    }
-
-    private fun handleMessagesResponse(response: List<MessageResponse>?, unread: Boolean = false, completion: OnFrolloSDKCompletionListener<Result>? = null) {
-        response?.let {
-            doAsync {
-                db.messages().insertAll(*response.toTypedArray())
-
-                val apiIds = response.map { it.messageId }.toList()
-                val staleIds = if (unread) {
-                    db.messages().getUnreadStaleIds(apiIds.toLongArray())
-                } else {
-                    db.messages().getStaleIds(apiIds.toLongArray())
-                }
-
-                if (staleIds.isNotEmpty()) {
-                    db.messages().deleteMany(staleIds.toLongArray())
-                }
-
-                uiThread { completion?.invoke(Result.success()) }
-            }
-        } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
     }
 
     private fun handleMessagesResponseWithPaginationResponse(

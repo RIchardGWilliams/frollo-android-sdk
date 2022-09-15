@@ -29,7 +29,6 @@ import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 
 internal interface MessagesAPI {
     companion object {
-        const val URL_UNREAD = "messages/unread"
         const val URL_MESSAGES = "messages"
         const val URL_MESSAGE = "messages/{message_id}"
         const val URL_MESSAGES_BULK = "messages/bulk"
@@ -37,9 +36,6 @@ internal interface MessagesAPI {
 
     @GET(URL_MESSAGES)
     fun fetchMessages(@QueryMap options: Map<String, String>): Call<PaginatedResponse<MessageResponse>>
-
-    @GET(URL_UNREAD)
-    fun fetchUnreadMessages(): Call<List<MessageResponse>>
 
     @GET(URL_MESSAGE)
     fun fetchMessage(@Path("message_id") id: Long): Call<MessageResponse>

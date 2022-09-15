@@ -236,12 +236,7 @@ Custom authentication can be provided by conforming to the [AccessTokenProvider]
 After logging in, your cache will be empty in the SDK. Refresh important data such as [Messages](us.frollo.frollosdk.messages/-messages/index.html) immediately after login.
 
 ```kotlin
-    FrolloSDK.messages.refreshUnreadMessages { result ->
-        when (result.status) {
-            Result.Status.ERROR -> displayError(result.error?.localizedDescription, "Refreshing Messages Failed")
-            Result.Status.SUCCESS -> Log.d("Accounts Refreshed")
-        }
-    }
+    FrolloSDK.messages.refreshMessagesWithPagination(MessageFilter())
 ```
 
 Alternatively refresh data on startup in an optimized way using [refreshData](us.frollo.frollosdk/-frollo-s-d-k/refresh-data.html) on the main SDK. This will refresh important user data first, delaying less important ones until later.
