@@ -228,7 +228,7 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
         messagesAPI.updateMessagesInBulk(request).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    handleMessagesResponse(response = resource.data, completion = completion)
+                    handleMessagesByIdsResponse(response = resource.data, completion = completion)
                 }
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#updateMessagesInBulk", resource.error?.localizedDescription)
@@ -433,6 +433,15 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
             doAsync {
                 db.messages().insert(response)
 
+                uiThread { completion?.invoke(Result.success()) }
+            }
+        } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
+    }
+
+    private fun handleMessagesByIdsResponse(response: List<MessageResponse>?, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        response?.let {
+            doAsync {
+                db.messages().insertAll(*response.toTypedArray())
                 uiThread { completion?.invoke(Result.success()) }
             }
         } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.

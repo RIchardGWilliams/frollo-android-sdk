@@ -593,6 +593,83 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testUpdateMessagesInBulk() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.messages_update_in_bulk)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES_BULK) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data1 = testMessageResponseData(msgId = 606522, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data2 = testMessageResponseData(msgId = 606525, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data3 = testMessageResponseData(msgId = 606531, types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data4 = testMessageResponseData(msgId = 104, types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val data5 = testMessageResponseData(msgId = 105, types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1", read = false)
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.messages().insertAll(*list.toTypedArray())
+
+        messages.updateMessagesInBulk(listOf(606522, 606525, 606531), true) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = messages.fetchMessages(messageFilter = MessageFilter()).test()
+            testObserver.awaitValue()
+            val models = testObserver.value()
+            assertNotNull(models)
+
+            assertEquals(5, models?.size)
+
+            assertEquals(
+                3,
+                models?.filter {
+                    it.messageId in listOf(606522L, 606525L, 606531L)
+                }?.filter {
+                    it.read
+                }?.size
+            )
+
+            assertEquals(
+                2,
+                models?.filter {
+                    it.messageId in listOf(104L, 105L)
+                }?.filter {
+                    !it.read
+                }?.size
+            )
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(MessagesAPI.URL_MESSAGES_BULK, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testMarkMessagesAsRead() {
+        initSetup()
+
+        // TODO
+
+        tearDown()
+    }
+
+    @Test
     fun testHandlePushMessage() {
         initSetup()
 

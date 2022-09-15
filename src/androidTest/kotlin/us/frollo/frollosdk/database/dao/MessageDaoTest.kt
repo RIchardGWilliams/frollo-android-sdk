@@ -121,6 +121,24 @@ class MessageDaoTest {
     }
 
     @Test
+    fun loadMessagesByQuery() {
+        val data1 = testMessageResponseData(types = mutableListOf("survey"), read = false)
+        val data2 = testMessageResponseData(types = mutableListOf("event"), read = false)
+        val data3 = testMessageResponseData(types = mutableListOf("survey", "welcome"), read = true)
+        val data4 = testMessageResponseData(types = mutableListOf("dashboard_event"), read = false)
+        val data5 = testMessageResponseData(types = mutableListOf("survey", "dashboard_event"), read = false)
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+
+        db.messages().insertAll(*list.toTypedArray())
+
+        val query = sqlForMessages(MessageFilter(messageTypes = listOf("survey", "dashboard_event"), read = false))
+
+        val models = db.messages().loadMessagesByQuery(query)
+        assertTrue(models.isNotEmpty())
+        assertEquals(3, models.size)
+    }
+
+    @Test
     fun testFindByMessageId() {
         val data = testMessageResponseData()
         val list = mutableListOf(testMessageResponseData(), data, testMessageResponseData())

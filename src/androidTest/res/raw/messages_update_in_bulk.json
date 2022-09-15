@@ -1,0 +1,77 @@
+[{
+  "id": 606522,
+  "event": "U_ACC_REQUIRED",
+  "user_event_id": 814296,
+  "placement": 9005,
+  "persists": true,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": true,
+  "created_date": "2022-04-07T16:28:14.907+10:00",
+  "delivered_date": "2022-04-07T16:28:16.287+10:00",
+  "interacted_date": "2022-04-07T16:28:54.425+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "Connect your bank accounts",
+  "metadata": {},
+  "content": {
+    "text": "Get the most out of Frollo by connecting your bank accounts.",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Connect Bank Account",
+    "link": "frollo-staging://spending_insights/accounts/add",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 606525,
+  "event": "U_ACC_ADDED",
+  "user_event_id": 814299,
+  "placement": 120,
+  "persists": false,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-04-07T16:29:40.488+10:00",
+  "delivered_date": "2022-04-07T16:29:46.936+10:00",
+  "message_types": ["bill_alerts"],
+  "content_type": "text",
+  "title": "How to get the most out of Frollo",
+  "metadata": {},
+  "content": {
+    "text": "Please check out our FAQ articles for quick help options",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Find your answer now",
+    "link": "frollo-staging://contact/faq",
+    "open_mode": "internal"
+  }
+}, {
+  "id": 606531,
+  "event": "U_ACC_REQUIRED",
+  "user_event_id": 814326,
+  "placement": 9005,
+  "persists": true,
+  "auto_dismiss": false,
+  "read": true,
+  "interacted": false,
+  "created_date": "2022-04-07T16:30:38.580+10:00",
+  "delivered_date": "2022-04-07T16:35:32.193+10:00",
+  "message_types": ["message_task"],
+  "content_type": "text",
+  "title": "Connect your bank accounts",
+  "metadata": {},
+  "content": {
+    "text": "Get the most out of Frollo by connecting your bank accounts.",
+    "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+    "design_type": "dash_1"
+  },
+  "action": {
+    "title": "Connect Bank Account",
+    "link": "frollo-staging://spending_insights/accounts/add",
+    "open_mode": "internal"
+  }
+}]
