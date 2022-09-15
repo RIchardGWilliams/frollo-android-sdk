@@ -21,8 +21,10 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.QueryMap
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.messages.MessageUpdateRequest
+import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 
 internal interface MessagesAPI {
     companion object {
@@ -32,7 +34,7 @@ internal interface MessagesAPI {
     }
 
     @GET(URL_MESSAGES)
-    fun fetchMessages(): Call<List<MessageResponse>>
+    fun fetchMessages(@QueryMap options: Map<String, String>): Call<PaginatedResponse<MessageResponse>>
 
     @GET(URL_UNREAD)
     fun fetchUnreadMessages(): Call<List<MessageResponse>>

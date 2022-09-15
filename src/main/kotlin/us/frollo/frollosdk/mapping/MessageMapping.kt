@@ -49,7 +49,10 @@ internal fun MessageResponse.toMessage(): Message? {
                     footer = content.footer,
                     header = content.header,
                     main = mainHtml,
-                    metadata = this.metadata
+                    metadata = this.metadata,
+                    createdDate = createdDate,
+                    deliveredDate = deliveredDate,
+                    interactedDate = interactedDate
                 )
             } ?: run {
                 Log.e("$TAG#toMessage-HTML", "HTML Message : Invalid data in content")
@@ -77,7 +80,10 @@ internal fun MessageResponse.toMessage(): Message? {
                     header = content.header,
                     imageUrl = content.imageUrl,
                     text = content.text,
-                    metadata = this.metadata
+                    metadata = this.metadata,
+                    createdDate = createdDate,
+                    deliveredDate = deliveredDate,
+                    interactedDate = interactedDate
                 )
             } ?: run {
                 Log.e("$TAG#toMessage-TEXT", "TEXT Message : Invalid data in content")
@@ -107,7 +113,10 @@ internal fun MessageResponse.toMessage(): Message? {
                     autoplayCellular = content.autoplayCellular ?: false,
                     iconUrl = content.iconUrl,
                     url = content.url,
-                    metadata = this.metadata
+                    metadata = this.metadata,
+                    createdDate = createdDate,
+                    deliveredDate = deliveredDate,
+                    interactedDate = interactedDate
                 )
             } else {
                 Log.e("$TAG#toMessage-VIDEO", "VIDEO Message : Invalid data in content")
@@ -133,7 +142,10 @@ internal fun MessageResponse.toMessage(): Message? {
                     height = content.height,
                     width = content.width,
                     url = content.url,
-                    metadata = this.metadata
+                    metadata = this.metadata,
+                    createdDate = createdDate,
+                    deliveredDate = deliveredDate,
+                    interactedDate = interactedDate
                 )
             } else {
                 Log.e("$TAG#toMessage-IMAGE", "IMAGE Message : Invalid data in content")

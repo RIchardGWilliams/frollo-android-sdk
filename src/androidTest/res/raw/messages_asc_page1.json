@@ -1,0 +1,637 @@
+{
+  "data": [{
+    "id": 606522,
+    "event": "U_ACC_REQUIRED",
+    "user_event_id": 814296,
+    "placement": 9005,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": true,
+    "created_date": "2022-04-07T16:28:14.907+10:00",
+    "delivered_date": "2022-04-07T16:28:16.287+10:00",
+    "interacted_date": "2022-04-07T16:28:54.425+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Connect your bank accounts",
+    "metadata": {},
+    "content": {
+      "text": "Get the most out of Frollo by connecting your bank accounts.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Connect Bank Account",
+      "link": "frollo-staging://spending_insights/accounts/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606525,
+    "event": "U_ACC_ADDED",
+    "user_event_id": 814299,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:29:40.488+10:00",
+    "delivered_date": "2022-04-07T16:29:46.936+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "How to get the most out of Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Please check out our FAQ articles for quick help options",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Find your answer now",
+      "link": "frollo-staging://contact/faq",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 606531,
+    "event": "U_ACC_REQUIRED",
+    "user_event_id": 814326,
+    "placement": 9005,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-07T16:30:38.580+10:00",
+    "delivered_date": "2022-04-07T16:35:32.193+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Connect your bank accounts",
+    "metadata": {},
+    "content": {
+      "text": "Get the most out of Frollo by connecting your bank accounts.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Connect Bank Account",
+      "link": "frollo-staging://spending_insights/accounts/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607082,
+    "event": "U_ACC_ADDED",
+    "user_event_id": 815115,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:09:58.296+10:00",
+    "delivered_date": "2022-04-08T15:10:01.989+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "How to get the most out of Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Please check out our FAQ articles for quick help options",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Find your answer now",
+      "link": "frollo-staging://contact/faq",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607090,
+    "event": "B_READY",
+    "user_event_id": 815140,
+    "placement": 10,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:11:58.922+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Spending Insight",
+    "metadata": {},
+    "content": {
+      "text": "See where your money is going by category and compare with previous months.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2976/icon/original/1608190536.png?1608190536",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "View Summary ",
+      "link": "frollo-staging://expenses/category?period=history\u0026date=2022-03",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607098,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815148,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:37.434+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Netflix bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Netflix bill for $17 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/thumb/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7236",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607100,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815152,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:39.514+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Amaysim bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Amaysim bill for $39 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/89/thumb/amaysim.png?1543468367",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7237",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607101,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815153,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:40.568+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Optus bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Optus bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/23/thumb/Optus-Logo-PNG-04905.png?1519085023",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7238",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607102,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815154,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:42.725+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "GIO Insurance bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your GIO Insurance bill for $1,200 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/94/thumb/preview-gio.png?1519084860",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7239",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607103,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815155,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:43.770+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "AGL bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your AGL bill for $70 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/39/thumb/AGL.png?1519084864",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7240",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 607106,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 815158,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-08T15:12:48.149+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Woolworths Insurance bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Woolworths Insurance bill for $12 weekly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/12/thumb/16386977_1395300327208761_3607300141437791064_n.png?1600643858",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7241",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 608281,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 816533,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-11T08:31:25.825+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 608872,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 817212,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-12T08:30:57.021+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 610239,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 819074,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-13T08:31:41.723+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $1,200 in bills coming up, but only $668 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 612375,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 821870,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-17T08:30:25.658+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 613368,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 822593,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-18T08:30:31.251+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 614820,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 823519,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-19T08:31:10.105+10:00",
+    "delivered_date": "2022-04-19T12:28:22.274+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $12 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 619075,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 827442,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-23T08:31:02.734+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 619899,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 828070,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-24T08:31:19.008+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 620708,
+    "event": "BILL_INSUFFICIENT_AMOUNT",
+    "user_event_id": 828762,
+    "placement": 111,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-04-25T08:30:28.353+10:00",
+    "delivered_date": "2022-04-26T12:12:05.190+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Insufficient funds alert",
+    "metadata": {},
+    "content": {
+      "text": "You have $17 in bills coming up, but only $-5,500 in your account.",
+      "image_url": "https://frollo-production.s3.ap-southeast-2.amazonaws.com/app/default_app_event_icon.svg",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Check your upcoming bills",
+      "link": "frollo-staging://bills",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 644566,
+    "event": "U_ACC_REQUIRED",
+    "user_event_id": 850508,
+    "placement": 9005,
+    "persists": true,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-05-24T11:46:30.199+10:00",
+    "delivered_date": "2022-05-24T11:47:13.370+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Connect your bank accounts",
+    "metadata": {},
+    "content": {
+      "text": "Get the most out of Frollo by connecting your bank accounts.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2959/icon/app/1608182606.png?1608182606",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Connect Bank Account",
+      "link": "frollo-staging://spending_insights/accounts/add",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 644572,
+    "event": "U_ACC_ADDED",
+    "user_event_id": 850513,
+    "placement": 120,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-05-24T12:22:37.620+10:00",
+    "delivered_date": "2022-05-24T12:22:42.105+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "How to get the most out of Frollo",
+    "metadata": {},
+    "content": {
+      "text": "Please check out our FAQ articles for quick help options",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/3229/icon/app/1611054852.png?1611054852",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Find your answer now",
+      "link": "frollo-staging://contact/faq",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 644583,
+    "event": "B_READY",
+    "user_event_id": 850535,
+    "placement": 10,
+    "persists": false,
+    "auto_dismiss": true,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-05-24T12:24:34.529+10:00",
+    "delivered_date": "2022-09-09T10:45:08.985+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Spending Insight",
+    "metadata": {},
+    "content": {
+      "text": "See where your money is going by category and compare with previous months.",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/messages/2976/icon/original/1608190536.png?1608190536",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "View Summary ",
+      "link": "frollo-staging://expenses/category?period=history\u0026date=2022-04",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 644588,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 850547,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-05-24T12:25:18.004+10:00",
+    "delivered_date": "2022-05-24T12:26:21.142+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Netflix bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Netflix bill for $17 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/44/thumb/10478570_10152214521608870_2744465531652776073_n.0.png?1519084840",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7887",
+      "open_mode": "internal"
+    }
+  }, {
+    "id": 644589,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 850548,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-05-24T12:25:21.420+10:00",
+    "delivered_date": "2022-05-24T12:26:21.142+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "Amaysim bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your Amaysim bill for $39 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/89/thumb/amaysim.png?1543468367",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/7888",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": null,
+      "after": "644589"
+    },
+    "next": "https://api-staging.frollo.us/api/v2/messages/?after=644589\u0026size=25\u0026design_types=dash_1\u0026order=asc\u0026sort=created_at",
+    "total": 49
+  }
+}

@@ -26,7 +26,16 @@ import us.frollo.frollosdk.testutils.randomNumber
 import us.frollo.frollosdk.testutils.randomString
 import kotlin.random.Random
 
-internal fun testMessageResponseData(type: ContentType? = null, types: List<String>? = null, read: Boolean? = null, msgId: Long? = null): MessageResponse {
+internal fun testMessageResponseData(
+    type: ContentType? = null,
+    types: List<String>? = null,
+    read: Boolean? = null,
+    msgId: Long? = null,
+    createdDate: String? = null,
+    deliveredDate: String? = null,
+    interactedDate: String? = null,
+    designType: String? = null
+): MessageResponse {
     val htmlContent = MessageContent(
         footer = randomString(20),
         header = randomString(20),
@@ -38,7 +47,7 @@ internal fun testMessageResponseData(type: ContentType? = null, types: List<Stri
         width = randomNumber(1..1000).toDouble()
     )
     val textContent = MessageContent(
-        designType = "information",
+        designType = designType ?: "information",
         footer = randomString(20),
         header = randomString(20),
         imageUrl = "https://example.com/image.png",
@@ -63,20 +72,23 @@ internal fun testMessageResponseData(type: ContentType? = null, types: List<Stri
     }
 
     return MessageResponse(
-        messageId = if (msgId == null) randomNumber().toLong() else msgId,
+        messageId = msgId ?: randomNumber().toLong(),
         action = Action(link = "frollo://dashboard", openMode = OpenMode.INTERNAL, title = randomString(30)),
         contentType = contentType,
         content = content,
         event = randomString(30),
         interacted = randomBoolean(),
-        messageTypes = if (types == null) mutableListOf("home_nudge") else types,
+        messageTypes = types ?: mutableListOf("home_nudge"),
         persists = randomBoolean(),
         placement = randomNumber(1..1000).toLong(),
         autoDismiss = randomBoolean(),
-        read = if (read == null) randomBoolean() else read,
+        read = read ?: randomBoolean(),
         title = randomString(100),
         userEventId = randomNumber(1..100000).toLong(),
-        metadata = null
+        metadata = null,
+        createdDate = createdDate ?: "2011-12-04T10:15:30+01:00",
+        deliveredDate = deliveredDate ?: "2011-12-04T10:15:30+01:00",
+        interactedDate = interactedDate ?: "2011-12-04T10:15:30+01:00"
     )
 }
 
@@ -85,16 +97,19 @@ internal fun MessageResponse.testModifyUserResponseData(newTitle: String? = null
         messageId = messageId,
         action = action,
         contentType = contentType,
-        content = if (messageContent == null) content else messageContent,
+        content = messageContent ?: content,
         event = event,
         interacted = interacted,
-        messageTypes = if (types == null) messageTypes else types,
+        messageTypes = types ?: messageTypes,
         persists = persists,
         placement = placement,
         autoDismiss = randomBoolean(),
         read = read,
-        title = if (newTitle == null) title else newTitle,
+        title = newTitle ?: title,
         userEventId = userEventId,
-        metadata = null
+        metadata = null,
+        createdDate = "2011-12-04T10:15:30+01:00",
+        deliveredDate = "2011-12-04T10:15:30+01:00",
+        interactedDate = "2011-12-04T10:15:30+01:00"
     )
 }

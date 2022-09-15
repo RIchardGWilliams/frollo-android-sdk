@@ -1,0 +1,36 @@
+{
+  "data": [{
+    "id": 786536,
+    "event": "BILL_CONFIRMED",
+    "user_event_id": 1013923,
+    "placement": 20,
+    "persists": false,
+    "auto_dismiss": false,
+    "read": true,
+    "interacted": false,
+    "created_date": "2022-08-12T11:01:20.238+10:00",
+    "delivered_date": "2022-08-12T11:06:36.633+10:00",
+    "message_types": ["bill_alerts"],
+    "content_type": "text",
+    "title": "TRUenergy bill found",
+    "metadata": {},
+    "content": {
+      "text": "We're now tracking your TRUenergy bill for $20 monthly",
+      "image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1623295401.png?1623295401",
+      "design_type": "dash_1"
+    },
+    "action": {
+      "title": "Change bill details",
+      "link": "frollo-staging://bills/31091",
+      "open_mode": "internal"
+    }
+  }],
+  "paging": {
+    "cursors": {
+      "before": "786536",
+      "after": null
+    },
+    "previous": "https://api-staging.frollo.us/api/v2/messages/?before=786536\u0026size=25\u0026design_types=dash_1\u0026order=desc\u0026sort=created_at",
+    "total": 51
+  }
+}

@@ -28,15 +28,19 @@ import org.junit.Test
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
+import us.frollo.frollosdk.base.PaginatedResult
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.model.coredata.messages.ContentType
+import us.frollo.frollosdk.model.coredata.messages.MessageFilter
 import us.frollo.frollosdk.model.coredata.messages.MessageHTML
 import us.frollo.frollosdk.model.coredata.messages.MessageImage
+import us.frollo.frollosdk.model.coredata.messages.MessageSortType
 import us.frollo.frollosdk.model.coredata.messages.MessageText
 import us.frollo.frollosdk.model.coredata.messages.MessageVideo
+import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.model.testMessageNotificationPayload
 import us.frollo.frollosdk.model.testMessageResponseData
 import us.frollo.frollosdk.network.api.MessagesAPI
@@ -87,8 +91,8 @@ class MessagesTest : BaseAndroidTest() {
 
         val testObserver = messages.fetchMessages().test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(4, testObserver.value().data?.size)
+        assertNotNull(testObserver.value())
+        assertEquals(4, testObserver.value()?.size)
 
         tearDown()
     }
@@ -105,10 +109,10 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(read = false).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(2, testObserver.value().data?.size)
+        assertNotNull(testObserver.value())
+        assertEquals(2, testObserver.value()?.size)
 
         tearDown()
     }
@@ -125,10 +129,10 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(messageTypes = mutableListOf("survey")).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(messageTypes = listOf("survey"))).test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(2, testObserver.value().data?.size)
+        assertNotNull(testObserver.value())
+        assertEquals(2, testObserver.value()?.size)
 
         tearDown()
     }
@@ -145,10 +149,10 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        val testObserver = messages.fetchMessages(read = false, contentType = ContentType.TEXT).test()
+        val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false, contentTypes = listOf(ContentType.TEXT))).test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(2, testObserver.value().data?.size)
+        assertNotNull(testObserver.value())
+        assertEquals(2, testObserver.value()?.size)
 
         tearDown()
     }
@@ -165,7 +169,7 @@ class MessagesTest : BaseAndroidTest() {
 
         database.messages().insertAll(*list.toTypedArray())
 
-        messages.fetchMessagesCount(read = true) { resource ->
+        messages.fetchMessagesCount(messageFilter = MessageFilter(read = true)) { resource ->
             assertEquals(2L, resource.data)
         }
 
@@ -173,50 +177,195 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshMessages() {
+    fun testRefreshMessagesWithPaginationOrderDesc() {
         initSetup()
+
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&size=25"
+        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&after=804460&size=25"
+        val requestPath3 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts%2Cdashboard_alerts&content_types=text&design_types=dash_1%2Cdash_2&sort=created_at&order=desc&after=786537&size=25"
 
         val signal = CountDownLatch(1)
 
-        val body = readStringFromJson(app, R.raw.messages_valid)
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES) {
+                    if (request.trimmedPath == requestPath1) {
                         return MockResponse()
                             .setResponseCode(200)
-                            .setBody(body)
+                            .setBody(readStringFromJson(app, R.raw.messages_desc_page1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_desc_page2))
+                    } else if (request.trimmedPath == requestPath3) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_desc_page3))
                     }
                     return MockResponse().setResponseCode(404)
                 }
             }
             )
 
-        messages.refreshMessages { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
+        // Insert some stale messages greater than first page first message's created_date
+        val data1 = testMessageResponseData(msgId = 101, createdDate = "2022-09-01T12:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
 
-            val testObserver = messages.fetchMessages().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(39, models?.size)
-            models?.forEach { message ->
-                when (message.contentType) {
-                    ContentType.HTML -> assertTrue(message is MessageHTML)
-                    ContentType.VIDEO -> assertTrue(message is MessageVideo)
-                    ContentType.IMAGE -> assertTrue(message is MessageImage)
-                    ContentType.TEXT -> assertTrue(message is MessageText)
+        // Insert some stale messages lesser than first page first message's created_date
+        // and greater than first page last message's created_date
+        val data2 = testMessageResponseData(msgId = 102, createdDate = "2022-08-23T10:29:35.103+10:00", types = listOf("dashboard_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between second page first message's created_date
+        // and second page last message's created_date
+        val data3 = testMessageResponseData(msgId = 103, createdDate = "2022-08-14T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_2")
+
+        // Insert some stale messages lesser than last page last message's created_date
+        val data4 = testMessageResponseData(msgId = 104, createdDate = "2022-08-11T10:29:35.103+10:00", types = listOf("dashboard_alerts"), type = ContentType.TEXT, designType = "dash_2")
+
+        // Insert some stale messages between first page first message's created_date and
+        // and first page last message's created_date but different message type
+        // and ensure that this message is not deleted after refresh
+        val data5 = testMessageResponseData(msgId = 105, createdDate = "2022-08-23T10:29:35.103+10:00", types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1")
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.messages().insertAll(*list.toTypedArray())
+
+        val messageFilter = MessageFilter(
+            messageTypes = listOf("bill_alerts", "dashboard_alerts"),
+            contentTypes = listOf(ContentType.TEXT),
+            designTypes = listOf("dash_1", "dash_2"),
+            size = 25,
+            sortBy = MessageSortType.CREATED_AT,
+            orderBy = OrderType.DESC
+        )
+        messages.refreshMessagesWithPagination(messageFilter) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(804460L, result1.paginationInfo?.after)
+
+            messageFilter.after = result1.paginationInfo?.after?.toString()
+            messages.refreshMessagesWithPagination(messageFilter) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(804459L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertEquals(786537L, result2.paginationInfo?.after)
+
+                messageFilter.after = result2.paginationInfo?.after?.toString()
+                messages.refreshMessagesWithPagination(messageFilter) { result3 ->
+                    assertTrue(result3 is PaginatedResult.Success)
+                    assertEquals(786536L, (result3 as PaginatedResult.Success).paginationInfo?.before)
+                    assertNull(result3.paginationInfo?.after)
+
+                    // Fetch all messages in DB
+                    val testObserver = messages.fetchMessages(MessageFilter()).test()
+                    testObserver.awaitValue()
+                    val models = testObserver.value()
+                    assertNotNull(models)
+                    assertEquals(52, models?.size)
+
+                    // Verify that the stale messages are deleted from the database
+                    assertEquals(0, models?.filter { it.messageId in listOf(101L, 102L, 103L, 104L) }?.size)
+
+                    // Verify that the message_id = 105 in not deleted from the database
+                    assertEquals(1, models?.filter { it.messageId == 105L }?.size)
+
+                    signal.countDown()
                 }
             }
-
-            signal.countDown()
         }
 
-        val request = mockServer.takeRequest()
-        assertEquals(MessagesAPI.URL_MESSAGES, request.trimmedPath)
+        signal.await(120, TimeUnit.SECONDS)
+
+        assertEquals(3, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshMessagesWithPaginationOrderAsc() {
+        initSetup()
+
+        val requestPath1 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&content_types=text&design_types=dash_1&sort=created_at&order=asc&size=25"
+        val requestPath2 = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&content_types=text&design_types=dash_1&sort=created_at&order=asc&after=644589&size=25"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_asc_page1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_asc_page2))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale messages lesser than first page first message's created_date
+        val data1 = testMessageResponseData(msgId = 101, createdDate = "2022-04-05T12:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages greater than first page first message's created_date
+        // and lesser than first page last message's created_date
+        val data2 = testMessageResponseData(msgId = 102, createdDate = "2022-04-18T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between second page first message's created_date
+        // and second page last message's created_date
+        val data3 = testMessageResponseData(msgId = 103, createdDate = "2022-05-25T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages greater than last page last message's created_date
+        val data4 = testMessageResponseData(msgId = 104, createdDate = "2022-05-27T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+
+        // Insert some stale messages between first page first message's created_date and
+        // and first page last message's created_date but different message type
+        // and ensure that this message is not deleted after refresh
+        val data5 = testMessageResponseData(msgId = 105, createdDate = "2022-04-11T10:29:35.103+10:00", types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1")
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.messages().insertAll(*list.toTypedArray())
+
+        val messageFilter = MessageFilter(
+            messageTypes = listOf("bill_alerts"),
+            contentTypes = listOf(ContentType.TEXT),
+            designTypes = listOf("dash_1"),
+            size = 25,
+            sortBy = MessageSortType.CREATED_AT,
+            orderBy = OrderType.ASC
+        )
+        messages.refreshMessagesWithPagination(messageFilter) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(644589L, result1.paginationInfo?.after)
+
+            messageFilter.after = result1.paginationInfo?.after?.toString()
+            messages.refreshMessagesWithPagination(messageFilter) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(644590L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertNull(result2.paginationInfo?.after)
+
+                // Fetch all messages in DB
+                val testObserver = messages.fetchMessages(MessageFilter()).test()
+                testObserver.awaitValue()
+                val models = testObserver.value()
+                assertNotNull(models)
+                assertEquals(50, models?.size)
+
+                // Verify that the stale messages are deleted from the database
+                assertEquals(0, models?.filter { it.messageId in listOf(101L, 102L, 103L, 104L) }?.size)
+
+                // Verify that the message_id = 105 in not deleted from the database
+                assertEquals(1, models?.filter { it.messageId == 105L }?.size)
+
+                signal.countDown()
+            }
+        }
 
         signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(2, mockServer.requestCount)
 
         tearDown()
     }
@@ -229,63 +378,14 @@ class MessagesTest : BaseAndroidTest() {
 
         clearLoggedInPreferences()
 
-        messages.refreshMessages { result ->
-            assertEquals(Result.Status.ERROR, result.status)
-            assertNotNull(result.error)
+        messages.refreshMessagesWithPagination(MessageFilter()) { result ->
+            assertTrue(result is PaginatedResult.Error)
+            assertNotNull((result as PaginatedResult.Error).error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
 
             signal.countDown()
         }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshMessagesSkipsInvalid() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.messages_invalid)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == MessagesAPI.URL_MESSAGES) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        messages.refreshMessages { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = messages.fetchMessages().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(35, models?.size)
-            models?.forEach { message ->
-                when (message.contentType) {
-                    ContentType.HTML -> assertTrue(message is MessageHTML)
-                    ContentType.VIDEO -> assertTrue(message is MessageVideo)
-                    ContentType.IMAGE -> assertTrue(message is MessageImage)
-                    ContentType.TEXT -> assertTrue(message is MessageText)
-                }
-            }
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(MessagesAPI.URL_MESSAGES, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -379,9 +479,9 @@ class MessagesTest : BaseAndroidTest() {
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = messages.fetchMessages(read = false).test()
+            val testObserver = messages.fetchMessages(messageFilter = MessageFilter(read = false)).test()
             testObserver.awaitValue()
-            val models = testObserver.value().data
+            val models = testObserver.value()
             assertNotNull(models)
             assertEquals(7, models?.size)
             models?.forEach { message ->

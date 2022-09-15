@@ -59,6 +59,30 @@ abstract class Message(
     open val action: Action?,
 
     /** Metadata - custom JSON associated with the message (Optional) */
-    open val metadata: JsonObject?
+    open val metadata: JsonObject?,
+
+    /**
+     * Date the message was generated (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    open val createdDate: String?,
+
+    /**
+     * Date the message was delivered (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    open val deliveredDate: String?,
+
+    /**
+     * Date the message was interacted with (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    open val interactedDate: String?
 
 ) : IAdapterModel
