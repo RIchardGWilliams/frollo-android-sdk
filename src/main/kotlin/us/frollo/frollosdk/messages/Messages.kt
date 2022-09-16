@@ -31,6 +31,7 @@ import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.extensions.deleteMessagesInBulk
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchMessages
 import us.frollo.frollosdk.extensions.sqlForMessageIdsToGetStaleIds
@@ -214,6 +215,63 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#updateMessagesInBulk", resource.error?.localizedDescription)
                     completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete a message
+     *
+     * @param messageId Message ID to be deleted
+     * @param completion Optional completion handler with optional error if the request fails (Optional)
+     */
+    fun deleteMessage(messageId: Long, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        messagesAPI.deleteMessage(messageId).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#deleteMessage", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    doAsync {
+                        db.messages().delete(messageId)
+                        uiThread {
+                            completion?.invoke(Result.success())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Delete messages in bulk
+     *
+     * @param messageIds Message IDs to be deleted
+     * @param completion Optional completion handler with optional error if the request fails (Optional)
+     */
+    fun deleteMessagesInBulk(messageIds: List<Long>, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        if (messageIds.isEmpty()) {
+            val error = DataError(type = DataErrorType.API, subType = DataErrorSubType.INVALID_DATA)
+            Log.e("$TAG#deleteTagsInBulk", "Empty Messages IDs")
+            completion?.invoke(Result.error(error))
+            return
+        }
+
+        messagesAPI.deleteMessagesInBulk(messageIds).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#deleteMessagesInBulk", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    doAsync {
+                        db.messages().deleteMany(messageIds.toLongArray())
+                        uiThread {
+                            completion?.invoke(Result.success())
+                        }
+                    }
                 }
             }
         }
