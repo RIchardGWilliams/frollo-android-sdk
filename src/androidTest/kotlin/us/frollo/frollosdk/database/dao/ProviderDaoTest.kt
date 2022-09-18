@@ -37,9 +37,11 @@ import us.frollo.frollosdk.model.testProviderResponseData
 
 class ProviderDaoTest {
 
-    @get:Rule val testRule = InstantTaskExecutorRule()
+    @get:Rule
+    val testRule = InstantTaskExecutorRule()
 
-    private val app = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
+    private val app =
+        InstrumentationRegistry.getInstrumentation().targetContext.applicationContext as Application
     private val db = SDKDatabase.getInstance(app, testSDKConfig())
 
     @Before
@@ -71,7 +73,11 @@ class ProviderDaoTest {
     @Test
     fun testLoadByProviderId() {
         val data = testProviderResponseData(providerId = 102)
-        val list = mutableListOf(testProviderResponseData(providerId = 101), data, testProviderResponseData(providerId = 103))
+        val list = mutableListOf(
+            testProviderResponseData(providerId = 101),
+            data,
+            testProviderResponseData(providerId = 103)
+        )
         db.providers().insertAll(*list.map { it.toProvider() }.toList().toTypedArray())
 
         val testObserver = db.providers().load(data.providerId).test()
@@ -178,8 +184,18 @@ class ProviderDaoTest {
     @Test
     fun testLoadAllWithRelation() {
         db.providers().insert(testProviderResponseData(providerId = 123).toProvider())
-        db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
-        db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 235, providerId = 123).toProviderAccount())
+        db.providerAccounts().insert(
+            testProviderAccountResponseData(
+                providerAccountId = 234,
+                providerId = 123
+            ).toProviderAccount()
+        )
+        db.providerAccounts().insert(
+            testProviderAccountResponseData(
+                providerAccountId = 235,
+                providerId = 123
+            ).toProviderAccount()
+        )
 
         val testObserver = db.providers().loadWithRelation().test()
         testObserver.awaitValue()
@@ -197,8 +213,18 @@ class ProviderDaoTest {
     @Test
     fun testLoadByProviderIdWithRelation() {
         db.providers().insert(testProviderResponseData(providerId = 123).toProvider())
-        db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
-        db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 235, providerId = 123).toProviderAccount())
+        db.providerAccounts().insert(
+            testProviderAccountResponseData(
+                providerAccountId = 234,
+                providerId = 123
+            ).toProviderAccount()
+        )
+        db.providerAccounts().insert(
+            testProviderAccountResponseData(
+                providerAccountId = 235,
+                providerId = 123
+            ).toProviderAccount()
+        )
 
         val testObserver = db.providers().loadWithRelation(providerId = 123).test()
         testObserver.awaitValue()
@@ -209,5 +235,23 @@ class ProviderDaoTest {
         assertEquals(2, model?.providerAccounts?.size)
         assertEquals(234L, model?.providerAccounts?.get(0)?.providerAccountId)
         assertEquals(235L, model?.providerAccounts?.get(1)?.providerAccountId)
+    }
+
+    @Test
+    fun testFetchProvidersByIdsWithRelation() {
+        val data1 = testProviderResponseData(providerId = 100)
+        val data2 = testProviderResponseData(providerId = 101)
+        val data3 = testProviderResponseData(providerId = 102)
+        val data4 = testProviderResponseData(providerId = 103)
+        val list = mutableListOf(data1, data2, data3, data4)
+        db.providers().insertAll(*list.map { it.toProvider() }.toList().toTypedArray())
+
+        val testObserver = db.providers().fetchProvidersByIdsWithRelation(listOf(100L, 103L).toLongArray()).test()
+        testObserver.awaitValue()
+
+        val model = testObserver.value()
+        assertEquals(2, model?.size)
+        assertEquals(100L, model?.get(0)?.provider?.providerId)
+        assertEquals(1234L, model?.get(0)?.provider?.associatedProviderIds?.get(0))
     }
 }

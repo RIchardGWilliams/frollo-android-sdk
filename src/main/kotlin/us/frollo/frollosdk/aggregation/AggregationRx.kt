@@ -93,6 +93,16 @@ fun Aggregation.fetchProvidersRx(query: SimpleSQLiteQuery): Observable<List<Prov
 }
 
 /**
+ * Method to fetch providers by IDs from the cache
+ *
+ * @param providerIds Unique provider IDs to fetch
+ * @return Rx Observable object of List<Provider> which can be observed using an Observer for future changes as well.
+ */
+fun Aggregation.fetchProvidersByIdsRxWithRelation(providerIds: List<Long>): Observable<List<ProviderRelation>> {
+    return db.providers().fetchProvidersByIdsWithRelationRx(providerIds.toLongArray())
+}
+
+/**
  * Fetch provider by ID from the cache along with other associated data.
  *
  * @param providerId Unique provider ID to fetch

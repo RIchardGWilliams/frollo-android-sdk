@@ -158,6 +158,28 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchProvidersByIdsWithRelation() {
+        initSetup()
+
+        val data1 = testProviderResponseData(providerId = 100)
+        val data2 = testProviderResponseData(providerId = 101)
+        val data3 = testProviderResponseData(providerId = 102)
+        val data4 = testProviderResponseData(providerId = 103)
+        val list = mutableListOf(data1, data2, data3, data4)
+
+        database.providers().insertAll(*list.map { it.toProvider() }.toList().toTypedArray())
+
+        val testObserver = aggregation.fetchProvidersByIdsWithRelation(listOf(100L, 103L)).test()
+        testObserver.awaitValue()
+
+        assertEquals(2, testObserver.value().size)
+        assertEquals(103L, testObserver.value()[1].provider?.providerId)
+        assertEquals(2345L, testObserver.value()[1].provider?.associatedProviderIds?.get(1))
+
+        tearDown()
+    }
+
+    @Test
     fun testFetchProviderByIDWithRelation() {
         initSetup()
 

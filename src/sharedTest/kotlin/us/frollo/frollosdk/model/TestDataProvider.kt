@@ -97,6 +97,6 @@ internal fun testProviderResponseData(providerId: Long? = null): ProviderRespons
         permissionIds = null,
         productsAvailable = false,
         jointAccountsAvailable = null,
-        associatedProviderIds = null
+        associatedProviderIds = listOf(1234L, 2345L, 3456L)
     )
 }

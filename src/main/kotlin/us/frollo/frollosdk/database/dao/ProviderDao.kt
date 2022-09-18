@@ -79,6 +79,10 @@ internal interface ProviderDao {
     @RawQuery(observedEntities = [Provider::class])
     fun loadByQueryWithRelation(queryStr: SupportSQLiteQuery): LiveData<List<ProviderRelation>>
 
+    @androidx.room.Transaction
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIdsWithRelation(providerIds: LongArray): LiveData<List<ProviderRelation>>
+
     /**
      * RxJava Return Types
      */
@@ -105,4 +109,8 @@ internal interface ProviderDao {
     @androidx.room.Transaction
     @RawQuery(observedEntities = [Provider::class])
     fun loadByQueryWithRelationRx(queryStr: SupportSQLiteQuery): Observable<List<ProviderRelation>>
+
+    @androidx.room.Transaction
+    @Query("SELECT * FROM provider WHERE provider_id IN (:providerIds)")
+    fun fetchProvidersByIdsWithRelationRx(providerIds: LongArray): Observable<List<ProviderRelation>>
 }

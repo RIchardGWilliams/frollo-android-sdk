@@ -212,6 +212,16 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
 
     /**
+     * Method to fetch providers by IDs from the cache
+     *
+     * @param providerIds Unique provider IDs to fetch
+     * @return LiveData object of List<Provider> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchProvidersByIdsWithRelation(providerIds: List<Long>): LiveData<List<ProviderRelation>> {
+        return db.providers().fetchProvidersByIdsWithRelation(providerIds.toLongArray())
+    }
+
+    /**
      * Fetch provider by ID from the cache along with other associated data.
      *
      * @param providerId Unique provider ID to fetch
@@ -2662,9 +2672,12 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         }
     }
 
-    // Internal methods
-
-    private fun fetchMissingProviders(providerIds: Set<Long>) {
+    /**
+     * Fetch missing providers by ID from the cache and refresh from the host
+     *
+     * @param providerIds Unique provider IDs to fetch
+     */
+    fun fetchMissingProviders(providerIds: Set<Long>) {
         doAsync {
             val existingProviderIds = db.providers().getIds().toSet()
             val missingProviderIds = providerIds.compareToFindMissingItems(existingProviderIds).minus(refreshingProviderIDs)
@@ -2676,6 +2689,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
             }
         }
     }
+
+    // Internal methods
 
     internal fun fetchMissingMerchants(merchantIds: Set<Long>) {
         doAsync {
