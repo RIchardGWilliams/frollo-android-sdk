@@ -583,6 +583,155 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testDeleteBudget() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val messageId: Long = 6
+
+        val requestPath = "messages/$messageId"
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        database.messages().insert(testMessageResponseData(msgId = messageId))
+
+        var testObserver = messages.fetchMessage(messageId).test()
+
+        testObserver.awaitValue()
+        val model = testObserver.value().data
+        assertNotNull(model)
+        assertEquals(messageId, model?.messageId)
+
+        messages.deleteMessage(messageId) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            testObserver = messages.fetchMessage(messageId).test()
+
+            testObserver.awaitValue()
+            assertNull(testObserver.value().data)
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testDeleteMessageFailsIfLoggedOut() {
+        initSetup()
+
+        clearLoggedInPreferences()
+        val signal = CountDownLatch(1)
+
+        messages.deleteMessage(6) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testDeleteMessagesInBulk() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val requestPath = "${MessagesAPI.URL_MESSAGES_BULK}?message_ids=1%2C2"
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        database.messages().insertAll(
+            testMessageResponseData(msgId = 1),
+            testMessageResponseData(msgId = 2)
+        )
+
+        var testObserver = messages.fetchMessage(1L).test()
+        testObserver.awaitValue()
+        var model = testObserver.value().data
+        assertNotNull(model)
+        assertEquals(1L, model?.messageId)
+
+        testObserver = messages.fetchMessage(2L).test()
+        testObserver.awaitValue()
+        model = testObserver.value().data
+        assertNotNull(model)
+        assertEquals(2L, model?.messageId)
+
+        messages.deleteMessagesInBulk(listOf(1, 2)) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            testObserver = messages.fetchMessage(1).test()
+            testObserver.awaitValue()
+            assertNull(testObserver.value().data)
+
+            testObserver = messages.fetchMessage(2).test()
+            testObserver.awaitValue()
+            assertNull(testObserver.value().data)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testDeleteMessagesInBulkFailsIfLoggedOut() {
+        initSetup()
+
+        clearLoggedInPreferences()
+        val signal = CountDownLatch(1)
+
+        messages.deleteMessagesInBulk(listOf(1L, 2L, 3L)) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testMarkMessagesAsRead() {
         initSetup()
 

@@ -453,3 +453,11 @@ internal fun MessagesAPI.fetchMessages(
 ): Call<PaginatedResponse<MessageResponse>> {
     return fetchMessages(messageFilter?.getQueryMap() ?: mutableMapOf())
 }
+
+internal fun MessagesAPI.deleteMessagesInBulk(
+    messageIds: List<Long>
+): Call<Void> {
+    val queryMap = mutableMapOf<String, String>()
+    queryMap["message_ids"] = messageIds.joinToString(",")
+    return deleteMessagesInBulk(queryMap)
+}

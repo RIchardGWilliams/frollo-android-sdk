@@ -18,6 +18,7 @@ package us.frollo.frollosdk.network.api
 
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -45,4 +46,10 @@ internal interface MessagesAPI {
 
     @PUT(URL_MESSAGES_BULK)
     fun updateMessagesInBulk(@Body request: List<MessageBulkUpdateRequest>): Call<List<MessageResponse>>
+
+    @DELETE(URL_MESSAGE)
+    fun deleteMessage(@Path("message_id") id: Long): Call<Void>
+
+    @DELETE(URL_MESSAGES_BULK)
+    fun deleteMessagesInBulk(@QueryMap options: Map<String, String>): Call<Void>
 }
