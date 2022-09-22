@@ -4855,7 +4855,6 @@ class AggregationTest : BaseAndroidTest() {
         database.cdrConfiguration().insert(
             testCDRConfigurationData(
                 configId = 100,
-                adrId = "12345",
                 externalId = CDR_CONFIG_EXTERNAL_ID
             ).toCDRConfiguration()
         )
@@ -4863,7 +4862,6 @@ class AggregationTest : BaseAndroidTest() {
         val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
         testObserver.awaitValue()
         assertEquals(100L, testObserver.value()?.configId)
-        assertEquals("12345", testObserver.value()?.adrId)
 
         tearDown()
     }
@@ -4897,8 +4895,6 @@ class AggregationTest : BaseAndroidTest() {
             val model = testObserver.value()
             assertNotNull(model)
             assertEquals(1L, model?.configId)
-            assertEquals("ADRBNK000002", model?.adrId)
-            assertEquals("FROLLO AUSTRALIA PTY Limited", model?.adrName)
             assertEquals("support@frollo.us", model?.supportEmail)
             assertEquals(3, model?.sharingDurations?.size)
             assertEquals(2, model?.permissions?.size)
@@ -4906,13 +4902,13 @@ class AggregationTest : BaseAndroidTest() {
             assertEquals("Frollo", model?.displayName)
             assertEquals("https://example.com", model?.cdrPolicyUrl)
             assertEquals(CDRModel.AFFILIATE, model?.model)
-            assertEquals(12345L, model?.relatedParties?.first()?.partyId)
-            assertEquals("ACME Inc", model?.relatedParties?.first()?.name)
-            assertEquals("Enhance stuff", model?.relatedParties?.first()?.description)
-            assertEquals(CDRPartyType.OSP, model?.relatedParties?.first()?.type)
-            assertEquals("AFF0001", model?.relatedParties?.first()?.adrId)
-            assertEquals("CDR Policy", model?.relatedParties?.first()?.policy?.name)
-            assertEquals("https://example.com", model?.relatedParties?.first()?.policy?.url)
+            assertEquals(12345L, model?.parties?.first()?.partyId)
+            assertEquals("ACME Inc", model?.parties?.first()?.name)
+            assertEquals("Enhance stuff", model?.parties?.first()?.description)
+            assertEquals(CDRPartyType.OSP, model?.parties?.first()?.type)
+            assertEquals("AFF0001", model?.parties?.first()?.adrId)
+            assertEquals("CDR Policy", model?.parties?.first()?.policy?.name)
+            assertEquals("https://example.com", model?.parties?.first()?.policy?.url)
             assertEquals(7890000L, model?.sharingUseDuration)
             assertEquals(53, model?.initialSyncWindowWeeks)
 

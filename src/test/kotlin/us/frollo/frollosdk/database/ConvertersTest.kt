@@ -1441,7 +1441,7 @@ class ConvertersTest {
     @Test
     fun testStringFromListOfCDRParty() {
         val info = listOf(
-            CDRParty(12345, "ACME Inc", "Enhance stuff", CDRPartyType.OSP, "AFF0001", CDRPolicy("CDR Policy", "https://example.com"))
+            CDRParty(12345, "ACME Inc", "TEST Summary", "Enhance stuff", "https://frollo.com.au", CDRPartyType.OSP, "AFF0001", "12 345 678 901", CDRPolicy("CDR Policy", "https://example.com"))
         )
         val json = Converters.instance.stringFromListOfCDRParty(info)
         assertEquals("[{\"id\":12345,\"name\":\"ACME Inc\",\"description\":\"Enhance stuff\",\"type\":\"osp\",\"adr_id\":\"AFF0001\",\"policy\":{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}}]", json)

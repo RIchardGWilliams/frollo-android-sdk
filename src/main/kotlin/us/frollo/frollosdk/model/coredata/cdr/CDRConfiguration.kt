@@ -35,12 +35,6 @@ data class CDRConfiguration(
     /** Unique ID of the CDR Configuration */
     @PrimaryKey @ColumnInfo(name = "config_id") val configId: Long,
 
-    /** The ID of the ADR that handles CDR data */
-    @ColumnInfo(name = "adr_id") val adrId: String,
-
-    /** The name of the ADR that handles CDR data */
-    @ColumnInfo(name = "adr_name") val adrName: String,
-
     /** The email to contact for support */
     @ColumnInfo(name = "support_email") val supportEmail: String,
 
@@ -49,6 +43,9 @@ data class CDRConfiguration(
 
     /** Permissions for the CDR Configuration */
     @ColumnInfo(name = "permissions") val permissions: List<CDRPermission>?,
+
+    /** Any additional permissions for the CDR Configurations (Optional) */
+    @ColumnInfo(name = "additional_permissions") val additionalPermissions: List<String>?,
 
     /** External Identifier */
     @ColumnInfo(name = "external_id") val externalId: String,
@@ -69,5 +66,20 @@ data class CDRConfiguration(
     @ColumnInfo(name = "sharing_use_duration") val sharingUseDuration: Long,
 
     /** How many weeks of transactions to be retrieved during initial sync (Optional) */
-    @ColumnInfo(name = "initial_sync_window_weeks") val initialSyncWindowWeeks: Int?
+    @ColumnInfo(name = "initial_sync_window_weeks") val initialSyncWindowWeeks: Int?,
+
+    /** Software product Identifier */
+    @ColumnInfo(name = "software_id") val softwareId: String?,
+
+    /** Software product name */
+    @ColumnInfo(name = "software_name") val softwareName: String?,
+
+    /** Image URL */
+    @ColumnInfo(name = "image_url") val imageUrl: String?,
+
+    /** Summary of Software product */
+    @ColumnInfo(name = "summary") val summary: String?,
+
+    /** Description of Software product */
+    @ColumnInfo(name = "description") val description: String?
 )

@@ -239,16 +239,20 @@ internal fun ConsentUpdateForm.toConsentUpdateRequest(): ConsentUpdateRequest =
 internal fun CDRConfigurationResponse.toCDRConfiguration(): CDRConfiguration =
     CDRConfiguration(
         configId = configId,
-        adrId = adrId,
-        adrName = adrName,
         supportEmail = supportEmail,
         sharingDurations = sharingDurations,
         permissions = permissions,
+        additionalPermissions = additionalPermissions,
         externalId = externalId,
         displayName = displayName,
         cdrPolicyUrl = cdrPolicyUrl,
         model = model,
         relatedParties = relatedParties,
         sharingUseDuration = sharingUseDuration,
-        initialSyncWindowWeeks = initialSyncWindowWeeks
+        initialSyncWindowWeeks = initialSyncWindowWeeks,
+        softwareId = softwareId,
+        softwareName = softwareName,
+        imageUrl = imageUrl,
+        summary = summary,
+        description = description
     )
