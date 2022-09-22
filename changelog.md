@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.20.0
+
+#### Changes
+- Add/Remove fields in CDR Config API Response
+
 ### 3.19.0
 
 #### Changes
