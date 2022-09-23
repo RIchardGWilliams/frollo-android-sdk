@@ -7,6 +7,7 @@
 - List Messages API with Pagination
 - Bulk Update Messages API
 - Remove Unread Messages API
+- Delete Messages APIs
 
 ### 3.18.0
 

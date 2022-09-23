@@ -20,7 +20,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.sqlite.db.SimpleSQLiteQuery
 import us.frollo.frollosdk.base.PaginatedResult
-import us.frollo.frollosdk.base.PaginationInfo
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
@@ -40,6 +39,7 @@ import us.frollo.frollosdk.extensions.sqlForMessagesCount
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toMessage
 import us.frollo.frollosdk.model.api.messages.MessageBulkUpdateRequest
+import us.frollo.frollosdk.model.api.messages.MessagePaginationInfo
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.messages.MessageUpdateRequest
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
@@ -145,7 +145,7 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
      */
     fun refreshMessagesWithPagination(
         messageFilter: MessageFilter,
-        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<MessagePaginationInfo>>? = null
     ) {
         messagesAPI.fetchMessages(messageFilter).enqueue { resource ->
             when (resource.status) {
@@ -398,7 +398,7 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
     private fun handleMessagesResponseWithPaginationResponse(
         paginatedResponse: PaginatedResponse<MessageResponse>?,
         messageFilter: MessageFilter,
-        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<MessagePaginationInfo>>?
     ) {
         paginatedResponse?.data?.let { messages ->
             if (messages.isEmpty()) {
@@ -435,10 +435,11 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
                 }
 
                 uiThread {
-                    val paginationInfo = PaginationInfo(
+                    val paginationInfo = MessagePaginationInfo(
                         before = paginatedResponse.paging.cursors?.before?.toLong(),
                         after = paginatedResponse.paging.cursors?.after?.toLong(),
-                        total = paginatedResponse.paging.total
+                        total = paginatedResponse.paging.total,
+                        afterCreatedDate = lastMessageInPage.createdDate
                     )
                     completion?.invoke(PaginatedResult.Success(paginationInfo))
                 }
