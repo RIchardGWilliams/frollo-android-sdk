@@ -78,5 +78,8 @@ internal data class ConsentResponse(
     @SerializedName("sharing_duration") val sharingDuration: Long?,
 
     /** The new status for the consent */
-    @SerializedName("status") val status: ConsentStatus
+    @SerializedName("status") val status: ConsentStatus,
+
+    /** The external Id of the cdr config */
+    @SerializedName("cdr_config_external_id") val cdrConfigExternalId: String?
 )

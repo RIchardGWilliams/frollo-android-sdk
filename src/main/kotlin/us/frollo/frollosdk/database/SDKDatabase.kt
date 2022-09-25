@@ -770,6 +770,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 2) Alter table - message - Add columns created_date, delivered_date, interacted_date
                 // 3) Alter table - cdr_configuration - Rename related_parties to parties
                 // 4) Drop & re-create - cdr_configuration - Delete adr_id, adr_name columns
+                // 5) Alter table - consent - Add column cdr_config_external_id
 
                 // START - Add column initial_sync_window_weeks, software_id, software_name, summary, description
                 database.execSQL("ALTER TABLE `cdr_configuration` ADD COLUMN `initial_sync_window_weeks` INTEGER")
@@ -793,6 +794,10 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `message` ADD COLUMN `delivered_date` TEXT")
                 database.execSQL("ALTER TABLE `message` ADD COLUMN `interacted_date` TEXT")
                 // END - Add columns created_date, delivered_date, interacted_date
+
+                // START - Add column cdr_config_external_id
+                database.execSQL("ALTER TABLE `consent` ADD COLUMN `cdr_config_external_id` TEXT")
+                // END - Add column cdr_config_external_id
             }
         }
     }

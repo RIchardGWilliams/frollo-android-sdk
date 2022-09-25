@@ -4,6 +4,7 @@
 
 #### Changes
 - Add/Remove fields in CDR Config API Response
+- Add field in ConsentResponse & request
 
 ### 3.19.0
 

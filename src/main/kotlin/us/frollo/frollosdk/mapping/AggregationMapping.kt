@@ -216,7 +216,8 @@ internal fun ConsentResponse.toConsent(): Consent =
         sharingStoppedAt = sharingStoppedAt,
         sharingExpiresAt = sharingExpiresAt,
         sharingDuration = sharingDuration,
-        status = status
+        status = status,
+        cdrConfigExternalId = cdrConfigExternalId
     )
 
 internal fun ConsentCreateForm.toConsentCreateRequest(): ConsentCreateRequest =
@@ -226,7 +227,8 @@ internal fun ConsentCreateForm.toConsentCreateRequest(): ConsentCreateRequest =
         permissions = permissions,
         additionalPermissions = additionalPermissions,
         existingConsentId = existingConsentId,
-        deleteRedundantData = true
+        deleteRedundantData = true,
+        cdrConfigExternalId = cdrConfigExternalId
     )
 
 internal fun ConsentUpdateForm.toConsentUpdateRequest(): ConsentUpdateRequest =

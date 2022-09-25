@@ -2322,6 +2322,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         after: Long? = null,
         before: Long? = null,
         size: Long? = null,
+        cdrConfigExternalId: String? = null,
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
     ) {
         cdrAPI.fetchConsents(
@@ -2330,7 +2331,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
             providerAccountId = providerAccountId,
             after = after,
             before = before,
-            size = size
+            size = size,
+            cdrConfigExternalId = cdrConfigExternalId ?: ""
         ).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.ERROR -> {
@@ -2346,6 +2348,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                         providerAccountId = providerAccountId,
                         before = response?.paging?.cursors?.before?.toLong(),
                         after = response?.paging?.cursors?.after?.toLong(),
+                        cdrConfigExternalId = cdrConfigExternalId ?: "",
                         completion = completion
                     )
                 }
@@ -2501,6 +2504,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         providerAccountId: Long? = null,
         after: Long?,
         before: Long?,
+        cdrConfigExternalId: String,
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
     ) {
         response?.let {
@@ -2519,7 +2523,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                         providerId = providerId,
                         providerAccountId = providerAccountId,
                         before = before,
-                        after = after
+                        after = after,
+                        cdrConfigExternalId = cdrConfigExternalId
                     )
                 ).toHashSet()
 
