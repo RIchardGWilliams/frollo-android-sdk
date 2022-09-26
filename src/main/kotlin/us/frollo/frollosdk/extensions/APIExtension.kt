@@ -329,8 +329,7 @@ internal fun CdrAPI.fetchConsents(
     providerAccountId: Long? = null,
     after: Long? = null,
     before: Long? = null,
-    size: Long? = null,
-    cdrConfigExternalId: String
+    size: Long? = null
 ): Call<PaginatedResponse<ConsentResponse>> {
     val queryMap = mutableMapOf<String, String>()
     status?.let { queryMap.put("status", status.toString()) }
@@ -339,7 +338,6 @@ internal fun CdrAPI.fetchConsents(
     after?.let { queryMap.put("after", it.toString()) }
     before?.let { queryMap.put("before", it.toString()) }
     size?.let { queryMap.put("size", it.toString()) }
-    cdrConfigExternalId.let { queryMap.put("cdrConfigExternalId", it) }
     return fetchConsents(queryMap)
 }
 

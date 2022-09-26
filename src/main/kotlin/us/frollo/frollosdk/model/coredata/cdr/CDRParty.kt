@@ -12,14 +12,14 @@ data class CDRParty(
     /** The name of the CDR Party */
     @SerializedName("name") val name: String,
 
-    /** The summary of the CDR Party */
-    @SerializedName("summary") val summary: String,
+    /** The summary of the CDR Party (Optional) */
+    @SerializedName("summary") val summary: String?,
 
     /** The description of the CDR Party */
     @SerializedName("description") val description: String,
 
-    /** The description of the CDR Party */
-    @SerializedName("image_url") val imageUrl: String,
+    /** The description of the CDR Party (Optional) */
+    @SerializedName("image_url") val imageUrl: String?,
 
     /** Type of the CDR Party */
     @SerializedName("type") val type: CDRPartyType,

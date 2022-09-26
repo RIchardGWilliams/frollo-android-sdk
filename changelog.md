@@ -1,11 +1,5 @@
 ## Changelog
 
-### 3.20.0
-
-#### Changes
-- Add/Remove fields in CDR Config API Response
-- Add field in ConsentResponse & request
-
 ### 3.19.0
 
 #### Changes
@@ -13,6 +7,8 @@
 - List Messages API with Pagination
 - Bulk Update Messages API
 - Remove Unread Messages API
+- Add/Remove fields in CDR Config API Response
+- Add field in ConsentResponse & request
 
 ### 3.18.0
 
