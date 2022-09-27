@@ -634,7 +634,6 @@ internal fun sqlForConsentIdsToGetStaleIds(
     providerAccountId?.let { sqlQueryBuilder.appendSelection(selection = "provider_account_id = $it") }
     before?.let { sqlQueryBuilder.appendSelection(selection = "consent_id > $it") }
     after?.let { sqlQueryBuilder.appendSelection(selection = "consent_id <= $it") }
-
     return sqlQueryBuilder.create()
 }
 

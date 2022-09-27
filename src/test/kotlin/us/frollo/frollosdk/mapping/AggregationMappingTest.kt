@@ -104,8 +104,8 @@ class AggregationMappingTest {
 
     @Test
     fun testCDRConfigurationResponseToCDRConfiguration() {
-        val response = testCDRConfigurationData(adrId = "12345")
+        val response = testCDRConfigurationData(configId = 12345L)
         val model = response.toCDRConfiguration()
-        assertEquals("12345", model.adrId)
+        assertEquals(12345L, model.configId)
     }
 }

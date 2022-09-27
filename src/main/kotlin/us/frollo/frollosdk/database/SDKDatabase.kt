@@ -766,18 +766,30 @@ abstract class SDKDatabase : RoomDatabase() {
                 // https://frollo.atlassian.net/browse/WA-3067
 
                 // New changes in this migration:
-                // 1) Alter table - cdr_configuration - Add column initial_sync_window_weeks
+                // 1) Drop & re-create - cdr_configuration - Delete columns adr_id, adr_name and Add columns initial_sync_window_weeks, additional_permissions, software_id, software_name, summary, image_url, description
                 // 2) Alter table - message - Add columns created_date, delivered_date, interacted_date
+                // 3) Alter table - consent - Add column cdr_config_external_id
 
-                // START - Add column initial_sync_window_weeks
-                database.execSQL("ALTER TABLE `cdr_configuration` ADD COLUMN `initial_sync_window_weeks` INTEGER")
-                // END - Add column initial_sync_window_weeks
+                // START - Drop columns adr_id, adr_name and Add columns initial_sync_window_weeks,
+                // additional_permissions, software_id, software_name, summary, image_url, description
+                database.execSQL("DROP INDEX IF EXISTS `index_cdr_configuration_config_id`")
+                database.execSQL("ALTER TABLE cdr_configuration RENAME TO original_cdr_configuration")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `additional_permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, `sharing_use_duration` INTEGER NOT NULL, `initial_sync_window_weeks` INTEGER, `software_id` TEXT, `software_name` TEXT, `image_url` TEXT, `summary` TEXT, `description` TEXT, PRIMARY KEY(`config_id`))")
+                database.execSQL("INSERT INTO cdr_configuration(config_id, support_email, sharing_durations, permissions, external_id, display_name, cdr_policy_url, model, related_parties, sharing_use_duration) SELECT config_id, support_email, sharing_durations, permissions, external_id, display_name, cdr_policy_url, model, related_parties, sharing_use_duration FROM original_cdr_configuration")
+                database.execSQL("DROP TABLE original_cdr_configuration")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
+                // END - Drop columns adr_id, adr_name and Add columns initial_sync_window_weeks,
+                // additional_permissions, software_id, software_name, summary, image_url, description
 
                 // START - Add columns created_date, delivered_date, interacted_date
                 database.execSQL("ALTER TABLE `message` ADD COLUMN `created_date` TEXT")
                 database.execSQL("ALTER TABLE `message` ADD COLUMN `delivered_date` TEXT")
                 database.execSQL("ALTER TABLE `message` ADD COLUMN `interacted_date` TEXT")
                 // END - Add columns created_date, delivered_date, interacted_date
+
+                // START - Add column cdr_config_external_id
+                database.execSQL("ALTER TABLE `consent` ADD COLUMN `cdr_config_external_id` TEXT")
+                // END - Add column cdr_config_external_id
             }
         }
     }
