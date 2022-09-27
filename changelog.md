@@ -7,6 +7,7 @@
 - List Messages API with Pagination
 - Bulk Update Messages API
 - Remove Unread Messages API
+- Delete Messages APIs
 - Add/Remove fields in CDR Config API Response
 - Add field in ConsentResponse & request
 
