@@ -37,5 +37,8 @@ internal data class ConsentCreateRequest(
     @SerializedName("delete_redundant_data") val deleteRedundantData: Boolean,
 
     /** ID of the consent being updated (Optional) */
-    @SerializedName("existing_consent_id") val existingConsentId: Long?
+    @SerializedName("existing_consent_id") val existingConsentId: Long?,
+
+    /** External ID of the cdr config */
+    @SerializedName("cdr_config_external_id") val cdrConfigExternalId: String
 )

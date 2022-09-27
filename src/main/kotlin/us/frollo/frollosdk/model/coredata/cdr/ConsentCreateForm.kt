@@ -34,5 +34,8 @@ data class ConsentCreateForm(
     var additionalPermissions: List<String>? = null,
 
     /** ID of the consent being updated (Optional) */
-    var existingConsentId: Long? = null
+    var existingConsentId: Long? = null,
+
+    /** External ID of the cdr config */
+    var cdrConfigExternalId: String
 )

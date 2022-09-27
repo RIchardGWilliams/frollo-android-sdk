@@ -216,7 +216,8 @@ internal fun ConsentResponse.toConsent(): Consent =
         sharingStoppedAt = sharingStoppedAt,
         sharingExpiresAt = sharingExpiresAt,
         sharingDuration = sharingDuration,
-        status = status
+        status = status,
+        cdrConfigExternalId = cdrConfigExternalId
     )
 
 internal fun ConsentCreateForm.toConsentCreateRequest(): ConsentCreateRequest =
@@ -226,7 +227,8 @@ internal fun ConsentCreateForm.toConsentCreateRequest(): ConsentCreateRequest =
         permissions = permissions,
         additionalPermissions = additionalPermissions,
         existingConsentId = existingConsentId,
-        deleteRedundantData = true
+        deleteRedundantData = true,
+        cdrConfigExternalId = cdrConfigExternalId
     )
 
 internal fun ConsentUpdateForm.toConsentUpdateRequest(): ConsentUpdateRequest =
@@ -239,16 +241,20 @@ internal fun ConsentUpdateForm.toConsentUpdateRequest(): ConsentUpdateRequest =
 internal fun CDRConfigurationResponse.toCDRConfiguration(): CDRConfiguration =
     CDRConfiguration(
         configId = configId,
-        adrId = adrId,
-        adrName = adrName,
         supportEmail = supportEmail,
         sharingDurations = sharingDurations,
         permissions = permissions,
+        additionalPermissions = additionalPermissions,
         externalId = externalId,
         displayName = displayName,
         cdrPolicyUrl = cdrPolicyUrl,
         model = model,
         relatedParties = relatedParties,
         sharingUseDuration = sharingUseDuration,
-        initialSyncWindowWeeks = initialSyncWindowWeeks
+        initialSyncWindowWeeks = initialSyncWindowWeeks,
+        softwareId = softwareId,
+        softwareName = softwareName,
+        imageUrl = imageUrl,
+        summary = summary,
+        description = description
     )

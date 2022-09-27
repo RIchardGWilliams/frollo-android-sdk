@@ -50,7 +50,8 @@ internal fun testConsentResponseData(
         withdrawalPDFURL = "",
         permissionIds = listOf("account_details", "transaction_details"),
         additionalPermissions = null,
-        deleteRedundantData = true
+        deleteRedundantData = true,
+        cdrConfigExternalId = "frollo-default"
     )
 }
 
@@ -89,7 +90,8 @@ internal fun testConsentCreateFormData(providerId: Long? = null): ConsentCreateF
         sharingDuration = randomNumber().toLong(),
         permissions = listOf("account_details"),
         additionalPermissions = null,
-        existingConsentId = null
+        existingConsentId = null,
+        cdrConfigExternalId = "frollo-default"
     )
 }
 
@@ -99,21 +101,25 @@ internal fun testConsentUpdateFormData(sharingDuration: Long? = null): ConsentUp
     )
 }
 
-internal fun testCDRConfigurationData(configId: Long? = null, adrId: String? = null, externalId: String? = null): CDRConfigurationResponse {
+internal fun testCDRConfigurationData(configId: Long? = null, externalId: String? = null): CDRConfigurationResponse {
     return CDRConfigurationResponse(
         configId = configId ?: randomNumber().toLong(),
-        adrId = adrId ?: randomString(20),
-        adrName = randomString(20),
         supportEmail = randomString(20),
         sharingDurations = listOf(testSharingDurationData(), testSharingDurationData(), testSharingDurationData()),
         permissions = testCDRPermissionData(),
+        additionalPermissions = listOf(),
         externalId = externalId ?: randomUUID(),
         displayName = randomString(20),
         cdrPolicyUrl = randomString(20),
         model = CDRModel.AFFILIATE,
         relatedParties = listOf(),
         sharingUseDuration = randomNumber().toLong(),
-        initialSyncWindowWeeks = 53
+        initialSyncWindowWeeks = 53,
+        softwareId = "469811b0-90d8-eb11-a824-000d3a884a20",
+        softwareName = "public",
+        imageUrl = "https://frollo.com.au",
+        summary = "TEST Summary",
+        description = "TEST Description",
     )
 }
 

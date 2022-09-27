@@ -94,6 +94,9 @@ data class Consent(
     @ColumnInfo(name = "sharing_duration") val sharingDuration: Long?,
 
     /** The new status for the consent */
-    @ColumnInfo(name = "status") val status: ConsentStatus
+    @ColumnInfo(name = "status") val status: ConsentStatus,
+
+    /** The new status for the consent */
+    @ColumnInfo(name = "cdr_config_external_id") val cdrConfigExternalId: String?
 
 ) : IAdapterModel

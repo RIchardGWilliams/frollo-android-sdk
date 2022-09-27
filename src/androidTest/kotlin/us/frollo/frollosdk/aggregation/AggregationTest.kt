@@ -4855,7 +4855,6 @@ class AggregationTest : BaseAndroidTest() {
         database.cdrConfiguration().insert(
             testCDRConfigurationData(
                 configId = 100,
-                adrId = "12345",
                 externalId = CDR_CONFIG_EXTERNAL_ID
             ).toCDRConfiguration()
         )
@@ -4863,7 +4862,6 @@ class AggregationTest : BaseAndroidTest() {
         val testObserver = aggregation.fetchCDRConfiguration(CDR_CONFIG_EXTERNAL_ID).test()
         testObserver.awaitValue()
         assertEquals(100L, testObserver.value()?.configId)
-        assertEquals("12345", testObserver.value()?.adrId)
 
         tearDown()
     }
@@ -4897,8 +4895,6 @@ class AggregationTest : BaseAndroidTest() {
             val model = testObserver.value()
             assertNotNull(model)
             assertEquals(1L, model?.configId)
-            assertEquals("ADRBNK000002", model?.adrId)
-            assertEquals("FROLLO AUSTRALIA PTY Limited", model?.adrName)
             assertEquals("support@frollo.us", model?.supportEmail)
             assertEquals(3, model?.sharingDurations?.size)
             assertEquals(2, model?.permissions?.size)

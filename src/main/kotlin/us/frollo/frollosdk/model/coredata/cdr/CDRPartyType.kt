@@ -31,7 +31,10 @@ enum class CDRPartyType {
     @SerializedName("osp") OSP,
 
     /** Representative */
-    @SerializedName("representative") REPRESENTATIVE;
+    @SerializedName("representative") REPRESENTATIVE,
+
+    /** Principal */
+    @SerializedName("principal") PRINCIPAL;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters
