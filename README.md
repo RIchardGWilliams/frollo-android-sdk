@@ -2,21 +2,21 @@
 
 ### Requirements
 
-- Android Studio Chipmunk | 2021.2.1
-- Kotlin version 1.6.21+
-- Gradle tools plugin version 7.2.2+ - In your project level **build.gradle**
+- Android Studio Dolphin | 2021.3.1
+- Kotlin version 1.7.10+
+- Gradle tools plugin version 7.3.0+ - In your project level **build.gradle**
     ```
     dependencies {
-        classpath "com.android.tools.build:gradle:7.2.2"
+        classpath "com.android.tools.build:gradle:7.3.0"
         //..
     }
     ```
-- Gradle version must be 7.3.3+
+- Gradle version must be 7.4+
 
     Modify Gradle version in your **gradle-wrapper.properties** as below
 
     ```
-    distributionUrl=https\://services.gradle.org/distributions/gradle-7.3.3-bin.zip
+    distributionUrl=https\://services.gradle.org/distributions/gradle-7.4-bin.zip
     ```
     
 - **minSdkVersion** in your gradle file must be **26** or above. Frollo SDK does not support Android versions below Oreo (8.0).
