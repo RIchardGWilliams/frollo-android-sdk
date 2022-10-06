@@ -991,6 +991,74 @@ class BudgetsTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testRemoveStaleBudgetPeriodsWhenEmptyResponse() {
+        initSetup()
+
+        val fromDate = "2020-05-11"
+        val toDate = "2021-08-31"
+        val status = BudgetStatus.ACTIVE
+        val requestPath = "${BudgetsAPI.URL_BUDGET_PERIODS}?from_date=$fromDate&to_date=$toDate&status=$status"
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.budget_periods_empty))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data1 = testBudgetResponseData(budgetId = 701, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "65", status = BudgetStatus.ACTIVE)
+        val data2 = testBudgetResponseData(budgetId = 702, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "64", status = BudgetStatus.ACTIVE)
+        val data3 = testBudgetResponseData(budgetId = 703, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "63", status = BudgetStatus.ACTIVE)
+        val data4 = testBudgetResponseData(budgetId = 704, type = BudgetType.TRANSACTION_CATEGORY, typeValue = "62", status = BudgetStatus.CANCELLED)
+        val list1 = mutableListOf(data1, data2, data3, data4)
+        database.budgets().insertAll(*list1.map { it.toBudget() }.toTypedArray())
+
+        val data5 = testBudgetPeriodResponseData(budgetPeriodId = 501, budgetId = 701, startDate = "2020-11-01", trackingStatus = BudgetTrackingStatus.BELOW)
+        val data6 = testBudgetPeriodResponseData(budgetPeriodId = 502, budgetId = 702, startDate = "2021-03-01", trackingStatus = BudgetTrackingStatus.BELOW)
+        val data7 = testBudgetPeriodResponseData(budgetPeriodId = 503, budgetId = 703, startDate = "2020-06-11", trackingStatus = BudgetTrackingStatus.BELOW)
+        val data8 = testBudgetPeriodResponseData(budgetPeriodId = 504, budgetId = 704, startDate = "2020-06-11", trackingStatus = BudgetTrackingStatus.BELOW)
+        val data9 = testBudgetPeriodResponseData(budgetPeriodId = 505, budgetId = 703, startDate = "2020-05-08", trackingStatus = BudgetTrackingStatus.BELOW)
+
+        val list2 = mutableListOf(data5, data6, data7, data8, data9)
+        database.budgetPeriods().insertAll(*list2.map { it.toBudgetPeriod() }.toTypedArray())
+
+        val signal = CountDownLatch(1)
+        budgets.refreshAllBudgetPeriodsWithPagination(
+            budgetStatus = status,
+            fromDate = fromDate,
+            toDate = toDate
+        ) { result ->
+            assertTrue(result is PaginatedResult.Success)
+            assertNull((result as PaginatedResult.Success).paginationInfo?.before)
+            assertNull(result.paginationInfo?.after)
+
+            val testObserver = budgets.fetchBudgetPeriods().test()
+            testObserver.awaitValue()
+            val fetchedBudgetPeriods = testObserver.value().data
+            assertEquals(2, fetchedBudgetPeriods?.size)
+
+            // Verify that the stale budget periods are deleted from the database
+            assertEquals(0, fetchedBudgetPeriods?.filter { it.budgetPeriodId in listOf(501L, 502L, 503L) }?.size)
+
+            // Verify that the budget period ids 104 & 105 are not deleted from the database
+            assertEquals(2, fetchedBudgetPeriods?.filter { it.budgetPeriodId in listOf(504L, 505L) }?.size)
+
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(1, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
     fun testRefreshAllBudgetPeriodsFailsIfLoggedOut() {
         initSetup()
 

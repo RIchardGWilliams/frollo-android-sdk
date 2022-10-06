@@ -367,6 +367,74 @@ class MessagesTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testRemoveStaleMessagesWhenEmptyResponse() {
+        initSetup()
+
+        val requestPath = "${MessagesAPI.URL_MESSAGES}?message_types=bill_alerts&content_types=text&design_types=dash_1&sort=created_at&order=asc&size=25"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.messages_empty))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale messages to be deleted
+        val data1 = testMessageResponseData(msgId = 101, createdDate = "2022-04-05T12:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+        val data2 = testMessageResponseData(msgId = 102, createdDate = "2022-04-18T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+        val data3 = testMessageResponseData(msgId = 103, createdDate = "2022-05-25T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_1")
+        // Insert some messages not to be deleted
+        val data4 = testMessageResponseData(msgId = 104, createdDate = "2022-05-27T10:29:35.103+10:00", types = listOf("bill_alerts"), type = ContentType.TEXT, designType = "dash_2")
+        val data5 = testMessageResponseData(msgId = 105, createdDate = "2022-04-11T10:29:35.103+10:00", types = listOf("message_task"), type = ContentType.TEXT, designType = "dash_1")
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.messages().insertAll(*list.toTypedArray())
+
+        val messageFilter = MessageFilter(
+            messageTypes = listOf("bill_alerts"),
+            contentTypes = listOf(ContentType.TEXT),
+            designTypes = listOf("dash_1"),
+            size = 25,
+            sortBy = MessageSortType.CREATED_AT,
+            orderBy = OrderType.ASC
+        )
+        messages.refreshMessagesWithPagination(messageFilter) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertNull(result1.paginationInfo?.after)
+
+            // Fetch all messages in DB
+            val testObserver = messages.fetchMessages(MessageFilter()).test()
+            testObserver.awaitValue()
+            val models = testObserver.value()
+            assertNotNull(models)
+            assertEquals(2, models?.size)
+
+            // Verify that the stale messages are deleted from the database
+            assertEquals(0, models?.filter { it.messageId in listOf(101L, 102L, 103L) }?.size)
+
+            // Verify that the message ids 104 & 105 are not deleted from the database
+            assertEquals(2, models?.filter { it.messageId in listOf(104L, 105L) }?.size)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(1, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
     fun testRefreshMessagesFailsIfLoggedOut() {
         initSetup()
 
