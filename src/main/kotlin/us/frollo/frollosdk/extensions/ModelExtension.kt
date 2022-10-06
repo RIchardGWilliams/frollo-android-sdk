@@ -682,8 +682,8 @@ internal fun sqlForExistingOutage(type: ServiceOutageType, startDate: String, en
 
 internal fun sqlForMessageIdsToGetStaleIds(
     messageFilter: MessageFilter,
-    firstMessageInPage: MessageResponse,
-    lastMessageInPage: MessageResponse,
+    firstMessageInPage: MessageResponse?,
+    lastMessageInPage: MessageResponse?,
     after: Long?,
     before: Long?
 ): SimpleSQLiteQuery {
@@ -695,25 +695,25 @@ internal fun sqlForMessageIdsToGetStaleIds(
         MessageSortType.CREATED_AT -> {
             when (messageFilter.orderBy) {
                 OrderType.DESC -> {
-                    if (before == null && after != null) {
+                    if (before == null && after != null && lastMessageInPage != null) {
                         // Consider only lower limit for first page
                         sqlQueryBuilder.appendSelection(selection = "created_date >= '${lastMessageInPage.createdDate}'")
-                    } else if (before != null && after != null) {
+                    } else if (before != null && after != null && firstMessageInPage != null && lastMessageInPage != null) {
                         // Consider both upper and lower limit for middle pages
                         sqlQueryBuilder.appendSelection(selection = "(created_date <= '${firstMessageInPage.createdDate}' AND created_date >= '${lastMessageInPage.createdDate}')")
-                    } else if (before != null && after == null) {
+                    } else if (before != null && after == null && firstMessageInPage != null) {
                         // Consider only upper limit for last page
                         sqlQueryBuilder.appendSelection(selection = "created_date <= '${firstMessageInPage.createdDate}'")
                     }
                 }
                 OrderType.ASC -> {
-                    if (before == null && after != null) {
+                    if (before == null && after != null && lastMessageInPage != null) {
                         // Consider only lower limit for first page
                         sqlQueryBuilder.appendSelection(selection = "created_date <= '${lastMessageInPage.createdDate}'")
-                    } else if (before != null && after != null) {
+                    } else if (before != null && after != null && firstMessageInPage != null && lastMessageInPage != null) {
                         // Consider both upper and lower limit for middle pages
                         sqlQueryBuilder.appendSelection(selection = "(created_date >= '${firstMessageInPage.createdDate}' AND created_date <= '${lastMessageInPage.createdDate}')")
-                    } else if (before != null && after == null) {
+                    } else if (before != null && after == null && firstMessageInPage != null) {
                         // Consider only upper limit for last page
                         sqlQueryBuilder.appendSelection(selection = "created_date >= '${firstMessageInPage.createdDate}'")
                     }

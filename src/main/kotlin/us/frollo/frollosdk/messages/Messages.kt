@@ -401,16 +401,14 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<PaginatedResult<MessagePaginationInfo>>?
     ) {
         paginatedResponse?.data?.let { messages ->
-            if (messages.isEmpty()) {
-                completion?.invoke(PaginatedResult.Success())
-                return
-            }
             doAsync {
-                val firstMessageInPage = messages.first()
-                val lastMessageInPage = messages.last()
+                val firstMessageInPage = messages.firstOrNull()
+                val lastMessageInPage = messages.lastOrNull()
 
                 // Insert all messages from API response
-                db.messages().insertAll(*messages.toTypedArray())
+                if (messages.isNotEmpty()) {
+                    db.messages().insertAll(*messages.toTypedArray())
+                }
 
                 // Fetch IDs from API response
                 val apiIds = messages.map { it.messageId }.toHashSet()
@@ -439,7 +437,7 @@ class Messages(network: NetworkService, internal val db: SDKDatabase) {
                         before = paginatedResponse.paging.cursors?.before?.toLong(),
                         after = paginatedResponse.paging.cursors?.after?.toLong(),
                         total = paginatedResponse.paging.total,
-                        afterCreatedDate = lastMessageInPage.createdDate
+                        afterCreatedDate = lastMessageInPage?.createdDate
                     )
                     completion?.invoke(PaginatedResult.Success(paginationInfo))
                 }

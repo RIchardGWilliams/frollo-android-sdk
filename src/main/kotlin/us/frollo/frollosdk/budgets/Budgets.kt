@@ -826,14 +826,9 @@ class Budgets(network: NetworkService, internal val db: SDKDatabase) {
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfoDatedCursor>>?
     ) {
         paginatedResponse?.data?.let { budgetPeriods ->
-            if (budgetPeriods.isEmpty()) {
-                completion?.invoke(PaginatedResult.Success())
-                return
-            }
-
             doAsync {
-                val firstBudgetPeriod = budgetPeriods.first()
-                val lastBudgetPeriod = budgetPeriods.last()
+                val firstBudgetPeriod = budgetPeriods.firstOrNull()
+                val lastBudgetPeriod = budgetPeriods.lastOrNull()
 
                 var beforeDate: String? = null
                 var afterDate: String? = null
@@ -842,14 +837,14 @@ class Budgets(network: NetworkService, internal val db: SDKDatabase) {
 
                 // Upper limit predicate if not first page
                 paginatedResponse.paging.cursors?.before?.let {
-                    beforeDate = firstBudgetPeriod.startDate
-                    beforeId = firstBudgetPeriod.budgetPeriodId
+                    beforeDate = firstBudgetPeriod?.startDate
+                    beforeId = firstBudgetPeriod?.budgetPeriodId
                 }
 
                 // Lower limit predicate if not last page
                 paginatedResponse.paging.cursors?.after?.let {
-                    afterDate = lastBudgetPeriod.startDate
-                    afterId = lastBudgetPeriod.budgetPeriodId
+                    afterDate = lastBudgetPeriod?.startDate
+                    afterId = lastBudgetPeriod?.budgetPeriodId
                 }
 
                 // Insert all budget periods & fetch IDs from API response
@@ -883,10 +878,10 @@ class Budgets(network: NetworkService, internal val db: SDKDatabase) {
                             before = paginatedResponse.paging.cursors?.before,
                             after = paginatedResponse.paging.cursors?.after,
                             total = paginatedResponse.paging.total,
-                            beforeDate = firstBudgetPeriod.startDate,
-                            beforeId = firstBudgetPeriod.budgetPeriodId,
-                            afterDate = lastBudgetPeriod.startDate,
-                            afterId = lastBudgetPeriod.budgetPeriodId
+                            beforeDate = firstBudgetPeriod?.startDate,
+                            beforeId = firstBudgetPeriod?.budgetPeriodId,
+                            afterDate = lastBudgetPeriod?.startDate,
+                            afterId = lastBudgetPeriod?.budgetPeriodId
                         )
                     )
                     completion?.invoke(paginationInfo)
