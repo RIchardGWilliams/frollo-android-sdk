@@ -14,12 +14,32 @@
       "key": "terms",
       "name": "Terms and Conditions",
       "url": "https://frollo.us/terms"
+    },
+    {
+      "key": "privacy policy",
+      "name": "Privacy Policy",
+      "url": "https://frollo.us/api/pages/privacy"
+    },
+    {
+      "key": "terms",
+      "name": "Terms and Conditions",
+      "url": "https://frollo.us/api/pages/explainer_landing_page_android"
     }
   ],
   "features": [
     {
       "key": "budgets",
       "name": "Budgeting",
+      "enabled": true
+    },
+    {
+      "key": "assets and liabilities",
+      "name": "manual_asset_liability",
+      "enabled": false
+    },
+    {
+      "key": "financial passport",
+      "name": "financial_passport",
       "enabled": true
     }
   ]

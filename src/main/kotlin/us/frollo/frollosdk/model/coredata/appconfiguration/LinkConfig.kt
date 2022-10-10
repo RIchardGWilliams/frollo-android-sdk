@@ -2,9 +2,15 @@ package us.frollo.frollosdk.model.coredata.appconfiguration
 
 import com.google.gson.annotations.SerializedName
 
-data class Features(
+/** Represents the links for the app */
+data class LinkConfig(
 
+    /** Link key */
     @SerializedName("key") val key: String,
+
+    /** Name of the link */
     @SerializedName("name") val name: String,
-    @SerializedName("enabled") val enabled: Boolean,
+
+    /** URL of the link */
+    @SerializedName("url") val url: String
 )

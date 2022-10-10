@@ -8,9 +8,9 @@ import us.frollo.frollosdk.model.api.appconfiguration.AppConfigurationResponse
 internal interface AppConfigurationAPI {
 
     companion object {
-        const val URL_APP_CONFIGURATION = "api/v2/config/app/{key}"
+        const val URL_APP_CONFIGURATION = "config/app/{key}"
     }
 
     @GET(URL_APP_CONFIGURATION)
-    fun fetchAppConfiguration(@Path("key") id: String): Call<AppConfigurationResponse>
+    fun fetchAppConfiguration(@Path("key") key: String): Call<AppConfigurationResponse>
 }
