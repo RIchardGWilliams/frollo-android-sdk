@@ -10,6 +10,7 @@
 - Delete Messages APIs
 - Add/Remove fields in CDR Config API Response
 - Add field in ConsentResponse & request
+- App config API
 
 ### 3.18.0
 

@@ -28,6 +28,7 @@ import org.threeten.bp.LocalDateTime
 import us.frollo.frollosdk.address.AddressManagement
 import us.frollo.frollosdk.affordability.Affordability
 import us.frollo.frollosdk.aggregation.Aggregation
+import us.frollo.frollosdk.appconfiguration.AppConfiguration
 import us.frollo.frollosdk.authentication.AuthenticationStatus
 import us.frollo.frollosdk.authentication.AuthenticationType.Custom
 import us.frollo.frollosdk.authentication.AuthenticationType.OAuth2
@@ -232,6 +233,12 @@ object FrolloSDK {
     val affordability: Affordability
         get() = _affordability ?: throw IllegalAccessException(SDK_NOT_SETUP)
 
+    /**
+     * AppConfiguration - AppConfiguration management. See [AppConfiguration] for details
+     */
+    val appConfiguration: AppConfiguration
+        get() = _appConfiguration ?: throw IllegalAccessException(SDK_NOT_SETUP)
+
     private var _setup = false
     private var _logger: LogManager? = null
     private var _aggregation: Aggregation? = null
@@ -255,6 +262,7 @@ object FrolloSDK {
     private var _addressManagement: AddressManagement? = null
     private var _serviceStatusManagement: ServiceStatusManagement? = null
     private var _affordability: Affordability? = null
+    private var _appConfiguration: AppConfiguration? = null
     private lateinit var keyStore: Keystore
     private lateinit var preferences: Preferences
     private lateinit var version: Version
@@ -413,6 +421,9 @@ object FrolloSDK {
 
             // Financial passport management
             _affordability = Affordability(network)
+
+            // App Configuration management
+            _appConfiguration = AppConfiguration(network)
 
             // Version Migration
             if (version.migrationNeeded()) {
