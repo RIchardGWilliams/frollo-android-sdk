@@ -90,7 +90,7 @@ class AppConfigurationTest : BaseAndroidTest() {
         val key = "FROLLO_FINANCE"
         val url = "config/app/$key"
 
-        val body = readStringFromJson(app, R.raw.service_outages)
+        val body = readStringFromJson(app, R.raw.app_config)
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
