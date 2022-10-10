@@ -84,7 +84,7 @@ class AppConfigurationTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testRefreshServiceOutagesNoAuthHeaders() {
+    fun testRefreshAppConfigNoAuthHeaders() {
         initSetup()
 
         val key = "FROLLO_FINANCE"
