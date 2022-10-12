@@ -108,7 +108,7 @@ class AppConfigurationTest : BaseAndroidTest() {
 
         val request = mockServer.takeRequest()
         assertEquals(url, request.trimmedPath)
-        
+
         assertNull(request.getHeader("Authorization"))
         assertNull(request.getHeader("X-Api-Version"))
         assertNull(request.getHeader("X-Bundle-Id"))
