@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.20.0
+
+#### Changes
+- App config API & caching
+
 ### 3.19.0
 
 #### Changes
