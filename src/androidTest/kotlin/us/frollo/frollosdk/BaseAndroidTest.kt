@@ -167,7 +167,7 @@ abstract class BaseAndroidTest {
         statements = Statements(network)
         affordability = Affordability(network)
         serviceStatusManagement = ServiceStatusManagement(network, database)
-        appConfiguration = AppConfiguration(network)
+        appConfiguration = AppConfiguration(network, database)
 
         AndroidThreeTen.init(app)
     }

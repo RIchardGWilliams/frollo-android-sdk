@@ -34,11 +34,14 @@ import us.frollo.frollosdk.database.dao.BudgetDao
 import us.frollo.frollosdk.database.dao.BudgetPeriodDao
 import us.frollo.frollosdk.database.dao.CDRConfigurationDao
 import us.frollo.frollosdk.database.dao.CardDao
+import us.frollo.frollosdk.database.dao.CompanyConfigDao
 import us.frollo.frollosdk.database.dao.ConsentDao
 import us.frollo.frollosdk.database.dao.ContactDao
+import us.frollo.frollosdk.database.dao.FeatureConfigDao
 import us.frollo.frollosdk.database.dao.GoalDao
 import us.frollo.frollosdk.database.dao.GoalPeriodDao
 import us.frollo.frollosdk.database.dao.ImageDao
+import us.frollo.frollosdk.database.dao.LinkConfigDao
 import us.frollo.frollosdk.database.dao.MerchantDao
 import us.frollo.frollosdk.database.dao.MessageDao
 import us.frollo.frollosdk.database.dao.PaydayDao
@@ -59,6 +62,9 @@ import us.frollo.frollosdk.model.coredata.aggregation.providers.Provider
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TransactionTag
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategory
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
+import us.frollo.frollosdk.model.coredata.appconfiguration.CompanyConfig
+import us.frollo.frollosdk.model.coredata.appconfiguration.FeatureConfig
+import us.frollo.frollosdk.model.coredata.appconfiguration.LinkConfig
 import us.frollo.frollosdk.model.coredata.bills.Bill
 import us.frollo.frollosdk.model.coredata.bills.BillPayment
 import us.frollo.frollosdk.model.coredata.budgets.Budget
@@ -100,9 +106,12 @@ import us.frollo.frollosdk.model.coredata.user.User
         Card::class,
         Payday::class,
         Address::class,
-        ServiceOutage::class
+        ServiceOutage::class,
+        CompanyConfig::class,
+        FeatureConfig::class,
+        LinkConfig::class
     ],
-    version = 20, exportSchema = true
+    version = 21, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -132,6 +141,9 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun payday(): PaydayDao
     internal abstract fun addresses(): AddressDao
     internal abstract fun serviceOutages(): ServiceOutageDao
+    internal abstract fun companyConfig(): CompanyConfigDao
+    internal abstract fun featureConfig(): FeatureConfigDao
+    internal abstract fun linkConfig(): LinkConfigDao
 
     companion object {
         private const val DEFAULT_DATABASE_NAME = "frollosdk-db" // WARNING: DO NOT USE this directly anywhere as the actual DB name is derived by appending the DB name prefix.
@@ -178,7 +190,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_16_17,
                     MIGRATION_17_18,
                     MIGRATION_18_19,
-                    MIGRATION_19_20
+                    MIGRATION_19_20,
+                    MIGRATION_20_21
                 )
                 .build()
         }
@@ -790,6 +803,22 @@ abstract class SDKDatabase : RoomDatabase() {
                 // START - Add column cdr_config_external_id
                 database.execSQL("ALTER TABLE `consent` ADD COLUMN `cdr_config_external_id` TEXT")
                 // END - Add column cdr_config_external_id
+            }
+        }
+
+        private val MIGRATION_20_21: Migration = object : Migration(20, 21) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) New tables - company_config, feature_config, link_config
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `company_config` (`display_name` TEXT NOT NULL, `legal_name` TEXT NOT NULL, `abn` TEXT, `acn` TEXT, `phone` TEXT, `address` TEXT, `support_email` TEXT, `support_phone` TEXT, `company_config_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `feature_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `enabled` INTEGER NOT NULL, PRIMARY KEY(`key`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `link_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`key`))")
             }
         }
     }

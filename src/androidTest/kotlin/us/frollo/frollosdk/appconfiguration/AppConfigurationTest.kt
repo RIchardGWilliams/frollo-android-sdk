@@ -1,5 +1,6 @@
 package us.frollo.frollosdk.appconfiguration
 
+import com.jraska.livedata.test
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
@@ -11,12 +12,15 @@ import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.extensions.readStringFromJson
+import us.frollo.frollosdk.network.api.AppConfigurationAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.trimmedPath
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class AppConfigurationTest : BaseAndroidTest() {
+
+    private lateinit var appConfigurationAPI: AppConfigurationAPI
 
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
@@ -25,6 +29,8 @@ class AppConfigurationTest : BaseAndroidTest() {
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
         preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
+
+        appConfigurationAPI = network.create(AppConfigurationAPI::class.java)
     }
 
     @Test
@@ -32,7 +38,7 @@ class AppConfigurationTest : BaseAndroidTest() {
         initSetup()
         val signal = CountDownLatch(1)
 
-        val key = "FROLLO_FINANCE"
+        val key = "default-app"
 
         val requestPath = "config/app/$key"
 
@@ -55,22 +61,40 @@ class AppConfigurationTest : BaseAndroidTest() {
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-           /* assertEquals("Frollo", response?.company?.displayName)
-            assertEquals("Frollo Australia Pty Ltd", response?.company?.legalName)
-            assertEquals("12345678901", response?.company?.abn)
-            assertEquals("123456789", response?.company?.acn)
-            assertEquals("020000000000", response?.company?.phone)
-            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", response?.company?.address)
-            assertEquals("support@frollo.us", response?.company?.supportEmail)
-            assertEquals("555 02 0000000", response?.company?.supportPhone)
+            // Company config test
+            val testObserver1 = appConfiguration.fetchCompanyConfig().test()
+            testObserver1.awaitValue()
+            val model1 = testObserver1.value()
+            assertNotNull(model1)
 
-            assertEquals("terms", response?.links?.get(0)?.key)
-            assertEquals("Terms and Conditions", response?.links?.get(0)?.name)
-            assertEquals("https://frollo.us/terms", response?.links?.get(0)?.url)
+            assertEquals("Frollo", model1?.data?.displayName)
+            assertEquals("Frollo Australia Pty Ltd", model1?.data?.legalName)
+            assertEquals("12345678901", model1?.data?.abn)
+            assertEquals("123456789", model1?.data?.acn)
+            assertEquals("020000000000", model1?.data?.phone)
+            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", model1?.data?.address)
+            assertEquals("support@frollo.us", model1?.data?.supportEmail)
+            assertEquals("555 02 0000000", model1?.data?.supportPhone)
 
-            assertEquals("budgets", response?.features?.get(0)?.key)
-            assertEquals("Budgeting", response?.features?.get(0)?.name)
-            assertEquals(true, response?.features?.get(0)?.enabled) */
+            // Features config test
+            val testObserver2 = appConfiguration.fetchFeatureConfig().test()
+            testObserver2.awaitValue()
+            val model2 = testObserver2.value()
+            assertNotNull(model2)
+
+            assertEquals("budgets", model2?.data?.get(0)?.key)
+            assertEquals("Budgeting", model2?.data?.get(0)?.name)
+            assertEquals(true, model2?.data?.get(0)?.enabled)
+
+            // Links config test
+            val testObserver3 = appConfiguration.fetchLinkConfig().test()
+            testObserver3.awaitValue()
+            val model3 = testObserver3.value()
+            assertNotNull(model3)
+
+            assertEquals("terms", model3?.data?.get(0)?.key)
+            assertEquals("Terms and Conditions", model3?.data?.get(0)?.name)
+            assertEquals("https://frollo.us/terms", model3?.data?.get(0)?.url)
 
             signal.countDown()
         }

@@ -5,7 +5,7 @@ import us.frollo.frollosdk.model.coredata.appconfiguration.CompanyConfig
 import us.frollo.frollosdk.model.coredata.appconfiguration.FeatureConfig
 import us.frollo.frollosdk.model.coredata.appconfiguration.LinkConfig
 
-internal data class AppConfigurationResponse(
+data class AppConfigurationResponse(
 
     @SerializedName("company") val company: CompanyConfig?,
     @SerializedName("links") val links: List<LinkConfig>?,
