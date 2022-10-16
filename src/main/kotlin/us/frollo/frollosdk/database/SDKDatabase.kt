@@ -817,8 +817,12 @@ abstract class SDKDatabase : RoomDatabase() {
                 // 1) New tables - company_config, feature_config, link_config
 
                 database.execSQL("CREATE TABLE IF NOT EXISTS `company_config` (`display_name` TEXT NOT NULL, `legal_name` TEXT NOT NULL, `abn` TEXT, `acn` TEXT, `phone` TEXT, `address` TEXT, `support_email` TEXT, `support_phone` TEXT, `company_config_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
+
                 database.execSQL("CREATE TABLE IF NOT EXISTS `feature_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `enabled` INTEGER NOT NULL, PRIMARY KEY(`key`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_feature_config_key` ON `feature_config` (`key`)")
+
                 database.execSQL("CREATE TABLE IF NOT EXISTS `link_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`key`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_link_config_key` ON `link_config` (`key`)")
             }
         }
     }

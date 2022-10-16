@@ -20,13 +20,13 @@ internal interface LinkConfigDao {
     fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<List<LinkConfig>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(model: LinkConfig): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg models: LinkConfig): LongArray
 
-    @Query("DELETE FROM link_config WHERE `key` = :key")
-    fun delete(key: String)
+    @Query("SELECT `key` FROM link_config WHERE `key` NOT IN (:apiKeys)")
+    fun getStaleKeys(apiKeys: Array<String>): List<String>
+
+    @Query("DELETE FROM link_config WHERE `key` IN (:keys)")
+    fun deleteMany(keys: Array<String>)
 
     @Query("DELETE FROM link_config")
     fun clear()

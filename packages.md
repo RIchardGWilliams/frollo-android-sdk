@@ -283,3 +283,11 @@ Manages the user details and device
 # Package us.frollo.frollosdk.appconfiguration
 
 Manages the app configuration details
+
+#Package us.frollo.frollosdk.model.api.appconfiguration
+
+Frollo SDK app configuration api model
+
+#Package us.frollo.frollosdk.model.coredata.appconfiguration
+
+Frollo SDK app configuration data models

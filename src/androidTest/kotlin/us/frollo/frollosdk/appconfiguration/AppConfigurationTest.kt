@@ -5,6 +5,7 @@ import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
@@ -12,15 +13,12 @@ import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.extensions.readStringFromJson
-import us.frollo.frollosdk.network.api.AppConfigurationAPI
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.trimmedPath
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class AppConfigurationTest : BaseAndroidTest() {
-
-    private lateinit var appConfigurationAPI: AppConfigurationAPI
 
     override fun initSetup(daOAuth2Login: Boolean) {
         super.initSetup(daOAuth2Login)
@@ -29,8 +27,6 @@ class AppConfigurationTest : BaseAndroidTest() {
         preferences.encryptedAccessToken = keystore.encrypt("ExistingAccessToken")
         preferences.encryptedRefreshToken = keystore.encrypt("ExistingRefreshToken")
         preferences.accessTokenExpiry = LocalDateTime.now(ZoneOffset.UTC).toEpochSecond(ZoneOffset.UTC) + 900
-
-        appConfigurationAPI = network.create(AppConfigurationAPI::class.java)
     }
 
     @Test
@@ -82,6 +78,7 @@ class AppConfigurationTest : BaseAndroidTest() {
             val model2 = testObserver2.value()
             assertNotNull(model2)
 
+            assertEquals(3, model2.data?.size)
             assertEquals("budgets", model2?.data?.get(0)?.key)
             assertEquals("Budgeting", model2?.data?.get(0)?.name)
             assertEquals(true, model2?.data?.get(0)?.enabled)
@@ -92,6 +89,7 @@ class AppConfigurationTest : BaseAndroidTest() {
             val model3 = testObserver3.value()
             assertNotNull(model3)
 
+            assertEquals(3, model3.data?.size)
             assertEquals("terms", model3?.data?.get(0)?.key)
             assertEquals("Terms and Conditions", model3?.data?.get(0)?.name)
             assertEquals("https://frollo.us/terms", model3?.data?.get(0)?.url)

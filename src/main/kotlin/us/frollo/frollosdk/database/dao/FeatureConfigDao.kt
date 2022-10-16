@@ -20,13 +20,13 @@ internal interface FeatureConfigDao {
     fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<List<FeatureConfig>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(model: FeatureConfig): Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg models: FeatureConfig): LongArray
 
-    @Query("DELETE FROM feature_config WHERE `key` = :key")
-    fun delete(key: String)
+    @Query("SELECT `key` FROM feature_config WHERE `key` NOT IN (:apiKeys)")
+    fun getStaleKeys(apiKeys: Array<String>): List<String>
+
+    @Query("DELETE FROM feature_config WHERE `key` IN (:keys)")
+    fun deleteMany(keys: Array<String>)
 
     @Query("DELETE FROM feature_config")
     fun clear()
