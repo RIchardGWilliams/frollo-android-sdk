@@ -30,7 +30,7 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
     private val appConfigAPI: AppConfigurationAPI = network.createExternalNoAuth(AppConfigurationAPI::class.java)
 
     /**
-     * Fetch company config from the host and update the cache
+     * Fetch company config from the cache
      */
     fun fetchCompanyConfig(): LiveData<Resource<CompanyConfig>> {
         return Transformations.map(db.companyConfig().load()) {
@@ -53,7 +53,7 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
         }
 
     /**
-     * Fetch feature config from the host and update the cache
+     * Fetch feature config from the cache
      */
     fun fetchFeatureConfig(): LiveData<Resource<List<FeatureConfig>>> {
         return Transformations.map(db.featureConfig().load()) {
@@ -76,7 +76,7 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
         }
 
     /**
-     * Fetch link config from the host and update the cache
+     * Fetch link config from the cache
      */
     fun fetchLinkConfig(): LiveData<Resource<List<LinkConfig>>> {
         return Transformations.map(db.linkConfig().load()) {
@@ -136,10 +136,10 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
                         featureconfig.key
                     }.toList()
 
-                    val staleIds = db.featureConfig().getStaleKeys(apiKeys.toTypedArray())
+                    val staleKeys = db.featureConfig().getStaleKeys(apiKeys.toTypedArray())
 
-                    if (staleIds.isNotEmpty()) {
-                        removeCachedFeatureConfigs(staleIds)
+                    if (staleKeys.isNotEmpty()) {
+                        db.featureConfig().deleteMany(staleKeys.toTypedArray())
                     }
                 }
 
@@ -150,28 +150,15 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
                         linkConfig.key
                     }.toList()
 
-                    val staleIds = db.linkConfig().getStaleKeys(apiKeys.toTypedArray())
+                    val staleKeys = db.linkConfig().getStaleKeys(apiKeys.toTypedArray())
 
-                    if (staleIds.isNotEmpty()) {
-                        removeCachedLinkConfigs(staleIds)
+                    if (staleKeys.isNotEmpty()) {
+                        db.linkConfig().deleteMany(staleKeys.toTypedArray())
                     }
                 }
+
                 uiThread { completion?.invoke(Result.success()) }
             }
         } ?: run { completion?.invoke(Result.success()) } // Explicitly invoke completion callback if response is null.
-    }
-
-    // WARNING: Do not call this method on the main thread
-    private fun removeCachedFeatureConfigs(staleIds: List<String>) {
-        if (staleIds.isNotEmpty()) {
-            db.featureConfig().deleteMany(staleIds.toTypedArray())
-        }
-    }
-
-    // WARNING: Do not call this method on the main thread
-    private fun removeCachedLinkConfigs(staleIds: List<String>) {
-        if (staleIds.isNotEmpty()) {
-            db.linkConfig().deleteMany(staleIds.toTypedArray())
-        }
     }
 }

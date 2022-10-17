@@ -13,11 +13,11 @@ import us.frollo.frollosdk.model.coredata.appconfiguration.CompanyConfig
 @Dao
 internal interface CompanyConfigDao {
 
-    @Query("SELECT * FROM company_config")
-    fun load(): LiveData<CompanyConfig>
+    @Query("SELECT * FROM company_config LIMIT 1")
+    fun load(): LiveData<CompanyConfig?>
 
     @RawQuery(observedEntities = [CompanyConfig::class])
-    fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<CompanyConfig>
+    fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<CompanyConfig?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: CompanyConfig): Long

@@ -12,6 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.model.testFeatureConfigData
 
@@ -45,8 +46,8 @@ class FeatureConfigDaoTest {
 
         val testObserver = db.featureConfig().load().test()
         testObserver.awaitValue()
-        Assert.assertTrue(testObserver.value().isNotEmpty())
-        Assert.assertEquals(3, testObserver.value().size)
+        assertTrue(testObserver.value().isNotEmpty())
+        assertEquals(3, testObserver.value().size)
     }
 
     @Test
@@ -62,8 +63,8 @@ class FeatureConfigDaoTest {
 
         val testObserver = db.featureConfig().loadByQuery(query).test()
         testObserver.awaitValue()
-        Assert.assertTrue(testObserver.value().isNotEmpty())
-        Assert.assertEquals(2, testObserver.value().size)
+        assertTrue(testObserver.value().isNotEmpty())
+        assertEquals(2, testObserver.value().size)
     }
 
     @Test
@@ -77,8 +78,8 @@ class FeatureConfigDaoTest {
 
         val staleKeys = db.featureConfig().getStaleKeys(arrayOf("budgets"))
 
-        Assert.assertEquals(1, staleKeys.size)
-        Assert.assertTrue(staleKeys.containsAll(mutableListOf("budgets")))
+        assertEquals(1, staleKeys.size)
+        assertTrue(staleKeys.containsAll(mutableListOf("budgets")))
     }
 
     @Test
@@ -95,8 +96,8 @@ class FeatureConfigDaoTest {
 
         val testObserver = db.featureConfig().load().test()
         testObserver.awaitValue()
-        Assert.assertTrue(testObserver.value().isNotEmpty())
-        Assert.assertEquals(2, testObserver.value().size)
+        assertTrue(testObserver.value().isNotEmpty())
+        assertEquals(2, testObserver.value().size)
     }
 
     @Test
@@ -113,6 +114,6 @@ class FeatureConfigDaoTest {
 
         val testObserver = db.featureConfig().load().test()
         testObserver.awaitValue()
-        Assert.assertTrue(testObserver.value().isEmpty())
+        assertTrue(testObserver.value().isEmpty())
     }
 }
