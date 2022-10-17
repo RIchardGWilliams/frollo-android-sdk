@@ -27,6 +27,7 @@ The Frollo Android SDK is broken down into multiple components that reflect the 
 * [Statements](#statements) - TBD
 * [ServiceStatusManagement](#servicestatusmanagement) - TBD
 * [AffordabilityManagement](#affordabilitymanagement) - TBD
+* [AppConfiguration](#appConfiguration) - Provides Configuration of the app
 
 ### Authentication
 
@@ -259,3 +260,9 @@ See [ServiceStatusManagement](us.frollo.frollosdk.servicestatus/-service-status-
 TBD
 
 See [AffordabilityManagement](us.frollo.frollosdk.affordability/-affordability/index.html) for more details.
+
+### AppConfiguration
+
+TBD
+
+See [AppConfiguration](us.frollo.frollosdk.appconfiguration/-app-configuration/index.html) for more details.

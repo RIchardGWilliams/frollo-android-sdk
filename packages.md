@@ -16,6 +16,10 @@ Manages all aspects of affordability.
 
 Manages all aggregation data including accounts, transactions, categories and merchants.
 
+# Package us.frollo.frollosdk.appconfiguration
+
+Manages the app configuration details
+
 # Package us.frollo.frollosdk.authentication
 
 Authentication manages the authentication of the user, managing the user profile and logout of the user.
@@ -96,6 +100,10 @@ Frollo SDK address models
 
 Frollo SDK affordability models
 
+#Package us.frollo.frollosdk.model.api.appconfiguration
+
+Frollo SDK app configuration api model
+
 # Package us.frollo.frollosdk.model.api.cards
 
 Frollo SDK card models
@@ -139,6 +147,10 @@ Frollo SDK address models
 # Package us.frollo.frollosdk.model.coredata.aggregation.accounts
 
 Frollo SDK account models
+
+#Package us.frollo.frollosdk.model.coredata.appconfiguration
+
+Frollo SDK app configuration data models
 
 # Package us.frollo.frollosdk.model.coredata.aggregation.merchants
 
