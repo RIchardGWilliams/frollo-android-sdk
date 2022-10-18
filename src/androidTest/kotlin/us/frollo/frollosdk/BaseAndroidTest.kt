@@ -32,6 +32,7 @@ import us.frollo.frollosdk.authentication.OAuth2Helper
 import us.frollo.frollosdk.bills.Bills
 import us.frollo.frollosdk.budgets.Budgets
 import us.frollo.frollosdk.cards.Cards
+import us.frollo.frollosdk.consents.Consents
 import us.frollo.frollosdk.contacts.Contacts
 import us.frollo.frollosdk.core.AppInfo
 import us.frollo.frollosdk.core.DeviceInfo
@@ -100,6 +101,7 @@ abstract class BaseAndroidTest {
     lateinit var affordability: Affordability
     lateinit var appInfo: AppInfo
     lateinit var appConfiguration: AppConfiguration
+    lateinit var consents: Consents
 
     val scopes = listOf("offline_access", "openid", "email")
 
@@ -168,6 +170,7 @@ abstract class BaseAndroidTest {
         affordability = Affordability(network)
         serviceStatusManagement = ServiceStatusManagement(network, database)
         appConfiguration = AppConfiguration(network)
+        consents = Consents(network, database)
 
         AndroidThreeTen.init(app)
     }
