@@ -431,7 +431,7 @@ object FrolloSDK {
             _affordability = Affordability(network)
 
             // App Configuration management
-            _appConfiguration = AppConfiguration(network)
+            _appConfiguration = AppConfiguration(network, database)
 
             // Consents management
             _consents = Consents(network, database)

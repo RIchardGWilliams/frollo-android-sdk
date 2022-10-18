@@ -1,9 +1,11 @@
 package us.frollo.frollosdk.appconfiguration
 
+import com.jraska.livedata.test
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.threeten.bp.LocalDateTime
@@ -11,6 +13,9 @@ import org.threeten.bp.ZoneOffset
 import us.frollo.frollosdk.BaseAndroidTest
 import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.extensions.readStringFromJson
+import us.frollo.frollosdk.model.testCompanyConfigData
+import us.frollo.frollosdk.model.testFeatureConfigData
+import us.frollo.frollosdk.model.testLinkConfigData
 import us.frollo.frollosdk.test.R
 import us.frollo.frollosdk.testutils.trimmedPath
 import java.util.concurrent.CountDownLatch
@@ -28,11 +33,69 @@ class AppConfigurationTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchCompanyConfig() {
+        initSetup()
+
+        val data = testCompanyConfigData(displayName = "test1")
+
+        database.companyConfig().insert(data)
+
+        val testObserver = appConfiguration.fetchCompanyConfig().test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value().data)
+        assertEquals("test1", testObserver.value().data?.displayName)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchFeatureConfig() {
+        initSetup()
+
+        val data1 = testFeatureConfigData(key = "key1")
+        val data2 = testFeatureConfigData(key = "key2", enabled = true)
+        val data3 = testFeatureConfigData()
+        val list = mutableListOf(data1, data2, data3)
+
+        database.featureConfig().insertAll(*list.toTypedArray())
+
+        val testObserver = appConfiguration.fetchFeatureConfig().test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value().data)
+        assertEquals(3, testObserver.value().data?.size)
+        assertEquals("key1", testObserver.value().data?.get(0)?.key)
+        assertEquals(true, testObserver.value().data?.get(1)?.enabled)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchLinkConfig() {
+        initSetup()
+
+        val data1 = testLinkConfigData(key = "key1")
+        val data2 = testLinkConfigData(key = "key2", url = "https://frollo.us/api/pages/explainer_landing_page_android")
+        val data3 = testLinkConfigData()
+        val list = mutableListOf(data1, data2, data3)
+
+        database.linkConfig().insertAll(*list.toTypedArray())
+
+        val testObserver = appConfiguration.fetchLinkConfig().test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value().data)
+        assertEquals(3, testObserver.value().data?.size)
+        assertEquals("key1", testObserver.value().data?.get(0)?.key)
+        assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", testObserver.value().data?.get(1)?.url)
+
+        tearDown()
+    }
+
+    @Test
     fun testRefreshAppConfig() {
         initSetup()
         val signal = CountDownLatch(1)
 
-        val key = "FROLLO_FINANCE"
+        val key = "default-app"
 
         val requestPath = "config/app/$key"
 
@@ -50,27 +113,75 @@ class AppConfigurationTest : BaseAndroidTest() {
             }
             )
 
+        // Insert some stale & actual feature config data
+        val featureConfigData1 = testFeatureConfigData(key = "key1")
+        val featureConfigData2 = testFeatureConfigData(key = "key2")
+        val featureConfigData3 = testFeatureConfigData(key = "assets and liabilities", enabled = true)
+
+        val featureConfigList = mutableListOf(featureConfigData1, featureConfigData2, featureConfigData3)
+        database.featureConfig().insertAll(*featureConfigList.toTypedArray())
+
+        // Insert some stale & actual Link config data
+
+        val linkConfigData1 = testLinkConfigData(key = "key1")
+        val linkConfigData2 = testLinkConfigData(key = "key2")
+        val linkConfigData3 = testLinkConfigData(key = "contact us", url = "https://frollo.us/api/pages/explainer_landing_page_android")
+
+        val linkConfigList = mutableListOf(linkConfigData1, linkConfigData2, linkConfigData3)
+        database.linkConfig().insertAll(*linkConfigList.toTypedArray())
+
+        // Insert some Company config data
+        val companyConfigData = testCompanyConfigData()
+        database.companyConfig().insert(companyConfigData)
+
         appConfiguration.refreshAppConfig(key = key) { result ->
 
             assertEquals(Result.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-           /* assertEquals("Frollo", response?.company?.displayName)
-            assertEquals("Frollo Australia Pty Ltd", response?.company?.legalName)
-            assertEquals("12345678901", response?.company?.abn)
-            assertEquals("123456789", response?.company?.acn)
-            assertEquals("020000000000", response?.company?.phone)
-            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", response?.company?.address)
-            assertEquals("support@frollo.us", response?.company?.supportEmail)
-            assertEquals("555 02 0000000", response?.company?.supportPhone)
+            // Company config test
+            val testObserver1 = appConfiguration.fetchCompanyConfig().test()
+            testObserver1.awaitValue()
+            val model1 = testObserver1.value()
+            assertNotNull(model1)
 
-            assertEquals("terms", response?.links?.get(0)?.key)
-            assertEquals("Terms and Conditions", response?.links?.get(0)?.name)
-            assertEquals("https://frollo.us/terms", response?.links?.get(0)?.url)
+            assertEquals("Frollo", model1?.data?.displayName)
+            assertEquals("Frollo Australia Pty Ltd", model1?.data?.legalName)
+            assertEquals("12345678901", model1?.data?.abn)
+            assertEquals("123456789", model1?.data?.acn)
+            assertEquals("020000000000", model1?.data?.phone)
+            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", model1?.data?.address)
+            assertEquals("support@frollo.us", model1?.data?.supportEmail)
+            assertEquals("555 02 0000000", model1?.data?.supportPhone)
 
-            assertEquals("budgets", response?.features?.get(0)?.key)
-            assertEquals("Budgeting", response?.features?.get(0)?.name)
-            assertEquals(true, response?.features?.get(0)?.enabled) */
+            // Features config test
+            val testObserver2 = appConfiguration.fetchFeatureConfig().test()
+            testObserver2.awaitValue()
+            val model2 = testObserver2.value()
+            assertNotNull(model2)
+
+            assertEquals(3, model2.data?.size)
+            assertEquals("budgets", model2?.data?.get(0)?.key)
+            assertEquals("Budgeting", model2?.data?.get(0)?.name)
+            assertEquals(true, model2?.data?.get(2)?.enabled)
+
+            // Verify that the stale feature configs are deleted from the database
+            assertEquals(0, model2?.data?.filter { it.key in listOf("key1", "key2") }?.size)
+
+            // Links config test
+            val testObserver3 = appConfiguration.fetchLinkConfig().test()
+            testObserver3.awaitValue()
+            val model3 = testObserver3.value()
+            assertNotNull(model3)
+
+            assertEquals(3, model3.data?.size)
+            assertEquals("terms", model3?.data?.get(0)?.key)
+            assertEquals("Terms and Conditions", model3?.data?.get(0)?.name)
+            assertEquals("https://frollo.us/terms", model3?.data?.get(0)?.url)
+            assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", model3?.data?.get(2)?.url)
+
+            // Verify that the stale link configs are deleted from the database
+            assertEquals(0, model3?.data?.filter { it.key in listOf("key1", "key2") }?.size)
 
             signal.countDown()
         }
