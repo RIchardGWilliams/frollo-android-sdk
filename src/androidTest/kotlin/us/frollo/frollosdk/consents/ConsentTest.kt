@@ -36,16 +36,21 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.mapping.toCDRConfiguration
 import us.frollo.frollosdk.mapping.toConsent
+import us.frollo.frollosdk.mapping.toExternalParty
 import us.frollo.frollosdk.mapping.toProvider
 import us.frollo.frollosdk.mapping.toProviderAccount
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
 import us.frollo.frollosdk.model.coredata.cdr.CDRModel
 import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.testCDRConfigurationData
 import us.frollo.frollosdk.model.testConsentCreateFormData
 import us.frollo.frollosdk.model.testConsentResponseData
 import us.frollo.frollosdk.model.testConsentUpdateFormData
+import us.frollo.frollosdk.model.testExternalPartyResponseData
 import us.frollo.frollosdk.model.testProviderAccountResponseData
 import us.frollo.frollosdk.model.testProviderResponseData
 import us.frollo.frollosdk.network.api.CdrAPI
@@ -771,6 +776,289 @@ class ConsentTest : BaseAndroidTest() {
         consents.refreshCDRConfiguration(CDR_CONFIG_EXTERNAL_ID) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    // External Party
+
+    @Test
+    fun testFetchExternalPartyByID() {
+        initSetup()
+
+        val data = testExternalPartyResponseData()
+        val list = mutableListOf(testExternalPartyResponseData(), data, testExternalPartyResponseData())
+        database.externalParty().insertAll(*list.map { it.toExternalParty() }.toList().toTypedArray())
+
+        val testObserver = consents.fetchExternalParty(data.partyId).test()
+        testObserver.awaitValue()
+        assertEquals(data.partyId, testObserver.value()?.partyId)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchExternalParties() {
+        initSetup()
+
+        val data1 = testExternalPartyResponseData(partyId = 101, externalId = "613bd99c", status = ExternalPartyStatus.ENABLED)
+        val data2 = testExternalPartyResponseData(partyId = 102, externalId = "613bd99c", status = ExternalPartyStatus.DISABLED)
+        val data3 = testExternalPartyResponseData(partyId = 103, externalId = "533rg28h", status = ExternalPartyStatus.ENABLED)
+        val data4 = testExternalPartyResponseData(partyId = 104, externalId = "613bd99c", status = ExternalPartyStatus.ENABLED)
+        val list = mutableListOf(data1, data2, data3, data4)
+
+        database.externalParty().insertAll(*list.map { it.toExternalParty() }.toTypedArray())
+
+        var testObserver = consents.fetchExternalParties().test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(4, testObserver.value()?.size)
+
+        testObserver = consents.fetchExternalParties(
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED
+        ).test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(3, testObserver.value()?.size)
+
+        testObserver = consents.fetchExternalParties(status = ExternalPartyStatus.DISABLED).test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(1, testObserver.value()?.size)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshExternalPartyByID() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val partId = 353L
+        val requestPath = "cdr/parties/external/$partId"
+        val body = readStringFromJson(app, R.raw.external_party_id_353)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        consents.refreshExternalParty(partId) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = consents.fetchExternalParty(partId).test()
+            testObserver.awaitValue()
+            val model = testObserver.value()
+            assertNotNull(model)
+            assertEquals(partId, model?.partyId)
+            assertEquals("613bd99c-7b5f-4963-a459-154283db887d", model?.externalId)
+            assertEquals("Check Finance", model?.name)
+            assertEquals("Display name", model?.company?.displayName)
+            assertEquals("Legal name", model?.company?.legalName)
+            assertEquals("support@frollo.us", model?.contact)
+            assertEquals("They broker things...", model?.description)
+            assertEquals(ExternalPartyStatus.ENABLED, model?.status)
+            assertEquals("https://example.com", model?.privacyUrl)
+            assertEquals(ExternalPartyType.TRUSTED_ADVISOR, model?.type)
+            assertEquals(TrustedAdvisorType.ACCOUNTANT, model?.trustedAdvisorType)
+            assertEquals(86400L, model?.sharingDurations?.get(0)?.duration)
+            assertEquals("One day", model?.sharingDurations?.get(0)?.description)
+            assertEquals("https://picsum.photos/300/200", model?.sharingDurations?.get(0)?.imageUrl)
+            assertEquals("account_details", model?.permissions?.get(0)?.permissionId)
+            assertEquals("Account balance and details", model?.permissions?.get(0)?.title)
+            assertEquals("We leverage...", model?.permissions?.get(0)?.description)
+            assertEquals(true, model?.permissions?.get(0)?.required)
+            assertEquals("account_name", model?.permissions?.get(0)?.details?.get(0)?.detailId)
+            assertEquals("Name of account", model?.permissions?.get(0)?.details?.get(0)?.description)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshExternalPartyByIDFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        consents.refreshExternalParty(353L) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshExternalPartiesWithPagination() {
+        initSetup()
+
+        val requestPath1 = "${CdrAPI.URL_EXTERNAL_PARTIES}?size=5&external_ids=6hsf735%2C73fkv734&status=enabled&ta_type=accountant&type=ta"
+        val requestPath2 = "${CdrAPI.URL_EXTERNAL_PARTIES}?after=8&size=5&external_ids=6hsf735%2C73fkv734&status=enabled&ta_type=accountant&type=ta"
+        val requestPath3 = "${CdrAPI.URL_EXTERNAL_PARTIES}?after=14&size=5&external_ids=6hsf735%2C73fkv734&status=enabled&ta_type=accountant&type=ta"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.external_parties_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.external_parties_page_2))
+                    } else if (request.trimmedPath == requestPath3) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.external_parties_page_3))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale data to be removed
+        // 2, 10, 20
+        val data1 = testExternalPartyResponseData(partyId = 2, externalId = "6hsf735")
+        val data2 = testExternalPartyResponseData(partyId = 10, externalId = "73fkv734")
+        val data3 = testExternalPartyResponseData(partyId = 20, externalId = "6hsf735")
+
+        // Insert some existing data to be updated
+        // 14, 16
+        val data4 = testExternalPartyResponseData(
+            partyId = 14,
+            externalId = "73fkv734",
+            status = ExternalPartyStatus.DISABLED
+        )
+        val data5 = testExternalPartyResponseData(
+            partyId = 16,
+            externalId = "73fkv734",
+            status = ExternalPartyStatus.DISABLED
+        )
+        // Insert some existing data which should not be affected
+        val data6 = testExternalPartyResponseData(
+            partyId = 5,
+            externalId = "5cbki879"
+        )
+        val data7 = testExternalPartyResponseData(
+            partyId = 21,
+            externalId = "5cbki879"
+        )
+
+        val list = mutableListOf(data1, data2, data3, data4, data5, data6, data7)
+        database.externalParty().insertAll(*list.map { it.toExternalParty() }.toTypedArray())
+
+        val externalIds = listOf("6hsf735", "73fkv734")
+        consents.refreshExternalPartiesWithPagination(
+            externalIds = externalIds,
+            status = ExternalPartyStatus.ENABLED,
+            trustedAdvisorType = TrustedAdvisorType.ACCOUNTANT,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            size = 5
+        ) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(8L, result1.paginationInfo?.after)
+
+            consents.refreshExternalPartiesWithPagination(
+                externalIds = externalIds,
+                status = ExternalPartyStatus.ENABLED,
+                trustedAdvisorType = TrustedAdvisorType.ACCOUNTANT,
+                type = ExternalPartyType.TRUSTED_ADVISOR,
+                after = result1.paginationInfo?.after?.toString(),
+                size = 5
+            ) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(9L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertEquals(14L, result2.paginationInfo?.after)
+
+                consents.refreshExternalPartiesWithPagination(
+                    externalIds = externalIds,
+                    status = ExternalPartyStatus.ENABLED,
+                    trustedAdvisorType = TrustedAdvisorType.ACCOUNTANT,
+                    type = ExternalPartyType.TRUSTED_ADVISOR,
+                    after = result2.paginationInfo?.after?.toString(),
+                    size = 5
+                ) { result3 ->
+                    assertTrue(result3 is PaginatedResult.Success)
+                    assertEquals(16L, (result3 as PaginatedResult.Success).paginationInfo?.before)
+                    assertNull(result3.paginationInfo?.after)
+
+                    // Fetch all messages in DB
+                    val testObserver = consents.fetchExternalParties().test()
+                    testObserver.awaitValue()
+                    val models = testObserver.value()
+                    assertNotNull(models)
+                    assertEquals(15, models?.size)
+
+                    // Verify that the stale data is deleted from the database
+                    assertEquals(0, models?.filter { it.partyId in listOf(2L, 10L, 15L, 20L) }?.size)
+
+                    // Verify that the ids = 5,21 are not deleted from the database
+                    assertEquals(2, models?.filter { it.partyId in listOf(5L, 21L) }?.size)
+
+                    // Verify that the ids = 14,16 are updated
+                    assertEquals(ExternalPartyStatus.ENABLED, models?.find { it.partyId == 14L }?.status)
+                    assertEquals(ExternalPartyStatus.ENABLED, models?.find { it.partyId == 16L }?.status)
+
+                    signal.countDown()
+                }
+            }
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(3, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshExternalPartiesWithPaginationIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        consents.refreshExternalPartiesWithPagination { result ->
+            assertTrue(result is PaginatedResult.Error)
+            assertNotNull((result as PaginatedResult.Error).error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
 

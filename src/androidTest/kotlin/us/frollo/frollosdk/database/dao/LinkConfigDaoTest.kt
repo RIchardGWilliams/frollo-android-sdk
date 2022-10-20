@@ -69,35 +69,36 @@ class LinkConfigDaoTest {
 
     @Test
     fun testGetStaleKeys() {
-        val data1 = testLinkConfigData()
-        val data2 = testLinkConfigData()
-        val data3 = testLinkConfigData()
+        val data1 = testLinkConfigData(key = "budgets")
+        val data2 = testLinkConfigData(key = "key1")
+        val data3 = testLinkConfigData(key = "key2")
         val list = mutableListOf(data1, data2, data3)
 
         db.linkConfig().insertAll(*list.toTypedArray())
 
         val staleKeys = db.linkConfig().getStaleKeys(arrayOf("budgets"))
 
-        assertEquals(1, staleKeys.size)
-        assertTrue(staleKeys.containsAll(mutableListOf("budgets")))
+        assertEquals(2, staleKeys.size)
+        assertTrue(staleKeys.containsAll(listOf("key1", "key2")))
     }
 
     @Test
     fun testDeleteMany() {
-        val data1 = testLinkConfigData()
-        val data2 = testLinkConfigData()
-        val data3 = testLinkConfigData()
+        val data1 = testLinkConfigData(key = "terms")
+        val data2 = testLinkConfigData(key = "privacy_policy")
+        val data3 = testLinkConfigData(key = "key1")
 
         val list = mutableListOf(data1, data2, data3)
 
         db.linkConfig().insertAll(*list.toTypedArray())
 
-        db.linkConfig().deleteMany(arrayOf("terms", "privacy policy"))
+        db.linkConfig().deleteMany(arrayOf("terms", "privacy_policy"))
 
         val testObserver = db.linkConfig().load().test()
         testObserver.awaitValue()
         assertTrue(testObserver.value().isNotEmpty())
-        assertEquals(2, testObserver.value().size)
+        assertEquals(1, testObserver.value().size)
+        assertEquals("key1", testObserver.value()[0].key)
     }
 
     @Test

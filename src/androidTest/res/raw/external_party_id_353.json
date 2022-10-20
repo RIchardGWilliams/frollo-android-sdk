@@ -1,0 +1,30 @@
+{
+    "id": 353,
+    "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+    "name": "Check Finance",
+    "company": {
+        "display_name": "Display name",
+        "legal_name": "Legal name"
+    },
+    "contact": "support@frollo.us",
+    "description": "They broker things...",
+    "status": "enabled",
+    "privacy_url": "https://example.com",
+    "type": "ta",
+    "ta_type": "accountant",
+    "sharing_durations": [{
+        "duration": 86400,
+        "description": "One day",
+        "image_url": "https://picsum.photos/300/200"
+    }],
+    "permissions": [{
+        "id": "account_details",
+        "title": "Account balance and details",
+        "description": "We leverage...",
+        "required": true,
+        "details": [{
+            "id": "account_name",
+            "description": "Name of account"
+        }]
+    }]
+}

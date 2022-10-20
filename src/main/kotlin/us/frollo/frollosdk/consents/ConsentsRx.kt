@@ -20,10 +20,15 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import io.reactivex.Observable
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
 import us.frollo.frollosdk.extensions.sqlForConsents
+import us.frollo.frollosdk.extensions.sqlForExternalParties
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
 import us.frollo.frollosdk.model.coredata.cdr.ConsentRelation
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 
 /**
  * Fetch consent by ID from the cache
@@ -114,4 +119,49 @@ fun Consents.fetchConsentsWithRelationRx(query: SimpleSQLiteQuery): Observable<L
  */
 fun Consents.fetchCDRConfigurationRx(): Observable<CDRConfiguration?> {
     return db.cdrConfiguration().loadRx()
+}
+
+/**
+ * Fetch external party by ID from the cache
+ *
+ * @param externalPartyId Unique external party ID to fetch
+ *
+ * @return Rx Observable object of [ExternalParty] which can be observed using an Observer for future changes as well.
+ */
+fun Consents.fetchExternalPartyRx(externalPartyId: Long): Observable<ExternalParty?> {
+    return db.externalParty().loadRx(externalPartyId)
+}
+
+/**
+ * Fetch external parties from the cache
+ *
+ * @param externalIds Filter external parties to be refreshed by external IDs (Optional)
+ * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
+ * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
+ * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+ *
+ * @return Rx Observable object of List<ExternalParty> which can be observed using an Observer for future changes as well.
+ */
+fun Consents.fetchExternalPartiesRx(
+    externalIds: List<String>? = null,
+    status: ExternalPartyStatus? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    type: ExternalPartyType? = null,
+): Observable<List<ExternalParty>> {
+    return db.externalParty().loadByQueryRx(
+        sqlForExternalParties(externalIds, status, trustedAdvisorType, type)
+    )
+}
+
+/**
+ * Advanced method to fetch external parties by SQL query from the cache
+ *
+ * @param query SimpleSQLiteQuery: Select query which fetches consents from the cache
+ *
+ * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
+ *
+ * @return Rx Observable object of List<ExternalParty> which can be observed using an Observer for future changes as well.
+ */
+fun Consents.fetchExternalPartiesRx(query: SimpleSQLiteQuery): Observable<List<ExternalParty>> {
+    return db.externalParty().loadByQueryRx(query)
 }

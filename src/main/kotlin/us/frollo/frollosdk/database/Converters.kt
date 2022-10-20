@@ -74,7 +74,10 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletProvider
 import us.frollo.frollosdk.model.coredata.contacts.DigitalWalletType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentDetails
@@ -577,6 +580,24 @@ internal class Converters {
 
     @TypeConverter
     fun stringFromCDRPolicy(value: CDRPolicy?): String? = if (value == null) null else gson.toJson(value)
+
+    @TypeConverter
+    fun stringFromExternalPartyStatus(value: ExternalPartyStatus?): String? = value?.name ?: ExternalPartyStatus.DISABLED.name
+
+    @TypeConverter
+    fun stringToExternalPartyStatus(value: String?): ExternalPartyStatus? = if (value == null) ExternalPartyStatus.DISABLED else ExternalPartyStatus.valueOf(value)
+
+    @TypeConverter
+    fun stringFromExternalPartyType(value: ExternalPartyType?): String? = value?.name ?: ExternalPartyType.CDR_INSIGHT.name
+
+    @TypeConverter
+    fun stringToExternalPartyType(value: String?): ExternalPartyType? = if (value == null) ExternalPartyType.CDR_INSIGHT else ExternalPartyType.valueOf(value)
+
+    @TypeConverter
+    fun stringFromTrustedAdvisorType(value: TrustedAdvisorType?): String? = value?.name
+
+    @TypeConverter
+    fun stringToTrustedAdvisorType(value: String?): TrustedAdvisorType? = value?.let { TrustedAdvisorType.valueOf(value) }
 
     // Contact
 

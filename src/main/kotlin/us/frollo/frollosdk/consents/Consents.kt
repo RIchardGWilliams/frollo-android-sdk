@@ -29,16 +29,21 @@ import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchConsents
+import us.frollo.frollosdk.extensions.fetchExternalParties
 import us.frollo.frollosdk.extensions.fetchProducts
 import us.frollo.frollosdk.extensions.sqlForConsentIdsToGetStaleIds
 import us.frollo.frollosdk.extensions.sqlForConsents
+import us.frollo.frollosdk.extensions.sqlForExternalParties
+import us.frollo.frollosdk.extensions.sqlForExternalPartyIdsToGetStaleIds
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toCDRConfiguration
 import us.frollo.frollosdk.mapping.toConsent
 import us.frollo.frollosdk.mapping.toConsentCreateRequest
 import us.frollo.frollosdk.mapping.toConsentUpdateRequest
+import us.frollo.frollosdk.mapping.toExternalParty
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
@@ -47,6 +52,10 @@ import us.frollo.frollosdk.model.coredata.cdr.ConsentCreateForm
 import us.frollo.frollosdk.model.coredata.cdr.ConsentRelation
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.ConsentUpdateForm
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.CdrAPI
 
@@ -493,5 +502,191 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
                 }
             }
         }
+    }
+
+    // External Party
+
+    /**
+     * Fetch external party by ID from the cache
+     *
+     * @param externalPartyId Unique external party ID to fetch
+     *
+     * @return LiveData object of [ExternalParty] which can be observed using an Observer for future changes as well.
+     */
+    fun fetchExternalParty(externalPartyId: Long): LiveData<ExternalParty?> {
+        return db.externalParty().load(externalPartyId)
+    }
+
+    /**
+     * Fetch external parties from the cache
+     *
+     * @param externalIds Filter external parties to be refreshed by external IDs (Optional)
+     * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
+     * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
+     * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+     *
+     * @return LiveData object of List<ExternalParty> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchExternalParties(
+        externalIds: List<String>? = null,
+        status: ExternalPartyStatus? = null,
+        trustedAdvisorType: TrustedAdvisorType? = null,
+        type: ExternalPartyType? = null,
+    ): LiveData<List<ExternalParty>> {
+        return db.externalParty().loadByQuery(
+            sqlForExternalParties(externalIds, status, trustedAdvisorType, type)
+        )
+    }
+
+    /**
+     * Advanced method to fetch external parties by SQL query from the cache
+     *
+     * @param query SimpleSQLiteQuery: Select query which fetches external parties from the cache
+     *
+     * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
+     *
+     * @return LiveData object of List<ExternalParty> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchExternalParties(query: SimpleSQLiteQuery): LiveData<List<ExternalParty>> {
+        return db.externalParty().loadByQuery(query)
+    }
+
+    /**
+     * Refresh a specific external party by ID from the host
+     *
+     * @param externalPartyId ID of the external party to fetch
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun refreshExternalParty(externalPartyId: Long, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+        cdrAPI.fetchExternalParty(externalPartyId).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#refreshExternalParty", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    handleExternalPartyResponse(response = resource.data, completion = completion)
+                }
+            }
+        }
+    }
+
+    /**
+     * Refresh All external parties
+     *
+     * @param externalIds Filter external parties to be refreshed by external IDs (Optional)
+     * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
+     * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
+     * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+     * @param before before field to get previous list in pagination (Optional)
+     * @param after after field to get next list in pagination (Optional)
+     * @param size Count of objects to returned from the API (page size)
+     * @param completion Optional completion handler with optional error if the request fails  else pagination data is success (Optional)
+     */
+    fun refreshExternalPartiesWithPagination(
+        externalIds: List<String>? = null,
+        status: ExternalPartyStatus? = null,
+        trustedAdvisorType: TrustedAdvisorType? = null,
+        type: ExternalPartyType? = null,
+        before: String? = null,
+        after: String? = null,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+    ) {
+        cdrAPI.fetchExternalParties(
+            externalIds = externalIds,
+            status = status,
+            trustedAdvisorType = trustedAdvisorType,
+            type = type,
+            before = before,
+            after = after,
+            size = size
+        ).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#refreshExternalPartiesWithPagination", resource.error?.localizedDescription)
+                    completion?.invoke(PaginatedResult.Error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    val response = resource.data
+                    handleExternalPartiesWithPaginationResponse(
+                        response = response?.data,
+                        externalIds = externalIds,
+                        status = status,
+                        trustedAdvisorType = trustedAdvisorType,
+                        type = type,
+                        before = response?.paging?.cursors?.before?.toLong(),
+                        after = response?.paging?.cursors?.after?.toLong(),
+                        completion = completion
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handleExternalPartyResponse(
+        response: ExternalPartyResponse?,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        response?.let {
+            doAsync {
+                val model = response.toExternalParty()
+
+                db.externalParty().insert(model)
+
+                uiThread {
+                    completion?.invoke(Result.success())
+                }
+            }
+        } ?: run {
+            completion?.invoke(Result.success())
+        } // Explicitly invoke completion callback if response is null.
+    }
+
+    private fun handleExternalPartiesWithPaginationResponse(
+        response: List<ExternalPartyResponse>?,
+        externalIds: List<String>? = null,
+        status: ExternalPartyStatus? = null,
+        trustedAdvisorType: TrustedAdvisorType? = null,
+        type: ExternalPartyType? = null,
+        after: Long?,
+        before: Long?,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
+    ) {
+        response?.let {
+            doAsync {
+                // Insert all external parties from API response
+                val models = response.map { it.toExternalParty() }
+                db.externalParty().insertAll(*models.toTypedArray())
+
+                // Fetch IDs from API response
+                val apiIds = response.map { it.partyId }.toHashSet()
+
+                // Get IDs from database
+                val externalPartyIds = db.externalParty().getIdsByQuery(
+                    sqlForExternalPartyIdsToGetStaleIds(
+                        before = before,
+                        after = after,
+                        externalIds = externalIds,
+                        status = status,
+                        trustedAdvisorType = trustedAdvisorType,
+                        type = type
+                    )
+                ).toHashSet()
+
+                // Get stale IDs that are not present in the API response
+                val staleIds = externalPartyIds.minus(apiIds)
+
+                // Delete the entries for these stale IDs from database if they exist
+                if (staleIds.isNotEmpty()) {
+                    db.externalParty().deleteMany(staleIds.toLongArray())
+                }
+
+                uiThread {
+                    val paginationInfo = PaginationInfo(before = before, after = after)
+                    completion?.invoke(PaginatedResult.Success(paginationInfo))
+                }
+            }
+        } ?: run { completion?.invoke(PaginatedResult.Success()) } // Explicitly invoke completion callback if response is null.
     }
 }

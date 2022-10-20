@@ -40,6 +40,9 @@ import us.frollo.frollosdk.model.coredata.budgets.BudgetTrackingStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
 import us.frollo.frollosdk.model.coredata.cards.CardStatus
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalFrequency
 import us.frollo.frollosdk.model.coredata.goals.GoalStatus
@@ -372,7 +375,6 @@ class ModelExtensionTest {
     fun testSQLForBudgetPeriodIds() {
         val budgetId: Long = 200
         val budgetStatus = BudgetStatus.ACTIVE
-        val trackingStatus = BudgetTrackingStatus.ABOVE
         val fromDate = "2019-03-01"
         val toDate = "2019-03-31"
 
@@ -619,5 +621,84 @@ class ModelExtensionTest {
             before = null
         )
         assertEquals("SELECT msg_id  FROM message WHERE created_date >= '2022-07-02T08:30:40.367+10:00'  ORDER BY created_date DESC", query.sql)
+    }
+
+    @Test
+    fun testSQLForMessages() {
+        val messageFilter = MessageFilter(
+            messageTypes = listOf("survey", "dashboard_alerts"),
+            contentTypes = listOf(ContentType.VIDEO, ContentType.TEXT),
+            designTypes = listOf("dash_1", "dash_2"),
+            event = "PA_LINKED",
+            read = false,
+            interacted = true,
+            sortBy = MessageSortType.CREATED_AT,
+            orderBy = OrderType.DESC
+        )
+
+        var query = sqlForMessages(messageFilter)
+        assertEquals("SELECT  *  FROM message WHERE ((message_types LIKE '%|survey|%') OR (message_types LIKE '%|dashboard_alerts|%')) AND content_type IN ('VIDEO','TEXT') AND content_design_type IN ('dash_1','dash_2') AND event = 'PA_LINKED' AND read = 0 AND interacted = 1  ORDER BY created_date DESC", query.sql)
+
+        // Default filters
+        query = sqlForMessages(MessageFilter())
+        assertEquals("SELECT  *  FROM message ORDER BY created_date DESC", query.sql)
+    }
+
+    @Test
+    fun testSQLForExternalParties() {
+        var query = sqlForExternalParties(
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+        )
+        assertEquals("SELECT  *  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+
+        // Default filters
+        query = sqlForExternalParties()
+        assertEquals("SELECT  *  FROM external_party", query.sql)
+    }
+
+    @Test
+    fun testSQLForExternalPartyIdsToGetStaleIds() {
+        var query = sqlForExternalPartyIdsToGetStaleIds(
+            before = 100,
+            after = 120,
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+        )
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+
+        query = sqlForExternalPartyIdsToGetStaleIds(
+            after = 120,
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+        )
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+
+        query = sqlForExternalPartyIdsToGetStaleIds(
+            before = 100,
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+        )
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+
+        query = sqlForExternalPartyIdsToGetStaleIds(
+            externalIds = listOf("613bd99c", "533rg28h"),
+            status = ExternalPartyStatus.ENABLED,
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+        )
+        assertEquals("SELECT party_id  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+
+        // Default filters
+        query = sqlForExternalPartyIdsToGetStaleIds()
+        assertEquals("SELECT party_id  FROM external_party", query.sql)
     }
 }
