@@ -85,7 +85,7 @@ class AppConfigurationTest : BaseAndroidTest() {
         assertNotNull(testObserver.value())
         assertEquals(3, testObserver.value()?.size)
         assertEquals("key1", testObserver.value()?.get(0)?.key)
-        assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", testObserver.value().data?.get(1)?.url)
+        assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", testObserver.value()?.get(1)?.url)
 
         tearDown()
     }
@@ -221,11 +221,11 @@ class AppConfigurationTest : BaseAndroidTest() {
         assertEquals(url, request.trimmedPath)
 
         assertNull(request.getHeader("Authorization"))
-        assertNull(request.getHeader("X-Api-Version"))
-        assertNull(request.getHeader("X-Bundle-Id"))
-        assertNull(request.getHeader("X-Device-Version"))
-        assertNull(request.getHeader("X-Software-Version"))
-        assertNull(request.getHeader("X-Session-Id"))
+        assertNotNull(request.getHeader("X-Api-Version"))
+        assertEquals("us.frollo.frollosdk", request.getHeader("X-Bundle-Id"))
+        assertNotNull(request.getHeader("X-Device-Version"))
+        assertNotNull(request.getHeader("X-Software-Version"))
+        assertNotNull(request.getHeader("X-Session-Id"))
 
         tearDown()
     }
