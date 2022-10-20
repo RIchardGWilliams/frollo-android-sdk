@@ -1,7 +1,6 @@
 package us.frollo.frollosdk.appconfiguration
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import androidx.sqlite.db.SimpleSQLiteQuery
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
@@ -32,10 +31,8 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
     /**
      * Fetch company config from the cache
      */
-    fun fetchCompanyConfig(): LiveData<Resource<CompanyConfig>> {
-        return Transformations.map(db.companyConfig().load()) {
-            Resource.success(it)
-        }
+    fun fetchCompanyConfig(): LiveData<CompanyConfig?> {
+        return db.companyConfig().load()
     }
 
     /**
@@ -45,20 +42,16 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
      *
      * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
      *
-     * @return LiveData object of Resource<CompanyConfig> which can be observed using an Observer for future changes as well.
+     * @return LiveData object of CompanyConfig which can be observed using an Observer for future changes as well.
      */
-    fun fetchCompanyConfig(query: SimpleSQLiteQuery): LiveData<Resource<CompanyConfig>> =
-        Transformations.map(db.companyConfig().loadByQuery(query)) { model ->
-            Resource.success(model)
-        }
+    fun fetchCompanyConfig(query: SimpleSQLiteQuery): LiveData<CompanyConfig?> =
+        db.companyConfig().loadByQuery(query)
 
     /**
      * Fetch feature config from the cache
      */
-    fun fetchFeatureConfig(): LiveData<Resource<List<FeatureConfig>>> {
-        return Transformations.map(db.featureConfig().load()) {
-            Resource.success(it)
-        }
+    fun fetchFeatureConfig(): LiveData<List<FeatureConfig>> {
+        return db.featureConfig().load()
     }
 
     /**
@@ -68,20 +61,16 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
      *
      * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
      *
-     * @return LiveData object of Resource<List<FeatureConfig>> which can be observed using an Observer for future changes as well.
+     * @return LiveData object of List<FeatureConfig> which can be observed using an Observer for future changes as well.
      */
-    fun fetchFeatureConfig(query: SimpleSQLiteQuery): LiveData<Resource<List<FeatureConfig>>> =
-        Transformations.map(db.featureConfig().loadByQuery(query)) { model ->
-            Resource.success(model)
-        }
+    fun fetchFeatureConfig(query: SimpleSQLiteQuery): LiveData<List<FeatureConfig>> =
+        db.featureConfig().loadByQuery(query)
 
     /**
      * Fetch link config from the cache
      */
-    fun fetchLinkConfig(): LiveData<Resource<List<LinkConfig>>> {
-        return Transformations.map(db.linkConfig().load()) {
-            Resource.success(it)
-        }
+    fun fetchLinkConfig(): LiveData<List<LinkConfig>> {
+        return db.linkConfig().load()
     }
 
     /**
@@ -91,12 +80,10 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
      *
      * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
      *
-     * @return LiveData object of Resource<List<LinkConfig>> which can be observed using an Observer for future changes as well.
+     * @return LiveData object of List<LinkConfig> which can be observed using an Observer for future changes as well.
      */
-    fun fetchLinkConfig(query: SimpleSQLiteQuery): LiveData<Resource<List<LinkConfig>>> =
-        Transformations.map(db.linkConfig().loadByQuery(query)) { model ->
-            Resource.success(model)
-        }
+    fun fetchLinkConfig(query: SimpleSQLiteQuery): LiveData<List<LinkConfig>> =
+        db.linkConfig().loadByQuery(query)
 
     /**
      * Fetch app configuration from the host and update the cache

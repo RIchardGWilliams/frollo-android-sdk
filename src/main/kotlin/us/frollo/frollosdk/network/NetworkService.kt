@@ -60,11 +60,19 @@ class NetworkService internal constructor(
     private val serverInterceptor = NetworkInterceptor(this, helper)
     private val tokenInterceptor = TokenInterceptor(helper, oAuth2Helper.config)
 
-    private val apiRetrofit = createRetrofit(baseUrl = oAuth2Helper.config.serverUrl, isTokenEndpoint = false)
+    private val apiRetrofit = createRetrofit(
+        baseUrl = oAuth2Helper.config.serverUrl,
+        needAuthHeader = true,
+        addAuthenticator = true
+    )
     private val authRetrofit: Retrofit?
         get() {
             return if (oAuth2Helper.config.authenticationType is OAuth2)
-                createRetrofit(baseUrl = oAuth2Helper.oAuth2.tokenUrl, isTokenEndpoint = true)
+                createRetrofit(
+                    baseUrl = oAuth2Helper.oAuth2.tokenUrl,
+                    needAuthHeader = false,
+                    addAuthenticator = true
+                )
             else null
         }
     private var revokeTokenRetrofit: Retrofit? = null
@@ -73,8 +81,8 @@ class NetworkService internal constructor(
         // Need to pass this as base URL cannot be empty for Retrofit initialization.
         // But, this will be ignored anyways when we specify full URL in the Service API.
         baseUrl = oAuth2Helper.config.serverUrl,
-        isTokenEndpoint = false,
-        needAuthentication = false
+        needAuthHeader = false,
+        addAuthenticator = false
     )
 
     internal var accessTokenProvider: AccessTokenProvider? = null
@@ -86,28 +94,37 @@ class NetworkService internal constructor(
     init {
         if (oAuth2Helper.config.authenticationType is OAuth2) {
             oAuth2Helper.oAuth2.revokeTokenURL?.let { revokeTokenUrl ->
-                revokeTokenRetrofit = createRetrofit(baseUrl = revokeTokenUrl, isTokenEndpoint = true)
+                revokeTokenRetrofit = createRetrofit(
+                    baseUrl = revokeTokenUrl,
+                    needAuthHeader = false,
+                    addAuthenticator = true
+                )
             }
             if (oAuth2Helper.oAuth2.daOAuth2Login) {
-                daTokenRetrofit = createRetrofit(baseUrl = oAuth2Helper.config.serverUrl, isTokenEndpoint = true)
+                daTokenRetrofit = createRetrofit(
+                    baseUrl = oAuth2Helper.config.serverUrl,
+                    needAuthHeader = false,
+                    addAuthenticator = true
+                )
             }
         }
     }
 
-    private fun createRetrofit(baseUrl: String, isTokenEndpoint: Boolean, needAuthentication: Boolean = true): Retrofit {
+    private fun createRetrofit(baseUrl: String, needAuthHeader: Boolean, addAuthenticator: Boolean): Retrofit {
         val httpClientBuilder = OkHttpClient.Builder()
             .setTimeouts()
             .addCertificatePinning()
 
-        if (needAuthentication) {
-            httpClientBuilder.addInterceptors(isTokenEndpoint)
-                .addAuthenticators(isTokenEndpoint)
+        httpClientBuilder.addInterceptors(needAuthHeader)
+
+        if (addAuthenticator) {
+            httpClientBuilder.addAuthenticators(needAuthHeader)
         }
 
         val httpClient = httpClientBuilder.build()
 
         // Keep a reference to the dispatcher for host service so we can remove requests on reset
-        if (!isTokenEndpoint && needAuthentication) {
+        if (needAuthHeader && addAuthenticator) {
             dispatcher = httpClient.dispatcher
         }
 
@@ -134,12 +151,12 @@ class NetworkService internal constructor(
     override fun <T> createDATokenAuth(service: Class<T>): T? = daTokenRetrofit?.create(service)
     override fun <T> createExternalNoAuth(service: Class<T>): T = externalNoAuthRetrofit.create(service)
 
-    private fun OkHttpClient.Builder.addInterceptors(isTokenEndpoint: Boolean): OkHttpClient.Builder {
+    private fun OkHttpClient.Builder.addInterceptors(needAuthHeader: Boolean): OkHttpClient.Builder {
         addInterceptor(
-            if (isTokenEndpoint)
-                tokenInterceptor
-            else
+            if (needAuthHeader)
                 serverInterceptor
+            else
+                tokenInterceptor
         )
         return this
     }
@@ -151,12 +168,12 @@ class NetworkService internal constructor(
         return this
     }
 
-    private fun OkHttpClient.Builder.addAuthenticators(isTokenEndpoint: Boolean): OkHttpClient.Builder {
+    private fun OkHttpClient.Builder.addAuthenticators(needAuthHeader: Boolean): OkHttpClient.Builder {
         authenticator(
-            if (isTokenEndpoint)
-                TokenAuthenticator(this@NetworkService)
-            else
+            if (needAuthHeader)
                 NetworkAuthenticator(this@NetworkService)
+            else
+                TokenAuthenticator(this@NetworkService)
         )
         return this
     }
