@@ -42,8 +42,8 @@ class AppConfigurationTest : BaseAndroidTest() {
 
         val testObserver = appConfiguration.fetchCompanyConfig().test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals("test1", testObserver.value().data?.displayName)
+        assertNotNull(testObserver.value())
+        assertEquals("test1", testObserver.value()?.displayName)
 
         tearDown()
     }
@@ -61,10 +61,10 @@ class AppConfigurationTest : BaseAndroidTest() {
 
         val testObserver = appConfiguration.fetchFeatureConfig().test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(3, testObserver.value().data?.size)
-        assertEquals("key1", testObserver.value().data?.get(0)?.key)
-        assertEquals(true, testObserver.value().data?.get(1)?.enabled)
+        assertNotNull(testObserver.value())
+        assertEquals(3, testObserver.value()?.size)
+        assertEquals("key1", testObserver.value()?.get(0)?.key)
+        assertEquals(true, testObserver.value()?.get(1)?.enabled)
 
         tearDown()
     }
@@ -82,9 +82,9 @@ class AppConfigurationTest : BaseAndroidTest() {
 
         val testObserver = appConfiguration.fetchLinkConfig().test()
         testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(3, testObserver.value().data?.size)
-        assertEquals("key1", testObserver.value().data?.get(0)?.key)
+        assertNotNull(testObserver.value())
+        assertEquals(3, testObserver.value()?.size)
+        assertEquals("key1", testObserver.value()?.get(0)?.key)
         assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", testObserver.value().data?.get(1)?.url)
 
         tearDown()
@@ -145,14 +145,14 @@ class AppConfigurationTest : BaseAndroidTest() {
             val model1 = testObserver1.value()
             assertNotNull(model1)
 
-            assertEquals("Frollo", model1?.data?.displayName)
-            assertEquals("Frollo Australia Pty Ltd", model1?.data?.legalName)
-            assertEquals("12345678901", model1?.data?.abn)
-            assertEquals("123456789", model1?.data?.acn)
-            assertEquals("020000000000", model1?.data?.phone)
-            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", model1?.data?.address)
-            assertEquals("support@frollo.us", model1?.data?.supportEmail)
-            assertEquals("555 02 0000000", model1?.data?.supportPhone)
+            assertEquals("Frollo", model1?.displayName)
+            assertEquals("Frollo Australia Pty Ltd", model1?.legalName)
+            assertEquals("12345678901", model1?.abn)
+            assertEquals("123456789", model1?.acn)
+            assertEquals("020000000000", model1?.phone)
+            assertEquals("Level 33 100 Mount Street, North Sydney, NSW 2060", model1?.address)
+            assertEquals("support@frollo.us", model1?.supportEmail)
+            assertEquals("555 02 0000000", model1?.supportPhone)
 
             // Features config test
             val testObserver2 = appConfiguration.fetchFeatureConfig().test()
@@ -160,13 +160,13 @@ class AppConfigurationTest : BaseAndroidTest() {
             val model2 = testObserver2.value()
             assertNotNull(model2)
 
-            assertEquals(3, model2.data?.size)
-            assertEquals("budgets", model2?.data?.get(0)?.key)
-            assertEquals("Budgeting", model2?.data?.get(0)?.name)
-            assertEquals(true, model2?.data?.get(2)?.enabled)
+            assertEquals(3, model2?.size)
+            assertEquals("budgets", model2?.get(0)?.key)
+            assertEquals("Budgeting", model2?.get(0)?.name)
+            assertEquals(true, model2?.get(2)?.enabled)
 
             // Verify that the stale feature configs are deleted from the database
-            assertEquals(0, model2?.data?.filter { it.key in listOf("key1", "key2") }?.size)
+            assertEquals(0, model2?.filter { it.key in listOf("key1", "key2") }?.size)
 
             // Links config test
             val testObserver3 = appConfiguration.fetchLinkConfig().test()
@@ -174,14 +174,14 @@ class AppConfigurationTest : BaseAndroidTest() {
             val model3 = testObserver3.value()
             assertNotNull(model3)
 
-            assertEquals(3, model3.data?.size)
-            assertEquals("terms", model3?.data?.get(0)?.key)
-            assertEquals("Terms and Conditions", model3?.data?.get(0)?.name)
-            assertEquals("https://frollo.us/terms", model3?.data?.get(0)?.url)
-            assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", model3?.data?.get(2)?.url)
+            assertEquals(3, model3?.size)
+            assertEquals("terms", model3?.get(0)?.key)
+            assertEquals("Terms and Conditions", model3?.get(0)?.name)
+            assertEquals("https://frollo.us/terms", model3?.get(0)?.url)
+            assertEquals("https://frollo.us/api/pages/explainer_landing_page_android", model3?.get(2)?.url)
 
             // Verify that the stale link configs are deleted from the database
-            assertEquals(0, model3?.data?.filter { it.key in listOf("key1", "key2") }?.size)
+            assertEquals(0, model3?.filter { it.key in listOf("key1", "key2") }?.size)
 
             signal.countDown()
         }
