@@ -4,6 +4,7 @@
 
 #### Changes
 - App config API & caching
+- External Parties API
 
 ### 3.19.0
 

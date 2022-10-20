@@ -1,0 +1,41 @@
+{
+    "data": [
+        {
+            "id": 16,
+            "external_id": "73fkv734",
+            "name": "Check Finance 16",
+            "contact": "support@frollo.us",
+            "status": "enabled",
+            "type": "ta",
+            "ta_type": "accountant",
+            "privacy_url": "http://frollo.us/privacy"
+        },
+        {
+            "id": 17,
+            "external_id": "73fkv734",
+            "name": "Check Finance 17",
+            "contact": "support@frollo.us",
+            "status": "enabled",
+            "type": "ta",
+            "ta_type": "accountant",
+            "privacy_url": "http://frollo.us/privacy"
+        },
+        {
+            "id": 19,
+            "external_id": "73fkv734",
+            "name": "Check Finance 19",
+            "contact": "support@frollo.us",
+            "status": "enabled",
+            "type": "ta",
+            "ta_type": "accountant",
+            "privacy_url": "http://frollo.us/privacy"
+        }
+    ],
+    "paging": {
+        "cursors": {
+            "before": 16,
+            "after": null
+        },
+        "total": 13
+    }
+}

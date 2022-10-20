@@ -40,6 +40,7 @@ import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.bills.Bills
 import us.frollo.frollosdk.budgets.Budgets
 import us.frollo.frollosdk.cards.Cards
+import us.frollo.frollosdk.consents.Consents
 import us.frollo.frollosdk.contacts.Contacts
 import us.frollo.frollosdk.core.ACTION.ACTION_AUTHENTICATION_CHANGED
 import us.frollo.frollosdk.core.ARGUMENT.ARG_AUTHENTICATION_STATUS
@@ -239,6 +240,12 @@ object FrolloSDK {
     val appConfiguration: AppConfiguration
         get() = _appConfiguration ?: throw IllegalAccessException(SDK_NOT_SETUP)
 
+    /**
+     * Consents - Managing all aspects of consents. See [Consents] for details
+     */
+    val consents: Consents
+        get() = _consents ?: throw IllegalAccessException(SDK_NOT_SETUP)
+
     private var _setup = false
     private var _logger: LogManager? = null
     private var _aggregation: Aggregation? = null
@@ -263,6 +270,7 @@ object FrolloSDK {
     private var _serviceStatusManagement: ServiceStatusManagement? = null
     private var _affordability: Affordability? = null
     private var _appConfiguration: AppConfiguration? = null
+    private var _consents: Consents? = null
     private lateinit var keyStore: Keystore
     private lateinit var preferences: Preferences
     private lateinit var version: Version
@@ -425,6 +433,9 @@ object FrolloSDK {
             // App Configuration management
             _appConfiguration = AppConfiguration(network, database)
 
+            // Consents management
+            _consents = Consents(network, database)
+
             // Version Migration
             if (version.migrationNeeded()) {
                 version.migrateVersion()
@@ -573,7 +584,7 @@ object FrolloSDK {
         aggregation.refreshProviderAccounts()
         aggregation.refreshAccounts()
         aggregation.refreshTransactionsWithPagination()
-        aggregation.refreshConsentsWithPagination()
+        consents.refreshConsentsWithPagination()
         userManagement.refreshUser()
         messages.refreshMessagesWithPagination(MessageFilter())
         budgets.refreshBudgets()

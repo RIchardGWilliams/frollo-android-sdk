@@ -27,6 +27,7 @@ import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
+import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 
@@ -37,6 +38,8 @@ internal interface CdrAPI {
         const val URL_CDR_CONSENT = "cdr/consents/{consent_id}"
         const val URL_CDR_PRODUCTS = "cdr/products"
         const val URL_CDR_PRODUCT = "cdr/products/{product_id}"
+        const val URL_EXTERNAL_PARTIES = "cdr/parties/external"
+        const val URL_EXTERNAL_PARTY = "cdr/parties/external/{external_party_id}"
     }
 
     @GET(URL_CDR_CONFIG)
@@ -59,4 +62,10 @@ internal interface CdrAPI {
 
     @PUT(URL_CDR_CONSENT)
     fun updateConsent(@Path("consent_id") consentId: Long, @Body request: ConsentUpdateRequest): Call<ConsentResponse>
+
+    @GET(URL_EXTERNAL_PARTIES)
+    fun fetchExternalParties(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<ExternalPartyResponse>>
+
+    @GET(URL_EXTERNAL_PARTY)
+    fun fetchExternalParty(@Path("external_party_id") partyId: Long): Call<ExternalPartyResponse>
 }

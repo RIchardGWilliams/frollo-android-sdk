@@ -75,7 +75,10 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.coredata.contacts.BankAddress
 import us.frollo.frollosdk.model.coredata.contacts.BankDetails
 import us.frollo.frollosdk.model.coredata.contacts.Beneficiary
@@ -1479,6 +1482,54 @@ class ConvertersTest {
         val info = CDRPolicy("CDR Policy", "https://example.com")
         val json = Converters.instance.stringFromCDRPolicy(info)
         assertEquals("{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}", json)
+    }
+
+    @Test
+    fun testStringToExternalPartyStatus() {
+        val status = Converters.instance.stringToExternalPartyStatus("ENABLED")
+        assertEquals(ExternalPartyStatus.ENABLED, status)
+
+        assertEquals(ExternalPartyStatus.DISABLED, Converters.instance.stringToExternalPartyStatus(null))
+    }
+
+    @Test
+    fun testStringFromExternalPartyStatus() {
+        val str = Converters.instance.stringFromExternalPartyStatus(ExternalPartyStatus.ENABLED)
+        assertEquals("ENABLED", str)
+
+        assertEquals("DISABLED", Converters.instance.stringFromExternalPartyStatus(null))
+    }
+
+    @Test
+    fun testStringToExternalPartyType() {
+        val status = Converters.instance.stringToExternalPartyType("TRUSTED_ADVISOR")
+        assertEquals(ExternalPartyType.TRUSTED_ADVISOR, status)
+
+        assertEquals(ExternalPartyType.CDR_INSIGHT, Converters.instance.stringToExternalPartyType(null))
+    }
+
+    @Test
+    fun testStringFromExternalPartyType() {
+        val str = Converters.instance.stringFromExternalPartyType(ExternalPartyType.TRUSTED_ADVISOR)
+        assertEquals("TRUSTED_ADVISOR", str)
+
+        assertEquals("CDR_INSIGHT", Converters.instance.stringFromExternalPartyType(null))
+    }
+
+    @Test
+    fun testStringToTrustedAdvisorType() {
+        val status = Converters.instance.stringToTrustedAdvisorType("ADVISOR")
+        assertEquals(TrustedAdvisorType.ADVISOR, status)
+
+        assertNull(Converters.instance.stringToTrustedAdvisorType(null))
+    }
+
+    @Test
+    fun testStringFromTrustedAdvisorType() {
+        val str = Converters.instance.stringFromTrustedAdvisorType(TrustedAdvisorType.ADVISOR)
+        assertEquals("ADVISOR", str)
+
+        assertNull(Converters.instance.stringFromTrustedAdvisorType(null))
     }
 
     @Test

@@ -37,6 +37,7 @@ import us.frollo.frollosdk.database.dao.CardDao
 import us.frollo.frollosdk.database.dao.CompanyConfigDao
 import us.frollo.frollosdk.database.dao.ConsentDao
 import us.frollo.frollosdk.database.dao.ContactDao
+import us.frollo.frollosdk.database.dao.ExternalPartyDao
 import us.frollo.frollosdk.database.dao.FeatureConfigDao
 import us.frollo.frollosdk.database.dao.GoalDao
 import us.frollo.frollosdk.database.dao.GoalPeriodDao
@@ -72,6 +73,7 @@ import us.frollo.frollosdk.model.coredata.budgets.BudgetPeriod
 import us.frollo.frollosdk.model.coredata.cards.Card
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 import us.frollo.frollosdk.model.coredata.contacts.Contact
 import us.frollo.frollosdk.model.coredata.goals.Goal
 import us.frollo.frollosdk.model.coredata.goals.GoalPeriod
@@ -109,7 +111,8 @@ import us.frollo.frollosdk.model.coredata.user.User
         ServiceOutage::class,
         CompanyConfig::class,
         FeatureConfig::class,
-        LinkConfig::class
+        LinkConfig::class,
+        ExternalParty::class
     ],
     version = 21, exportSchema = true
 )
@@ -144,6 +147,7 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun companyConfig(): CompanyConfigDao
     internal abstract fun featureConfig(): FeatureConfigDao
     internal abstract fun linkConfig(): LinkConfigDao
+    internal abstract fun externalParty(): ExternalPartyDao
 
     companion object {
         private const val DEFAULT_DATABASE_NAME = "frollosdk-db" // WARNING: DO NOT USE this directly anywhere as the actual DB name is derived by appending the DB name prefix.
@@ -814,15 +818,21 @@ abstract class SDKDatabase : RoomDatabase() {
                 // https://frollo.atlassian.net/browse/WA-3067
 
                 // New changes in this migration:
-                // 1) New tables - company_config, feature_config, link_config
+                // 1) Add new tables - company_config, feature_config, link_config
+                // 2) Add new table - external_party
 
+                // START - Add new tables - company_config, feature_config, link_config
                 database.execSQL("CREATE TABLE IF NOT EXISTS `company_config` (`display_name` TEXT NOT NULL, `legal_name` TEXT NOT NULL, `abn` TEXT, `acn` TEXT, `phone` TEXT, `address` TEXT, `support_email` TEXT, `support_phone` TEXT, `company_config_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
-
                 database.execSQL("CREATE TABLE IF NOT EXISTS `feature_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `enabled` INTEGER NOT NULL, PRIMARY KEY(`key`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_feature_config_key` ON `feature_config` (`key`)")
-
                 database.execSQL("CREATE TABLE IF NOT EXISTS `link_config` (`key` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`key`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_link_config_key` ON `link_config` (`key`)")
+                // END - Add new tables - company_config, feature_config, link_config
+
+                // START - Add new table - external_party
+                database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` INTEGER, `name` TEXT NOT NULL, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, PRIMARY KEY(`party_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_external_party_party_id` ON `external_party` (`party_id`)")
+                // END - Add new table - external_party
             }
         }
     }

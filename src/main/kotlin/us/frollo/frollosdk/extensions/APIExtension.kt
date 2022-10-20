@@ -29,6 +29,7 @@ import us.frollo.frollosdk.model.api.bills.BillPaymentResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetPeriodResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
@@ -47,6 +48,9 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFi
 import us.frollo.frollosdk.model.coredata.budgets.BudgetStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
@@ -460,4 +464,24 @@ internal fun MessagesAPI.deleteMessagesInBulk(
     val queryMap = mutableMapOf<String, String>()
     queryMap["message_ids"] = messageIds.joinToString(",")
     return deleteMessagesInBulk(queryMap)
+}
+
+internal fun CdrAPI.fetchExternalParties(
+    externalIds: List<String>? = null,
+    status: ExternalPartyStatus? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    type: ExternalPartyType? = null,
+    before: String? = null,
+    after: String? = null,
+    size: Long? = null
+): Call<PaginatedResponse<ExternalPartyResponse>> {
+    val queryMap = mutableMapOf<String, String>()
+    after?.let { queryMap.put("after", it) }
+    before?.let { queryMap.put("before", it) }
+    size?.let { queryMap.put("size", it.toString()) }
+    externalIds?.let { queryMap["external_ids"] = it.joinToString(",") }
+    status?.let { queryMap["status"] = it.toString() }
+    trustedAdvisorType?.let { queryMap["ta_type"] = it.toString() }
+    type?.let { queryMap["type"] = it.toString() }
+    return fetchExternalParties(queryMap)
 }

@@ -18,13 +18,18 @@ package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.coredata.cdr.CDRModel
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.ConsentCreateForm
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.ConsentUpdateForm
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyCompany
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.testutils.randomNumber
 import us.frollo.frollosdk.testutils.randomString
 import us.frollo.frollosdk.testutils.randomUUID
@@ -128,5 +133,36 @@ internal fun testSharingDurationData(): SharingDuration {
         duration = randomNumber().toLong(),
         description = randomString(20),
         imageUrl = randomString(20)
+    )
+}
+
+internal fun testExternalPartyResponseData(
+    partyId: Long? = null,
+    status: ExternalPartyStatus? = null,
+    type: ExternalPartyType? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    externalId: String? = null
+): ExternalPartyResponse {
+    return ExternalPartyResponse(
+        partyId = partyId ?: randomNumber().toLong(),
+        externalId = externalId ?: randomString(20),
+        name = randomString(20),
+        company = ExternalPartyCompany(
+            displayName = randomString(20),
+            legalName = randomString(20)
+        ),
+        contact = randomString(20),
+        description = randomString(20),
+        status = status ?: ExternalPartyStatus.ENABLED,
+        imageUrl = "https://frollo.com.au/image",
+        smallImageUrl = "https://frollo.com.au/image_small",
+        privacyUrl = "https://frollo.com.au/terms",
+        type = type ?: ExternalPartyType.TRUSTED_ADVISOR,
+        trustedAdvisorType = trustedAdvisorType ?: TrustedAdvisorType.ACCOUNTANT,
+        summary = randomString(20),
+        sharingDurations = listOf(
+            testSharingDurationData()
+        ),
+        permissions = testCDRPermissionData()
     )
 }

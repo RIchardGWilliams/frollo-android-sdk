@@ -69,24 +69,24 @@ class FeatureConfigDaoTest {
 
     @Test
     fun testGetStaleKeys() {
-        val data1 = testFeatureConfigData()
-        val data2 = testFeatureConfigData()
-        val data3 = testFeatureConfigData()
+        val data1 = testFeatureConfigData(key = "budgets")
+        val data2 = testFeatureConfigData(key = "key1")
+        val data3 = testFeatureConfigData(key = "key2")
         val list = mutableListOf(data1, data2, data3)
 
         db.featureConfig().insertAll(*list.toTypedArray())
 
         val staleKeys = db.featureConfig().getStaleKeys(arrayOf("budgets"))
 
-        assertEquals(1, staleKeys.size)
-        assertTrue(staleKeys.containsAll(mutableListOf("budgets")))
+        assertEquals(2, staleKeys.size)
+        assertTrue(staleKeys.containsAll(listOf("key1", "key2")))
     }
 
     @Test
     fun testDeleteMany() {
-        val data1 = testFeatureConfigData()
-        val data2 = testFeatureConfigData()
-        val data3 = testFeatureConfigData()
+        val data1 = testFeatureConfigData(key = "budgets")
+        val data2 = testFeatureConfigData(key = "financial passport")
+        val data3 = testFeatureConfigData(key = "key1")
 
         val list = mutableListOf(data1, data2, data3)
 
@@ -97,7 +97,8 @@ class FeatureConfigDaoTest {
         val testObserver = db.featureConfig().load().test()
         testObserver.awaitValue()
         assertTrue(testObserver.value().isNotEmpty())
-        assertEquals(2, testObserver.value().size)
+        assertEquals(1, testObserver.value().size)
+        assertEquals("key1", testObserver.value()[0].key)
     }
 
     @Test

@@ -125,6 +125,7 @@ class FrolloSDKAndroidUnitTest {
             assertNotNull(FrolloSDK.serviceStatusManagement)
             assertNotNull(FrolloSDK.affordability)
             assertNotNull(FrolloSDK.appConfiguration)
+            assertNotNull(FrolloSDK.consents)
         }
     }
 
@@ -376,6 +377,17 @@ class FrolloSDKAndroidUnitTest {
 
         try {
             FrolloSDK.appConfiguration
+        } catch (e: IllegalAccessException) {
+            assertEquals(FrolloSDK.SDK_NOT_SETUP, e.localizedMessage)
+        }
+    }
+
+    @Test
+    fun testConsentManagementThrowsErrorBeforeSetup() {
+        assertFalse(FrolloSDK.isSetup)
+
+        try {
+            FrolloSDK.consents
         } catch (e: IllegalAccessException) {
             assertEquals(FrolloSDK.SDK_NOT_SETUP, e.localizedMessage)
         }

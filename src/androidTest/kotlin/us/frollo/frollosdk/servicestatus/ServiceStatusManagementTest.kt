@@ -343,11 +343,11 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
 
         assertEquals("frollo", request.getHeader("X-Host"))
         assertNull(request.getHeader("Authorization"))
-        assertNull(request.getHeader("X-Api-Version"))
-        assertNull(request.getHeader("X-Bundle-Id"))
-        assertNull(request.getHeader("X-Device-Version"))
-        assertNull(request.getHeader("X-Software-Version"))
-        assertNull(request.getHeader("X-Session-Id"))
+        assertNotNull(request.getHeader("X-Api-Version"))
+        assertEquals("us.frollo.frollosdk", request.getHeader("X-Bundle-Id"))
+        assertNotNull(request.getHeader("X-Device-Version"))
+        assertNotNull(request.getHeader("X-Software-Version"))
+        assertNotNull(request.getHeader("X-Session-Id"))
 
         tearDown()
     }
@@ -379,11 +379,11 @@ class ServiceStatusManagementTest : BaseAndroidTest() {
 
         assertEquals("frollo", request.getHeader("X-Host"))
         assertNull(request.getHeader("Authorization"))
-        assertNull(request.getHeader("X-Api-Version"))
-        assertNull(request.getHeader("X-Bundle-Id"))
-        assertNull(request.getHeader("X-Device-Version"))
-        assertNull(request.getHeader("X-Software-Version"))
-        assertNull(request.getHeader("X-Session-Id"))
+        assertNotNull(request.getHeader("X-Api-Version"))
+        assertEquals("us.frollo.frollosdk", request.getHeader("X-Bundle-Id"))
+        assertNotNull(request.getHeader("X-Device-Version"))
+        assertNotNull(request.getHeader("X-Software-Version"))
+        assertNotNull(request.getHeader("X-Session-Id"))
 
         tearDown()
     }

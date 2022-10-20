@@ -42,6 +42,9 @@ import us.frollo.frollosdk.model.coredata.budgets.BudgetTrackingStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
 import us.frollo.frollosdk.model.coredata.cards.CardStatus
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
+import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 import us.frollo.frollosdk.model.coredata.contacts.PaymentMethod
 import us.frollo.frollosdk.model.coredata.goals.GoalFrequency
 import us.frollo.frollosdk.model.coredata.goals.GoalStatus
@@ -759,4 +762,50 @@ private fun appendMessageFilterToSqlQuery(sqlQueryBuilder: SimpleSQLiteQueryBuil
     filter.read?.let { sqlQueryBuilder.appendSelection(selection = "read = ${ it.toInt() }") }
     filter.interacted?.let { sqlQueryBuilder.appendSelection(selection = "interacted = ${ it.toInt() }") }
     sqlQueryBuilder.orderBy(orderBy = "${filter.sortBy.dbColumnName} ${filter.orderBy.name}")
+}
+
+internal fun sqlForExternalParties(
+    externalIds: List<String>? = null,
+    status: ExternalPartyStatus? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    type: ExternalPartyType? = null
+): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("external_party")
+
+    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type)
+
+    return sqlQueryBuilder.create()
+}
+
+internal fun sqlForExternalPartyIdsToGetStaleIds(
+    before: Long? = null,
+    after: Long? = null,
+    externalIds: List<String>? = null,
+    status: ExternalPartyStatus? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    type: ExternalPartyType? = null
+): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("external_party")
+    sqlQueryBuilder.columns(arrayOf("party_id"))
+
+    before?.let { sqlQueryBuilder.appendSelection(selection = "party_id > $it") }
+    after?.let { sqlQueryBuilder.appendSelection(selection = "party_id <= $it") }
+    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type)
+
+    return sqlQueryBuilder.create()
+}
+
+private fun appendExternalPartyToSqlQuery(
+    sqlQueryBuilder: SimpleSQLiteQueryBuilder,
+    externalIds: List<String>? = null,
+    status: ExternalPartyStatus? = null,
+    trustedAdvisorType: TrustedAdvisorType? = null,
+    type: ExternalPartyType? = null
+) {
+    externalIds?.let {
+        sqlQueryBuilder.appendSelection(selection = "external_id IN ('${externalIds.joinToString("','") { it }}')")
+    }
+    status?.let { sqlQueryBuilder.appendSelection(selection = "status = '${ it.name }'") }
+    trustedAdvisorType?.let { sqlQueryBuilder.appendSelection(selection = "ta_type = '${ it.name }'") }
+    type?.let { sqlQueryBuilder.appendSelection(selection = "type = '${ it.name }'") }
 }
