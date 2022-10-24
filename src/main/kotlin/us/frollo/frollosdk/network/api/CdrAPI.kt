@@ -24,11 +24,10 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
-import us.frollo.frollosdk.model.api.cdr.CDRDisclosureConsentRequest
-import us.frollo.frollosdk.model.api.cdr.CDRDisclosureConsentsResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentsResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
@@ -73,5 +72,5 @@ internal interface CdrAPI {
     fun fetchExternalParty(@Path("external_party_id") partyId: Long): Call<ExternalPartyResponse>
 
     @GET(URL_CDR_DISCLOSURE_CONSENTS)
-    fun fetchDisclosureConsents(@Body request: CDRDisclosureConsentRequest): Call<PaginatedResponse<CDRDisclosureConsentsResponse>>
+    fun fetchDisclosureConsents(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<DisclosureConsentsResponse>>
 }

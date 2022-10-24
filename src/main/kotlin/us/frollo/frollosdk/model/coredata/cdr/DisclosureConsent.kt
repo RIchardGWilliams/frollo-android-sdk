@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 
 // Declaring the ColumnInfo allows for the renaming of variables without
 // implementing a database migration, as the column name would not change.
@@ -12,26 +11,27 @@ import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 @Entity(
     tableName = "disclosure_consent",
     indices = [
-        Index("id")
+        Index("consent_id")
     ]
 )
 
-data class CDRDisclosureConsent(
+/** Represents key information of Disclosure consent */
+data class DisclosureConsent(
 
     /** The ID of the consent */
-    @PrimaryKey @ColumnInfo(name = "id") val consentId: Long,
+    @PrimaryKey @ColumnInfo(name = "consent_id") val consentId: Long,
 
     /** The Status of disclosure consent */
-    @ColumnInfo(name = "status") val status: Long?,
+    @ColumnInfo(name = "status") val status: ConsentStatus,
 
     /** The Linked Collection Consent IDs (Optional) */
-    @ColumnInfo(name = "consent_ids") val consent_ids: List<Long>?,
+    @ColumnInfo(name = "consent_ids") val linkedConsentIds: List<Long>?,
 
     /** The Permissions given for the Disclosure Consent - same as Collection permissions (Optional) */
-    @ColumnInfo(name = "permissions") val permissions: List<CDRDisclosureConsentPermission>,
+    @ColumnInfo(name = "permissions") val permissions: List<String>?,
 
     /** The disclosure duration in seconds of how long to disclose data for (Optional) */
-    @ColumnInfo(name = "disclosure_duration") val disclosureDuration: Int?,
+    @ColumnInfo(name = "disclosure_duration") val disclosureDuration: Long?,
 
     /** Start date of the sharing window. This date is the date when the consent officially starts on the Data Holder's end. (Optional)
      *
@@ -48,5 +48,5 @@ data class CDRDisclosureConsent(
     @ColumnInfo(name = "sharing_stopped_at") val sharingStoppedAt: String?,
 
     /**  External party (Optional) */
-    @ColumnInfo(name = "external_party") val externalParty: ExternalPartyResponse?
+    @ColumnInfo(name = "external_party") val externalParty: ExternalParty?
 )
