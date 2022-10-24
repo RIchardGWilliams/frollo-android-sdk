@@ -19,7 +19,7 @@ package us.frollo.frollosdk.model.api.cdr
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 
-internal data class DisclosureConsentsResponse(
+internal data class DisclosureConsentResponse(
 
     /** The ID of the consent */
     @SerializedName("id") val consentId: Long,

@@ -27,7 +27,7 @@ import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
-import us.frollo.frollosdk.model.api.cdr.DisclosureConsentsResponse
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
@@ -72,5 +72,5 @@ internal interface CdrAPI {
     fun fetchExternalParty(@Path("external_party_id") partyId: Long): Call<ExternalPartyResponse>
 
     @GET(URL_CDR_DISCLOSURE_CONSENTS)
-    fun fetchDisclosureConsents(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<DisclosureConsentsResponse>>
+    fun fetchDisclosureConsents(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<DisclosureConsentResponse>>
 }
