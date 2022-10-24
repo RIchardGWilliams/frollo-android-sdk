@@ -24,7 +24,7 @@ import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
 import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 
-internal data class ExternalPartyResponse(
+data class ExternalPartyResponse(
     @SerializedName("id") val partyId: Long,
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("name") val name: String,
