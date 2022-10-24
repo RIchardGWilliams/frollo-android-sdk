@@ -31,7 +31,7 @@ internal data class DisclosureConsentsResponse(
     @SerializedName("consent_ids") val linkedConsentIds: List<Long>?,
 
     /** The Permissions given for the Disclosure Consent - same as Collection permissions (Optional) */
-    @SerializedName("permissions") val permissionIds: List<String>,
+    @SerializedName("permissions") val permissionIds: List<String>?,
 
     /** The disclosure duration in seconds of how long to disclose data for (Optional) */
     @SerializedName("disclosure_duration") val disclosureDuration: Long?,
