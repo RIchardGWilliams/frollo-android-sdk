@@ -63,6 +63,14 @@ data class DisclosureConsent(
      */
     @ColumnInfo(name = "sharing_stopped_at") val sharingStoppedAt: String?,
 
+    /**
+     * The date the consent will expire if not withdrawn sooner (Optional)
+     *
+     * Date format for this field is ISO8601
+     * example 2011-12-03T10:15:30+01:00
+     */
+    @ColumnInfo(name = "sharing_expires_at") val sharingExpiresAt: String?,
+
     /**  External party (Optional) */
     @ColumnInfo(name = "external_party") val externalParty: ExternalParty?
 )
