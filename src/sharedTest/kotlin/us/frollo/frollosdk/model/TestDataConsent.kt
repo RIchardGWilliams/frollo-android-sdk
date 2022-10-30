@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.coredata.cdr.CDRModel
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
@@ -164,5 +165,22 @@ internal fun testExternalPartyResponseData(
             testSharingDurationData()
         ),
         permissions = testCDRPermissionData()
+    )
+}
+
+internal fun testDisclosureConsentResponseData(
+    consentId: Long? = null,
+    status: ConsentStatus? = null
+): DisclosureConsentResponse {
+    return DisclosureConsentResponse(
+        consentId = consentId ?: randomNumber().toLong(),
+        status = status ?: ConsentStatus.ACTIVE,
+        linkedConsentIds = listOf(randomNumber().toLong()),
+        permissionIds = listOf("account_details", "transaction_details"),
+        disclosureDuration = randomNumber().toLong(),
+        sharingStartedAt = "2022-02-04T05:10:19+00:00",
+        sharingStoppedAt = "2022-12-04T05:10:19+00:00",
+        sharingExpiresAt = "2020-06-03T12:02:12.505+10:00",
+        externalParty = testExternalPartyResponseData(partyId = 12345L)
     )
 }

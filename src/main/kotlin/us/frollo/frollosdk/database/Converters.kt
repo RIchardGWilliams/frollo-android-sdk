@@ -74,6 +74,7 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRPermission
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
@@ -598,6 +599,12 @@ internal class Converters {
 
     @TypeConverter
     fun stringToTrustedAdvisorType(value: String?): TrustedAdvisorType? = value?.let { TrustedAdvisorType.valueOf(value) }
+
+    @TypeConverter
+    fun stringToExternalParty(value: String?): ExternalParty? = if (value == null) null else gson.fromJson(value)
+
+    @TypeConverter
+    fun stringFromExternalParty(value: ExternalParty?): String? = if (value == null) null else gson.toJson(value)
 
     // Contact
 
