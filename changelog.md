@@ -6,7 +6,6 @@
 - App config API & caching
 - External Parties API
 - Disclosure Consents API
-- Update Host API version to v2.21
 
 ### 3.19.0
 
