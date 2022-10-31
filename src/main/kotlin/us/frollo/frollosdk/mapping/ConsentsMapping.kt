@@ -20,11 +20,13 @@ import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentCreateRequest
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentUpdateRequest
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
 import us.frollo.frollosdk.model.coredata.cdr.ConsentCreateForm
 import us.frollo.frollosdk.model.coredata.cdr.ConsentUpdateForm
+import us.frollo.frollosdk.model.coredata.cdr.DisclosureConsent
 import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 
 internal fun ConsentResponse.toConsent(): Consent =
@@ -102,4 +104,17 @@ internal fun ExternalPartyResponse.toExternalParty(): ExternalParty =
         summary = summary,
         sharingDurations = sharingDurations,
         permissions = permissions
+    )
+
+internal fun DisclosureConsentResponse.toDisclosureConsent(): DisclosureConsent =
+    DisclosureConsent(
+        consentId = consentId,
+        status = status,
+        linkedConsentIds = linkedConsentIds,
+        permissions = permissionIds,
+        disclosureDuration = disclosureDuration,
+        sharingStartedAt = sharingStartedAt,
+        sharingStoppedAt = sharingStoppedAt,
+        sharingExpiresAt = sharingExpiresAt,
+        externalParty = externalParty?.toExternalParty()
     )

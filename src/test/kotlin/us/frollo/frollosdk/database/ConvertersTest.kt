@@ -75,6 +75,8 @@ import us.frollo.frollosdk.model.coredata.cdr.CDRPartyType
 import us.frollo.frollosdk.model.coredata.cdr.CDRPermissionDetail
 import us.frollo.frollosdk.model.coredata.cdr.CDRPolicy
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
+import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyCompany
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
 import us.frollo.frollosdk.model.coredata.cdr.SharingDuration
@@ -1530,6 +1532,56 @@ class ConvertersTest {
         assertEquals("ADVISOR", str)
 
         assertNull(Converters.instance.stringFromTrustedAdvisorType(null))
+    }
+
+    @Test
+    fun testStringToExternalParty() {
+        val json = "{\"id\":1,\"external_id\":\"6hsf735\",\"name\":\"CheckFinance1\",\"contact\":\"support@frollo.us\",\"status\":\"enabled\",\"type\":\"ta\",\"ta_type\":\"accountant\",\"privacy_url\":\"http://frollo.us/privacy\"}"
+        val externalParty = Converters.instance.stringToExternalParty(json)
+        assertNotNull(externalParty)
+        assertEquals(1, externalParty?.partyId)
+        assertEquals("6hsf735", externalParty?.externalId)
+        assertEquals("CheckFinance1", externalParty?.name)
+        assertEquals("support@frollo.us", externalParty?.contact)
+        assertEquals("They broker things...", externalParty?.description)
+        assertEquals(ExternalPartyStatus.ENABLED, externalParty?.status)
+        assertEquals("http://frollo.us/privacy", externalParty?.privacyUrl)
+        assertEquals(ExternalPartyType.TRUSTED_ADVISOR, externalParty?.type)
+        assertEquals(TrustedAdvisorType.ACCOUNTANT, externalParty?.trustedAdvisorType)
+
+        assertNull(Converters.instance.stringToExternalParty(null))
+    }
+
+    @Test
+    fun testStringFromExternalParty() {
+        val externalParty = ExternalParty(
+            partyId = 1,
+            externalId = "6hsf735",
+            name = "CheckFinance1",
+            company = ExternalPartyCompany(
+                displayName = "Frollo",
+                legalName = "Frollo"
+            ),
+            contact = "support@frollo.us",
+            description = "Test123",
+            status = ExternalPartyStatus.ENABLED,
+            imageUrl = "https://frollo.com.au/image",
+            smallImageUrl = "https://frollo.com.au/image_small",
+            privacyUrl = "http://frollo.us/privacy",
+            type = ExternalPartyType.TRUSTED_ADVISOR,
+            trustedAdvisorType = TrustedAdvisorType.ACCOUNTANT,
+            summary = "Test summary",
+            sharingDurations = listOf(
+                SharingDuration(
+                    duration = 86400,
+                    description = "Sharing duration",
+                    imageUrl = "https://frollo.com.au/image"
+                )
+            ),
+            permissions = testCDRPermissionData()
+        )
+        val json = Converters.instance.stringFromExternalParty(externalParty)
+        assertEquals("{\"partyId\":1,\"externalId\":\"6hsf735\",\"name\":\"CheckFinance1\",\"company\":{\"display_name\":\"Frollo\",\"legal_name\":\"Frollo\"},\"contact\":\"support@frollo.us\",\"description\":\"Test123\",\"status\":\"enabled\",\"imageUrl\":\"https://frollo.com.au/image\",\"smallImageUrl\":\"https://frollo.com.au/image_small\",\"privacyUrl\":\"http://frollo.us/privacy\",\"type\":\"ta\",\"trustedAdvisorType\":\"accountant\",\"summary\":\"Test summary\",\"sharingDurations\":[{\"duration\":86400,\"description\":\"Sharing duration\",\"image_url\":\"https://frollo.com.au/image\"}],\"permissions\":[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}]},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}]}]}", json)
     }
 
     @Test

@@ -809,3 +809,35 @@ private fun appendExternalPartyToSqlQuery(
     trustedAdvisorType?.let { sqlQueryBuilder.appendSelection(selection = "ta_type = '${ it.name }'") }
     type?.let { sqlQueryBuilder.appendSelection(selection = "type = '${ it.name }'") }
 }
+
+internal fun sqlForDisclosureConsents(
+    status: ConsentStatus? = null,
+): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("disclosure_consent")
+
+    appendDisclosureConsentToSqlQuery(sqlQueryBuilder, status)
+
+    return sqlQueryBuilder.create()
+}
+
+internal fun sqlForDisclosureConsentIdsToGetStaleIds(
+    before: Long? = null,
+    after: Long? = null,
+    status: ConsentStatus? = null,
+): SimpleSQLiteQuery {
+    val sqlQueryBuilder = SimpleSQLiteQueryBuilder("disclosure_consent")
+    sqlQueryBuilder.columns(arrayOf("consent_id"))
+
+    before?.let { sqlQueryBuilder.appendSelection(selection = "consent_id > $it") }
+    after?.let { sqlQueryBuilder.appendSelection(selection = "consent_id <= $it") }
+    appendDisclosureConsentToSqlQuery(sqlQueryBuilder, status)
+
+    return sqlQueryBuilder.create()
+}
+
+private fun appendDisclosureConsentToSqlQuery(
+    sqlQueryBuilder: SimpleSQLiteQueryBuilder,
+    status: ConsentStatus? = null,
+) {
+    status?.let { sqlQueryBuilder.appendSelection(selection = "status = '${ it.name }'") }
+}

@@ -20,11 +20,13 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import io.reactivex.Observable
 import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
 import us.frollo.frollosdk.extensions.sqlForConsents
+import us.frollo.frollosdk.extensions.sqlForDisclosureConsents
 import us.frollo.frollosdk.extensions.sqlForExternalParties
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
 import us.frollo.frollosdk.model.coredata.cdr.ConsentRelation
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
+import us.frollo.frollosdk.model.coredata.cdr.DisclosureConsent
 import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
@@ -164,4 +166,32 @@ fun Consents.fetchExternalPartiesRx(
  */
 fun Consents.fetchExternalPartiesRx(query: SimpleSQLiteQuery): Observable<List<ExternalParty>> {
     return db.externalParty().loadByQueryRx(query)
+}
+
+/**
+ * Fetch disclosure consents from the cache
+ *
+ * @param status Filter disclosure consents to be refreshed by [ConsentStatus] (Optional)
+ *
+ * @return Rx Observable object of List<DisclosureConsent> which can be observed using an Observer for future changes as well.
+ */
+fun Consents.fetchDisclosureConsentsRx(
+    status: ConsentStatus? = null,
+): Observable<List<DisclosureConsent>> {
+    return db.disclosureConsent().loadByQueryRx(
+        sqlForDisclosureConsents(status)
+    )
+}
+
+/**
+ * Advanced method to fetch disclosure consents by SQL query from the cache
+ *
+ * @param query SimpleSQLiteQuery: Select query which fetches disclosure consents from the cache
+ *
+ * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
+ *
+ * @return Rx Observable object of List<DisclosureConsent> which can be observed using an Observer for future changes as well.
+ */
+fun Consents.fetchDisclosureConsentsRx(query: SimpleSQLiteQuery): Observable<List<DisclosureConsent>> {
+    return db.disclosureConsent().loadByQueryRx(query)
 }

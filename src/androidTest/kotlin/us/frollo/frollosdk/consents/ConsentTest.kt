@@ -50,6 +50,7 @@ import us.frollo.frollosdk.model.testCDRConfigurationData
 import us.frollo.frollosdk.model.testConsentCreateFormData
 import us.frollo.frollosdk.model.testConsentResponseData
 import us.frollo.frollosdk.model.testConsentUpdateFormData
+import us.frollo.frollosdk.model.testDisclosureConsentResponseData
 import us.frollo.frollosdk.model.testExternalPartyResponseData
 import us.frollo.frollosdk.model.testProviderAccountResponseData
 import us.frollo.frollosdk.model.testProviderResponseData
@@ -1057,6 +1058,162 @@ class ConsentTest : BaseAndroidTest() {
         clearLoggedInPreferences()
 
         consents.refreshExternalPartiesWithPagination { result ->
+            assertTrue(result is PaginatedResult.Error)
+            assertNotNull((result as PaginatedResult.Error).error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchDisclosureConsents() {
+        initSetup()
+
+        val data1 = testDisclosureConsentResponseData(consentId = 1, status = ConsentStatus.ACTIVE)
+        val data2 = testDisclosureConsentResponseData(consentId = 20, status = ConsentStatus.WITHDRAWN)
+        val data3 = testDisclosureConsentResponseData(consentId = 21, status = ConsentStatus.ACTIVE)
+        val list = mutableListOf(data1, data2, data3)
+
+        database.disclosureConsent().insertAll(*list.map { it }.toTypedArray())
+
+        var testObserver = consents.fetchDisclosureConsents().test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(4, testObserver.value()?.size)
+
+        testObserver = consents.fetchDisclosureConsents(
+            status = ConsentStatus.ACTIVE
+        ).test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(2, testObserver.value()?.size)
+
+        testObserver = consents.fetchDisclosureConsents(status = ConsentStatus.WITHDRAWN).test()
+        testObserver.awaitValue()
+        assertNotNull(testObserver.value())
+        assertEquals(1, testObserver.value()?.size)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshDisclosureConsentsWithPagination() {
+        initSetup()
+
+        val requestPath1 = "${CdrAPI.URL_CDR_DISCLOSURE_CONSENTS}?size=4&status=active"
+        val requestPath2 = "${CdrAPI.URL_CDR_DISCLOSURE_CONSENTS}?after=6&size=4&status=active"
+        val requestPath3 = "${CdrAPI.URL_CDR_DISCLOSURE_CONSENTS}?after=17&size=4&status=active"
+
+        val signal = CountDownLatch(1)
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.disclosure_consent_page_1))
+                    } else if (request.trimmedPath == requestPath2) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.disclosure_consent_page_2))
+                    } else if (request.trimmedPath == requestPath3) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(readStringFromJson(app, R.raw.disclosure_consent_page_3))
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        // Insert some stale data to be removed
+        val data1 = testDisclosureConsentResponseData(consentId = 4, status = ConsentStatus.IN_USE)
+        val data2 = testDisclosureConsentResponseData(consentId = 15, status = ConsentStatus.IN_USE)
+        val data3 = testDisclosureConsentResponseData(consentID = 23)
+
+        // Insert existing data to be updated
+        val data4 = testDisclosureConsentResponseData(
+            consentId = 1,
+            status = ConsentStatus.WITHDRAWN
+        )
+        // Insert existing data which should not be affected
+        val data5 = testDisclosureConsentResponseData(
+            consentId = 21,
+            status = ConsentStatus.ACTIVE
+        )
+
+        val list = mutableListOf(data1, data2, data3, data4, data5)
+        database.disclosureConsent().insertAll(*list.map { it.todislosureConsent() }.toTypedArray())
+
+        consents.refreshDisclosureConsentsWithPagination(
+            status = ConsentStatus.ACTIVE,
+            size = 4
+        ) { result1 ->
+            assertTrue(result1 is PaginatedResult.Success)
+            assertNull((result1 as PaginatedResult.Success).paginationInfo?.before)
+            assertEquals(6L, result1.paginationInfo?.after)
+
+            consents.refreshDisclosureConsentsWithPagination(
+                status = ConsentStatus.ACTIVE,
+                size = 4
+            ) { result2 ->
+                assertTrue(result2 is PaginatedResult.Success)
+                assertEquals(10L, (result2 as PaginatedResult.Success).paginationInfo?.before)
+                assertEquals(17L, result2.paginationInfo?.after)
+
+                consents.refreshDisclosureConsentsWithPagination(
+                    status = ConsentStatus.ACTIVE,
+                    after = result2.paginationInfo?.after?.toString(),
+                    size = 4
+                ) { result3 ->
+                    assertTrue(result3 is PaginatedResult.Success)
+                    assertEquals(21L, (result3 as PaginatedResult.Success).paginationInfo?.before)
+                    assertNull(result3.paginationInfo?.after)
+
+                    // Fetch all consents in DB
+                    val testObserver = consents.fetchDisclosureConsents().test()
+                    testObserver.awaitValue()
+                    val models = testObserver.value()
+                    assertNotNull(models)
+                    assertEquals(12, models?.size)
+
+                    // Verify that the stale data is deleted from the database
+                    assertEquals(0, models?.filter { it.consentId in listOf(4L, 15L, 23L) }?.size)
+
+                    // Verify that the ids = 5,21 are not deleted from the database
+                    assertEquals(1, models?.filter { it.consentId in listOf(21L) }?.size)
+
+                    // Verify that the ids = 14,16 are updated
+                    assertEquals(ConsentStatus.WITHDRAWN, models?.find { it.consentId == 1L }?.status)
+
+                    signal.countDown()
+                }
+            }
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        assertEquals(3, mockServer.requestCount)
+
+        tearDown()
+    }
+
+    @Test
+    fun testRefreshDisclosureConsentsWithPaginationIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        consents.refreshDisclosureConsentsWithPagination { result ->
             assertTrue(result is PaginatedResult.Error)
             assertNotNull((result as PaginatedResult.Error).error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)

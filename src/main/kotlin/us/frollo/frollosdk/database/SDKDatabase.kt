@@ -37,6 +37,7 @@ import us.frollo.frollosdk.database.dao.CardDao
 import us.frollo.frollosdk.database.dao.CompanyConfigDao
 import us.frollo.frollosdk.database.dao.ConsentDao
 import us.frollo.frollosdk.database.dao.ContactDao
+import us.frollo.frollosdk.database.dao.DisclosureConsentDao
 import us.frollo.frollosdk.database.dao.ExternalPartyDao
 import us.frollo.frollosdk.database.dao.FeatureConfigDao
 import us.frollo.frollosdk.database.dao.GoalDao
@@ -73,6 +74,7 @@ import us.frollo.frollosdk.model.coredata.budgets.BudgetPeriod
 import us.frollo.frollosdk.model.coredata.cards.Card
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
+import us.frollo.frollosdk.model.coredata.cdr.DisclosureConsent
 import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 import us.frollo.frollosdk.model.coredata.contacts.Contact
 import us.frollo.frollosdk.model.coredata.goals.Goal
@@ -112,7 +114,8 @@ import us.frollo.frollosdk.model.coredata.user.User
         CompanyConfig::class,
         FeatureConfig::class,
         LinkConfig::class,
-        ExternalParty::class
+        ExternalParty::class,
+        DisclosureConsent::class
     ],
     version = 21, exportSchema = true
 )
@@ -148,6 +151,7 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun featureConfig(): FeatureConfigDao
     internal abstract fun linkConfig(): LinkConfigDao
     internal abstract fun externalParty(): ExternalPartyDao
+    internal abstract fun disclosureConsent(): DisclosureConsentDao
 
     companion object {
         private const val DEFAULT_DATABASE_NAME = "frollosdk-db" // WARNING: DO NOT USE this directly anywhere as the actual DB name is derived by appending the DB name prefix.
@@ -833,6 +837,11 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` INTEGER, `name` TEXT NOT NULL, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, PRIMARY KEY(`party_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_external_party_party_id` ON `external_party` (`party_id`)")
                 // END - Add new table - external_party
+
+                // START - Add new table - disclosure_consent
+                database.execSQL("CREATE TABLE IF NOT EXISTS `disclosure_consent` (`consent_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `consent_ids` TEXT, `permissions` TEXT, `disclosure_duration` INTEGER, `sharing_started_at` TEXT, `sharing_stopped_at` TEXT, `sharing_expires_at` TEXT, `external_party` TEXT, PRIMARY KEY(`consent_id`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_disclosure_consent_consent_id` ON `disclosure_consent` (`consent_id`)")
+                // END - Add new table - disclosure_consent
             }
         }
     }

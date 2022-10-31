@@ -18,10 +18,12 @@ package us.frollo.frollosdk.mapping
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.testCDRConfigurationData
 import us.frollo.frollosdk.model.testConsentCreateFormData
 import us.frollo.frollosdk.model.testConsentResponseData
 import us.frollo.frollosdk.model.testConsentUpdateFormData
+import us.frollo.frollosdk.model.testDisclosureConsentResponseData
 import us.frollo.frollosdk.model.testExternalPartyResponseData
 
 class ConsentsMappingTest {
@@ -59,5 +61,12 @@ class ConsentsMappingTest {
         val response = testExternalPartyResponseData(partyId = 12345L)
         val model = response.toExternalParty()
         assertEquals(12345L, model.partyId)
+    }
+
+    @Test
+    fun testDisclosureConsentResponseToDisclosureConsent() {
+        val response = testDisclosureConsentResponseData(status = ConsentStatus.WITHDRAWN)
+        val model = response.toDisclosureConsent()
+        assertEquals(ConsentStatus.WITHDRAWN, model.status)
     }
 }

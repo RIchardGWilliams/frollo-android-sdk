@@ -29,10 +29,13 @@ import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.database.SDKDatabase
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchConsents
+import us.frollo.frollosdk.extensions.fetchDisclosureConsents
 import us.frollo.frollosdk.extensions.fetchExternalParties
 import us.frollo.frollosdk.extensions.fetchProducts
 import us.frollo.frollosdk.extensions.sqlForConsentIdsToGetStaleIds
 import us.frollo.frollosdk.extensions.sqlForConsents
+import us.frollo.frollosdk.extensions.sqlForDisclosureConsentIdsToGetStaleIds
+import us.frollo.frollosdk.extensions.sqlForDisclosureConsents
 import us.frollo.frollosdk.extensions.sqlForExternalParties
 import us.frollo.frollosdk.extensions.sqlForExternalPartyIdsToGetStaleIds
 import us.frollo.frollosdk.logging.Log
@@ -40,9 +43,11 @@ import us.frollo.frollosdk.mapping.toCDRConfiguration
 import us.frollo.frollosdk.mapping.toConsent
 import us.frollo.frollosdk.mapping.toConsentCreateRequest
 import us.frollo.frollosdk.mapping.toConsentUpdateRequest
+import us.frollo.frollosdk.mapping.toDisclosureConsent
 import us.frollo.frollosdk.mapping.toExternalParty
 import us.frollo.frollosdk.model.api.cdr.CDRConfigurationResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
@@ -52,6 +57,7 @@ import us.frollo.frollosdk.model.coredata.cdr.ConsentCreateForm
 import us.frollo.frollosdk.model.coredata.cdr.ConsentRelation
 import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.coredata.cdr.ConsentUpdateForm
+import us.frollo.frollosdk.model.coredata.cdr.DisclosureConsent
 import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyStatus
 import us.frollo.frollosdk.model.coredata.cdr.ExternalPartyType
@@ -680,6 +686,117 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
                 // Delete the entries for these stale IDs from database if they exist
                 if (staleIds.isNotEmpty()) {
                     db.externalParty().deleteMany(staleIds.toLongArray())
+                }
+
+                uiThread {
+                    val paginationInfo = PaginationInfo(before = before, after = after)
+                    completion?.invoke(PaginatedResult.Success(paginationInfo))
+                }
+            }
+        } ?: run { completion?.invoke(PaginatedResult.Success()) } // Explicitly invoke completion callback if response is null.
+    }
+
+    /**
+     * Fetch disclosure consents from the cache
+     *
+     * @param status Filter disclosure consents to be refreshed by [ConsentStatus] (Optional)
+     *
+     * @return LiveData object of List<DisclosureConsent> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchDisclosureConsents(
+        status: ConsentStatus? = null,
+    ): LiveData<List<DisclosureConsent>> {
+        return db.disclosureConsent().loadByQuery(
+            sqlForDisclosureConsents(status)
+        )
+    }
+
+    /**
+     * Advanced method to fetch disclosure consents by SQL query from the cache
+     *
+     * @param query SimpleSQLiteQuery: Select query which fetches disclosure consents from the cache
+     *
+     * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
+     *
+     * @return LiveData object of List<DisclosureConsent> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchDisclosureConsents(query: SimpleSQLiteQuery): LiveData<List<DisclosureConsent>> {
+        return db.disclosureConsent().loadByQuery(query)
+    }
+
+    /**
+     * Refresh All disclosure consents
+     *
+     * @param status Filter disclosure consents to be refreshed by [ConsentStatus] (Optional)
+     * @param before before field to get previous list in pagination (Optional)
+     * @param after after field to get next list in pagination (Optional)
+     * @param size Count of objects to returned from the API (page size)
+     * @param completion Optional completion handler with optional error if the request fails  else pagination data is success (Optional)
+     */
+    fun refreshDisclosureConsentsWithPagination(
+        status: ConsentStatus? = null,
+        before: String? = null,
+        after: String? = null,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+    ) {
+        cdrAPI.fetchDisclosureConsents(
+            status = status,
+            before = before,
+            after = after,
+            size = size
+        ).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#refreshDisclosureConsentsWithPagination", resource.error?.localizedDescription)
+                    completion?.invoke(PaginatedResult.Error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    val response = resource.data
+                    handleDisclosureConsentWithPaginationResponse(
+                        response = response?.data,
+                        status = status,
+                        before = response?.paging?.cursors?.before?.toLong(),
+                        after = response?.paging?.cursors?.after?.toLong(),
+                        completion = completion
+                    )
+                }
+            }
+        }
+    }
+
+    private fun handleDisclosureConsentWithPaginationResponse(
+        response: List<DisclosureConsentResponse>?,
+        status: ConsentStatus? = null,
+        after: Long?,
+        before: Long?,
+        size: Long? = null,
+        completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>? = null
+    ) {
+        response?.let {
+            doAsync {
+                // Insert all disclosure consents from API response
+                val models = response.map { it.toDisclosureConsent() }
+                db.disclosureConsent().insertAll(*models.toTypedArray())
+
+                // Fetch IDs from API response
+                val apiIds = response.map { it.consentId }.toHashSet()
+
+                // Get IDs from database
+                val disclosureConsentIds = db.disclosureConsent().getIdsByQuery(
+                    sqlForDisclosureConsentIdsToGetStaleIds(
+                        before = before,
+                        after = after,
+                        status = status,
+                    )
+                ).toHashSet()
+
+                // Get stale IDs that are not present in the API response
+                val staleIds = disclosureConsentIds.minus(apiIds)
+
+                // Delete the entries for these stale IDs from database if they exist
+                if (staleIds.isNotEmpty()) {
+                    db.disclosureConsent().deleteMany(staleIds.toLongArray())
                 }
 
                 uiThread {

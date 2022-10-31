@@ -29,6 +29,7 @@ import us.frollo.frollosdk.model.api.bills.BillPaymentResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetPeriodResponse
 import us.frollo.frollosdk.model.api.budgets.BudgetResponse
 import us.frollo.frollosdk.model.api.cdr.ConsentResponse
+import us.frollo.frollosdk.model.api.cdr.DisclosureConsentResponse
 import us.frollo.frollosdk.model.api.cdr.ExternalPartyResponse
 import us.frollo.frollosdk.model.api.contacts.ContactResponse
 import us.frollo.frollosdk.model.api.goals.GoalResponse
@@ -484,4 +485,18 @@ internal fun CdrAPI.fetchExternalParties(
     trustedAdvisorType?.let { queryMap["ta_type"] = it.toString() }
     type?.let { queryMap["type"] = it.toString() }
     return fetchExternalParties(queryMap)
+}
+
+internal fun CdrAPI.fetchDisclosureConsents(
+    status: ConsentStatus? = null,
+    before: String? = null,
+    after: String? = null,
+    size: Long? = null
+): Call<PaginatedResponse<DisclosureConsentResponse>> {
+    val queryMap = mutableMapOf<String, String>()
+    after?.let { queryMap.put("after", it) }
+    before?.let { queryMap.put("before", it) }
+    size?.let { queryMap.put("size", it.toString()) }
+    status?.let { queryMap["status"] = it.toString() }
+    return fetchDisclosureConsents(queryMap)
 }
