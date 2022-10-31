@@ -1177,7 +1177,7 @@ class ConsentTest : BaseAndroidTest() {
                     assertEquals(21L, (result3 as PaginatedResult.Success).paginationInfo?.before)
                     assertNull(result3.paginationInfo?.after)
 
-                    // Fetch all messages in DB
+                    // Fetch all consents in DB
                     val testObserver = consents.fetchDisclosureConsents().test()
                     testObserver.awaitValue()
                     val models = testObserver.value()

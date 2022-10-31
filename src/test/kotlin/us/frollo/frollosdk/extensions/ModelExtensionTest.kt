@@ -701,4 +701,47 @@ class ModelExtensionTest {
         query = sqlForExternalPartyIdsToGetStaleIds()
         assertEquals("SELECT party_id  FROM external_party", query.sql)
     }
+
+    @Test
+    fun testSQLForDisclosureConsents() {
+        var query = sqlForDisclosureConsents(
+            status = ConsentStatus.ACTIVE,
+        )
+        assertEquals("SELECT  *  FROM disclosure_consent WHERE status = 'ACTIVE' ", query.sql)
+
+        // Default filters
+        query = sqlForDisclosureConsents()
+        assertEquals("SELECT  *  FROM disclosure_consent", query.sql)
+    }
+
+    @Test
+    fun testSQLForDisclosureConsentIdsToGetStaleIds() {
+        var query = sqlForDisclosureConsentIdsToGetStaleIds(
+            before = 8,
+            after = 21,
+            status = ConsentStatus.ACTIVE
+        )
+        assertEquals("SELECT consent_id  FROM disclosure_consent WHERE consent_id > 8 AND consent_id <= 21 AND status = 'ACTIVE' ", query.sql)
+
+        query = sqlForDisclosureConsentIdsToGetStaleIds(
+            after = 20,
+            status = ConsentStatus.ACTIVE
+        )
+        assertEquals("SELECT consent_id  FROM disclosure_consent WHERE consent_id <= 20 AND status = 'ACTIVE' ", query.sql)
+
+        query = sqlForDisclosureConsentIdsToGetStaleIds(
+            before = 8,
+            status = ConsentStatus.ACTIVE
+        )
+        assertEquals("SELECT consent_id  FROM disclosure_consent WHERE consent_id > 8 AND status = 'ACTIVE' ", query.sql)
+
+        query = sqlForDisclosureConsentIdsToGetStaleIds(
+            status = ConsentStatus.ACTIVE
+        )
+        assertEquals("SELECT consent_id  FROM disclosure_consent WHERE status = 'ACTIVE' ", query.sql)
+
+        // Default filters
+        query = sqlForDisclosureConsentIdsToGetStaleIds()
+        assertEquals("SELECT consent_id  FROM disclosure_consent", query.sql)
+    }
 }

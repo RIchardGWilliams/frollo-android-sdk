@@ -51,7 +51,7 @@ class DisclosureConsentDaoTest {
     }
 
     @Test
-    fun testLoadByPartytId() {
+    fun testLoadByConsentId() {
         val data = testDisclosureConsentResponseData(consentId = 34567)
         val list = mutableListOf(testDisclosureConsentResponseData(consentId = 12345), data, testDisclosureConsentResponseData(consentId = 56789))
         db.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toList().toTypedArray())

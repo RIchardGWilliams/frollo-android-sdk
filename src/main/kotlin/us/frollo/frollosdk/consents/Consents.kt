@@ -712,6 +712,19 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
     }
 
     /**
+     * Advanced method to fetch disclosure consents by SQL query from the cache
+     *
+     * @param query SimpleSQLiteQuery: Select query which fetches disclosure consents from the cache
+     *
+     * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
+     *
+     * @return LiveData object of List<DisclosureConsent> which can be observed using an Observer for future changes as well.
+     */
+    fun fetchDisclosureConsents(query: SimpleSQLiteQuery): LiveData<List<DisclosureConsent>> {
+        return db.disclosureConsent().loadByQuery(query)
+    }
+
+    /**
      * Refresh All disclosure consents
      *
      * @param status Filter disclosure consents to be refreshed by [ConsentStatus] (Optional)
