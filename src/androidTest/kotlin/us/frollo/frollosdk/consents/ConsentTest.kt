@@ -36,6 +36,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.mapping.toCDRConfiguration
 import us.frollo.frollosdk.mapping.toConsent
+import us.frollo.frollosdk.mapping.toDisclosureConsent
 import us.frollo.frollosdk.mapping.toExternalParty
 import us.frollo.frollosdk.mapping.toProvider
 import us.frollo.frollosdk.mapping.toProviderAccount
@@ -1080,12 +1081,12 @@ class ConsentTest : BaseAndroidTest() {
         val data3 = testDisclosureConsentResponseData(consentId = 21, status = ConsentStatus.ACTIVE)
         val list = mutableListOf(data1, data2, data3)
 
-        database.disclosureConsent().insertAll(*list.map { it }.toTypedArray())
+        database.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toTypedArray())
 
         var testObserver = consents.fetchDisclosureConsents().test()
         testObserver.awaitValue()
         assertNotNull(testObserver.value())
-        assertEquals(4, testObserver.value()?.size)
+        assertEquals(3, testObserver.value()?.size)
 
         testObserver = consents.fetchDisclosureConsents(
             status = ConsentStatus.ACTIVE
@@ -1134,9 +1135,9 @@ class ConsentTest : BaseAndroidTest() {
             )
 
         // Insert some stale data to be removed
-        val data1 = testDisclosureConsentResponseData(consentId = 4, status = ConsentStatus.IN_USE)
-        val data2 = testDisclosureConsentResponseData(consentId = 15, status = ConsentStatus.IN_USE)
-        val data3 = testDisclosureConsentResponseData(consentID = 23)
+        val data1 = testDisclosureConsentResponseData(consentId = 4, status = ConsentStatus.ACTIVE)
+        val data2 = testDisclosureConsentResponseData(consentId = 15, status = ConsentStatus.ACTIVE)
+        val data3 = testDisclosureConsentResponseData(consentId = 23, status = ConsentStatus.ACTIVE)
 
         // Insert existing data to be updated
         val data4 = testDisclosureConsentResponseData(
@@ -1145,12 +1146,12 @@ class ConsentTest : BaseAndroidTest() {
         )
         // Insert existing data which should not be affected
         val data5 = testDisclosureConsentResponseData(
-            consentId = 21,
-            status = ConsentStatus.ACTIVE
+            consentId = 20,
+            status = ConsentStatus.IN_USE
         )
 
         val list = mutableListOf(data1, data2, data3, data4, data5)
-        database.disclosureConsent().insertAll(*list.map { it.todislosureConsent() }.toTypedArray())
+        database.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toTypedArray())
 
         consents.refreshDisclosureConsentsWithPagination(
             status = ConsentStatus.ACTIVE,
@@ -1162,6 +1163,7 @@ class ConsentTest : BaseAndroidTest() {
 
             consents.refreshDisclosureConsentsWithPagination(
                 status = ConsentStatus.ACTIVE,
+                after = result1.paginationInfo?.after?.toString(),
                 size = 4
             ) { result2 ->
                 assertTrue(result2 is PaginatedResult.Success)
@@ -1187,11 +1189,11 @@ class ConsentTest : BaseAndroidTest() {
                     // Verify that the stale data is deleted from the database
                     assertEquals(0, models?.filter { it.consentId in listOf(4L, 15L, 23L) }?.size)
 
-                    // Verify that the ids = 5,21 are not deleted from the database
-                    assertEquals(1, models?.filter { it.consentId in listOf(21L) }?.size)
+                    // Verify that the ids = 20 are not deleted from the database
+                    assertEquals(1, models?.filter { it.consentId in listOf(20L) }?.size)
 
-                    // Verify that the ids = 14,16 are updated
-                    assertEquals(ConsentStatus.WITHDRAWN, models?.find { it.consentId == 1L }?.status)
+                    // Verify that the id = 1 is updated
+                    assertEquals(ConsentStatus.ACTIVE, models?.find { it.consentId == 1L }?.status)
 
                     signal.countDown()
                 }

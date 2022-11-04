@@ -31,6 +31,8 @@ import org.junit.Rule
 import org.junit.Test
 import us.frollo.frollosdk.core.testSDKConfig
 import us.frollo.frollosdk.database.SDKDatabase
+import us.frollo.frollosdk.mapping.toDisclosureConsent
+import us.frollo.frollosdk.model.coredata.cdr.ConsentStatus
 import us.frollo.frollosdk.model.testDisclosureConsentResponseData
 
 class DisclosureConsentDaoTest {
@@ -54,7 +56,7 @@ class DisclosureConsentDaoTest {
     fun testLoadByConsentId() {
         val data = testDisclosureConsentResponseData(consentId = 34567)
         val list = mutableListOf(testDisclosureConsentResponseData(consentId = 12345), data, testDisclosureConsentResponseData(consentId = 56789))
-        db.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toList().toTypedArray())
+        db.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toTypedArray())
 
         val testObserver = db.disclosureConsent().load(data.consentId).test()
 
@@ -70,7 +72,7 @@ class DisclosureConsentDaoTest {
         val data3 = testDisclosureConsentResponseData(consentId = 56789)
         val list = mutableListOf(data1, data2, data3)
 
-        db.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toList().toTypedArray())
+        db.disclosureConsent().insertAll(*list.map { it.toDisclosureConsent() }.toTypedArray())
 
         val query = SimpleSQLiteQuery("SELECT * FROM disclosure_consent WHERE consent_id IN (12345,34567)")
         val testObserver = db.disclosureConsent().loadByQuery(query).test()

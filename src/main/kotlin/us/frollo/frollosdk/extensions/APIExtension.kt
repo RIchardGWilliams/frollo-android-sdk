@@ -45,6 +45,8 @@ import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.budgets.BudgetStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
@@ -131,6 +133,19 @@ internal fun AggregationAPI.fetchMerchants(before: Long? = null, after: Long? = 
     size?.let { queryMap.put("size", it.toString()) }
     merchantIds?.let { queryMap.put("merchant_ids", it.joinToString(",")) }
     return fetchMerchants(queryMap)
+}
+
+internal fun AggregationAPI.exportTransactions(
+    exportType: ExportTransactionType,
+    exportTransactionFilter: ExportTransactionFilter? = null
+): Call<Void> {
+    val queryMap = mutableMapOf<String, String>()
+    exportType.let { queryMap.put("type", it.toString()) }
+    val filterMap = exportTransactionFilter?.getQueryMap()
+    filterMap?.let {
+        queryMap.putAll(it)
+    }
+    return exportTransactions(queryMap)
 }
 
 internal fun AggregationAPI.fetchUserTags(

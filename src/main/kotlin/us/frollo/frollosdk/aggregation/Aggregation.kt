@@ -44,6 +44,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.extensions.compareToFindMissingItems
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.exportTransactions
 import us.frollo.frollosdk.extensions.fetchMerchants
 import us.frollo.frollosdk.extensions.fetchSimilarTransactions
 import us.frollo.frollosdk.extensions.fetchSuggestedTags
@@ -109,6 +110,8 @@ import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TransactionTag
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategory
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionRelation
@@ -1455,6 +1458,33 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 Log.e("$TAG#fetchTransactionsSummaryByIDs", resource.error?.localizedDescription)
 
             completion.invoke(resource.map { it?.toTransactionsSummary() })
+        }
+    }
+
+    /**
+     * Get a Transactions document in the specified format for the authenticated user.
+     * When data is ready, the user will receive an email which
+     * should include the document as an attachment.
+     *
+     * @param exportType Export file format type
+     * @param filter Filters to filter the transactions (Optional)
+     * @param completion Optional completion handler with optional error if the request fails or the transactions summary model if succeeds
+     */
+    fun exportTransactions(
+        exportType: ExportTransactionType,
+        filter: ExportTransactionFilter? = null,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        aggregationAPI.exportTransactions(exportType, filter).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#exportTransactions", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    completion?.invoke(Result.success())
+                }
+            }
         }
     }
 

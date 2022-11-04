@@ -62,6 +62,9 @@ import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.AccountRe
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.model.coredata.aggregation.providers.ProviderStatus
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionField
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
@@ -3152,6 +3155,75 @@ class AggregationTest : BaseAndroidTest() {
 
         aggregation.fetchTransactionsSummary(transactionIds = longArrayOf(1, 2, 3, 4, 5)) { result ->
             assertEquals(Resource.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testExportTransactions() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val fromDate = "2022-08-01"
+        val toDate = "2022-10-31"
+
+        val filter = ExportTransactionFilter(
+            fromDate = fromDate,
+            toDate = toDate,
+            fields = listOf(ExportTransactionField.ACCOUNT_NAME, ExportTransactionField.BUDGET_CATEGORY),
+            accountAggregator = AggregatorType.CDR
+        )
+        val requestPath1 = "${AggregationAPI.URL_EXPORT_TRANSACTIONS}?type=csv&account_aggregator=cdr&fields=account_name%2Cbudget_category&from_date=$fromDate&to_date=$toDate"
+
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath1) {
+                        return MockResponse()
+                            .setResponseCode(201)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        aggregation.exportTransactions(
+            exportType = ExportTransactionType.CSV,
+            filter = filter
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath1, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testExportTransactionsFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        aggregation.exportTransactions(exportType = ExportTransactionType.CSV) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
