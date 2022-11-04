@@ -64,6 +64,7 @@ internal interface AggregationAPI {
         const val URL_TRANSACTIONS_BULK = "aggregation/transactions/bulk"
         const val URL_SIMILAR_TRANSACTIONS = "aggregation/transactions/{transaction_id}/similar"
         const val URL_TRANSACTIONS_SUMMARY = "aggregation/transactions/summary"
+        const val URL_EXPORT_TRANSACTIONS = "aggregation/transactions/export"
 
         // Tags URLs
         const val URL_TRANSACTION_TAGS = "$URL_TRANSACTIONS/{transaction_id}/tags"
@@ -153,6 +154,9 @@ internal interface AggregationAPI {
     // Query parameters: {transaction_ids, account_ids, from_date, to_date, account_included, transaction_included}
     @GET(URL_TRANSACTIONS_SUMMARY)
     fun fetchTransactionsSummary(@QueryMap queryParams: Map<String, String>): Call<TransactionsSummaryResponse>
+
+    @GET(URL_EXPORT_TRANSACTIONS)
+    fun exportTransactions(@QueryMap queryParams: Map<String, String>): Call<Void>
 
     // Transaction Category API
 

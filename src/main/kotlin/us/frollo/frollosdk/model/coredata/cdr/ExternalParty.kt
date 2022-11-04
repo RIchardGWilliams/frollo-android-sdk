@@ -21,6 +21,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 // Declaring the ColumnInfo allows for the renaming of variables without
 // implementing a database migration, as the column name would not change.
@@ -33,50 +34,55 @@ import androidx.room.PrimaryKey
 )
 
 /** Data representation ExternalParty */
+/*
+   NOTE: We have added SerializedName annotation here as well
+   because it is needed by DisclosureConsent.kt and
+   Converters.kt (stringToExternalParty and stringFromExternalParty)
+*/
 data class ExternalParty(
 
     /** Unique ID of the External Party */
-    @PrimaryKey @ColumnInfo(name = "party_id") val partyId: Long,
+    @PrimaryKey @ColumnInfo(name = "party_id") @SerializedName("id") val partyId: Long,
 
     /** External Party external reference ID (Optional) */
-    @ColumnInfo(name = "external_id") val externalId: String?,
+    @ColumnInfo(name = "external_id") @SerializedName("external_id") val externalId: String?,
 
     /** External Party name */
-    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "name") @SerializedName("name") val name: String,
 
     /** Company details */
-    @Embedded(prefix = "company_") val company: ExternalPartyCompany?,
+    @Embedded(prefix = "company_") @SerializedName("company") val company: ExternalPartyCompany?,
 
     /** Contact could be an email, phone number or a website */
-    @ColumnInfo(name = "contact") val contact: String,
+    @ColumnInfo(name = "contact") @SerializedName("contact") val contact: String,
 
     /** External Party description (Optional) */
-    @ColumnInfo(name = "description") val description: String?,
+    @ColumnInfo(name = "description") @SerializedName("description") val description: String?,
 
     /** Status of External Party */
-    @ColumnInfo(name = "status") val status: ExternalPartyStatus,
+    @ColumnInfo(name = "status") @SerializedName("status") val status: ExternalPartyStatus,
 
     /** External Party image URL (Optional) */
-    @ColumnInfo(name = "image_url") val imageUrl: String?,
+    @ColumnInfo(name = "image_url") @SerializedName("image_url") val imageUrl: String?,
 
     /** External Party small image URL (Optional) */
-    @ColumnInfo(name = "small_image_url") val smallImageUrl: String?,
+    @ColumnInfo(name = "small_image_url") @SerializedName("small_image_url") val smallImageUrl: String?,
 
     /** External Party privacy policy URL */
-    @ColumnInfo(name = "privacy_url") val privacyUrl: String,
+    @ColumnInfo(name = "privacy_url") @SerializedName("privacy_url") val privacyUrl: String,
 
     /** Type of External Party */
-    @ColumnInfo(name = "type") val type: ExternalPartyType,
+    @ColumnInfo(name = "type") @SerializedName("type") val type: ExternalPartyType,
 
     /** Type of Trusted Advisor (Optional) */
-    @ColumnInfo(name = "ta_type") val trustedAdvisorType: TrustedAdvisorType?,
+    @ColumnInfo(name = "ta_type") @SerializedName("ta_type") val trustedAdvisorType: TrustedAdvisorType?,
 
     /** External Party summary (Optional) */
-    @ColumnInfo(name = "summary") val summary: String?,
+    @ColumnInfo(name = "summary") @SerializedName("summary") val summary: String?,
 
     /** The sharing durations for the External Party (Optional) */
-    @ColumnInfo(name = "sharing_durations") val sharingDurations: List<SharingDuration>?,
+    @ColumnInfo(name = "sharing_durations") @SerializedName("sharing_durations") val sharingDurations: List<SharingDuration>?,
 
     /** Permissions for the CDR Configuration (Optional) */
-    @ColumnInfo(name = "permissions") val permissions: List<CDRPermission>?
+    @ColumnInfo(name = "permissions") @SerializedName("permissions") val permissions: List<CDRPermission>?
 )
