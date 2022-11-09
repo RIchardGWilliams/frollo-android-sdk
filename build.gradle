@@ -104,7 +104,7 @@ android {
 
 buildscript {
 
-    ext.kotlin_version_internal = '1.7.10'
+    ext.kotlin_version_internal = '1.7.21'
 
     repositories {
         google()
