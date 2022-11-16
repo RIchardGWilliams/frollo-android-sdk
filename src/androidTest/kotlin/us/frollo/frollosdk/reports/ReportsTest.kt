@@ -170,11 +170,11 @@ class ReportsTest : BaseAndroidTest() {
         assertEquals(661, fetchedReports?.size)
 
         val report = fetchedReports?.first()
-        assertEquals("2018-10-28", report?.report?.date)
+        assertEquals("2019-01-22", report?.report?.date)
         assertEquals(542L, report?.report?.accountId)
         assertEquals("AUD", report?.report?.currency)
         assertEquals(period, report?.report?.period)
-        assertEquals(BigDecimal("-1191.45"), report?.report?.value)
+        assertEquals(BigDecimal("-651.15"), report?.report?.value)
 
         val request = mockServer.takeRequest()
         assertEquals(requestPath, request.trimmedPath)
@@ -531,7 +531,7 @@ class ReportsTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testFetchingAccountBalanceReportsCommingling() {
+    fun testFetchingAccountBalanceReports() {
         initSetup()
 
         val signal = CountDownLatch(3)
@@ -1220,6 +1220,63 @@ class ReportsTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchCashflowReports() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val fromDate = "2019-01-01"
+        val toDate = "2019-01-14"
+        val period = TransactionReportPeriod.WEEKLY
+        val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}?period=$period&from_date=$fromDate&to_date=$toDate"
+
+        val body = readStringFromJson(app, R.raw.cashflow_reports)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == requestPath) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        reports.fetchCashflowReports(
+            period = period,
+            fromDate = fromDate,
+            toDate = toDate
+        ) { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+
+            val models = resource.data
+            assertNotNull(models)
+
+            // Check for overall reports
+            val overallReports = models?.sortedBy { it.date }
+            assertEquals(5, overallReports?.size)
+
+            val report = overallReports?.get(2)!!
+            assertEquals("2019-01-15", report.date)
+            assertEquals("2000.00", report.credits)
+            assertEquals("-1000.00", report.debits)
+            assertEquals("-1000.00", report.balance)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals(requestPath, request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
     fun testFetchMerchantReportsFailsIfLoggedOut() {
         initSetup()
 
@@ -1308,6 +1365,32 @@ class ReportsTest : BaseAndroidTest() {
         val fromDate = "2019-01-01"
         val toDate = "2019-12-31"
         val period = TransactionReportPeriod.MONTHLY
+
+        reports.fetchTagReports(period = period, fromDate = fromDate, toDate = toDate) { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchCashflowReportsFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        val fromDate = "2019-01-01"
+        val toDate = "2019-01-14"
+        val period = TransactionReportPeriod.WEEKLY
 
         reports.fetchTagReports(period = period, fromDate = fromDate, toDate = toDate) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)

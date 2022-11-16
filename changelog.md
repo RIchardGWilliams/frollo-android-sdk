@@ -6,6 +6,7 @@
 - App config API & caching
 - External Parties API
 - Disclosure Consents API
+- Cashflow Reports API
 
 ### 3.19.0
 

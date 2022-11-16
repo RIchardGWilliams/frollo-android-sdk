@@ -23,6 +23,7 @@ import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
 import us.frollo.frollosdk.model.testAccountBalanceReportResponseData
+import us.frollo.frollosdk.model.testCashflowReportResponseData
 import us.frollo.frollosdk.model.testGroupReportResponseData
 import us.frollo.frollosdk.model.testReportResponseData
 import us.frollo.frollosdk.model.testReportsResponseData
@@ -75,5 +76,16 @@ class ReportsMappingTest {
         assertEquals(1L, model.linkedId)
         assertEquals("living", model.name)
         assertEquals(2, model.transactionIds?.size)
+    }
+
+    @Test
+    fun testCashflowReportResponseToCashflowReport() {
+        val response = testCashflowReportResponseData()
+        val models = response.toCashflowReports()
+        assertEquals(1, models.size)
+        assertEquals("2016-07-01", models[0].date)
+        assertEquals("4000.00", models[0].credits)
+        assertEquals("-7500.00", models[0].debits)
+        assertEquals("-3500.00", models[0].balance)
     }
 }
