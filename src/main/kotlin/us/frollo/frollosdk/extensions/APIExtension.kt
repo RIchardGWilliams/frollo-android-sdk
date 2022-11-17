@@ -36,6 +36,7 @@ import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
+import us.frollo.frollosdk.model.api.reports.CashflowReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
 import us.frollo.frollosdk.model.api.statements.Statement
@@ -247,6 +248,18 @@ internal fun ReportsAPI.fetchTagReports(
     return transactionTag?.let { tag ->
         fetchReportsByTag(tag, queryMap)
     } ?: fetchReportsByTag(queryMap)
+}
+
+internal fun ReportsAPI.fetchCashflowReports(
+    period: TransactionReportPeriod?,
+    fromDate: String?,
+    toDate: String?
+): Call<CashflowReportResponse> {
+    val queryMap = mutableMapOf<String, String>()
+    period?.let { queryMap.put("period", it.toString()) }
+    fromDate?.let { queryMap.put("from_date", it) }
+    toDate?.let { queryMap.put("to_date", it) }
+    return fetchCashflowReports(queryMap)
 }
 
 // Bills

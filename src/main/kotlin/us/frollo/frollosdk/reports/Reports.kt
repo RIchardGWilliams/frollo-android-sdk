@@ -34,6 +34,7 @@ import us.frollo.frollosdk.extensions.dailyToWeekly
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchAccountBalanceReports
 import us.frollo.frollosdk.extensions.fetchBudgetCategoryReports
+import us.frollo.frollosdk.extensions.fetchCashflowReports
 import us.frollo.frollosdk.extensions.fetchMerchantReports
 import us.frollo.frollosdk.extensions.fetchTagReports
 import us.frollo.frollosdk.extensions.fetchTransactionCategoryReports
@@ -47,6 +48,7 @@ import us.frollo.frollosdk.mapping.toReports
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
+import us.frollo.frollosdk.model.coredata.reports.CashflowReport
 import us.frollo.frollosdk.model.coredata.reports.Report
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalanceRelation
@@ -289,6 +291,38 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
                 period = period,
                 grouping = grouping ?: ReportGrouping.TAG, // Set default grouping only while sending back result to the app
                 completion = completion
+            )
+        }
+    }
+
+    /**
+     * Fetch cashflow reports from the host
+     *
+     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive) (Optional). See [CashflowReport.DATE_FORMAT_PATTERN]
+     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive) (Optional). See [CashflowReport.DATE_FORMAT_PATTERN]
+     * @param period Period that reports should be broken down by (Optional)
+     * @param completion Optional completion handler with optional error if the request fails
+     */
+    fun fetchCashflowReports(
+        fromDate: String? = null,
+        toDate: String? = null,
+        period: TransactionReportPeriod? = null,
+        completion: OnFrolloSDKCompletionListener<Resource<List<CashflowReport>>>? = null
+    ) {
+        reportsAPI.fetchCashflowReports(
+            period = period,
+            fromDate = fromDate,
+            toDate = toDate
+        ).enqueue { resource ->
+
+            if (resource.status == Resource.Status.ERROR) {
+                Log.e("$TAG#fetchCashflowReports", resource.error?.message)
+                completion?.invoke(Resource.error(resource.error))
+            }
+            completion?.invoke(
+                resource.map { response ->
+                    response?.data
+                }
             )
         }
     }
