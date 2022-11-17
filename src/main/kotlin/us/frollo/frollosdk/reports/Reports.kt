@@ -298,15 +298,15 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
     /**
      * Fetch cashflow reports from the host
      *
-     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive). See [CashflowReport.DATE_FORMAT_PATTERN]
-     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive). See [CashflowReport.DATE_FORMAT_PATTERN]
-     * @param period Period that reports should be broken down by
+     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive) (Optional). See [CashflowReport.DATE_FORMAT_PATTERN]
+     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive) (Optional). See [CashflowReport.DATE_FORMAT_PATTERN]
+     * @param period Period that reports should be broken down by (Optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchCashflowReports(
-        fromDate: String?,
-        toDate: String?,
-        period: TransactionReportPeriod?,
+        fromDate: String? = null,
+        toDate: String? = null,
+        period: TransactionReportPeriod? = null,
         completion: OnFrolloSDKCompletionListener<Resource<List<CashflowReport>>>? = null
     ) {
         reportsAPI.fetchCashflowReports(
