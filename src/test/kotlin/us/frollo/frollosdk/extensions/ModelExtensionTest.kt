@@ -650,9 +650,10 @@ class ModelExtensionTest {
             externalIds = listOf("613bd99c", "533rg28h"),
             status = ExternalPartyStatus.ENABLED,
             type = ExternalPartyType.TRUSTED_ADVISOR,
-            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR,
+            key = "ACME001"
         )
-        assertEquals("SELECT  *  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+        assertEquals("SELECT  *  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' AND key = 'ACME001' ", query.sql)
 
         // Default filters
         query = sqlForExternalParties()
@@ -667,35 +668,39 @@ class ModelExtensionTest {
             externalIds = listOf("613bd99c", "533rg28h"),
             status = ExternalPartyStatus.ENABLED,
             type = ExternalPartyType.TRUSTED_ADVISOR,
-            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR,
+            key = "ACME001"
         )
-        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' AND key = 'ACME001' ", query.sql)
 
         query = sqlForExternalPartyIdsToGetStaleIds(
             after = 120,
             externalIds = listOf("613bd99c", "533rg28h"),
             status = ExternalPartyStatus.ENABLED,
             type = ExternalPartyType.TRUSTED_ADVISOR,
-            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR,
+            key = "ACME001"
         )
-        assertEquals("SELECT party_id  FROM external_party WHERE party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id <= 120 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' AND key = 'ACME001' ", query.sql)
 
         query = sqlForExternalPartyIdsToGetStaleIds(
             before = 100,
             externalIds = listOf("613bd99c", "533rg28h"),
             status = ExternalPartyStatus.ENABLED,
             type = ExternalPartyType.TRUSTED_ADVISOR,
-            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR,
+            key = "ACME001"
         )
-        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+        assertEquals("SELECT party_id  FROM external_party WHERE party_id > 100 AND external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' AND key = 'ACME001' ", query.sql)
 
         query = sqlForExternalPartyIdsToGetStaleIds(
             externalIds = listOf("613bd99c", "533rg28h"),
             status = ExternalPartyStatus.ENABLED,
             type = ExternalPartyType.TRUSTED_ADVISOR,
-            trustedAdvisorType = TrustedAdvisorType.ADVISOR
+            trustedAdvisorType = TrustedAdvisorType.ADVISOR,
+            key = "ACME001"
         )
-        assertEquals("SELECT party_id  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' ", query.sql)
+        assertEquals("SELECT party_id  FROM external_party WHERE external_id IN ('613bd99c','533rg28h') AND status = 'ENABLED' AND ta_type = 'ADVISOR' AND type = 'TRUSTED_ADVISOR' AND key = 'ACME001' ", query.sql)
 
         // Default filters
         query = sqlForExternalPartyIdsToGetStaleIds()

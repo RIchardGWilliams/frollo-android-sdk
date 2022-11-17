@@ -114,7 +114,10 @@ data class User(
     @ColumnInfo(name = "external_id") val externalId: String?,
 
     /** Middle names of the user (optional) */
-    @ColumnInfo(name = "middle_names") val middleNames: String?
+    @ColumnInfo(name = "middle_names") val middleNames: String?,
+
+    /** External Party ID the User is sharing data with (optional) */
+    @ColumnInfo(name = "external_party_id") var externalPartyId: Long?
 ) {
 
     companion object {

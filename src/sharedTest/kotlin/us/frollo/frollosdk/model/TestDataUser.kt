@@ -40,6 +40,7 @@ internal fun testUserResponseData(
     residentialAddressId: Long? = null,
     mailingAddressId: Long? = null,
     previousAddressId: Long? = null,
+    externalPartyId: Long? = null
 ): UserResponse {
     val name = randomUUID()
 
@@ -70,7 +71,8 @@ internal fun testUserResponseData(
         features = listOf(FeatureFlag(feature = "aggregation", enabled = true)),
         tfnStatus = TFNStatus.RECEIVED,
         externalId = "123456",
-        middleNames = randomUUID()
+        middleNames = randomUUID(),
+        externalPartyId = externalPartyId ?: randomNumber().toLong()
     )
 }
 
@@ -102,7 +104,8 @@ internal fun UserResponse.testModifyUserResponseData(firstName: String): UserRes
         features = features,
         tfnStatus = TFNStatus.RECEIVED,
         externalId = "123456",
-        middleNames = middleNames
+        middleNames = middleNames,
+        externalPartyId = randomNumber().toLong()
     )
 }
 
@@ -130,7 +133,8 @@ internal fun testUserRequestData(): UserUpdateRequest {
         taxResidency = "AU",
         tfn = "12345678",
         tin = "111",
-        middleNames = randomUUID()
+        middleNames = randomUUID(),
+        externalPartyId = randomNumber().toLong()
     )
 }
 

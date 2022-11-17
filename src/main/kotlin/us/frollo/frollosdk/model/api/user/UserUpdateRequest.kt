@@ -94,5 +94,8 @@ data class UserUpdateRequest(
     @SerializedName("tin") val tin: String? = null,
 
     /** Middle names of the user (optional) */
-    @SerializedName("middle_names") val middleNames: String? = null
+    @SerializedName("middle_names") val middleNames: String? = null,
+
+    /** External Party ID the User is sharing data with (optional) */
+    @SerializedName("external_party_id") val externalPartyId: Long? = null
 )

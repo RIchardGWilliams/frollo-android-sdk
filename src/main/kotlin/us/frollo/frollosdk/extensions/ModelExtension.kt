@@ -768,11 +768,12 @@ internal fun sqlForExternalParties(
     externalIds: List<String>? = null,
     status: ExternalPartyStatus? = null,
     trustedAdvisorType: TrustedAdvisorType? = null,
-    type: ExternalPartyType? = null
+    type: ExternalPartyType? = null,
+    key: String? = null
 ): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("external_party")
 
-    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type)
+    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type, key)
 
     return sqlQueryBuilder.create()
 }
@@ -783,14 +784,15 @@ internal fun sqlForExternalPartyIdsToGetStaleIds(
     externalIds: List<String>? = null,
     status: ExternalPartyStatus? = null,
     trustedAdvisorType: TrustedAdvisorType? = null,
-    type: ExternalPartyType? = null
+    type: ExternalPartyType? = null,
+    key: String? = null
 ): SimpleSQLiteQuery {
     val sqlQueryBuilder = SimpleSQLiteQueryBuilder("external_party")
     sqlQueryBuilder.columns(arrayOf("party_id"))
 
     before?.let { sqlQueryBuilder.appendSelection(selection = "party_id > $it") }
     after?.let { sqlQueryBuilder.appendSelection(selection = "party_id <= $it") }
-    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type)
+    appendExternalPartyToSqlQuery(sqlQueryBuilder, externalIds, status, trustedAdvisorType, type, key)
 
     return sqlQueryBuilder.create()
 }
@@ -800,7 +802,8 @@ private fun appendExternalPartyToSqlQuery(
     externalIds: List<String>? = null,
     status: ExternalPartyStatus? = null,
     trustedAdvisorType: TrustedAdvisorType? = null,
-    type: ExternalPartyType? = null
+    type: ExternalPartyType? = null,
+    key: String? = null
 ) {
     externalIds?.let {
         sqlQueryBuilder.appendSelection(selection = "external_id IN ('${externalIds.joinToString("','") { it }}')")
@@ -808,6 +811,7 @@ private fun appendExternalPartyToSqlQuery(
     status?.let { sqlQueryBuilder.appendSelection(selection = "status = '${ it.name }'") }
     trustedAdvisorType?.let { sqlQueryBuilder.appendSelection(selection = "ta_type = '${ it.name }'") }
     type?.let { sqlQueryBuilder.appendSelection(selection = "type = '${ it.name }'") }
+    key?.let { sqlQueryBuilder.appendSelection(selection = "key = '$it'") }
 }
 
 internal fun sqlForDisclosureConsents(

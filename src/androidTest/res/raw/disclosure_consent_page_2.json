@@ -15,6 +15,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Annabel Doerson new",
         "company": {
           "display_name": "Annabel Doerson",
@@ -58,6 +59,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Annabel Doerson new",
         "company": {
           "display_name": "Annabel Doerson",
@@ -101,6 +103,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Annabel Doerson new",
         "company": {
           "display_name": "Annabel Doerson",
@@ -144,6 +147,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Annabel Doerson new",
         "company": {
           "display_name": "Annabel Doerson",

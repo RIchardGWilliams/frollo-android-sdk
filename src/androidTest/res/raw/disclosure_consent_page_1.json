@@ -15,6 +15,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Check Finance",
         "company": {
           "display_name": "Display name",
@@ -42,6 +43,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Check Finance",
         "company": {
           "display_name": "Display name",
@@ -69,6 +71,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Check Finance",
         "company": {
           "display_name": "Display name",
@@ -97,6 +100,7 @@
       "external_party": {
         "id": 1,
         "external_id": "613bd99c-7b5f-4963-a459-154283db887d",
+        "key": "ACME001",
         "name": "Check Finance",
         "company": {
           "display_name": "Display name",

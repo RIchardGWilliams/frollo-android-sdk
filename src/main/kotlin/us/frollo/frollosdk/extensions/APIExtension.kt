@@ -487,6 +487,7 @@ internal fun CdrAPI.fetchExternalParties(
     status: ExternalPartyStatus? = null,
     trustedAdvisorType: TrustedAdvisorType? = null,
     type: ExternalPartyType? = null,
+    key: String? = null,
     before: String? = null,
     after: String? = null,
     size: Long? = null
@@ -499,6 +500,7 @@ internal fun CdrAPI.fetchExternalParties(
     status?.let { queryMap["status"] = it.toString() }
     trustedAdvisorType?.let { queryMap["ta_type"] = it.toString() }
     type?.let { queryMap["type"] = it.toString() }
+    key?.let { queryMap["key"] = it }
     return fetchExternalParties(queryMap)
 }
 

@@ -40,6 +40,7 @@ import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.extensions.fromJson
 import us.frollo.frollosdk.mapping.toAddress
+import us.frollo.frollosdk.mapping.toExternalParty
 import us.frollo.frollosdk.mapping.toUser
 import us.frollo.frollosdk.model.api.shared.APIErrorCode
 import us.frollo.frollosdk.model.api.user.UserResponse
@@ -56,6 +57,7 @@ import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdAccountStatus
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdOTPMethodType
 import us.frollo.frollosdk.model.coredata.user.payid.UserPayIdStatus
 import us.frollo.frollosdk.model.testAddressResponseData
+import us.frollo.frollosdk.model.testExternalPartyResponseData
 import us.frollo.frollosdk.model.testUserRequestData
 import us.frollo.frollosdk.model.testUserResponseData
 import us.frollo.frollosdk.network.api.DeviceAPI
@@ -1299,6 +1301,29 @@ class UserManagementTest : BaseAndroidTest() {
         assertEquals(345L, model?.residentialAddress?.addressId)
         assertEquals(345L, model?.mailingAddress?.addressId)
         assertEquals(346L, model?.previousAddress?.addressId)
+
+        tearDown()
+    }
+
+    @Test
+    fun testUserLinkToExternalParty() {
+        initSetup()
+
+        database.externalParty().insert(testExternalPartyResponseData(partyId = 1001).toExternalParty())
+        database.users().insert(
+            testUserResponseData(
+                userId = 123,
+                externalPartyId = 1001
+            ).toUser()
+        )
+
+        val testObserver = userManagement.fetchUserWithRelation().test()
+
+        testObserver.awaitValue()
+        val model = testObserver.value()
+        assertNotNull(model)
+        assertEquals(123L, model?.user?.userId)
+        assertEquals(1001L, model?.externalParty?.partyId)
 
         tearDown()
     }
