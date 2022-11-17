@@ -22,7 +22,7 @@ import us.frollo.frollosdk.model.IAdapterModel
 /** Data representation of Cashflow report */
 data class CashflowReport(
 
-    /** Start date of the report period. Check [Report.DATE_FORMAT_PATTERN] for the date format.*/
+    /** Start date of the report period. Check [CashflowReport.DATE_FORMAT_PATTERN] for the date format.*/
     @SerializedName("date")val date: String,
 
     /** Sum of credit transactions */

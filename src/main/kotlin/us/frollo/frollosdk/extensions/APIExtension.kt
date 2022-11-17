@@ -251,12 +251,14 @@ internal fun ReportsAPI.fetchTagReports(
 }
 
 internal fun ReportsAPI.fetchCashflowReports(
-    period: TransactionReportPeriod,
-    fromDate: String,
-    toDate: String
+    period: TransactionReportPeriod?,
+    fromDate: String?,
+    toDate: String?
 ): Call<CashflowReportResponse> {
-
-    val queryMap = mutableMapOf("period" to period.toString(), "from_date" to fromDate, "to_date" to toDate)
+    val queryMap = mutableMapOf<String, String>()
+    period?.let { queryMap.put("period", it.toString()) }
+    fromDate?.let { queryMap.put("from_date", it) }
+    toDate?.let { queryMap.put("to_date", it) }
     return fetchCashflowReports(queryMap)
 }
 

@@ -17,11 +17,9 @@
 package us.frollo.frollosdk.model
 
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
-import us.frollo.frollosdk.model.api.reports.CashflowReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse.ReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse.ReportResponse.GroupReportResponse
-import us.frollo.frollosdk.model.coredata.reports.CashflowReport
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.testutils.randomBoolean
@@ -90,18 +88,4 @@ internal fun testReportAccountBalanceData(
     id?.let { report.reportId = it }
 
     return report
-}
-
-internal fun testCashflowReportResponseData(): CashflowReportResponse {
-    return CashflowReportResponse(listOf(testCasflowReportData()))
-}
-
-internal fun testCasflowReportData(): CashflowReport {
-    return CashflowReport(
-        date = "2016-07-01",
-        credits = "4000.00",
-        debits = "-7500.00",
-        balance = "-3500.00"
-
-    )
 }

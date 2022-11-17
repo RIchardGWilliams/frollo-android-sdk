@@ -170,11 +170,11 @@ class ReportsTest : BaseAndroidTest() {
         assertEquals(661, fetchedReports?.size)
 
         val report = fetchedReports?.first()
-        assertEquals("2019-01-22", report?.report?.date)
+        assertEquals("2018-10-28", report?.report?.date)
         assertEquals(542L, report?.report?.accountId)
         assertEquals("AUD", report?.report?.currency)
         assertEquals(period, report?.report?.period)
-        assertEquals(BigDecimal("-651.15"), report?.report?.value)
+        assertEquals(BigDecimal("-1191.45"), report?.report?.value)
 
         val request = mockServer.takeRequest()
         assertEquals(requestPath, request.trimmedPath)
@@ -1255,11 +1255,10 @@ class ReportsTest : BaseAndroidTest() {
             val models = resource.data
             assertNotNull(models)
 
-            // Check for overall reports
-            val overallReports = models?.sortedBy { it.date }
-            assertEquals(5, overallReports?.size)
+            val reports = models?.sortedBy { it.date }
+            assertEquals(5, reports?.size)
 
-            val report = overallReports?.get(2)!!
+            val report = reports?.get(2)!!
             assertEquals("2019-01-15", report.date)
             assertEquals("2000.00", report.credits)
             assertEquals("-1000.00", report.debits)
@@ -1392,7 +1391,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2019-01-14"
         val period = TransactionReportPeriod.WEEKLY
 
-        reports.fetchTagReports(period = period, fromDate = fromDate, toDate = toDate) { resource ->
+        reports.fetchCashflowReports(period = period, fromDate = fromDate, toDate = toDate) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)

@@ -43,7 +43,6 @@ import us.frollo.frollosdk.extensions.sqlForExistingAccountBalanceReports
 import us.frollo.frollosdk.extensions.sqlForFetchingAccountBalanceReports
 import us.frollo.frollosdk.extensions.sqlForStaleIdsAccountBalanceReports
 import us.frollo.frollosdk.logging.Log
-import us.frollo.frollosdk.mapping.toCashflowReports
 import us.frollo.frollosdk.mapping.toReportAccountBalance
 import us.frollo.frollosdk.mapping.toReports
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
@@ -297,10 +296,10 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
     }
 
     /**
-     * Fetch tag reports from the host
+     * Fetch cashflow reports from the host
      *
-     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive). See [Report.DATE_FORMAT_PATTERN]
-     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive). See [Report.DATE_FORMAT_PATTERN]
+     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive). See [CashflowReport.DATE_FORMAT_PATTERN]
+     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive). See [CashflowReport.DATE_FORMAT_PATTERN]
      * @param period Period that reports should be broken down by
      * @param completion Optional completion handler with optional error if the request fails
      */
@@ -322,7 +321,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             }
             completion?.invoke(
                 resource.map { response ->
-                    response?.toCashflowReports()
+                    response?.data
                 }
             )
         }

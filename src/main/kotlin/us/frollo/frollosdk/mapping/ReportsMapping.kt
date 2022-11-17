@@ -17,11 +17,9 @@
 package us.frollo.frollosdk.mapping
 
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
-import us.frollo.frollosdk.model.api.reports.CashflowReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse.ReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse.ReportResponse.GroupReportResponse
-import us.frollo.frollosdk.model.coredata.reports.CashflowReport
 import us.frollo.frollosdk.model.coredata.reports.GroupReport
 import us.frollo.frollosdk.model.coredata.reports.Report
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
@@ -72,11 +70,3 @@ internal fun GroupReportResponse.toGroupReport(grouping: ReportGrouping, period:
         period = period,
         date = date
     )
-
-internal fun CashflowReportResponse.toCashflowReports(): List<CashflowReport> {
-    val cashflowReports = mutableListOf<CashflowReport>()
-    this.data.forEach {
-        cashflowReports.add(it)
-    }
-    return cashflowReports
-}
