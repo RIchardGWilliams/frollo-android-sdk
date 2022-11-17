@@ -304,9 +304,9 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchCashflowReports(
-        fromDate: String,
-        toDate: String,
-        period: TransactionReportPeriod,
+        fromDate: String?,
+        toDate: String?,
+        period: TransactionReportPeriod?,
         completion: OnFrolloSDKCompletionListener<Resource<List<CashflowReport>>>? = null
     ) {
         reportsAPI.fetchCashflowReports(
