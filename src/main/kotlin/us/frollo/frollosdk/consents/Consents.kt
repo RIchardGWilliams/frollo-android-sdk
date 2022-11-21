@@ -530,6 +530,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
      * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
      * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
      * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+     * @param key Filter external parties to be refreshed by the generated unique key (Optional)
      *
      * @return LiveData object of List<ExternalParty> which can be observed using an Observer for future changes as well.
      */
@@ -538,9 +539,10 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
         status: ExternalPartyStatus? = null,
         trustedAdvisorType: TrustedAdvisorType? = null,
         type: ExternalPartyType? = null,
+        key: String? = null
     ): LiveData<List<ExternalParty>> {
         return db.externalParty().loadByQuery(
-            sqlForExternalParties(externalIds, status, trustedAdvisorType, type)
+            sqlForExternalParties(externalIds, status, trustedAdvisorType, type, key)
         )
     }
 
@@ -584,6 +586,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
      * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
      * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
      * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+     * @param key Filter external parties to be refreshed by the generated unique key (Optional)
      * @param before before field to get previous list in pagination (Optional)
      * @param after after field to get next list in pagination (Optional)
      * @param size Count of objects to returned from the API (page size)
@@ -594,6 +597,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
         status: ExternalPartyStatus? = null,
         trustedAdvisorType: TrustedAdvisorType? = null,
         type: ExternalPartyType? = null,
+        key: String? = null,
         before: String? = null,
         after: String? = null,
         size: Long? = null,
@@ -604,6 +608,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
             status = status,
             trustedAdvisorType = trustedAdvisorType,
             type = type,
+            key = key,
             before = before,
             after = after,
             size = size
@@ -621,6 +626,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
                         status = status,
                         trustedAdvisorType = trustedAdvisorType,
                         type = type,
+                        key = key,
                         before = response?.paging?.cursors?.before?.toLong(),
                         after = response?.paging?.cursors?.after?.toLong(),
                         completion = completion
@@ -655,6 +661,7 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
         status: ExternalPartyStatus? = null,
         trustedAdvisorType: TrustedAdvisorType? = null,
         type: ExternalPartyType? = null,
+        key: String? = null,
         after: Long?,
         before: Long?,
         completion: OnFrolloSDKCompletionListener<PaginatedResult<PaginationInfo>>?
@@ -676,7 +683,8 @@ class Consents(network: NetworkService, internal val db: SDKDatabase) {
                         externalIds = externalIds,
                         status = status,
                         trustedAdvisorType = trustedAdvisorType,
-                        type = type
+                        type = type,
+                        key = key
                     )
                 ).toHashSet()
 

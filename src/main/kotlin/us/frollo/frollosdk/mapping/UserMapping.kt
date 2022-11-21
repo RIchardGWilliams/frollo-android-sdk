@@ -47,5 +47,6 @@ internal fun UserResponse.toUser() =
         features = features,
         tfnStatus = tfnStatus,
         externalId = externalId,
-        middleNames = middleNames
+        middleNames = middleNames,
+        externalPartyId = externalPartyId
     )

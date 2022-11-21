@@ -47,6 +47,9 @@ data class ExternalParty(
     /** External Party external reference ID (Optional) */
     @ColumnInfo(name = "external_id") @SerializedName("external_id") val externalId: String?,
 
+    /** Unique key generated for the External Party */
+    @ColumnInfo(name = "key") @SerializedName("key") val key: String,
+
     /** External Party name */
     @ColumnInfo(name = "name") @SerializedName("name") val name: String,
 

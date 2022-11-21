@@ -824,6 +824,8 @@ abstract class SDKDatabase : RoomDatabase() {
                 // New changes in this migration:
                 // 1) Add new tables - company_config, feature_config, link_config
                 // 2) Add new table - external_party
+                // 3) Add new table - disclosure_consent
+                // 4) Alter table - user - Add column external_party_id
 
                 // START - Add new tables - company_config, feature_config, link_config
                 database.execSQL("CREATE TABLE IF NOT EXISTS `company_config` (`display_name` TEXT NOT NULL, `legal_name` TEXT NOT NULL, `abn` TEXT, `acn` TEXT, `phone` TEXT, `address` TEXT, `support_email` TEXT, `support_phone` TEXT, `company_config_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)")
@@ -834,7 +836,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // END - Add new tables - company_config, feature_config, link_config
 
                 // START - Add new table - external_party
-                database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` INTEGER, `name` TEXT NOT NULL, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, PRIMARY KEY(`party_id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` INTEGER, `key` TEXT NOT NULL, `name` TEXT NOT NULL, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, PRIMARY KEY(`party_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_external_party_party_id` ON `external_party` (`party_id`)")
                 // END - Add new table - external_party
 
@@ -842,6 +844,10 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `disclosure_consent` (`consent_id` INTEGER NOT NULL, `status` TEXT NOT NULL, `consent_ids` TEXT, `permissions` TEXT, `disclosure_duration` INTEGER, `sharing_started_at` TEXT, `sharing_stopped_at` TEXT, `sharing_expires_at` TEXT, `external_party` TEXT, PRIMARY KEY(`consent_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_disclosure_consent_consent_id` ON `disclosure_consent` (`consent_id`)")
                 // END - Add new table - disclosure_consent
+
+                // START - Alter table - user - Add column external_party_id
+                database.execSQL("ALTER TABLE `user` ADD COLUMN `external_party_id` INTEGER")
+                // END - Alter table - user - Add column external_party_id
             }
         }
     }

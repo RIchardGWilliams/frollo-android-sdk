@@ -3,6 +3,7 @@
         {
             "id": 16,
             "external_id": "73fkv734",
+            "key": "ACME016",
             "name": "Check Finance 16",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -13,6 +14,7 @@
         {
             "id": 17,
             "external_id": "73fkv734",
+            "key": "ACME017",
             "name": "Check Finance 17",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -23,6 +25,7 @@
         {
             "id": 19,
             "external_id": "73fkv734",
+            "key": "ACME019",
             "name": "Check Finance 19",
             "contact": "support@frollo.us",
             "status": "enabled",

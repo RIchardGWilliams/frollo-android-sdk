@@ -7,6 +7,7 @@
 - External Parties API
 - Disclosure Consents API
 - Cashflow Reports API
+- Update Host API version to 2.21
 
 ### 3.19.0
 

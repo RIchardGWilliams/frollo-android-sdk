@@ -27,6 +27,7 @@ import us.frollo.frollosdk.model.coredata.cdr.TrustedAdvisorType
 internal data class ExternalPartyResponse(
     @SerializedName("id") val partyId: Long,
     @SerializedName("external_id") val externalId: String?,
+    @SerializedName("key") val key: String,
     @SerializedName("name") val name: String,
     @SerializedName("company") val company: ExternalPartyCompany?,
     @SerializedName("contact") val contact: String,

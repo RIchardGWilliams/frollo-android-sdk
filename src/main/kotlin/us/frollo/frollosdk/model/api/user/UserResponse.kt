@@ -55,5 +55,6 @@ internal data class UserResponse(
     @SerializedName("features") val features: List<FeatureFlag>?,
     @SerializedName("tfn_status") val tfnStatus: TFNStatus?,
     @SerializedName("external_id") val externalId: String?,
-    @SerializedName("middle_names") val middleNames: String?
+    @SerializedName("middle_names") val middleNames: String?,
+    @SerializedName("external_party_id") val externalPartyId: Long?
 )

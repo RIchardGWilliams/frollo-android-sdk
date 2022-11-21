@@ -141,6 +141,7 @@ fun Consents.fetchExternalPartyRx(externalPartyId: Long): Observable<ExternalPar
  * @param status Filter external parties to be refreshed by [ExternalPartyStatus] (Optional)
  * @param trustedAdvisorType Filter external parties to be refreshed by [TrustedAdvisorType] (Optional)
  * @param type Filter external parties to be refreshed by [ExternalPartyType] (Optional)
+ * @param key Filter external parties to be refreshed by the generated unique key (Optional)
  *
  * @return Rx Observable object of List<ExternalParty> which can be observed using an Observer for future changes as well.
  */
@@ -149,9 +150,10 @@ fun Consents.fetchExternalPartiesRx(
     status: ExternalPartyStatus? = null,
     trustedAdvisorType: TrustedAdvisorType? = null,
     type: ExternalPartyType? = null,
+    key: String? = null
 ): Observable<List<ExternalParty>> {
     return db.externalParty().loadByQueryRx(
-        sqlForExternalParties(externalIds, status, trustedAdvisorType, type)
+        sqlForExternalParties(externalIds, status, trustedAdvisorType, type, key)
     )
 }
 

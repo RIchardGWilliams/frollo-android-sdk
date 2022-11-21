@@ -3,6 +3,7 @@
         {
             "id": 1,
             "external_id": "6hsf735",
+            "key": "ACME001",
             "name": "Check Finance 1",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -13,6 +14,7 @@
         {
             "id": 3,
             "external_id": "6hsf735",
+            "key": "ACME002",
             "name": "Check Finance 3",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -23,6 +25,7 @@
         {
             "id": 4,
             "external_id": "6hsf735",
+            "key": "ACME004",
             "name": "Check Finance 4",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -33,6 +36,7 @@
         {
             "id": 6,
             "external_id": "6hsf735",
+            "key": "ACME006",
             "name": "Check Finance 6",
             "contact": "support@frollo.us",
             "status": "enabled",
@@ -43,6 +47,7 @@
         {
             "id": 8,
             "external_id": "73fkv734",
+            "key": "ACME008",
             "name": "Check Finance 8",
             "contact": "support@frollo.us",
             "status": "enabled",

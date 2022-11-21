@@ -91,6 +91,7 @@ internal fun ExternalPartyResponse.toExternalParty(): ExternalParty =
     ExternalParty(
         partyId = partyId,
         externalId = externalId,
+        key = key,
         name = name,
         company = company,
         contact = contact,

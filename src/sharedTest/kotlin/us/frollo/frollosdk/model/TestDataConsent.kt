@@ -147,6 +147,7 @@ internal fun testExternalPartyResponseData(
     return ExternalPartyResponse(
         partyId = partyId ?: randomNumber().toLong(),
         externalId = externalId ?: randomString(20),
+        key = randomString(6),
         name = randomString(20),
         company = ExternalPartyCompany(
             displayName = randomString(20),

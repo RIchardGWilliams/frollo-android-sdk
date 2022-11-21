@@ -20,6 +20,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.coredata.address.Address
+import us.frollo.frollosdk.model.coredata.cdr.ExternalParty
 
 /** User with associated data */
 data class UserRelation(
@@ -47,7 +48,14 @@ data class UserRelation(
      * Even though its a list this will have only one element. It is requirement of Room database for this to be a list.
      */
     @Relation(parentColumn = "previous_address_id", entityColumn = "address_id", entity = Address::class)
-    var previousAddresses: List<Address>? = null
+    var previousAddresses: List<Address>? = null,
+
+    /** Associated External Party
+     *
+     * Even though its a list this will have only one element. It is requirement of Room database for this to be a list.
+     */
+    @Relation(parentColumn = "external_party_id", entityColumn = "party_id", entity = ExternalParty::class)
+    var externalParties: List<ExternalParty>? = null
 
 ) : IAdapterModel {
 
@@ -69,6 +77,13 @@ data class UserRelation(
     val previousAddress: Address?
         get() {
             val models = previousAddresses
+            return if (models?.isNotEmpty() == true) models[0] else null
+        }
+
+    /** Associated External Party */
+    val externalParty: ExternalParty?
+        get() {
+            val models = externalParties
             return if (models?.isNotEmpty() == true) models[0] else null
         }
 }
