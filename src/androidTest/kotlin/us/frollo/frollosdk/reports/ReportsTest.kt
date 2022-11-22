@@ -35,6 +35,7 @@ import us.frollo.frollosdk.base.Result
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
+import us.frollo.frollosdk.error.FrolloSDKError
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
 import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
@@ -85,7 +86,7 @@ class ReportsTest : BaseAndroidTest() {
         tearDown()
     }
 
-   /* @Test
+    @Test
     fun testFetchingAccountBalanceReportsFailsDateFormat() {
         initSetup()
 
@@ -102,7 +103,7 @@ class ReportsTest : BaseAndroidTest() {
         }
 
         tearDown()
-    }*/
+    }
 
     @Test
     fun testFetchingAccountBalanceReportsFailsIfLoggedOut() {
