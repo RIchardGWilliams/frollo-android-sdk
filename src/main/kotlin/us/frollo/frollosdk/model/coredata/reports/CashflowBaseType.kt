@@ -20,24 +20,15 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.extensions.serializedName
 
 /**
- * Represents how a transaction report response should be broken down. E.g. by merchant
+ * Base type - of the cashflow
  */
-enum class ReportGrouping {
+enum class CashflowBaseType {
 
-    /** Budget **/
-    @SerializedName("budget")BUDGET,
+    /** Credit **/
+    @SerializedName("credit")CREDIT,
 
-    /** Budget Category */
-    @SerializedName("budget_category") BUDGET_CATEGORY,
-
-    /** Transaction Category */
-    @SerializedName("category") TRANSACTION_CATEGORY,
-
-    /** Merchant */
-    @SerializedName("merchant") MERCHANT,
-
-    /** User Tag */
-    @SerializedName("tag") TAG;
+    /** Debit */
+    @SerializedName("debit") DEBIT;
 
     /** Enum to serialized string */
     // This override MUST be used for this enum to work with Retrofit @Path or @Query parameters

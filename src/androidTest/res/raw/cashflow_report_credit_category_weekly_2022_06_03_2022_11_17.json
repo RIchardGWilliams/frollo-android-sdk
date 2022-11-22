@@ -1,0 +1,267 @@
+{
+    "data": [{
+        "date": "2022-06-03",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-06-10",
+        "value": "100.00",
+        "income": false,
+        "groups": [{
+            "id": 82,
+            "name": "Deposits",
+            "category_type": "income",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926657],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1663636497.png?1663636497"
+        }]
+    }, {
+        "date": "2022-06-17",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926779],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-06-24",
+        "value": "3250.00",
+        "income": false,
+        "groups": [{
+            "id": 84,
+            "name": "Salary/Regular Income",
+            "category_type": "income",
+            "value": "3250.00",
+            "income": false,
+            "transaction_ids": [5926309],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1663636916.png?1663636916"
+        }]
+    }, {
+        "date": "2022-07-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-07-08",
+        "value": "100.00",
+        "income": false,
+        "groups": [{
+            "id": 82,
+            "name": "Deposits",
+            "category_type": "income",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926655],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1663636497.png?1663636497"
+        }]
+    }, {
+        "date": "2022-07-15",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926777],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-07-22",
+        "value": "3250.00",
+        "income": false,
+        "groups": [{
+            "id": 84,
+            "name": "Salary/Regular Income",
+            "category_type": "income",
+            "value": "3250.00",
+            "income": false,
+            "transaction_ids": [5926307],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1663636916.png?1663636916"
+        }]
+    }, {
+        "date": "2022-07-29",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-08-05",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926775],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-08-12",
+        "value": "100.00",
+        "income": false,
+        "groups": [{
+            "id": 82,
+            "name": "Deposits",
+            "category_type": "income",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926653],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1663636497.png?1663636497"
+        }]
+    }, {
+        "date": "2022-08-19",
+        "value": "4050.00",
+        "income": false,
+        "groups": [{
+            "id": 84,
+            "name": "Salary/Regular Income",
+            "category_type": "income",
+            "value": "4050.00",
+            "income": false,
+            "transaction_ids": [5926305],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1663636916.png?1663636916"
+        }]
+    }, {
+        "date": "2022-08-26",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926773],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-09-02",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-09-09",
+        "value": "100.00",
+        "income": false,
+        "groups": [{
+            "id": 82,
+            "name": "Deposits",
+            "category_type": "income",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926651],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1663636497.png?1663636497"
+        }]
+    }, {
+        "date": "2022-09-16",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926771],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-09-23",
+        "value": "4050.00",
+        "income": false,
+        "groups": [{
+            "id": 84,
+            "name": "Salary/Regular Income",
+            "category_type": "income",
+            "value": "4050.00",
+            "income": false,
+            "transaction_ids": [5926303],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1663636916.png?1663636916"
+        }]
+    }, {
+        "date": "2022-09-30",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926769],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-10-07",
+        "value": "100.00",
+        "income": false,
+        "groups": [{
+            "id": 82,
+            "name": "Deposits",
+            "category_type": "income",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926649],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/82/icon/original/1663636497.png?1663636497"
+        }]
+    }, {
+        "date": "2022-10-14",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-10-21",
+        "value": "4500.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926767],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }, {
+            "id": 84,
+            "name": "Salary/Regular Income",
+            "category_type": "income",
+            "value": "4050.00",
+            "income": false,
+            "transaction_ids": [5926301],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/84/icon/original/1663636916.png?1663636916"
+        }]
+    }, {
+        "date": "2022-10-28",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2022-11-04",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926765],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }]
+    }, {
+        "date": "2022-11-11",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }]
+}

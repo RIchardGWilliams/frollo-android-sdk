@@ -1,0 +1,293 @@
+{
+    "data": [{
+        "date": "2021-01-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-02-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-03-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-04-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-05-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-06-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-07-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-08-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-09-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-10-01",
+        "value": "0.00",
+        "income": false,
+        "groups": []
+    }, {
+        "date": "2021-11-01",
+        "value": "3350.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926671],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "3250.00",
+            "income": false,
+            "transaction_ids": [5926323],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2021-12-01",
+        "value": "3350.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926669],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "3250.00",
+            "income": false,
+            "transaction_ids": [5926321],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2022-01-01",
+        "value": "3800.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "3700.00",
+            "income": false,
+            "transaction_ids": [5926795, 5926319],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926667],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-02-01",
+        "value": "4250.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "4150.00",
+            "income": false,
+            "transaction_ids": [5926793, 5926317, 5926791],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926665],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-03-01",
+        "value": "4250.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926663],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "4150.00",
+            "income": false,
+            "transaction_ids": [5926797, 5926789, 5926315],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2022-04-01",
+        "value": "4250.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "4150.00",
+            "income": false,
+            "transaction_ids": [5926787, 5926785, 5926313],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926661],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-05-01",
+        "value": "4250.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "4150.00",
+            "income": false,
+            "transaction_ids": [5926783, 5926311, 5926781],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926659],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-06-01",
+        "value": "3800.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926657],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "3700.00",
+            "income": false,
+            "transaction_ids": [5926779, 5926309],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2022-07-01",
+        "value": "3800.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926655],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "3700.00",
+            "income": false,
+            "transaction_ids": [5926777, 5926307],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2022-08-01",
+        "value": "5050.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "4950.00",
+            "income": false,
+            "transaction_ids": [5926775, 5926305, 5926773],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926653],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-09-01",
+        "value": "4600.00",
+        "income": false,
+        "groups": [{
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926651],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }, {
+            "id": 1,
+            "name": "Unknown",
+            "value": "4500.00",
+            "income": false,
+            "transaction_ids": [5926771, 5926303],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }, {
+        "date": "2022-10-01",
+        "value": "5050.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "4950.00",
+            "income": false,
+            "transaction_ids": [5926769, 5926767, 5926301],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }, {
+            "id": 127,
+            "name": "Direct Credit",
+            "value": "100.00",
+            "income": false,
+            "transaction_ids": [5926649],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236"
+        }]
+    }, {
+        "date": "2022-11-01",
+        "value": "450.00",
+        "income": false,
+        "groups": [{
+            "id": 1,
+            "name": "Unknown",
+            "value": "450.00",
+            "income": false,
+            "transaction_ids": [5926765],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/merchants/1/original/595ad4b3-5481-4272-90df-d5ff3fa6c0e2.png?1592197547"
+        }]
+    }]
+}
