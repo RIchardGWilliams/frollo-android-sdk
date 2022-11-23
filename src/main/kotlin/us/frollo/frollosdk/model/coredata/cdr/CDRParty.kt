@@ -12,6 +12,9 @@ data class CDRParty(
     /** The name of the CDR Party */
     @SerializedName("name") val name: String,
 
+    /** Display name - friendlier name to show (Optional) */
+    @SerializedName("display_name") val displayName: String?,
+
     /** The summary of the CDR Party (Optional) */
     @SerializedName("summary") val summary: String?,
 
@@ -31,6 +34,21 @@ data class CDRParty(
     @SerializedName("registration_number") val registrationNumber: String?,
 
     /** CDR or privacy policy */
-    @SerializedName("policy") val policy: CDRPolicy
+    @SerializedName("policy") val policy: CDRPolicy,
+
+    /** Head office phone number of related party (Optional) */
+    @SerializedName("phone") val phone: String?,
+
+    /** Address of the related party (Optional) */
+    @SerializedName("address") val address: String?,
+
+    /** Support email of related party (Optional) */
+    @SerializedName("support_email") val supportEmail: String?,
+
+    /** Support phone number of related party (Optional) */
+    @SerializedName("support_phone") val supportPhone: String?,
+
+    /** Website URL of related party (Optional) */
+    @SerializedName("website_url") val websiteUrl: String?
 
 ) : IAdapterModel

@@ -490,7 +490,7 @@ class ConvertersTest {
 
     @Test
     fun testStringToListOfCDRPermission() {
-        val json = "[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":\"true\",\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}]},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":\"false\",\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}]}]"
+        val json = "[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":\"true\",\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}],\"placement\":10},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":\"false\",\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}],\"placement\":10}]"
         val permissions = Converters.instance.stringToListOfCDRPermission(json)
         assertNotNull(permissions)
         assertEquals(2, permissions?.size)
@@ -499,11 +499,13 @@ class ConvertersTest {
         assertEquals("We leverage...", permissions?.get(0)?.description)
         assertEquals(true, permissions?.get(0)?.required)
         assertEquals(1, permissions?.get(0)?.details?.size)
+        assertEquals(10, permissions?.get(0)?.placement)
         assertEquals("transaction_details", permissions?.get(1)?.permissionId)
         assertEquals("Transaction and details", permissions?.get(1)?.title)
         assertEquals("We leverage...", permissions?.get(1)?.description)
         assertEquals(false, permissions?.get(1)?.required)
         assertEquals(1, permissions?.get(1)?.details?.size)
+        assertEquals(10, permissions?.get(1)?.placement)
 
         assertNull(Converters.instance.stringToListOfCDRPermission(null))
     }
@@ -512,7 +514,7 @@ class ConvertersTest {
     fun testStringFromListOfCDRPermission() {
         val permissions = testCDRPermissionData()
         val json = Converters.instance.stringFromListOfCDRPermission(permissions)
-        assertEquals("[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}]},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}]}]", json)
+        assertEquals("[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}],\"placement\":10},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}],\"placement\":10}]", json)
     }
 
     @Test
@@ -1386,16 +1388,20 @@ class ConvertersTest {
 
     @Test
     fun testStringToListOfSharingDuration() {
-        val json = "[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\"}]"
+        val json = "[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}]"
         val info = Converters.instance.stringToListOfSharingDuration(json)
         assertNotNull(info)
         assertTrue(info?.size == 2)
         assertEquals(1234500L, info?.first()?.duration)
         assertEquals("Account Details", info?.first()?.description)
         assertEquals("http://app.image.png", info?.first()?.imageUrl)
+        assertEquals(604800L, info?.first()?.sharingUseDuration)
+        assertEquals("1 week", info?.first()?.sharingUseDescription)
         assertEquals(2345678L, info?.get(1)?.duration)
         assertEquals("Transaction Details", info?.get(1)?.description)
         assertEquals("http://app.image.png", info?.get(1)?.imageUrl)
+        assertEquals(604800L, info?.get(1)?.sharingUseDuration)
+        assertEquals("1 week", info?.get(1)?.sharingUseDescription)
 
         assertNull(Converters.instance.stringToListOfSharingDuration(null))
     }
@@ -1403,11 +1409,11 @@ class ConvertersTest {
     @Test
     fun testStringFromListOfSharingDuration() {
         val info = listOf(
-            SharingDuration(1234500, "Account Details", "http://app.image.png"),
-            SharingDuration(2345678, "Transaction Details", "http://app.image.png")
+            SharingDuration(1234500, "Account Details", "http://app.image.png", 604800, "1 week"),
+            SharingDuration(2345678, "Transaction Details", "http://app.image.png", 604800, "1 week")
         )
         val json = Converters.instance.stringFromListOfSharingDuration(info)
-        assertEquals("[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\"}]", json)
+        assertEquals("[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}]", json)
     }
 
     @Test
@@ -1446,7 +1452,26 @@ class ConvertersTest {
     @Test
     fun testStringFromListOfCDRParty() {
         val info = listOf(
-            CDRParty(12345, "ACME Inc", "Test Summary", "Enhance stuff", "https://frollo.com.au", CDRPartyType.OSP, "AFF0001", "12 345 678 901", CDRPolicy("CDR Policy", "https://example.com"))
+            CDRParty(
+                partyId = 12345,
+                name = "ACME Inc",
+                displayName = null,
+                summary = "Test Summary",
+                description = "Enhance stuff",
+                imageUrl = "https://frollo.com.au",
+                type = CDRPartyType.OSP,
+                adrId = "AFF0001",
+                registrationNumber = "12 345 678 901",
+                policy = CDRPolicy(
+                    "CDR Policy",
+                    "https://example.com"
+                ),
+                phone = null,
+                address = null,
+                supportEmail = null,
+                supportPhone = null,
+                websiteUrl = null
+            )
         )
         val json = Converters.instance.stringFromListOfCDRParty(info)
         assertEquals("[{\"id\":12345,\"name\":\"ACME Inc\",\"summary\":\"Test Summary\",\"description\":\"Enhance stuff\",\"image_url\":\"https://frollo.com.au\",\"type\":\"osp\",\"adr_id\":\"AFF0001\",\"registration_number\":\"12 345 678 901\",\"policy\":{\"name\":\"CDR Policy\",\"url\":\"https://example.com\"}}]", json)
@@ -1576,14 +1601,16 @@ class ConvertersTest {
                 SharingDuration(
                     duration = 86400,
                     description = "Sharing duration",
-                    imageUrl = "https://frollo.com.au/image"
+                    imageUrl = "https://frollo.com.au/image",
+                    sharingUseDuration = 604800,
+                    sharingUseDescription = "1 week"
                 )
             ),
             permissions = testCDRPermissionData(),
             key = "ACME001"
         )
         val json = Converters.instance.stringFromExternalParty(externalParty)
-        assertEquals("{\"id\":1,\"external_id\":\"6hsf735\",\"key\":\"ACME001\",\"name\":\"CheckFinance1\",\"company\":{\"display_name\":\"Frollo\",\"legal_name\":\"Frollo\"},\"contact\":\"support@frollo.us\",\"description\":\"Test123\",\"status\":\"enabled\",\"image_url\":\"https://frollo.com.au/image\",\"small_image_url\":\"https://frollo.com.au/image_small\",\"privacy_url\":\"http://frollo.us/privacy\",\"type\":\"ta\",\"ta_type\":\"accountant\",\"summary\":\"Test summary\",\"sharing_durations\":[{\"duration\":86400,\"description\":\"Sharing duration\",\"image_url\":\"https://frollo.com.au/image\"}],\"permissions\":[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}]},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}]}]}", json)
+        assertEquals("{\"id\":1,\"external_id\":\"6hsf735\",\"key\":\"ACME001\",\"name\":\"CheckFinance1\",\"company\":{\"display_name\":\"Frollo\",\"legal_name\":\"Frollo\"},\"contact\":\"support@frollo.us\",\"description\":\"Test123\",\"status\":\"enabled\",\"image_url\":\"https://frollo.com.au/image\",\"small_image_url\":\"https://frollo.com.au/image_small\",\"privacy_url\":\"http://frollo.us/privacy\",\"type\":\"ta\",\"ta_type\":\"accountant\",\"summary\":\"Test summary\",\"sharing_durations\":[{\"duration\":86400,\"description\":\"Sharing duration\",\"image_url\":\"https://frollo.com.au/image\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}],\"permissions\":[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}],\"placement\":10},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}],\"placement\":10}]}", json)
     }
 
     @Test

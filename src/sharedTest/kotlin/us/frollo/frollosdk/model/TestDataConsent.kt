@@ -73,7 +73,8 @@ internal fun testCDRPermissionData(): List<CDRPermission> {
                     detailId = "account_name",
                     description = "Name of account"
                 )
-            )
+            ),
+            placement = 10
         ),
         CDRPermission(
             permissionId = "transaction_details",
@@ -85,7 +86,8 @@ internal fun testCDRPermissionData(): List<CDRPermission> {
                     detailId = "transaction_name",
                     description = "Name of transaction"
                 )
-            )
+            ),
+            placement = 10
         )
     )
 }
@@ -119,7 +121,6 @@ internal fun testCDRConfigurationData(configId: Long? = null, externalId: String
         cdrPolicyUrl = randomString(20),
         model = CDRModel.AFFILIATE,
         relatedParties = listOf(),
-        sharingUseDuration = randomNumber().toLong(),
         initialSyncWindowWeeks = 53,
         softwareId = "469811b0-90d8-eb11-a824-000d3a884a20",
         softwareName = "public",
@@ -133,7 +134,9 @@ internal fun testSharingDurationData(): SharingDuration {
     return SharingDuration(
         duration = randomNumber().toLong(),
         description = randomString(20),
-        imageUrl = randomString(20)
+        imageUrl = randomString(20),
+        sharingUseDuration = randomNumber().toLong(),
+        sharingUseDescription = randomString(20)
     )
 }
 
