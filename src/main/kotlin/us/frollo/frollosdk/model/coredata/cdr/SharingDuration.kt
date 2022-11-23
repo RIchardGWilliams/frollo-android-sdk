@@ -28,5 +28,11 @@ data class SharingDuration(
     @SerializedName("description") val description: String,
 
     /** The image URL for the sharing duration image */
-    @SerializedName("image_url") val imageUrl: String
+    @SerializedName("image_url") val imageUrl: String,
+
+    /** Sharing use duration - time in seconds data collected will be used even after sharing may have stopped */
+    @SerializedName("sharing_use_duration") val sharingUseDuration: Long,
+
+    /** Sharing use duration description - human readable description of the sharing use duration */
+    @SerializedName("sharing_use_description") val sharingUseDescription: String
 )

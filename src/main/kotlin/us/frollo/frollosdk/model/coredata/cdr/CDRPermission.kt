@@ -19,6 +19,9 @@ data class CDRPermission(
     @SerializedName("required") val required: Boolean,
 
     /** The details of the permission */
-    @SerializedName("details") val details: List<CDRPermissionDetail>
+    @SerializedName("details") val details: List<CDRPermissionDetail>,
+
+    /** Placement order of the permission - higher first, descending */
+    @SerializedName("placement") val placement: Int
 
 ) : IAdapterModel
