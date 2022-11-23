@@ -338,7 +338,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive) (Optional). See [CashflowBaseTypeReport.DATE_FORMAT_PATTERN]
      * @param period Period that reports should be broken down by (Optional)
      * @param grouping How does the user want the data grouped e.g. budget, budget_category, category, merchant, tag
-     * @param completion Optional completion handler with optional error if the request fails
+     * @param completion Completion handler with optional error if the request fails
      */
     fun fetchCashflowReportsByBaseType(
         baseType: CashflowBaseType,
@@ -346,7 +346,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
         toDate: String? = null,
         period: TransactionReportPeriod? = null,
         grouping: ReportGrouping? = null,
-        completion: OnFrolloSDKCompletionListener<Resource<List<CashflowBaseTypeReport>>>? = null
+        completion: OnFrolloSDKCompletionListener<Resource<List<CashflowBaseTypeReport>>>
     ) {
         reportsAPI.fetchCashflowReportsByBaseType(
             baseType = baseType,
@@ -359,10 +359,10 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             when (resource.status) {
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#fetchCashflowReportsByBaseType", resource.error?.message)
-                    completion?.invoke(Resource.error(resource.error))
+                    completion.invoke(Resource.error(resource.error))
                 }
                 Resource.Status.SUCCESS -> {
-                    completion?.invoke(
+                    completion.invoke(
                         resource.map { response ->
                             response?.data
                         }

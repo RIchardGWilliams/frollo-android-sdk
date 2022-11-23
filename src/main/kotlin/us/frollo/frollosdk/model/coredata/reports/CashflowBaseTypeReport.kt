@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.coredata.reports
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.IAdapterModel
 
+/** Data representation of Cashflow report by base type */
 data class CashflowBaseTypeReport(
 
     /** Start date of the report period. Check [CashflowBaseTypeReport.DATE_FORMAT_PATTERN] for the date format.*/
@@ -31,7 +32,7 @@ data class CashflowBaseTypeReport(
     @SerializedName("value")val value: String,
 
     /** Group data for this period */
-    @SerializedName("groups")val groups: List<CashflowBaseTypeGroup>
+    @SerializedName("groups")val groups: List<CashflowBaseTypeGroup>?
 
 ) : IAdapterModel {
 

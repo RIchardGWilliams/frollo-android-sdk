@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
 
+/** Data representation of a group in cashflow report by base type response */
 data class CashflowBaseTypeGroup(
 
     /** Id of the group, If say the grouping parameter is by merchant, this would be a merchantID */

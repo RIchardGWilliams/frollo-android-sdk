@@ -20,5 +20,5 @@ import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.coredata.reports.CashflowBaseTypeReport
 
 internal data class CashflowBaseTypeReportResponse(
-    @SerializedName("data") val data: List<CashflowBaseTypeReport>
+    @SerializedName("data") val data: List<CashflowBaseTypeReport>?
 )

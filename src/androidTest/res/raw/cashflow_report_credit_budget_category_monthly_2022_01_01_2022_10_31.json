@@ -252,7 +252,7 @@
             "transaction_ids": [5926649],
             "image_url": null
         }, {
-            "id": 0,
+            "id": 3,
             "name": "income",
             "value": "4050.00",
             "income": false,
