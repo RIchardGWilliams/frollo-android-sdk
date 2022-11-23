@@ -1,0 +1,349 @@
+{
+    "data": [{
+        "date": "2022-01-01",
+        "value": "-33917.78",
+        "income": false,
+        "groups": [{
+            "id": 77,
+            "name": "Restaurants",
+            "category_type": "expense",
+            "value": "-3623.00",
+            "income": false,
+            "transaction_ids": [5927729, 5927727, 5927725, 5927723, 5927721, 5927719, 5927717, 5927715, 5927713, 5927711, 5927709, 5927707, 5927705, 5927703, 5927701, 5927699, 5927697, 5927695, 5927693, 5927691, 5927689, 5927687, 5927685, 5927683, 5927681, 5927679, 5927677, 5927675, 5927673, 5927671, 5927669, 5927667, 5927665, 5927663, 5927661, 5927659, 5927657, 5927655, 5927653, 5927651, 5927649, 5927647, 5927645, 5927643, 5927641, 5927639, 5927637, 5927631, 5927629, 5927627, 5927625, 5927617, 5927611],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1663636470.png?1663636470"
+        }, {
+            "id": 80,
+            "name": "ATM/Cash Withdrawals",
+            "category_type": "expense",
+            "value": "-1800.00",
+            "income": false,
+            "transaction_ids": [5926597, 5926595, 5926593, 5926591, 5926589, 5926587, 5926585, 5926583, 5926581, 5926579, 5926577, 5926575, 5926573, 5926571, 5926569, 5926567, 5926565, 5926563, 5926561, 5926559, 5926557, 5926555, 5926553, 5926551, 5926549, 5926547, 5926545, 5926543, 5926541, 5926539, 5926537, 5926535, 5926533, 5926531, 5926527, 5926529, 5926525, 5926523, 5926521, 5926519, 5926517, 5926515, 5926513, 5926511, 5926509, 5926507, 5926505, 5926503],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1663636609.png?1663636609"
+        }, {
+            "id": 71,
+            "name": "Services/Supplies",
+            "category_type": "expense",
+            "value": "-1437.25",
+            "income": false,
+            "transaction_ids": [5927087, 5927085, 5927083, 5927081, 5927079, 5927077, 5927075, 5927073, 5927071, 5927069, 5926247, 5926245, 5926243, 5926241, 5926239, 5926237, 5926235],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1663636970.png?1663636970"
+        }, {
+            "id": 64,
+            "name": "Entertainment/Recreation",
+            "category_type": "expense",
+            "value": "-167.89",
+            "income": false,
+            "transaction_ids": [5927111, 5927133, 5927109, 5927131, 5927107, 5927129, 5927105, 5927127, 5927103, 5927125, 5927123],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1663636734.png?1663636734"
+        }, {
+            "id": 66,
+            "name": "Groceries",
+            "category_type": "expense",
+            "value": "-4197.30",
+            "income": false,
+            "transaction_ids": [5927385, 5928065, 5928063, 5927261, 5928061, 5927503, 5928059, 5928057, 5927259, 5928055, 5927383, 5927257, 5927501, 5927381, 5927255, 5927499, 5928053, 5927379, 5928051, 5927253, 5928049, 5927497, 5927377, 5928047, 5928045, 5927251, 5927805, 5927495, 5927375, 5928043, 5928041, 5927249, 5928039, 5927493, 5928037, 5928035, 5927247, 5928033, 5927373, 5927245, 5927491, 5927371, 5927243, 5927489, 5928031, 5927369, 5928029, 5927241, 5928027, 5927487, 5927367, 5928025, 5928023, 5927239, 5927803, 5927485, 5927365, 5928021, 5928019, 5927237, 5928017, 5927483, 5928015, 5928013, 5927235, 5928011, 5927363, 5927233, 5927481, 5927361, 5927231, 5927479, 5928009, 5927359, 5928007, 5927229, 5928005, 5927477, 5927357, 5928003, 5928001, 5927227, 5927801, 5927475, 5927355, 5927999, 5927997, 5927225, 5927995, 5927473, 5927993, 5927991, 5927223, 5927989, 5927353, 5927221, 5927471, 5927351, 5927219, 5927469, 5927987, 5927349, 5927985, 5927217, 5927983, 5927467, 5927347, 5927981, 5927979, 5927215, 5927799, 5927465, 5927345, 5927977, 5927975, 5927213, 5927973, 5927463, 5927971, 5927969, 5927209, 5927211, 5927967, 5927343, 5927461, 5927341, 5927207, 5927459, 5927965, 5927339, 5927963, 5927205, 5927961, 5927457, 5927337, 5927959, 5927957, 5927203, 5927455, 5927335, 5927955, 5927953, 5927201, 5927951, 5927453, 5927949, 5927947, 5927199, 5927945, 5927333, 5927197, 5927451, 5927331, 5927195, 5927449, 5927943, 5927329, 5927941, 5927193, 5927939, 5927447, 5927327, 5927937, 5927935, 5927191, 5927445],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1663636484.png?1663636484"
+        }, {
+            "id": 76,
+            "name": "Rent",
+            "category_type": "expense",
+            "value": "-3515.00",
+            "income": false,
+            "transaction_ids": [5926285, 5926283, 5926281, 5926279, 5926277, 5926275, 5926273, 5926271, 5926269, 5926267, 5926265, 5926263, 5926261, 5926259, 5926257, 5926255, 5926253, 5926251, 5926249],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/76/icon/original/1663636471.png?1663636471"
+        }, {
+            "id": 78,
+            "name": "Travel",
+            "category_type": "expense",
+            "value": "-1602.00",
+            "income": false,
+            "transaction_ids": [5927003, 5927001, 5926335, 5926999, 5926997, 5926337, 5926995, 5926993, 5926991, 5926989, 5926339, 5926341, 5926987, 5926985, 5926981, 5926983, 5926343, 5926979, 5926977, 5926975, 5926973, 5926971, 5926345, 5926969, 5926967, 5926963, 5926965, 5926961, 5926347, 5926959, 5926957, 5926955, 5926953, 5926951, 5926349, 5926949, 5926947, 5926945, 5926351, 5926943, 5926941, 5926937, 5926939, 5926935, 5926353, 5926933, 5926931, 5926929, 5926927],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/78/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 68,
+            "name": "Home Improvement",
+            "category_type": "expense",
+            "value": "-150.00",
+            "income": false,
+            "transaction_ids": [5927783, 5927781, 5927779, 5927777, 5927775],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/68/icon/original/1663636483.png?1663636483"
+        }, {
+            "id": 79,
+            "name": "Service Charges/Fees",
+            "category_type": "expense",
+            "value": "-150.00",
+            "income": false,
+            "transaction_ids": [5926819, 5926817, 5926815, 5926813, 5926811, 5926809],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/79/icon/original/1663636955.png?1663636955"
+        }, {
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "-12500.00",
+            "income": false,
+            "transaction_ids": [5926701, 5926737, 5926699, 5926735, 5926697, 5926733, 5926695, 5926703, 5926739, 5926731, 5926693, 5926729, 5926691, 5926727, 5926689, 5926725, 5926723, 5926721],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }, {
+            "id": 90,
+            "name": "Utilities",
+            "category_type": "expense",
+            "value": "-420.00",
+            "income": false,
+            "transaction_ids": [5926427, 5926425, 5926423, 5926421, 5926419, 5926417],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 94,
+            "name": "Electronics",
+            "category_type": "expense",
+            "value": "-171.99",
+            "income": false,
+            "transaction_ids": [5927829, 5927827, 5927825, 5927823, 5927101],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/94/icon/original/1663636497.png?1663636497"
+        }, {
+            "id": 70,
+            "name": "Cable/Satellite/Telecom",
+            "category_type": "expense",
+            "value": "-659.40",
+            "income": false,
+            "transaction_ids": [5926403, 5926643, 5926401, 5926641, 5926399, 5926639, 5926397, 5926637, 5926395, 5926635, 5926393, 5926633],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/70/icon/original/1663636638.png?1663636638"
+        }, {
+            "id": 157,
+            "name": "Public Transport",
+            "category_type": "expense",
+            "value": "-200.00",
+            "income": false,
+            "transaction_ids": [5926355, 5926357, 5926359, 5926361, 5926363],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1663636479.png?1663636479"
+        }, {
+            "id": 161,
+            "name": "Taxi \u0026 Rideshare",
+            "category_type": "expense",
+            "value": "-404.00",
+            "income": false,
+            "transaction_ids": [5926925, 5926923, 5926919, 5926921, 5926917, 5926915, 5926913, 5926911, 5926909, 5926907, 5926905, 5926903, 5926901],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1663636467.png?1663636467"
+        }, {
+            "id": 83,
+            "name": "Transfers",
+            "category_type": "transfer",
+            "value": "-2040.95",
+            "income": false,
+            "transaction_ids": [5927067, 5926687, 5927065, 5927063, 5926685],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/83/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 60,
+            "name": "Uncategorised",
+            "category_type": "uncategorize",
+            "value": "-300.00",
+            "income": false,
+            "transaction_ids": [5927635, 5927615],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 124,
+            "name": "Bars \u0026 Pubs",
+            "category_type": "expense",
+            "value": "-130.00",
+            "income": false,
+            "transaction_ids": [5927633, 5927613],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1663636514.png?1663636514"
+        }, {
+            "id": 135,
+            "name": "General Merchandise",
+            "category_type": "expense",
+            "value": "-80.00",
+            "income": false,
+            "transaction_ids": [5927821, 5927819],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/135/icon/original/1663636495.png?1663636495"
+        }, {
+            "id": 143,
+            "name": "Alcohol \u0026 Cigarette",
+            "category_type": "expense",
+            "value": "-120.00",
+            "income": false,
+            "transaction_ids": [5927797, 5927795],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1663636593.png?1663636593"
+        }, {
+            "id": 159,
+            "name": "Travel/Holidays",
+            "category_type": "expense",
+            "value": "-219.00",
+            "income": false,
+            "transaction_ids": [5927623, 5927621, 5927619],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1663636999.png?1663636999"
+        }, {
+            "id": 130,
+            "name": "Home Renovation \u0026 Maintenance",
+            "category_type": "expense",
+            "value": "-30.00",
+            "income": false,
+            "transaction_ids": [5927773],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/130/icon/original/1663636483.png?1663636483"
+        }]
+    }, {
+        "date": "2022-07-01",
+        "value": "-24421.36",
+        "income": false,
+        "groups": [{
+            "id": 77,
+            "name": "Restaurants",
+            "category_type": "expense",
+            "value": "-1263.00",
+            "income": false,
+            "transaction_ids": [5927609, 5927607, 5927605, 5927597, 5927591, 5927589, 5927587, 5927585, 5927577, 5927571, 5927569, 5927567, 5927565, 5927557, 5927551, 5927549, 5927547, 5927545, 5927537, 5927531, 5927529, 5927527, 5927525],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1663636470.png?1663636470"
+        }, {
+            "id": 80,
+            "name": "ATM/Cash Withdrawals",
+            "category_type": "expense",
+            "value": "-1260.00",
+            "income": false,
+            "transaction_ids": [5926501, 5926499, 5926497, 5926495, 5926493, 5926491, 5926489, 5926487, 5926485, 5926483, 5926481, 5926479, 5926477, 5926475, 5926473, 5926471, 5926469, 5926467, 5926465, 5926463, 5926461, 5926459, 5926457, 5926455, 5926453, 5926451, 5926449, 5926447, 5926445, 5926443, 5926441, 5926439, 5926437, 5926435, 5926433],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/80/icon/original/1663636609.png?1663636609"
+        }, {
+            "id": 94,
+            "name": "Electronics",
+            "category_type": "expense",
+            "value": "-59.95",
+            "income": false,
+            "transaction_ids": [5927099, 5927097, 5927095, 5927093, 5927091],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/94/icon/original/1663636497.png?1663636497"
+        }, {
+            "id": 66,
+            "name": "Groceries",
+            "category_type": "expense",
+            "value": "-2770.60",
+            "income": false,
+            "transaction_ids": [5927325, 5927933, 5927931, 5927189, 5927929, 5927443, 5927927, 5927925, 5927187, 5927923, 5927323, 5927185, 5927441, 5927321, 5927183, 5927439, 5927921, 5927319, 5927919, 5927181, 5927917, 5927437, 5927317, 5927915, 5927913, 5927179, 5927435, 5927315, 5927911, 5927909, 5927177, 5927907, 5927433, 5927905, 5927903, 5927175, 5927901, 5927313, 5927173, 5927431, 5927311, 5927171, 5927429, 5927899, 5927309, 5927897, 5927169, 5927895, 5927427, 5927307, 5927893, 5927891, 5927167, 5927425, 5927305, 5927889, 5927887, 5927165, 5927885, 5927423, 5927883, 5927881, 5927163, 5927879, 5927303, 5927161, 5927421, 5927301, 5927159, 5927419, 5927877, 5927299, 5927875, 5927157, 5927873, 5927417, 5927297, 5927871, 5927869, 5927155, 5927415, 5927295, 5927867, 5927865, 5927153, 5927863, 5927413, 5927861, 5927859, 5927151, 5927857, 5927293, 5927149, 5927411, 5927291, 5927147, 5927409, 5927855, 5927289, 5927853, 5927145, 5927851, 5927407, 5927287, 5927849, 5927847, 5927143, 5927405, 5927285, 5927845, 5927843, 5927141, 5927841, 5927403, 5927839, 5927837, 5927139, 5927835, 5927283],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/66/icon/original/1663636484.png?1663636484"
+        }, {
+            "id": 71,
+            "name": "Services/Supplies",
+            "category_type": "expense",
+            "value": "-3515.00",
+            "income": false,
+            "transaction_ids": [5926233, 5926231, 5926229, 5926227, 5926225, 5926223, 5926221, 5926219, 5926217, 5926215, 5926213, 5926211, 5926209, 5926207, 5926205, 5926203, 5926201, 5926199, 5926197],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/71/icon/original/1663636970.png?1663636970"
+        }, {
+            "id": 161,
+            "name": "Taxi \u0026 Rideshare",
+            "category_type": "expense",
+            "value": "-1218.00",
+            "income": false,
+            "transaction_ids": [5926899, 5926897, 5926893, 5926895, 5926891, 5926889, 5926887, 5926885, 5926883, 5926881, 5926879, 5926875, 5926877, 5926873, 5926871, 5926869, 5926867, 5926865, 5926863, 5926861, 5926859, 5926857, 5926855, 5926853, 5926849, 5926851, 5926847, 5926845, 5926843, 5926841, 5926839, 5926837, 5926835, 5926831, 5926833, 5926829, 5926827, 5926825, 5926823],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/161/icon/original/1663636467.png?1663636467"
+        }, {
+            "id": 159,
+            "name": "Travel/Holidays",
+            "category_type": "expense",
+            "value": "-996.00",
+            "income": false,
+            "transaction_ids": [5927603, 5927601, 5927599, 5927583, 5927581, 5927579, 5927563, 5927561, 5927559, 5927543, 5927541, 5927539, 5927523],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/159/icon/original/1663636999.png?1663636999"
+        }, {
+            "id": 157,
+            "name": "Public Transport",
+            "category_type": "expense",
+            "value": "-400.00",
+            "income": false,
+            "transaction_ids": [5926365, 5926367, 5926369, 5926371, 5926373, 5926375, 5926377, 5926379, 5926381, 5926383],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/157/icon/original/1663636479.png?1663636479"
+        }, {
+            "id": 83,
+            "name": "Transfers",
+            "category_type": "transfer",
+            "value": "-6142.25",
+            "income": false,
+            "transaction_ids": [5927061, 5926683, 5927059, 5927057, 5926681, 5927055, 5926679, 5927053, 5927051, 5926677, 5927049, 5926675, 5927047, 5926673, 5927045, 5927043],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/83/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 130,
+            "name": "Home Renovation \u0026 Maintenance",
+            "category_type": "expense",
+            "value": "-150.00",
+            "income": false,
+            "transaction_ids": [5927771, 5927769, 5927767, 5927765, 5927763],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/130/icon/original/1663636483.png?1663636483"
+        }, {
+            "id": 79,
+            "name": "Service Charges/Fees",
+            "category_type": "expense",
+            "value": "-125.00",
+            "income": false,
+            "transaction_ids": [5926807, 5926805, 5926803, 5926801, 5926799],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/79/icon/original/1663636955.png?1663636955"
+        }, {
+            "id": 81,
+            "name": "Credit Card Payments",
+            "category_type": "transfer",
+            "value": "-3150.00",
+            "income": false,
+            "transaction_ids": [5926719, 5926717, 5926715, 5926713, 5926711, 5926709, 5926707],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/81/icon/original/1663636498.png?1663636498"
+        }, {
+            "id": 90,
+            "name": "Utilities",
+            "category_type": "expense",
+            "value": "-280.00",
+            "income": false,
+            "transaction_ids": [5926415, 5926413, 5926411, 5926409],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/90/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 60,
+            "name": "Uncategorised",
+            "category_type": "uncategorize",
+            "value": "-600.00",
+            "income": false,
+            "transaction_ids": [5927595, 5927575, 5927555, 5927535],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/60/icon/original/1663636466.png?1663636466"
+        }, {
+            "id": 64,
+            "name": "Entertainment/Recreation",
+            "category_type": "expense",
+            "value": "-71.96",
+            "income": false,
+            "transaction_ids": [5927121, 5927119, 5927117, 5927115],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/64/icon/original/1663636734.png?1663636734"
+        }, {
+            "id": 124,
+            "name": "Bars \u0026 Pubs",
+            "category_type": "expense",
+            "value": "-260.00",
+            "income": false,
+            "transaction_ids": [5927593, 5927573, 5927553, 5927533],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/124/icon/original/1663636514.png?1663636514"
+        }, {
+            "id": 135,
+            "name": "General Merchandise",
+            "category_type": "expense",
+            "value": "-160.00",
+            "income": false,
+            "transaction_ids": [5927817, 5927815, 5927813, 5927811],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/135/icon/original/1663636495.png?1663636495"
+        }, {
+            "id": 70,
+            "name": "Cable/Satellite/Telecom",
+            "category_type": "expense",
+            "value": "-439.60",
+            "income": false,
+            "transaction_ids": [5926391, 5926631, 5926389, 5926629, 5926387, 5926627, 5926385, 5926625],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/70/icon/original/1663636638.png?1663636638"
+        }, {
+            "id": 143,
+            "name": "Alcohol \u0026 Cigarette",
+            "category_type": "expense",
+            "value": "-240.00",
+            "income": false,
+            "transaction_ids": [5927793, 5927791, 5927789, 5927787],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/143/icon/original/1663636593.png?1663636593"
+        }, {
+            "id": 91,
+            "name": "Savings",
+            "category_type": "transfer",
+            "value": "-1320.00",
+            "income": false,
+            "transaction_ids": [5926751, 5926749, 5926747, 5926745, 5926743, 5926741],
+            "image_url": "https://frollo-staging.s3.amazonaws.com/categories/91/icon/original/1663636469.png?1663636469"
+        }]
+    }]
+}

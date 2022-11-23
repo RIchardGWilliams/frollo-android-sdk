@@ -36,6 +36,7 @@ import us.frollo.frollosdk.model.api.goals.GoalResponse
 import us.frollo.frollosdk.model.api.images.ImageResponse
 import us.frollo.frollosdk.model.api.messages.MessageResponse
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
+import us.frollo.frollosdk.model.api.reports.CashflowBaseTypeReportResponse
 import us.frollo.frollosdk.model.api.reports.CashflowReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.api.shared.PaginatedResponse
@@ -60,6 +61,7 @@ import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProduct
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
+import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
@@ -260,6 +262,21 @@ internal fun ReportsAPI.fetchCashflowReports(
     fromDate?.let { queryMap.put("from_date", it) }
     toDate?.let { queryMap.put("to_date", it) }
     return fetchCashflowReports(queryMap)
+}
+
+internal fun ReportsAPI.fetchCashflowReportsByBaseType(
+    baseType: CashflowBaseType,
+    period: TransactionReportPeriod?,
+    fromDate: String?,
+    toDate: String?,
+    grouping: ReportGrouping?
+): Call<CashflowBaseTypeReportResponse> {
+    val queryMap = mutableMapOf<String, String>()
+    period?.let { queryMap.put("period", it.toString()) }
+    fromDate?.let { queryMap.put("from_date", it) }
+    toDate?.let { queryMap.put("to_date", it) }
+    grouping?.let { queryMap.put("grouping", it.toString()) }
+    return fetchCashflowReportsByBaseType(baseType.toString(), queryMap)
 }
 
 // Bills

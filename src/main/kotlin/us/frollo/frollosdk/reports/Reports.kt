@@ -35,6 +35,7 @@ import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchAccountBalanceReports
 import us.frollo.frollosdk.extensions.fetchBudgetCategoryReports
 import us.frollo.frollosdk.extensions.fetchCashflowReports
+import us.frollo.frollosdk.extensions.fetchCashflowReportsByBaseType
 import us.frollo.frollosdk.extensions.fetchMerchantReports
 import us.frollo.frollosdk.extensions.fetchTagReports
 import us.frollo.frollosdk.extensions.fetchTransactionCategoryReports
@@ -48,6 +49,8 @@ import us.frollo.frollosdk.mapping.toReports
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
+import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
+import us.frollo.frollosdk.model.coredata.reports.CashflowBaseTypeReport
 import us.frollo.frollosdk.model.coredata.reports.CashflowReport
 import us.frollo.frollosdk.model.coredata.reports.Report
 import us.frollo.frollosdk.model.coredata.reports.ReportAccountBalance
@@ -324,6 +327,48 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
                     response?.data
                 }
             )
+        }
+    }
+
+    /**
+     * Fetch cashflow reports by credit/debit from the host
+     *
+     * @param baseType Which basetype of report does the user want
+     * @param fromDate Start date in the format yyyy-MM-dd to fetch reports from (inclusive) (Optional). See [CashflowBaseTypeReport.DATE_FORMAT_PATTERN]
+     * @param toDate End date in the format yyyy-MM-dd to fetch reports up to (inclusive) (Optional). See [CashflowBaseTypeReport.DATE_FORMAT_PATTERN]
+     * @param period Period that reports should be broken down by (Optional)
+     * @param grouping How does the user want the data grouped e.g. budget, budget_category, category, merchant, tag
+     * @param completion Completion handler with optional error if the request fails
+     */
+    fun fetchCashflowReportsByBaseType(
+        baseType: CashflowBaseType,
+        fromDate: String? = null,
+        toDate: String? = null,
+        period: TransactionReportPeriod? = null,
+        grouping: ReportGrouping? = null,
+        completion: OnFrolloSDKCompletionListener<Resource<List<CashflowBaseTypeReport>>>
+    ) {
+        reportsAPI.fetchCashflowReportsByBaseType(
+            baseType = baseType,
+            period = period,
+            fromDate = fromDate,
+            toDate = toDate,
+            grouping = grouping
+        ).enqueue { resource ->
+
+            when (resource.status) {
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#fetchCashflowReportsByBaseType", resource.error?.message)
+                    completion.invoke(Resource.error(resource.error))
+                }
+                Resource.Status.SUCCESS -> {
+                    completion.invoke(
+                        resource.map { response ->
+                            response?.data
+                        }
+                    )
+                }
+            }
         }
     }
 

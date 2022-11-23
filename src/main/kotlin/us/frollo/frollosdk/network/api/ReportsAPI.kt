@@ -21,6 +21,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
+import us.frollo.frollosdk.model.api.reports.CashflowBaseTypeReportResponse
 import us.frollo.frollosdk.model.api.reports.CashflowReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 
@@ -37,6 +38,7 @@ internal interface ReportsAPI {
         const val URL_REPORTS_TAGS = "$URL_BASE_REPORTS/tags"
         const val URL_REPORTS_TAG = "$URL_BASE_REPORTS/tags/{tag}"
         const val URL_REPORTS_CASHFLOW = "$URL_BASE_REPORTS/cashflow"
+        const val URL_REPORTS_CASHFLOW_BASETYPE = "$URL_REPORTS_CASHFLOW/{base_type}"
     }
 
     @GET(URL_REPORT_ACCOUNT_BALANCE)
@@ -68,4 +70,7 @@ internal interface ReportsAPI {
 
     @GET(URL_REPORTS_CASHFLOW)
     fun fetchCashflowReports(@QueryMap options: Map<String, String>): Call<CashflowReportResponse>
+
+    @GET(URL_REPORTS_CASHFLOW_BASETYPE)
+    fun fetchCashflowReportsByBaseType(@Path("base_type") baseType: String, @QueryMap options: Map<String, String>): Call<CashflowBaseTypeReportResponse>
 }
