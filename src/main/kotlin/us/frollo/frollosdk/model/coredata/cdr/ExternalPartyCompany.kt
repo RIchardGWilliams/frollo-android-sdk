@@ -10,5 +10,11 @@ data class ExternalPartyCompany(
     @ColumnInfo(name = "display_name") @SerializedName("display_name") val displayName: String,
 
     /** Company legal name */
-    @ColumnInfo(name = "legal_name") @SerializedName("legal_name") val legalName: String
+    @ColumnInfo(name = "legal_name") @SerializedName("legal_name") val legalName: String,
+
+    /** Company abn (Optional) */
+    @ColumnInfo(name = "abn") @SerializedName("abn") val abn: String?,
+
+    /** Company acn (Optional) */
+    @ColumnInfo(name = "acn") @SerializedName("acn") val acn: String?
 )

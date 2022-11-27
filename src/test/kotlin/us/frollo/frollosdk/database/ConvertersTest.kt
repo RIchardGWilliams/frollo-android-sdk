@@ -1586,7 +1586,9 @@ class ConvertersTest {
             name = "CheckFinance1",
             company = ExternalPartyCompany(
                 displayName = "Frollo",
-                legalName = "Frollo"
+                legalName = "Frollo",
+                abn = "12345678901",
+                acn = "123456789"
             ),
             contact = "support@frollo.us",
             description = "Test123",

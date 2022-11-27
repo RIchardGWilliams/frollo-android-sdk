@@ -29,6 +29,7 @@ internal data class ExternalPartyResponse(
     @SerializedName("external_id") val externalId: String?,
     @SerializedName("key") val key: String,
     @SerializedName("name") val name: String,
+    @SerializedName("display_name") val displayName: String?,
     @SerializedName("company") val company: ExternalPartyCompany?,
     @SerializedName("contact") val contact: String,
     @SerializedName("description") val description: String?,
@@ -40,5 +41,10 @@ internal data class ExternalPartyResponse(
     @SerializedName("ta_type") val trustedAdvisorType: TrustedAdvisorType?,
     @SerializedName("summary") val summary: String?,
     @SerializedName("sharing_durations") val sharingDurations: List<SharingDuration>?,
-    @SerializedName("permissions") val permissions: List<CDRPermission>?
+    @SerializedName("permissions") val permissions: List<CDRPermission>?,
+    @SerializedName("phone") val phone: String?,
+    @SerializedName("address") val address: String?,
+    @SerializedName("support_email") val supportEmail: String?,
+    @SerializedName("support_phone") val supportPhone: String?,
+    @SerializedName("website_url") val websiteUrl: String?
 )

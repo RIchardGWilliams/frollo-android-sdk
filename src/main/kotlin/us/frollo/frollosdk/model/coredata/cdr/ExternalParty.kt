@@ -53,6 +53,9 @@ data class ExternalParty(
     /** External Party name */
     @ColumnInfo(name = "name") @SerializedName("name") val name: String,
 
+    /** External Party display name (Optional) */
+    @ColumnInfo(name = "display_name") @SerializedName("support_phone") val displayName: String?,
+
     /** Company details */
     @Embedded(prefix = "company_") @SerializedName("company") val company: ExternalPartyCompany?,
 
@@ -87,5 +90,20 @@ data class ExternalParty(
     @ColumnInfo(name = "sharing_durations") @SerializedName("sharing_durations") val sharingDurations: List<SharingDuration>?,
 
     /** Permissions for the CDR Configuration (Optional) */
-    @ColumnInfo(name = "permissions") @SerializedName("permissions") val permissions: List<CDRPermission>?
+    @ColumnInfo(name = "permissions") @SerializedName("permissions") val permissions: List<CDRPermission>?,
+
+    /** External Party Phone (Optional) */
+    @ColumnInfo(name = "phone") @SerializedName("phone") val phone: String?,
+
+    /** External party Address (Optional) */
+    @ColumnInfo(name = "address") @SerializedName("address") val address: String?,
+
+    /** External party support email (Optional) */
+    @ColumnInfo(name = "support_email") @SerializedName("support_email") val supportEmail: String?,
+
+    /** External party support phone (Optional) */
+    @ColumnInfo(name = "support_phone") @SerializedName("support_phone") val supportPhone: String?,
+
+    /** External party website url (Optional) */
+    @ColumnInfo(name = "website_url") @SerializedName("website_url") val websiteUrl: String?
 )

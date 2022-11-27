@@ -92,6 +92,7 @@ internal fun ExternalPartyResponse.toExternalParty(): ExternalParty =
         externalId = externalId,
         key = key,
         name = name,
+        displayName = displayName,
         company = company,
         contact = contact,
         description = description,
@@ -103,7 +104,12 @@ internal fun ExternalPartyResponse.toExternalParty(): ExternalParty =
         trustedAdvisorType = trustedAdvisorType,
         summary = summary,
         sharingDurations = sharingDurations,
-        permissions = permissions
+        permissions = permissions,
+        phone = phone,
+        address = address,
+        supportEmail = supportEmail,
+        supportPhone = supportPhone,
+        websiteUrl = websiteUrl
     )
 
 internal fun DisclosureConsentResponse.toDisclosureConsent(): DisclosureConsent =

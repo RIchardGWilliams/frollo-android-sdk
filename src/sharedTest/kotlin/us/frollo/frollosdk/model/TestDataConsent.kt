@@ -152,9 +152,12 @@ internal fun testExternalPartyResponseData(
         externalId = externalId ?: randomString(20),
         key = randomString(6),
         name = randomString(20),
+        displayName = randomString(20),
         company = ExternalPartyCompany(
             displayName = randomString(20),
-            legalName = randomString(20)
+            legalName = randomString(20),
+            abn = "1234567890",
+            acn = "123456789"
         ),
         contact = randomString(20),
         description = randomString(20),
@@ -168,7 +171,12 @@ internal fun testExternalPartyResponseData(
         sharingDurations = listOf(
             testSharingDurationData()
         ),
-        permissions = testCDRPermissionData()
+        permissions = testCDRPermissionData(),
+        phone = "020000000000",
+        address = "Level 33 100 Mount Street, North Sydney, NSW 2060",
+        supportEmail = "support@frollo.us",
+        supportPhone = "555 02 0000000",
+        websiteUrl = "https://frollo.com.au"
     )
 }
 
