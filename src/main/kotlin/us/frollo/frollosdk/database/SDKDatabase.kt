@@ -837,7 +837,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 // END - Add new tables - company_config, feature_config, link_config
 
                 // START - Add new table - external_party
-                database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` INTEGER, `key` TEXT NOT NULL, `name` TEXT NOT NULL, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, PRIMARY KEY(`party_id`))")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `external_party` (`party_id` INTEGER NOT NULL, `external_id` TEXT, `key` TEXT NOT NULL, `name` TEXT NOT NULL, `display_name` TEXT, `contact` TEXT NOT NULL, `description` TEXT, `status` TEXT NOT NULL, `image_url` TEXT, `small_image_url` TEXT, `privacy_url` TEXT NOT NULL, `type` TEXT NOT NULL, `ta_type` TEXT, `summary` TEXT, `sharing_durations` TEXT, `permissions` TEXT, `phone` TEXT, `address` TEXT, `support_email` TEXT, `support_phone` TEXT, `website_url` TEXT, `company_display_name` TEXT, `company_legal_name` TEXT, `company_abn` TEXT, `company_acn` TEXT, PRIMARY KEY(`party_id`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_external_party_party_id` ON `external_party` (`party_id`)")
                 // END - Add new table - external_party
 
