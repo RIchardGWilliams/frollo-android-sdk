@@ -54,7 +54,7 @@ data class ExternalParty(
     @ColumnInfo(name = "name") @SerializedName("name") val name: String,
 
     /** External Party display name (Optional) */
-    @ColumnInfo(name = "display_name") @SerializedName("support_phone") val displayName: String?,
+    @ColumnInfo(name = "display_name") @SerializedName("display_name") val displayName: String?,
 
     /** Company details */
     @Embedded(prefix = "company_") @SerializedName("company") val company: ExternalPartyCompany?,
