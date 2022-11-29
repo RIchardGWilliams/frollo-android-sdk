@@ -1208,6 +1208,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     fun fetchSimilarTransactionsWithPagination(
         transactionId: Long,
         excludeSelf: Boolean? = null,
+        accountIncluded: Boolean? = null,
+        transactionIncluded: Boolean? = null,
         fromDate: String? = null,
         toDate: String? = null,
         after: String? = null,
@@ -1218,6 +1220,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         aggregationAPI.fetchSimilarTransactions(
             transactionId = transactionId,
             excludeSelf = excludeSelf,
+            accountIncluded = accountIncluded,
+            transactionIncluded = transactionIncluded,
             fromDate = fromDate,
             toDate = toDate,
             after = after,
