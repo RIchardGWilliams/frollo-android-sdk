@@ -92,6 +92,8 @@ internal fun AggregationAPI.fetchTransactions(transactionFilter: TransactionFilt
 internal fun AggregationAPI.fetchSimilarTransactions(
     transactionId: Long,
     excludeSelf: Boolean? = null,
+    accountIncluded: Boolean?,
+    transactionIncluded: Boolean?,
     fromDate: String? = null,
     toDate: String? = null,
     before: String? = null,
@@ -103,6 +105,8 @@ internal fun AggregationAPI.fetchSimilarTransactions(
     fromDate?.let { queryMap.put("from_date", it) }
     toDate?.let { queryMap.put("to_date", it) }
     excludeSelf?.let { queryMap.put("exclude_self", it.toString()) }
+    accountIncluded?.let { queryMap.put("account_included", it.toString()) }
+    transactionIncluded?.let { queryMap.put("transaction_included", it.toString()) }
     before?.let { queryMap.put("before", it.toString()) }
     after?.let { queryMap.put("after", it.toString()) }
     size?.let { queryMap.put("size", it.toString()) }
