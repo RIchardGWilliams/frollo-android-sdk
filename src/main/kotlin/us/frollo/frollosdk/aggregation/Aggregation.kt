@@ -1198,6 +1198,8 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
      *
      * @param transactionId ID of the transaction for which we have to fetch similar transactions
      * @param excludeSelf Indicates whether the transaction ID is provided as a parameter should be excluded from the result set. If not provided, the value is assumed to be true.
+     * @param accountIncluded Boolean flag to indicate whether to filter excluded accounts or not (Optional)
+     * @param transactionIncluded Boolean flag to indicates whether to filter excluded transactions or not (Optional)
      * @param fromDate Date to filter transactions from (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
      * @param toDate Date to filter transactions to (inclusive). Please use [Transaction.DATE_FORMAT_PATTERN] for the format pattern.
      * @param after after field to get next list in pagination. Format is "<epoch_date>_<transaction_id>"
