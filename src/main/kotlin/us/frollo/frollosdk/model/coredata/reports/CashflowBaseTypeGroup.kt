@@ -19,6 +19,7 @@ package us.frollo.frollosdk.model.coredata.reports
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.IAdapterModel
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
+import java.math.BigDecimal
 
 /** Data representation of a group in cashflow report by base type response */
 data class CashflowBaseTypeGroup(
@@ -36,7 +37,7 @@ data class CashflowBaseTypeGroup(
     @SerializedName("income")val income: Boolean,
 
     /** Balance of credit and debit transactions summed together */
-    @SerializedName("value")val value: String,
+    @SerializedName("value")val value: BigDecimal,
 
     /** Transaction Ids of the group */
     @SerializedName("transaction_ids")val transactionIds: List<Long>,

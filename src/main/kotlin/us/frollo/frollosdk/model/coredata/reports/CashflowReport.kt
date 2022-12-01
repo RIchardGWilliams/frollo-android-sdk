@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.coredata.reports
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.IAdapterModel
+import java.math.BigDecimal
 
 /** Data representation of Cashflow report */
 data class CashflowReport(
@@ -26,13 +27,13 @@ data class CashflowReport(
     @SerializedName("date")val date: String,
 
     /** Sum of credit transactions */
-    @SerializedName("credits")val credits: String,
+    @SerializedName("credits")val credits: BigDecimal,
 
     /** Sum of debit transactions */
-    @SerializedName("debits")val debits: String,
+    @SerializedName("debits")val debits: BigDecimal,
 
     /** Balance of credit and debit transactions summed together */
-    @SerializedName("balance")val balance: String
+    @SerializedName("balance")val balance: BigDecimal
 
 ) : IAdapterModel {
 

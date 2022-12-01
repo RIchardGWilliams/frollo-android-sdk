@@ -1262,9 +1262,9 @@ class ReportsTest : BaseAndroidTest() {
 
             val report = reports?.get(2)!!
             assertEquals("2019-01-15", report.date)
-            assertEquals("2000.00", report.credits)
-            assertEquals("-1000.00", report.debits)
-            assertEquals("-1000.00", report.balance)
+            assertEquals("2000.00", report.credits.toString())
+            assertEquals("-1000.00", report.debits.toString())
+            assertEquals("-1000.00", report.balance.toString())
 
             signal.countDown()
         }
@@ -1321,12 +1321,12 @@ class ReportsTest : BaseAndroidTest() {
 
             val report = models?.get(9)!!
             assertEquals("2022-10-01", report.date)
-            assertEquals("5050.00", report.value)
+            assertEquals("5050.00", report.value.toString())
 
             val bucket2 = report.groups?.get(2)
             assertEquals(3L, bucket2?.id)
             assertEquals("income", bucket2?.name)
-            assertEquals("4050.00", bucket2?.value)
+            assertEquals("4050.00", bucket2?.value.toString())
             assertEquals(1, bucket2?.transactionIds?.size)
             assertEquals(false, bucket2?.income)
 
@@ -1385,13 +1385,13 @@ class ReportsTest : BaseAndroidTest() {
 
             val report1 = models?.get(0)!!
             assertEquals("2022-06-03", report1.date)
-            assertEquals("0.00", report1.value)
+            assertEquals("0.00", report1.value.toString())
 
             val report2 = models.get(1)
             val bucket = report2.groups?.get(0)
             assertEquals(82L, bucket?.id)
             assertEquals("Deposits", bucket?.name)
-            assertEquals("100.00", bucket?.value)
+            assertEquals("100.00", bucket?.value?.toString())
             assertEquals(1, bucket?.transactionIds?.size)
             assertEquals(5926657L, bucket?.transactionIds?.get(0))
             assertEquals(false, bucket?.income)
@@ -1450,12 +1450,12 @@ class ReportsTest : BaseAndroidTest() {
 
             val report = models?.get(10)!!
             assertEquals("2021-11-01", report.date)
-            assertEquals("3350.00", report.value)
+            assertEquals("3350.00", report.value.toString())
 
             val bucket = report.groups?.get(0)
             assertEquals(127L, bucket?.id)
             assertEquals("Direct Credit", bucket?.name)
-            assertEquals("100.00", bucket?.value)
+            assertEquals("100.00", bucket?.value?.toString())
             assertEquals(1, bucket?.transactionIds?.size)
             assertEquals("https://frollo-staging.s3.amazonaws.com/merchants/127/original/Direct_Credit.png?1530578236", bucket?.imageUrl)
 
@@ -1511,13 +1511,13 @@ class ReportsTest : BaseAndroidTest() {
 
             val report = models?.get(3)!!
             assertEquals("2022-10-01", report.date)
-            assertEquals("-8913.13", report.value)
+            assertEquals("-8913.13", report.value.toString())
 
             assertEquals(2, report.groups?.size)
             val bucket = report.groups?.get(0)
             assertEquals(1L, bucket?.id)
             assertEquals("living", bucket?.name)
-            assertEquals("-2471.26", bucket?.value)
+            assertEquals("-2471.26", bucket?.value?.toString())
             assertEquals(53, bucket?.transactionIds?.size)
             assertEquals(false, bucket?.income)
 
@@ -1573,13 +1573,13 @@ class ReportsTest : BaseAndroidTest() {
 
             val report = models?.get(0)!!
             assertEquals("2022-01-01", report.date)
-            assertEquals("-33917.78", report.value)
+            assertEquals("-33917.78", report.value.toString())
 
             assertEquals(22, report.groups?.size)
             val bucket = report.groups?.get(0)
             assertEquals(77L, bucket?.id)
             assertEquals("Restaurants", bucket?.name)
-            assertEquals("-3623.00", bucket?.value)
+            assertEquals("-3623.00", bucket?.value?.toString())
             assertEquals(53, bucket?.transactionIds?.size)
             assertEquals(5927729L, bucket?.transactionIds?.get(0))
             assertEquals("https://frollo-staging.s3.amazonaws.com/categories/77/icon/original/1663636470.png?1663636470", bucket?.imageUrl)

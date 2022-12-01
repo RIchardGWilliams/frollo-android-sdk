@@ -18,6 +18,7 @@ package us.frollo.frollosdk.model.coredata.reports
 
 import com.google.gson.annotations.SerializedName
 import us.frollo.frollosdk.model.IAdapterModel
+import java.math.BigDecimal
 
 /** Data representation of Cashflow report by base type */
 data class CashflowBaseTypeReport(
@@ -29,7 +30,7 @@ data class CashflowBaseTypeReport(
     @SerializedName("income")val income: Boolean,
 
     /** Value */
-    @SerializedName("value")val value: String,
+    @SerializedName("value")val value: BigDecimal,
 
     /** Group data for this period */
     @SerializedName("groups")val groups: List<CashflowBaseTypeGroup>?
