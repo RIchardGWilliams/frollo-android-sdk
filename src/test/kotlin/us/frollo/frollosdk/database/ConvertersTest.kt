@@ -1388,20 +1388,16 @@ class ConvertersTest {
 
     @Test
     fun testStringToListOfSharingDuration() {
-        val json = "[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}]"
+        val json = "[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\"}]"
         val info = Converters.instance.stringToListOfSharingDuration(json)
         assertNotNull(info)
         assertTrue(info?.size == 2)
         assertEquals(1234500L, info?.first()?.duration)
         assertEquals("Account Details", info?.first()?.description)
         assertEquals("http://app.image.png", info?.first()?.imageUrl)
-        assertEquals(604800L, info?.first()?.sharingUseDuration)
-        assertEquals("1 week", info?.first()?.sharingUseDescription)
         assertEquals(2345678L, info?.get(1)?.duration)
         assertEquals("Transaction Details", info?.get(1)?.description)
         assertEquals("http://app.image.png", info?.get(1)?.imageUrl)
-        assertEquals(604800L, info?.get(1)?.sharingUseDuration)
-        assertEquals("1 week", info?.get(1)?.sharingUseDescription)
 
         assertNull(Converters.instance.stringToListOfSharingDuration(null))
     }
@@ -1409,11 +1405,11 @@ class ConvertersTest {
     @Test
     fun testStringFromListOfSharingDuration() {
         val info = listOf(
-            SharingDuration(1234500, "Account Details", "http://app.image.png", 604800, "1 week"),
-            SharingDuration(2345678, "Transaction Details", "http://app.image.png", 604800, "1 week")
+            SharingDuration(1234500, "Account Details", "http://app.image.png"),
+            SharingDuration(2345678, "Transaction Details", "http://app.image.png")
         )
         val json = Converters.instance.stringFromListOfSharingDuration(info)
-        assertEquals("[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}]", json)
+        assertEquals("[{\"duration\":1234500,\"description\":\"Account Details\",\"image_url\":\"http://app.image.png\"},{\"duration\":2345678,\"description\":\"Transaction Details\",\"image_url\":\"http://app.image.png\"}]", json)
     }
 
     @Test
@@ -1603,16 +1599,20 @@ class ConvertersTest {
                 SharingDuration(
                     duration = 86400,
                     description = "Sharing duration",
-                    imageUrl = "https://frollo.com.au/image",
-                    sharingUseDuration = 604800,
-                    sharingUseDescription = "1 week"
+                    imageUrl = "https://frollo.com.au/image"
                 )
             ),
             permissions = testCDRPermissionData(),
-            key = "ACME001"
+            key = "ACME001",
+            phone = "020000000000",
+            address = "Level 33 100 Mount Street, North Sydney, NSW 2060",
+            supportEmail = "support@frollo.us",
+            supportPhone = "555 02 0000000",
+            websiteUrl = "https://frollo.com.au",
+            displayName = "CheckFinance1"
         )
         val json = Converters.instance.stringFromExternalParty(externalParty)
-        assertEquals("{\"id\":1,\"external_id\":\"6hsf735\",\"key\":\"ACME001\",\"name\":\"CheckFinance1\",\"company\":{\"display_name\":\"Frollo\",\"legal_name\":\"Frollo\"},\"contact\":\"support@frollo.us\",\"description\":\"Test123\",\"status\":\"enabled\",\"image_url\":\"https://frollo.com.au/image\",\"small_image_url\":\"https://frollo.com.au/image_small\",\"privacy_url\":\"http://frollo.us/privacy\",\"type\":\"ta\",\"ta_type\":\"accountant\",\"summary\":\"Test summary\",\"sharing_durations\":[{\"duration\":86400,\"description\":\"Sharing duration\",\"image_url\":\"https://frollo.com.au/image\",\"sharing_use_duration\":604800,\"sharing_use_description\":\"1 week\"}],\"permissions\":[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}],\"placement\":10},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}],\"placement\":10}]}", json)
+        assertEquals("{\"id\":1,\"external_id\":\"6hsf735\",\"key\":\"ACME001\",\"name\":\"CheckFinance1\",\"display_name\":\"CheckFinance1\",\"company\":{\"display_name\":\"Frollo\",\"legal_name\":\"Frollo\",\"abn\":\"12345678901\",\"acn\":\"123456789\"},\"contact\":\"support@frollo.us\",\"description\":\"Test123\",\"status\":\"enabled\",\"image_url\":\"https://frollo.com.au/image\",\"small_image_url\":\"https://frollo.com.au/image_small\",\"privacy_url\":\"http://frollo.us/privacy\",\"type\":\"ta\",\"ta_type\":\"accountant\",\"summary\":\"Test summary\",\"sharing_durations\":[{\"duration\":86400,\"description\":\"Sharing duration\",\"image_url\":\"https://frollo.com.au/image\"}],\"permissions\":[{\"id\":\"account_details\",\"title\":\"Account balance and details\",\"description\":\"We leverage...\",\"required\":true,\"details\":[{\"id\":\"account_name\",\"description\":\"Name of account\"}],\"placement\":10},{\"id\":\"transaction_details\",\"title\":\"Transaction and details\",\"description\":\"We leverage...\",\"required\":false,\"details\":[{\"id\":\"transaction_name\",\"description\":\"Name of transaction\"}],\"placement\":10}],\"phone\":\"020000000000\",\"address\":\"Level 33 100 Mount Street, North Sydney, NSW 2060\",\"support_email\":\"support@frollo.us\",\"support_phone\":\"555 02 0000000\",\"website_url\":\"https://frollo.com.au\"}", json)
     }
 
     @Test
