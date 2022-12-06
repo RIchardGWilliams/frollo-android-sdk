@@ -31,9 +31,7 @@
           {
             "duration": 86400,
             "description": "One day",
-            "image_url": "https://picsum.photos/300/200",
-            "sharing_use_duration": 604800,
-            "sharing_use_description": "1 week"
+            "image_url": "https://picsum.photos/300/200"
           }
         ],
         "permissions": [
@@ -77,9 +75,7 @@
           {
             "duration": 86400,
             "description": "One day",
-            "image_url": "https://picsum.photos/300/200",
-            "sharing_use_duration": 604800,
-            "sharing_use_description": "1 week"
+            "image_url": "https://picsum.photos/300/200"
           }
         ],
         "permissions": [
@@ -123,9 +119,7 @@
           {
             "duration": 86400,
             "description": "One day",
-            "image_url": "https://picsum.photos/300/200",
-            "sharing_use_duration": 604800,
-            "sharing_use_description": "1 week"
+            "image_url": "https://picsum.photos/300/200"
           }
         ],
         "permissions": [
@@ -169,9 +163,7 @@
           {
             "duration": 86400,
             "description": "One day",
-            "image_url": "https://picsum.photos/300/200",
-            "sharing_use_duration": 604800,
-            "sharing_use_description": "1 week"
+            "image_url": "https://picsum.photos/300/200"
           }
         ],
         "permissions": [

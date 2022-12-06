@@ -849,17 +849,6 @@ abstract class SDKDatabase : RoomDatabase() {
                 // START - Alter table - user - Add column external_party_id
                 database.execSQL("ALTER TABLE `user` ADD COLUMN `external_party_id` INTEGER")
                 // END - Alter table - user - Add column external_party_id
-
-                // START - Alter table - cdr_configuration - Drop column sharing_use_duration
-                database.execSQL("DROP INDEX IF EXISTS `index_cdr_configuration_config_id`")
-                // NOTE: Here intentionally we are not taking backup of original data and restoring it later.
-                // This is because, we don't have a way to have load default values for "sharing_use_duration"
-                // and "sharing_use_description" in the converter method stringToListOfSharingDuration.
-                // It should be okay as upon migration the cdr config data is fetched again from the host
-                // and the cache will be updated.
-                database.execSQL("CREATE TABLE IF NOT EXISTS `cdr_configuration` (`config_id` INTEGER NOT NULL, `support_email` TEXT NOT NULL, `sharing_durations` TEXT NOT NULL, `permissions` TEXT, `additional_permissions` TEXT, `external_id` TEXT NOT NULL, `display_name` TEXT NOT NULL, `cdr_policy_url` TEXT NOT NULL, `model` TEXT NOT NULL, `related_parties` TEXT NOT NULL, `initial_sync_window_weeks` INTEGER, `software_id` TEXT, `software_name` TEXT, `image_url` TEXT, `summary` TEXT, `description` TEXT, PRIMARY KEY(`config_id`))")
-                database.execSQL("CREATE INDEX IF NOT EXISTS `index_cdr_configuration_config_id` ON `cdr_configuration` (`config_id`)")
-                // END - Alter table - cdr_configuration - Drop column sharing_use_duration
             }
         }
     }

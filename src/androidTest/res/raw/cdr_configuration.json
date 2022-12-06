@@ -22,21 +22,15 @@
     "sharing_durations": [{
         "duration": 7884000,
         "description": "3 Months",
-        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_3_months.png",
-        "sharing_use_duration": 604800,
-        "sharing_use_description": "1 week"
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_3_months.png"
     }, {
         "duration": 15768000,
         "description": "6 Months",
-        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_6_months.png",
-        "sharing_use_duration": 604800,
-        "sharing_use_description": "1 week"
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_6_months.png"
     }, {
         "duration": 31536000,
         "description": "12 Months",
-        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_12_months.png",
-        "sharing_use_duration": 604800,
-        "sharing_use_description": "1 week"
+        "image_url": "https://content.frollo.us/images/open-banking/consent_calendar_12_months.png"
     }],
     "permissions": [{
         "id": "account_details",
@@ -94,6 +88,7 @@
             "description": "Who you have sent money to and received money from"
         }]
     }],
+    "sharing_use_duration": 7890000,
     "additional_permissions": [],
     "external_id": "frollo-default",
     "initial_sync_window_weeks": 53

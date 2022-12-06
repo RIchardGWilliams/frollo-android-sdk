@@ -78,6 +78,7 @@ internal fun CDRConfigurationResponse.toCDRConfiguration(): CDRConfiguration =
         cdrPolicyUrl = cdrPolicyUrl,
         model = model,
         relatedParties = relatedParties,
+        sharingUseDuration = sharingUseDuration,
         initialSyncWindowWeeks = initialSyncWindowWeeks,
         softwareId = softwareId,
         softwareName = softwareName,
