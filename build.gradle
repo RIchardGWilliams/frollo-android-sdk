@@ -13,7 +13,7 @@ configurations.all{
 android {
     compileSdkVersion 33
     defaultConfig {
-        minSdkVersion 26 // Android 8.0 (Oreo)
+        minSdkVersion 28 // Android 9.0 (Pie)
         targetSdkVersion 33
         versionCode 1
         versionName "3.20.0"
