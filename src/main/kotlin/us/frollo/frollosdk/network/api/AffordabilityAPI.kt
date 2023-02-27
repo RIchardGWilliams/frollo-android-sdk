@@ -23,11 +23,13 @@ import retrofit2.http.Query
 import retrofit2.http.QueryMap
 import us.frollo.frollosdk.model.api.affordability.ExportType
 import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.NetworthResponse
 
 internal interface AffordabilityAPI {
     companion object {
         const val URL_FINANCIAL_PASSPORT = "affordability/financialpassport"
         const val URL_FINANCIAL_PASSPORT_EXPORT = "affordability/financialpassport/export"
+        const val URL_NETWORTH = "affordability/networth"
     }
 
     @GET(URL_FINANCIAL_PASSPORT)
@@ -35,4 +37,7 @@ internal interface AffordabilityAPI {
 
     @GET(URL_FINANCIAL_PASSPORT_EXPORT)
     fun exportFinancialPassport(@Query("type") format: ExportType): Call<ResponseBody>
+
+    @GET(URL_NETWORTH)
+    fun fetchNetworth(@QueryMap queryParams: Map<String, String>): Call<NetworthResponse>
 }

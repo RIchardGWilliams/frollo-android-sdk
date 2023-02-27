@@ -124,6 +124,64 @@ class AffordabilityTest : BaseAndroidTest() {
     }
 
     @Test
+    fun testFetchNetworth() {
+        initSetup()
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.networth_response)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == AffordabilityAPI.URL_NETWORTH) {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        affordability.fetchNetworth { resource ->
+            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertNull(resource.error)
+            val model = resource.data
+            assertNotNull(model)
+            assertEquals("189926.12", model?.summary?.totals?.assets)
+            assertEquals("20897.88", model?.summary?.totals?.liabilities)
+            assertEquals("-125000.00", model?.summary?.totals?.netBalance)
+            assertEquals(3, model?.summary?.aggregatorTotals?.size)
+            assertEquals("cdr", model?.summary?.aggregatorTotals?.first()?.aggregator?.toString())
+            assertEquals("10123.10", model?.summary?.aggregatorTotals?.get(1)?.assets)
+            assertEquals("-5897.20", model?.summary?.aggregatorTotals?.get(2)?.liabilities)
+            assertEquals(2, model?.assets?.accountIds?.size)
+            assertEquals(2, model?.liabilities?.accountIds?.size)
+            signal.countDown()
+        }
+        val request = mockServer.takeRequest()
+        assertEquals(AffordabilityAPI.URL_NETWORTH, request.trimmedPath)
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testFetchNetworthFailsIfLoggedOut() {
+        initSetup()
+        val signal = CountDownLatch(1)
+        clearLoggedInPreferences()
+        affordability.fetchNetworth { resource ->
+            assertEquals(Resource.Status.ERROR, resource.status)
+            assertNotNull(resource.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+            signal.countDown()
+        }
+        signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
+
+    @Test
     fun testFinancialPassportExport() {
         initSetup()
 
