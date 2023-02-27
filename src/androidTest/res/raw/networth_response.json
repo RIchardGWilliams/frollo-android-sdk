@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "totals": {
+      "assets": "189926.12",
+      "liabilities": "20897.88",
+      "net_balance": "-125000.00"
+    },
+    "aggregator_totals": [
+      {
+        "aggregator": "cdr",
+        "assets": "10123.10",
+        "liabilities": "-5897.20",
+        "net_balance": "4225.90"
+      },
+      {
+        "aggregator": "manual",
+        "assets": "10123.10",
+        "liabilities": "-5897.20",
+        "net_balance": "4225.90"
+      },
+      {
+        "aggregator": "yodlee",
+        "assets": "10123.10",
+        "liabilities": "-5897.20",
+        "net_balance": "4225.90"
+      }
+    ]
+  },
+  "assets": {
+    "account_ids": [123, 456]
+  },
+  "liabilities": {
+    "account_ids": [123, 456]
+  }
+}

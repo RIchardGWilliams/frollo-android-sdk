@@ -24,6 +24,7 @@ import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
 import us.frollo.frollosdk.error.FrolloSDKError
 import us.frollo.frollosdk.extensions.enqueue
+import us.frollo.frollosdk.extensions.fetchNetworth
 import us.frollo.frollosdk.extensions.fromJson
 import us.frollo.frollosdk.extensions.getFinancialPassport
 import us.frollo.frollosdk.extensions.readStringFromJson
@@ -31,6 +32,7 @@ import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.model.api.affordability.AssetsLiabilitiesResponse
 import us.frollo.frollosdk.model.api.affordability.ExportType
 import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.NetworthResponse
 import us.frollo.frollosdk.model.coredata.aggregation.providers.AggregatorType
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.AffordabilityAPI
@@ -93,6 +95,32 @@ class Affordability(network: NetworkService) {
                     completion.invoke(resource)
                 }
             }
+        }
+    }
+
+    /**
+     * Get net worth from the host
+     *
+     * @param accountIds: List of  accounts IDs; Optional
+     * @param providerAccountIDs: List of  provider accounts IDs; Optional
+     * @param aggregators: List of [AggregatorType] types; Optional
+     * @param completion: Completion handler with optional error if the request fails or [NetworthResponse] if succeeds
+     */
+    fun fetchNetworth(
+        accountIds: List<Long>? = null,
+        providerAccountIDs: List<Long>? = null,
+        aggregators: List<AggregatorType>? = null,
+        completion: OnFrolloSDKCompletionListener<Resource<NetworthResponse>>
+    ) {
+        affordabilityAPI.fetchNetworth(
+            accountIds,
+            providerAccountIDs,
+            aggregators,
+        ).enqueue { resource ->
+            if (resource.status == Resource.Status.ERROR) {
+                Log.e("$TAG#fetchNetworth", resource.error?.localizedDescription)
+            }
+            completion.invoke(resource)
         }
     }
 

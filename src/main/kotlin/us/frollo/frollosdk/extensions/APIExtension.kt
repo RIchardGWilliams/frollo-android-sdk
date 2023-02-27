@@ -20,6 +20,7 @@ import retrofit2.Call
 import retrofit2.http.Query
 import us.frollo.frollosdk.model.api.address.AddressAutocomplete
 import us.frollo.frollosdk.model.api.affordability.FinancialPassportResponse
+import us.frollo.frollosdk.model.api.affordability.NetworthResponse
 import us.frollo.frollosdk.model.api.aggregation.merchants.MerchantResponse
 import us.frollo.frollosdk.model.api.aggregation.provideraccounts.ProviderAccountResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
@@ -500,6 +501,24 @@ internal fun AffordabilityAPI.getFinancialPassport(
         queryMap["to_date"] = it
     }
     return getFinancialPassport(queryMap)
+}
+
+internal fun AffordabilityAPI.fetchNetworth(
+    accountIds: List<Long>? = null,
+    providerAccountIDs: List<Long>? = null,
+    aggregators: List<AggregatorType>? = null,
+): Call<NetworthResponse> {
+    val queryMap = mutableMapOf<String, String>()
+    accountIds?.let {
+        queryMap["account_ids"] = accountIds.joinToString(",")
+    }
+    providerAccountIDs?.let {
+        queryMap["provider_account_ids"] = it.joinToString(",")
+    }
+    aggregators?.let {
+        queryMap["aggregators"] = it.joinToString(",")
+    }
+    return fetchNetworth(queryMap)
 }
 
 internal fun MessagesAPI.fetchMessages(
