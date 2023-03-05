@@ -49,7 +49,6 @@ import us.frollo.frollosdk.mapping.toReports
 import us.frollo.frollosdk.model.api.reports.AccountBalanceReportResponse
 import us.frollo.frollosdk.model.api.reports.ReportsResponse
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
-import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
 import us.frollo.frollosdk.model.coredata.reports.CashflowBaseTypeReport
 import us.frollo.frollosdk.model.coredata.reports.CashflowReport
 import us.frollo.frollosdk.model.coredata.reports.Report
@@ -61,6 +60,7 @@ import us.frollo.frollosdk.model.coredata.reports.ReportDateFormat.Companion.DAT
 import us.frollo.frollosdk.model.coredata.reports.ReportDateFormat.Companion.MONTHLY
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.reports.ReportsBaseType
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.network.NetworkService
@@ -174,6 +174,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
         period: TransactionReportPeriod,
         categoryId: Long? = null,
         grouping: ReportGrouping? = null,
+        baseType: ReportsBaseType? = null,
         completion: OnFrolloSDKCompletionListener<Resource<List<Report>>>
     ) {
         reportsAPI.fetchTransactionCategoryReports(
@@ -181,6 +182,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             toDate = toDate,
             period = period,
             grouping = grouping,
+            baseType = baseType,
             categoryId = categoryId
         ).enqueue { resource ->
 
@@ -209,6 +211,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
         period: TransactionReportPeriod,
         merchantId: Long? = null,
         grouping: ReportGrouping? = null,
+        baseType: ReportsBaseType? = null,
         completion: OnFrolloSDKCompletionListener<Resource<List<Report>>>
     ) {
         reportsAPI.fetchMerchantReports(
@@ -216,6 +219,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             toDate = toDate,
             period = period,
             grouping = grouping,
+            baseType = baseType,
             merchantId = merchantId
         ).enqueue { resource ->
 
@@ -244,6 +248,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
         period: TransactionReportPeriod,
         budgetCategory: BudgetCategory? = null,
         grouping: ReportGrouping? = null,
+        baseType: ReportsBaseType? = null,
         completion: OnFrolloSDKCompletionListener<Resource<List<Report>>>
     ) {
         reportsAPI.fetchBudgetCategoryReports(
@@ -251,6 +256,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             toDate = toDate,
             period = period,
             grouping = grouping,
+            baseType = baseType,
             budgetCategory = budgetCategory
         ).enqueue { resource ->
 
@@ -279,6 +285,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
         period: TransactionReportPeriod,
         transactionTag: String? = null,
         grouping: ReportGrouping? = null,
+        baseType: ReportsBaseType? = null,
         completion: OnFrolloSDKCompletionListener<Resource<List<Report>>>
     ) {
         reportsAPI.fetchTagReports(
@@ -286,6 +293,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
             toDate = toDate,
             period = period,
             grouping = grouping,
+            baseType = baseType,
             transactionTag = transactionTag
         ).enqueue { resource ->
 
@@ -341,7 +349,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param completion Completion handler with optional error if the request fails
      */
     fun fetchCashflowReportsByBaseType(
-        baseType: CashflowBaseType,
+        baseType: ReportsBaseType,
         fromDate: String? = null,
         toDate: String? = null,
         period: TransactionReportPeriod? = null,

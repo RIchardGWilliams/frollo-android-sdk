@@ -62,9 +62,9 @@ import us.frollo.frollosdk.model.coredata.goals.GoalStatus
 import us.frollo.frollosdk.model.coredata.goals.GoalTrackingStatus
 import us.frollo.frollosdk.model.coredata.managedproduct.ManagedProduct
 import us.frollo.frollosdk.model.coredata.messages.MessageFilter
-import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.reports.ReportsBaseType
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.coredata.shared.OrderType
@@ -201,11 +201,13 @@ internal fun ReportsAPI.fetchTransactionCategoryReports(
     period: TransactionReportPeriod,
     fromDate: String,
     toDate: String,
+    baseType: ReportsBaseType? = null,
     categoryId: Long? = null,
     grouping: ReportGrouping? = null
 ): Call<ReportsResponse> {
 
     val queryMap = mutableMapOf("period" to period.toString(), "from_date" to fromDate, "to_date" to toDate)
+    baseType?.let { queryMap.put("base_type", it.toString()) }
     grouping?.let { queryMap.put("grouping", it.toString()) }
     return categoryId?.let { id ->
         fetchReportsByCategory(id, queryMap)
@@ -216,11 +218,13 @@ internal fun ReportsAPI.fetchMerchantReports(
     period: TransactionReportPeriod,
     fromDate: String,
     toDate: String,
+    baseType: ReportsBaseType? = null,
     merchantId: Long? = null,
     grouping: ReportGrouping? = null
 ): Call<ReportsResponse> {
 
     val queryMap = mutableMapOf("period" to period.toString(), "from_date" to fromDate, "to_date" to toDate)
+    baseType?.let { queryMap.put("base_type", it.toString()) }
     grouping?.let { queryMap.put("grouping", it.toString()) }
     return merchantId?.let { id ->
         fetchReportsByMerchant(id, queryMap)
@@ -231,11 +235,13 @@ internal fun ReportsAPI.fetchBudgetCategoryReports(
     period: TransactionReportPeriod,
     fromDate: String,
     toDate: String,
+    baseType: ReportsBaseType? = null,
     budgetCategory: BudgetCategory? = null,
     grouping: ReportGrouping? = null
 ): Call<ReportsResponse> {
 
     val queryMap = mutableMapOf("period" to period.toString(), "from_date" to fromDate, "to_date" to toDate)
+    baseType?.let { queryMap.put("base_type", it.toString()) }
     grouping?.let { queryMap.put("grouping", it.toString()) }
     return budgetCategory?.let { bCategory ->
         fetchReportsByBudgetCategory(bCategory.budgetCategoryId, queryMap)
@@ -246,11 +252,13 @@ internal fun ReportsAPI.fetchTagReports(
     period: TransactionReportPeriod,
     fromDate: String,
     toDate: String,
+    baseType: ReportsBaseType? = null,
     transactionTag: String? = null,
     grouping: ReportGrouping? = null
 ): Call<ReportsResponse> {
 
     val queryMap = mutableMapOf("period" to period.toString(), "from_date" to fromDate, "to_date" to toDate)
+    baseType?.let { queryMap.put("base_type", it.toString()) }
     grouping?.let { queryMap.put("grouping", it.toString()) }
     return transactionTag?.let { tag ->
         fetchReportsByTag(tag, queryMap)
@@ -270,7 +278,7 @@ internal fun ReportsAPI.fetchCashflowReports(
 }
 
 internal fun ReportsAPI.fetchCashflowReportsByBaseType(
-    baseType: CashflowBaseType,
+    baseType: ReportsBaseType,
     period: TransactionReportPeriod?,
     fromDate: String?,
     toDate: String?,

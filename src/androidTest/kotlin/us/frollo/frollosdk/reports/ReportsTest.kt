@@ -37,9 +37,9 @@ import us.frollo.frollosdk.error.DataErrorType
 import us.frollo.frollosdk.error.FrolloSDKError
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountType
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
-import us.frollo.frollosdk.model.coredata.reports.CashflowBaseType
 import us.frollo.frollosdk.model.coredata.reports.ReportGrouping
 import us.frollo.frollosdk.model.coredata.reports.ReportPeriod
+import us.frollo.frollosdk.model.coredata.reports.ReportsBaseType
 import us.frollo.frollosdk.model.coredata.reports.TransactionReportPeriod
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import us.frollo.frollosdk.model.testReportAccountBalanceData
@@ -1287,7 +1287,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2022-11-12"
         val period = TransactionReportPeriod.MONTHLY
         val grouping = ReportGrouping.BUDGET_CATEGORY
-        val baseType = CashflowBaseType.CREDIT
+        val baseType = ReportsBaseType.CREDIT
         val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}/$baseType?period=$period&from_date=$fromDate&to_date=$toDate&grouping=$grouping"
         val body = readStringFromJson(app, R.raw.cashflow_report_credit_budget_category_monthly_2022_01_01_2022_10_31)
 
@@ -1351,7 +1351,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2022-11-12"
         val period = TransactionReportPeriod.WEEKLY
         val grouping = ReportGrouping.TRANSACTION_CATEGORY
-        val baseType = CashflowBaseType.CREDIT
+        val baseType = ReportsBaseType.CREDIT
         val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}/$baseType?period=$period&from_date=$fromDate&to_date=$toDate&grouping=$grouping"
 
         val body = readStringFromJson(app, R.raw.cashflow_report_credit_category_weekly_2022_06_03_2022_11_17)
@@ -1416,7 +1416,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2022-11-16"
         val period = TransactionReportPeriod.MONTHLY
         val grouping = ReportGrouping.MERCHANT
-        val baseType = CashflowBaseType.CREDIT
+        val baseType = ReportsBaseType.CREDIT
         val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}/$baseType?period=$period&from_date=$fromDate&to_date=$toDate&grouping=$grouping"
 
         val body = readStringFromJson(app, R.raw.cashflow_report_credit_merchant_monthly_2021_01_01_2022_11_16)
@@ -1479,7 +1479,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2022-12-31"
         val period = TransactionReportPeriod.QUARTERLY
         val grouping = ReportGrouping.BUDGET_CATEGORY
-        val baseType = CashflowBaseType.DEBIT
+        val baseType = ReportsBaseType.DEBIT
         val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}/$baseType?period=$period&from_date=$fromDate&to_date=$toDate&grouping=$grouping"
 
         val body = readStringFromJson(app, R.raw.cashflow_report_debit_budget_category_quarterly_2022_01_01_2022_12_31)
@@ -1541,7 +1541,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2022-12-31"
         val period = TransactionReportPeriod.BIANNUALLY
         val grouping = ReportGrouping.TRANSACTION_CATEGORY
-        val baseType = CashflowBaseType.DEBIT
+        val baseType = ReportsBaseType.DEBIT
         val requestPath = "${ReportsAPI.URL_REPORTS_CASHFLOW}/$baseType?period=$period&from_date=$fromDate&to_date=$toDate&grouping=$grouping"
 
         val body = readStringFromJson(app, R.raw.cashflow_report_debit_category_biannually_2022_01_01_2022_12_31)
@@ -1737,7 +1737,7 @@ class ReportsTest : BaseAndroidTest() {
         val toDate = "2019-01-14"
         val period = TransactionReportPeriod.WEEKLY
         val grouping = ReportGrouping.BUDGET_CATEGORY
-        val baseType = CashflowBaseType.CREDIT
+        val baseType = ReportsBaseType.CREDIT
 
         reports.fetchCashflowReportsByBaseType(baseType, period = period, fromDate = fromDate, toDate = toDate, grouping = grouping) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
