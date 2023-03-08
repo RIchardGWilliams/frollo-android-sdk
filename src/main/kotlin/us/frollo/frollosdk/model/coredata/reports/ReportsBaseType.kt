@@ -22,7 +22,7 @@ import us.frollo.frollosdk.extensions.serializedName
 /**
  * Base type - of the cashflow
  */
-enum class CashflowBaseType {
+enum class ReportsBaseType {
 
     /** Credit **/
     @SerializedName("credit")CREDIT,
