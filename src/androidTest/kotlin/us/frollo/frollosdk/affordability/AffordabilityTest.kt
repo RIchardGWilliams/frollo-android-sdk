@@ -73,10 +73,10 @@ class AffordabilityTest : BaseAndroidTest() {
             }
             )
 
-        affordability.getFinancialPassport { resource ->
+        affordability.getFinancialPassport { _, resource ->
             assertEquals(Resource.Status.SUCCESS, resource.status)
-            assertNull(resource.error)
-            val model = resource.data
+            assertNull(resource?.error)
+            val model = resource?.data
             assertNotNull(model)
             assertEquals(5, model?.accounts?.size)
             assertEquals(20902L, model?.accounts?.first()?.accountId)
@@ -112,11 +112,11 @@ class AffordabilityTest : BaseAndroidTest() {
         initSetup()
         val signal = CountDownLatch(1)
         clearLoggedInPreferences()
-        affordability.getFinancialPassport { resource ->
-            assertEquals(Resource.Status.ERROR, resource.status)
-            assertNotNull(resource.error)
-            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
-            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
+        affordability.getFinancialPassport { _, resource ->
+            assertEquals(Resource.Status.ERROR, resource?.status)
+            assertNotNull(resource?.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource?.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource?.error as DataError).subType)
             signal.countDown()
         }
         signal.await(3, TimeUnit.SECONDS)
@@ -201,11 +201,11 @@ class AffordabilityTest : BaseAndroidTest() {
             }
             )
 
-        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
-            assertEquals(Resource.Status.SUCCESS, resource.status)
-            assertNull(resource.error)
-            assertNotNull(resource.data)
-            val bodyString = resource.data?.string()?.replace("\n", "")
+        affordability.exportFinancialPassport(ExportType.PDF) { _, resource ->
+            assertEquals(Resource.Status.SUCCESS, resource?.status)
+            assertNull(resource?.error)
+            assertNotNull(resource?.data)
+            val bodyString = resource?.data?.string()?.replace("\n", "")
             bodyString?.let {
                 val user: User? = Gson().fromJson(it)
                 assertEquals("jacob@frollo.us", user?.email)
@@ -224,9 +224,9 @@ class AffordabilityTest : BaseAndroidTest() {
         val signal = CountDownLatch(1)
         clearLoggedInPreferences()
 
-        affordability.exportFinancialPassport(ExportType.PDF) { resource ->
+        affordability.exportFinancialPassport(ExportType.PDF) { _, resource ->
             assertNotNull(resource)
-            assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
+            assertEquals(DataErrorType.AUTHENTICATION, (resource?.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
             signal.countDown()
         }
