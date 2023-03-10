@@ -22,6 +22,8 @@ import us.frollo.frollosdk.FrolloSDK
 import us.frollo.frollosdk.R
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.core.OnFrolloSDKCompletionListener
+import us.frollo.frollosdk.core.OnFrolloSDKExportDataCompletionListener
+import us.frollo.frollosdk.core.OnFrolloSDKFPCompletionListener
 import us.frollo.frollosdk.error.FrolloSDKError
 import us.frollo.frollosdk.extensions.enqueue
 import us.frollo.frollosdk.extensions.fetchNetworth
@@ -62,7 +64,7 @@ class Affordability(network: NetworkService) {
         aggregators: List<AggregatorType>? = null,
         fromDate: String? = null, // 2021-01-01
         toDate: String? = null, // 2021-01-01
-        completion: OnFrolloSDKCompletionListener<Resource<FinancialPassportResponse>>
+        completion: OnFrolloSDKFPCompletionListener<Boolean, Resource<FinancialPassportResponse>?>
     ) {
         affordabilityAPI.getFinancialPassport(
             accountIds,
@@ -71,10 +73,18 @@ class Affordability(network: NetworkService) {
             fromDate, // 2021-01-01
             toDate
         ).enqueue { resource ->
-            if (resource.status == Resource.Status.ERROR) {
-                Log.e("$TAG#getFinancialPassport", resource.error?.localizedDescription)
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    when (resource.responseStatusCode) {
+                        202 -> completion.invoke(true, null)
+                        else -> completion.invoke(false, resource)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#getFinancialPassport", resource.error?.localizedDescription)
+                    completion.invoke(false, resource)
+                }
             }
-            completion.invoke(resource)
         }
     }
 
@@ -82,17 +92,20 @@ class Affordability(network: NetworkService) {
      * Export financial passport from the host
      *
      * @param format of financial passport  to download
-     * @param completion: Completion handler with optional error if the request fails or Financial Passport PDF body if succeeds
+     * @param completion: Completion handler with optional error if the request fails or flag indicating request is still processing & Financial Passport PDF body if succeeds
      */
-    fun exportFinancialPassport(format: ExportType, completion: OnFrolloSDKCompletionListener<Resource<ResponseBody>>) {
+    fun exportFinancialPassport(format: ExportType, completion: OnFrolloSDKExportDataCompletionListener<Boolean, Resource<ResponseBody>>) {
         affordabilityAPI.exportFinancialPassport(format).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
-                    completion.invoke(resource)
+                    when (resource.responseStatusCode) {
+                        202 -> completion.invoke(true, null)
+                        else -> completion.invoke(false, resource)
+                    }
                 }
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#exportFinancialPassport", resource.error?.localizedDescription)
-                    completion.invoke(resource)
+                    completion.invoke(false, resource)
                 }
             }
         }
