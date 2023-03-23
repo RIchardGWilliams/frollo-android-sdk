@@ -113,6 +113,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.Tran
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionRelation
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionsSummary
@@ -1429,6 +1430,7 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
      * @param accountIds Specific account IDs of the transactions to fetch summary (optional)
      * @param onlyIncludedTransactions Boolean flag to indicate to fetch summary for only those transactions that are excluded/included in budget (optional)
      * @param onlyIncludedAccounts Boolean flag to indicate to fetch summary for only those transactions of excluded/included Accounts (optional)
+     * @param baseType Breakdown of transactions summary filtered by debit or credit (optional)
      * @param completion Optional completion handler with optional error if the request fails or the transactions summary model if succeeds
      */
     fun fetchTransactionsSummary(
@@ -1437,12 +1439,13 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         accountIds: LongArray? = null,
         onlyIncludedTransactions: Boolean? = null,
         onlyIncludedAccounts: Boolean? = null,
+        baseType: TransactionBaseType? = null,
         completion: OnFrolloSDKCompletionListener<Resource<TransactionsSummary>>
     ) {
         aggregationAPI.fetchTransactionsSummaryByQuery(
             fromDate = fromDate, toDate = toDate,
             accountIds = accountIds, transactionIncluded = onlyIncludedTransactions,
-            accountIncluded = onlyIncludedAccounts
+            accountIncluded = onlyIncludedAccounts, baseType = baseType
         ).enqueue { resource ->
 
             if (resource.status == Resource.Status.ERROR)

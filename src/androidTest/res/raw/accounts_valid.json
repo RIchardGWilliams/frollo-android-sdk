@@ -20,6 +20,14 @@
     "included": true,
     "favourite": true,
     "hidden": false,
+    "primary_balance": {
+      "amount": "1799.00",
+      "currency": "AUD"
+    },
+    "secondary_balance": {
+      "amount": "-1255.25",
+      "currency": "AUD"
+    },
     "current_balance": {
         "amount": "1823.85",
         "currency": "AUD"

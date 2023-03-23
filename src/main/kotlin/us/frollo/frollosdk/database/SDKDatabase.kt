@@ -199,7 +199,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_17_18,
                     MIGRATION_18_19,
                     MIGRATION_19_20,
-                    MIGRATION_20_21
+                    MIGRATION_20_21,
+                    MIGRATION_21_22
                 )
                 .build()
         }
@@ -849,6 +850,24 @@ abstract class SDKDatabase : RoomDatabase() {
                 // START - Alter table - user - Add column external_party_id
                 database.execSQL("ALTER TABLE `user` ADD COLUMN `external_party_id` INTEGER")
                 // END - Alter table - user - Add column external_party_id
+            }
+        }
+
+        private val MIGRATION_21_22: Migration = object : Migration(21, 22) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) Alter table - account - Add columns p_balance_amount, p_balance_currency, s_balance_amount, s_balance_currency
+
+                // START - Alter table - account - Add columns p_balance_amount, p_balance_currency, s_balance_amount, s_balance_currency
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `p_balance_amount` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `p_balance_currency` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_amount` TEXT")
+                database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_currency` TEXT")
+                // END - Alter table - account - Add columns p_balance_amount, p_balance_currency, s_balance_amount, s_balance_currency
             }
         }
     }

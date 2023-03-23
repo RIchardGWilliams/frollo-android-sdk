@@ -50,6 +50,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProduct
 import us.frollo.frollosdk.model.coredata.aggregation.providers.CDRProductCategory
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.budgets.BudgetStatus
 import us.frollo.frollosdk.model.coredata.budgets.BudgetType
@@ -120,13 +121,15 @@ internal fun AggregationAPI.fetchTransactionsSummaryByQuery(
     toDate: String, // yyyy-MM-dd
     accountIds: LongArray? = null,
     accountIncluded: Boolean? = null,
-    transactionIncluded: Boolean? = null
+    transactionIncluded: Boolean? = null,
+    baseType: TransactionBaseType? = null
 ): Call<TransactionsSummaryResponse> {
 
     val queryMap = mutableMapOf("from_date" to fromDate, "to_date" to toDate)
     accountIncluded?.let { queryMap.put("account_included", it.toString()) }
     transactionIncluded?.let { queryMap.put("transaction_included", it.toString()) }
     accountIds?.let { queryMap.put("account_ids", it.joinToString(",")) }
+    baseType?.let { queryMap.put("base_type", it.toString()) }
 
     return fetchTransactionsSummary(queryMap)
 }

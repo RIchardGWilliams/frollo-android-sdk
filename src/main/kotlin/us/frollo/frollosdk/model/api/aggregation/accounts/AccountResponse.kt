@@ -49,6 +49,8 @@ internal data class AccountResponse(
     @SerializedName("favourite") val favourite: Boolean,
     @SerializedName("hidden") val hidden: Boolean,
     @SerializedName("refresh_status") val refreshStatus: RefreshStatus?,
+    @SerializedName("primary_balance") val primaryBalance: Balance?,
+    @SerializedName("secondary_balance") val secondaryBalance: Balance?,
     @SerializedName("current_balance") val currentBalance: Balance?,
     @SerializedName("available_balance") val availableBalance: Balance?,
     @SerializedName("available_cash") val availableCash: Balance?,

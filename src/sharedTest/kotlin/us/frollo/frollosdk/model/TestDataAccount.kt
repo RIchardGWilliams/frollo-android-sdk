@@ -88,6 +88,8 @@ internal fun testAccountResponseData(accountId: Long? = null, providerAccountId:
         availableCash = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         availableCredit = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         balanceDetails = balanceDetails,
+        primaryBalance = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
+        secondaryBalance = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         currentBalance = Balance(amount = randomNumber().toBigDecimal(), currency = "AUD"),
         dueDate = "2019-01-01",
         holderProfile = holderProfile,

@@ -91,6 +91,12 @@ data class Account(
     /** Refresh status */
     @Embedded(prefix = "r_status_") val refreshStatus: RefreshStatus?,
 
+    /** Primary balance (optional) */
+    @Embedded(prefix = "p_balance_") val primaryBalance: Balance?,
+
+    /** Secondary balance (optional) */
+    @Embedded(prefix = "s_balance_") val secondaryBalance: Balance?,
+
     /** Current balance (optional) */
     @Embedded(prefix = "c_balance_") val currentBalance: Balance?,
 
