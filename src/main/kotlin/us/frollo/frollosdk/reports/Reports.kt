@@ -166,6 +166,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param period Period that reports should be broken down by
      * @param categoryId Transaction category ID that reports should be filtered by. Leave blank to return all reports of that grouping (Optional)
      * @param grouping Grouping that reports should be broken down into (Optional)
+     * @param baseType Breakdown of transaction category reports filtered by debit or credit (optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchTransactionCategoryReports(
@@ -203,6 +204,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param period Period that reports should be broken down by
      * @param merchantId Merchant ID that reports should be filtered by. Leave blank to return all reports of that grouping (Optional)
      * @param grouping Grouping that reports should be broken down into (Optional)
+     * @param baseType Breakdown of merchant reports filtered by debit or credit (optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchMerchantReports(
@@ -240,6 +242,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param period Period that reports should be broken down by
      * @param budgetCategory Budget Category to filter reports by. Leave blank to return all reports of that grouping (Optional)
      * @param grouping Grouping that reports should be broken down into (Optional)
+     * @param baseType Breakdown of budget category reports filtered by debit or credit (optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchBudgetCategoryReports(
@@ -277,6 +280,7 @@ class Reports(network: NetworkService, internal val db: SDKDatabase, private val
      * @param period Period that reports should be broken down by
      * @param transactionTag Transaction tag that reports should be filtered by. Leave blank to return all reports of that grouping (Optional)
      * @param grouping Grouping that reports should be broken down into (Optional)
+     * @param baseType Breakdown of tag reports filtered by debit or credit (optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
     fun fetchTagReports(
