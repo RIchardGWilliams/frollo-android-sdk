@@ -5,7 +5,7 @@ apply plugin: 'org.jetbrains.dokka'
 apply from: "ktlint.gradle"
 
 buildscript {
-    ext.kotlin_version_internal = '1.7.21'
+    ext.kotlin_version_internal = '1.8.10'
     ext.build_gradle_tools_version_internal = '7.3.1'
 
     repositories {
