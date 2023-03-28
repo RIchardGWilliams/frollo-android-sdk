@@ -4,6 +4,22 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 apply from: "ktlint.gradle"
 
+buildscript {
+    ext.kotlin_version_internal = '1.7.21'
+    ext.build_gradle_tools_version_internal = '7.3.1'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version_internal"
+        classpath "com.android.tools.build:gradle:$build_gradle_tools_version_internal"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
+    }
+}
+
 configurations.all{
     resolutionStrategy {
         force "com.squareup.okhttp3:okhttp:4.10.0"
@@ -102,24 +118,9 @@ android {
     }
 }
 
-buildscript {
-
-    ext.kotlin_version_internal = '1.7.21'
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version_internal"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
-    }
-}
-
 repositories {
+    google()
     mavenCentral()
-    maven { url "https://jitpack.io" }
 }
 
 dependencies {
