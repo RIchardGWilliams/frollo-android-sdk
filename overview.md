@@ -99,6 +99,7 @@ The following features are part of aggregation:
 * Categorisation and tagging of transactions
 * Merchant information
 * Searching of transactions
+* Creation of manual transactions
 
 Note: Aggregation refers the the aggregated view of accounts seen within Frollo, whether this includes accounts from external aggregation partners will depend on how your tenant is configured.
 

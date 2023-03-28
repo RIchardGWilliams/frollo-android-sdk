@@ -36,6 +36,7 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsCreateDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
@@ -147,6 +148,9 @@ internal interface AggregationAPI {
 
     @PUT(URL_TRANSACTION)
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>
+
+    @POST(URL_TRANSACTIONS)
+    fun createManualTransaction(@Body request: ManualTransactionCreateUpdateRequest): Call<TransactionResponse>
 
     @PUT(URL_TRANSACTIONS_BULK)
     fun updateTransactionsInBulk(@Body request: List<TransactionBulkUpdateRequest>): Call<List<TransactionResponse>>

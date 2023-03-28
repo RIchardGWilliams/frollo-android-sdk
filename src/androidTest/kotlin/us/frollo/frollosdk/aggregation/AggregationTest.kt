@@ -68,6 +68,8 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransac
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionStatus
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitPeriod
@@ -95,6 +97,7 @@ import us.frollo.frollosdk.testutils.randomUUID
 import us.frollo.frollosdk.testutils.readStringFromJson
 import us.frollo.frollosdk.testutils.trimmedPath
 import us.frollo.frollosdk.testutils.wait
+import java.math.BigDecimal
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -3037,6 +3040,73 @@ class AggregationTest : BaseAndroidTest() {
 
             signal.countDown()
         }
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    // Manual Transaction Tests
+    @Test
+    fun testCreateManualTransaction() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val body = readStringFromJson(app, R.raw.transaction_manual_id_194830)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val transactionDate = "2016-10-09T00:00:00.000Z"
+        aggregation.createManualTransaction(
+            amount = BigDecimal("1635.44"),
+            currency = "AUD",
+            baseType = TransactionBaseType.CREDIT,
+            transactionStatus = TransactionStatus.POSTED,
+            included = true,
+            description = "0150 Amazon  Santa Ana CA 55.73USD",
+            accountId = 939,
+            payee = "T SMITH",
+            memo = "test",
+            categoryId = 33,
+            budgetCategory = BudgetCategory.INCOME,
+            transactionDate = transactionDate,
+            type = TransactionType.DIRECT_DEBIT
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchTransactions().test()
+            testObserver.awaitValue()
+            val models = testObserver.value().data
+            assertNotNull(models)
+            assertEquals(1, models?.size)
+            assertEquals(emptyList<String>(), models?.get(0)?.userTags)
+            assertEquals(198430L, models?.get(0)?.transactionId)
+            assertEquals(939L, models?.get(0)?.accountId)
+            assertEquals(1L, models?.get(0)?.category?.id)
+            assertEquals(BigDecimal("1635.44"), models?.get(0)?.amount?.amount)
+            assertEquals("AUD", models?.get(0)?.amount?.currency)
+            assertEquals(TransactionBaseType.CREDIT, models?.get(0)?.baseType)
+            assertEquals(true, models?.get(0)?.included)
+            assertEquals(transactionDate, models?.get(0)?.transactionDate)
+            assertEquals(transactionDate, models?.get(0)?.postDate)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("aggregation/transactions", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 

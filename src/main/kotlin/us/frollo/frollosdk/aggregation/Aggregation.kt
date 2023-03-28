@@ -85,6 +85,7 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsCreateDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
@@ -113,8 +114,11 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.Tran
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionRelation
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionStatus
+import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionsSummary
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimit
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
@@ -122,6 +126,7 @@ import us.frollo.frollosdk.model.coredata.shared.OrderType
 import us.frollo.frollosdk.network.NetworkService
 import us.frollo.frollosdk.network.api.AggregationAPI
 import us.frollo.frollosdk.network.api.CdrAPI
+import java.math.BigDecimal
 
 /**
  * Manages all aggregation data including accounts, transactions, categories and merchants.
@@ -1415,6 +1420,73 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
                 }
                 Resource.Status.ERROR -> {
                     Log.e("$TAG#updateTransactionsInBulk", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
+     * Create a manual transaction
+     * @param amount amount of the transaction
+     * @param currency currency of the transaction
+     * @param baseType baseType of the transaction
+     * @param transactionStatus status of the transaction
+     * @param included include status of the transaction
+     * @param description description status of the transaction
+     * @param accountId the affected account
+     * @param payee who is being paid
+     * @param categoryId the category for the transaction
+     * @param budgetCategory the budget category
+     * @param transactionDate the actual transaction date
+     * @param memo any additional memo
+     * @param type the transaction type
+     * @param completion the completion block for success/error
+     */
+    fun createManualTransaction(
+        amount: BigDecimal,
+        currency: String,
+        baseType: TransactionBaseType,
+        transactionStatus: TransactionStatus = TransactionStatus.POSTED,
+        included: Boolean = true,
+        description: String,
+        accountId: Long,
+        payee: String,
+        categoryId: Long,
+        budgetCategory: BudgetCategory,
+        transactionDate: String,
+        memo: String?,
+        type: TransactionType,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        val manualTransactionReq = ManualTransactionCreateUpdateRequest(
+            amount = amount,
+            currency = currency,
+            baseType = baseType,
+            transactionStatus = transactionStatus,
+            included = included,
+            originalDescription = description,
+            accountId = accountId,
+            payee = payee,
+            payer = null,
+            reference = null,
+            categoryId = categoryId,
+            merchantId = null,
+            merchantLocationId = null,
+            budgetCategory = budgetCategory,
+            transactionDate = transactionDate,
+            postedDate = transactionDate,
+            memo = memo,
+            type = type
+        )
+
+        aggregationAPI.createManualTransaction(manualTransactionReq).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleTransactionResponse(response = resource.data, completion = completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#createManualTransaction", resource.error?.localizedDescription)
                     completion?.invoke(Result.error(resource.error))
                 }
             }

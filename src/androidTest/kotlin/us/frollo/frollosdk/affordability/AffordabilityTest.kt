@@ -74,7 +74,7 @@ class AffordabilityTest : BaseAndroidTest() {
             )
 
         affordability.getFinancialPassport { _, resource ->
-            assertEquals(Resource.Status.SUCCESS, resource.status)
+            assertEquals(Resource.Status.SUCCESS, resource?.status)
             assertNull(resource?.error)
             val model = resource?.data
             assertNotNull(model)
