@@ -3109,7 +3109,67 @@ class AggregationTest : BaseAndroidTest() {
         assertEquals("aggregation/transactions", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
 
+    @Test
+    fun testDeleteManualTransaction() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        val transactionId = 54321L
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/$transactionId") {
+                        return MockResponse()
+                            .setResponseCode(204)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val data = testTransactionResponseData(transactionId = transactionId)
+        database.transactions().insert(data.toTransaction())
+
+        aggregation.deleteManualTransaction(transactionId) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchTransaction(transactionId).test()
+            testObserver.awaitValue()
+            val model = testObserver.value().data
+            assertNull(model)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("aggregation/transactions/54321", request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+
+        tearDown()
+    }
+
+    @Test
+    fun testDeleteManualTransactionFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+        clearLoggedInPreferences()
+
+        aggregation.deleteManualTransaction(512125L) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
         tearDown()
     }
 

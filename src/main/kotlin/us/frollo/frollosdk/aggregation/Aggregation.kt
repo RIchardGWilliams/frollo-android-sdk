@@ -1494,6 +1494,30 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
+     * Delete a manual transaction
+     *
+     * @param transactionId Transaction to delete
+     * @param completion Optional completion handler with optional error if the request fails or succeeds
+     */
+    fun deleteManualTransaction(
+        transactionId: Long,
+        completion: OnFrolloSDKCompletionListener<Result>?
+    ) {
+        aggregationAPI.deleteManualTransaction(transactionId).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    removeCachedTransactions(longArrayOf(transactionId))
+                    completion?.invoke(Result.success())
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#deleteManualTransaction", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
      * Fetch transactions summary from a certain period from the host
      *
      * @param fromDate Start date to fetch transactions summary from (inclusive). Please use [TransactionsSummary.DATE_FORMAT_PATTERN] for the format pattern.

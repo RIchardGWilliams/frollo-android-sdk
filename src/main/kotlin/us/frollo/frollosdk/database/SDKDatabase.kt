@@ -117,7 +117,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         ExternalParty::class,
         DisclosureConsent::class
     ],
-    version = 21, exportSchema = true
+    version = 22, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
