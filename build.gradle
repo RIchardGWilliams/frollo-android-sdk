@@ -35,6 +35,8 @@ android {
         versionName "3.22.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // Clear existing data for package using 'pm clear'
+        testInstrumentationRunnerArguments clearPackageData: 'true'
         manifestPlaceholders = ['appAuthRedirectScheme': 'frollo-sdk-test']
         buildConfigField "String", "SDK_VERSION_NAME", "\"$versionName\""
         buildConfigField "int", "SDK_VERSION_CODE", "$versionCode"

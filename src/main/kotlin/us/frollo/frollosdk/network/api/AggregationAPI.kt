@@ -152,6 +152,9 @@ internal interface AggregationAPI {
     @POST(URL_TRANSACTIONS)
     fun createManualTransaction(@Body request: ManualTransactionCreateUpdateRequest): Call<TransactionResponse>
 
+    @DELETE(URL_TRANSACTION)
+    fun deleteManualTransaction(@Path("transaction_id") transactionId: Long): Call<Void>
+
     @PUT(URL_TRANSACTIONS_BULK)
     fun updateTransactionsInBulk(@Body request: List<TransactionBulkUpdateRequest>): Call<List<TransactionResponse>>
 
