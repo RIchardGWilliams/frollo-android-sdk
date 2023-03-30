@@ -23,7 +23,7 @@ import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionTy
 import us.frollo.frollosdk.model.coredata.shared.BudgetCategory
 import java.math.BigDecimal
 
-internal data class ManualTransactionCreateUpdateRequest(
+internal data class ManualTransactionCreateRequest(
     @SerializedName("account_id") val accountId: Long,
     @SerializedName("base_type") val baseType: TransactionBaseType,
     @SerializedName("transaction_status") val transactionStatus: TransactionStatus,

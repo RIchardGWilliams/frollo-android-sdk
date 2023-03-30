@@ -1,0 +1,57 @@
+{
+	"id": 198430,
+	"account_id": 939,
+	"account_aggregator": "demo",
+	"base_type": "credit",
+	"status": "posted",
+	"transaction_date": "2017-10-09T00:00:00.000Z",
+	"post_date": "2017-10-09T00:00:00.000Z",
+	"amount": {
+		"amount": "1636.44",
+		"currency": "AUD"
+	},
+	"description": {
+		"original": "0150 Amazon  Santa Ana CA 55.73USD",
+		"user": "New Toy",
+		"simple": "Amazon Purcahse"
+	},
+	"budget_category": "income",
+	"category": {
+		"id": 1,
+		"name": "Woolworths",
+		"image_url": "https://example.com/icon.png"
+	},
+	"merchant": {
+		"id": 1,
+		"name": "Woolworths",
+		"phone": "(02) 5689 3423",
+		"website": "https://www.woolworths.com.au",
+		"image_url": "https://example.com/logo.png",
+		"location": {
+			"formatted_address": "10 Falcon St, Crows Nest NSW 2065, Australia",
+			"line_1": "10 Falcon St",
+			"line_2": "Suite 2 Level 3",
+			"line_3": "Building 2 MLC",
+			"suburb": "Crows Nest",
+			"state": "NSW",
+			"postcode": "2065",
+			"country": "Australia",
+			"latitude": -33.827499,
+			"longitude": 151.201699
+		}
+	},
+	"memo": "Updated memo",
+	"included": true,
+	"bill_id": 1,
+	"bill_payment_id": 1,
+	"user_tags": [],
+	"biller": {
+		"code": "BPAY code",
+		"name": "BPAY Biller name",
+		"crn": "Customer Reference Number",
+		"apca_number": "Sender APCA Number"
+	},
+	"payee": "T SMITH",
+	"payer": "A JONES",
+	"type": "payment"
+}
