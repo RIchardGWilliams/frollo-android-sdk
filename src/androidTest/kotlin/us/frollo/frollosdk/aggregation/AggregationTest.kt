@@ -3053,7 +3053,7 @@ class AggregationTest : BaseAndroidTest() {
 
         val signal = CountDownLatch(1)
 
-        val body = readStringFromJson(app, R.raw.transaction_manual_id_194830)
+        val body = readStringFromJson(app, R.raw.transaction_manual_id_198430)
         mockServer.dispatcher = (
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
@@ -3109,6 +3109,101 @@ class AggregationTest : BaseAndroidTest() {
         assertEquals("aggregation/transactions", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
+
+    @Test()
+    fun testUpdateManualTransaction() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        val transactionId = 198430L
+        val body = readStringFromJson(app, R.raw.transaction_manual_id_198430_update)
+        mockServer.dispatcher = (
+            object : Dispatcher() {
+                override fun dispatch(request: RecordedRequest): MockResponse {
+                    if (request.trimmedPath == "aggregation/transactions/$transactionId") {
+                        return MockResponse()
+                            .setResponseCode(200)
+                            .setBody(body)
+                    }
+                    return MockResponse().setResponseCode(404)
+                }
+            }
+            )
+
+        val transactionDate = "2017-10-09T00:00:00.000Z"
+        aggregation.updateManualTransaction(
+            transactionId = transactionId,
+            userDescription = "Updated manual description",
+            categoryId = 33,
+            included = true,
+            includeApplyAll = true,
+            budgetCategory = BudgetCategory.INCOME,
+            memo = "Updated memo",
+            budgetApplyAll = true,
+        ) { result ->
+            assertEquals(Result.Status.SUCCESS, result.status)
+            assertNull(result.error)
+
+            val testObserver = aggregation.fetchTransactions().test()
+            testObserver.awaitValue()
+            val models = testObserver.value().data
+            assertNotNull(models)
+            assertEquals(1, models?.size)
+            assertEquals(emptyList<String>(), models?.get(0)?.userTags)
+            assertEquals(transactionId, models?.get(0)?.transactionId)
+            assertEquals(939L, models?.get(0)?.accountId)
+            assertEquals(1L, models?.get(0)?.category?.id)
+            assertEquals(BigDecimal("1636.44"), models?.get(0)?.amount?.amount)
+            assertEquals("AUD", models?.get(0)?.amount?.currency)
+            assertEquals(TransactionBaseType.CREDIT, models?.get(0)?.baseType)
+            assertEquals(true, models?.get(0)?.included)
+            assertEquals("Updated memo", models?.get(0)?.memo)
+            assertEquals(transactionDate, models?.get(0)?.transactionDate)
+            assertEquals(transactionDate, models?.get(0)?.postDate)
+
+            signal.countDown()
+        }
+
+        val request = mockServer.takeRequest()
+        assertEquals("aggregation/transactions/$transactionId", request.trimmedPath)
+
+        signal.await(3, TimeUnit.SECONDS)
+        tearDown()
+    }
+
+    @Test
+    fun testUpdateManualTransactionFailsIfLoggedOut() {
+        initSetup()
+
+        val signal = CountDownLatch(1)
+
+        clearLoggedInPreferences()
+
+        val transactionId = 198430L
+        val transactionDate = "2017-10-09T00:00:00.000Z"
+        aggregation.updateManualTransaction(
+            transactionId,
+            userDescription = "N/A",
+            categoryId = 33,
+            budgetCategory = BudgetCategory.INCOME,
+            memo = "Updated memo",
+            budgetApplyAll = true,
+            included = true,
+            recategoriseAll = false,
+        ) { result ->
+            assertEquals(Result.Status.ERROR, result.status)
+            assertNotNull(result.error)
+            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
+            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
+
+            signal.countDown()
+        }
+
+        signal.await(3, TimeUnit.SECONDS)
+
         tearDown()
     }
 

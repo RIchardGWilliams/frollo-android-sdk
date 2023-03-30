@@ -36,7 +36,8 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsCreateDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
-import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateUpdateRequest
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateRequest
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionUpdateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
@@ -150,7 +151,10 @@ internal interface AggregationAPI {
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>
 
     @POST(URL_TRANSACTIONS)
-    fun createManualTransaction(@Body request: ManualTransactionCreateUpdateRequest): Call<TransactionResponse>
+    fun createManualTransaction(@Body request: ManualTransactionCreateRequest): Call<TransactionResponse>
+
+    @PUT(URL_TRANSACTION)
+    fun updateManualTransaction(@Path("transaction_id") transactionId: Long, @Body request: ManualTransactionUpdateUpdateRequest): Call<TransactionResponse>
 
     @DELETE(URL_TRANSACTION)
     fun deleteManualTransaction(@Path("transaction_id") transactionId: Long): Call<Void>

@@ -85,7 +85,8 @@ import us.frollo.frollosdk.model.api.aggregation.providers.ProviderResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagResponse
 import us.frollo.frollosdk.model.api.aggregation.tags.TransactionTagsCreateDeleteRequest
 import us.frollo.frollosdk.model.api.aggregation.transactioncategories.TransactionCategoryResponse
-import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateUpdateRequest
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionCreateRequest
+import us.frollo.frollosdk.model.api.aggregation.transactions.ManualTransactionUpdateUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionBulkUpdateRequest
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionUpdateRequest
@@ -1451,15 +1452,15 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         included: Boolean = true,
         description: String,
         accountId: Long,
-        payee: String,
-        categoryId: Long,
-        budgetCategory: BudgetCategory,
+        payee: String? = null,
+        categoryId: Long?,
+        budgetCategory: BudgetCategory?,
         transactionDate: String,
         memo: String?,
         type: TransactionType,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
-        val manualTransactionReq = ManualTransactionCreateUpdateRequest(
+        val manualTransactionReq = ManualTransactionCreateRequest(
             amount = amount,
             currency = currency,
             baseType = baseType,
@@ -1481,6 +1482,54 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
         )
 
         aggregationAPI.createManualTransaction(manualTransactionReq).enqueue { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> {
+                    handleTransactionResponse(response = resource.data, completion = completion)
+                }
+                Resource.Status.ERROR -> {
+                    Log.e("$TAG#createManualTransaction", resource.error?.localizedDescription)
+                    completion?.invoke(Result.error(resource.error))
+                }
+            }
+        }
+    }
+
+    /**
+     * Update a manual transaction
+     * @param transactionId the manual transaction id we are updating
+     * @param memo any additional memo
+     * @param userDescription user description update
+     * @param included description status of the transaction
+     * @param budgetCategory the budget category
+     * @param categoryId the category for the transaction
+     * @param budgetApplyAll Should this be applied to all similar transactions (BE classification)
+     * @param completion the completion block for success/error
+     */
+
+    fun updateManualTransaction(
+        transactionId: Long,
+        memo: String?,
+        userDescription: String?,
+        included: Boolean? = true,
+        includeApplyAll: Boolean? = true,
+        budgetCategory: BudgetCategory,
+        budgetApplyAll: Boolean?,
+        categoryId: Long?,
+        recategoriseAll: Boolean? = true,
+        completion: OnFrolloSDKCompletionListener<Result>? = null
+    ) {
+        val manualTransactionReq = ManualTransactionUpdateUpdateRequest(
+            included = included,
+            categoryId = categoryId,
+            budgetCategory = budgetCategory,
+            memo = memo,
+            userDescription = userDescription,
+            includedApplyAll = includeApplyAll,
+            recategoriseAll = recategoriseAll,
+            budgetApplyAll = true
+        )
+
+        aggregationAPI.updateManualTransaction(transactionId, manualTransactionReq).enqueue { resource ->
             when (resource.status) {
                 Resource.Status.SUCCESS -> {
                     handleTransactionResponse(response = resource.data, completion = completion)
