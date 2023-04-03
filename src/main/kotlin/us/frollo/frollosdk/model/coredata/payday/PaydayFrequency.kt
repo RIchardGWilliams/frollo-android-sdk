@@ -39,6 +39,11 @@ enum class PaydayFrequency {
     /** Weekly */
     @SerializedName("weekly") WEEKLY,
 
+    /**
+     * Last business day of month
+     */
+    @SerializedName("monthly_last_businessday") MONTHLY_LAST_BUSINESS_DAY,
+
     /** Unknown */
     @SerializedName("unknown") UNKNOWN;
 

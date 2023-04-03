@@ -84,7 +84,14 @@ class Paydays(network: NetworkService, internal val db: SDKDatabase) {
         nextDate: String? = null,
         completion: OnFrolloSDKCompletionListener<Result>? = null
     ) {
-        val request = PaydayUpdateRequest(frequency = frequency, nextDate = nextDate)
+        val request: PaydayUpdateRequest =
+            if (frequency == PaydayFrequency.MONTHLY_LAST_BUSINESS_DAY || frequency == PaydayFrequency.IRREGULAR) {
+                // These cases don't supply a nextDate
+                PaydayUpdateRequest(frequency = frequency)
+            } else {
+                // Every other case supplies a nextDate
+                PaydayUpdateRequest(frequency = frequency, nextDate = nextDate)
+            }
 
         paydayAPI.updatePayday(request).enqueue { resource ->
             when (resource.status) {
