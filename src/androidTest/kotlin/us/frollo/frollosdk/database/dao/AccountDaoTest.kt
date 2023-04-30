@@ -35,12 +35,10 @@ import us.frollo.frollosdk.mapping.toAccount
 import us.frollo.frollosdk.mapping.toGoal
 import us.frollo.frollosdk.mapping.toProvider
 import us.frollo.frollosdk.mapping.toProviderAccount
-import us.frollo.frollosdk.mapping.toTransaction
 import us.frollo.frollosdk.model.testAccountResponseData
 import us.frollo.frollosdk.model.testGoalResponseData
 import us.frollo.frollosdk.model.testProviderAccountResponseData
 import us.frollo.frollosdk.model.testProviderResponseData
-import us.frollo.frollosdk.model.testTransactionResponseData
 
 class AccountDaoTest {
 
@@ -262,8 +260,6 @@ class AccountDaoTest {
         db.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         db.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        db.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        db.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
         db.goals().insert(testGoalResponseData(goalId = 789, accountId = 345).toGoal())
         db.goals().insert(testGoalResponseData(goalId = 790, accountId = 345).toGoal())
 
@@ -276,9 +272,6 @@ class AccountDaoTest {
 
         assertEquals(345L, model.account?.accountId)
         assertEquals(234L, model.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model.transactions?.size)
-        assertEquals(456L, model.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model.transactions?.get(1)?.transactionId)
         assertEquals(789L, model.goals?.get(0)?.goalId)
         assertEquals(790L, model.goals?.get(1)?.goalId)
     }
@@ -288,8 +281,6 @@ class AccountDaoTest {
         db.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         db.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        db.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        db.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
 
         val testObserver = db.accounts().loadWithRelation(accountId = 345).test()
         testObserver.awaitValue()
@@ -298,9 +289,6 @@ class AccountDaoTest {
 
         assertEquals(345L, model?.account?.accountId)
         assertEquals(234L, model?.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model?.transactions?.size)
-        assertEquals(456L, model?.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model?.transactions?.get(1)?.transactionId)
     }
 
     @Test
@@ -308,11 +296,7 @@ class AccountDaoTest {
         db.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         db.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         db.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        db.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        db.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
         db.accounts().insert(testAccountResponseData(accountId = 346, providerAccountId = 234).toAccount())
-        db.transactions().insert(testTransactionResponseData(transactionId = 458, accountId = 346).toTransaction())
-        db.transactions().insert(testTransactionResponseData(transactionId = 459, accountId = 346).toTransaction())
 
         val testObserver = db.accounts().loadWithRelation().test()
         testObserver.awaitValue()
@@ -323,16 +307,10 @@ class AccountDaoTest {
 
         assertEquals(345L, model1.account?.accountId)
         assertEquals(234L, model1.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model1.transactions?.size)
-        assertEquals(456L, model1.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model1.transactions?.get(1)?.transactionId)
 
         val model2 = testObserver.value()[1]
 
         assertEquals(346L, model2.account?.accountId)
         assertEquals(234L, model2.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model2.transactions?.size)
-        assertEquals(458L, model2.transactions?.get(0)?.transactionId)
-        assertEquals(459L, model2.transactions?.get(1)?.transactionId)
     }
 }

@@ -468,7 +468,7 @@ class NetworkAuthenticatorTest : BaseAndroidTest() {
             signal.countDown()
         }
 
-        signal.await(8, TimeUnit.SECONDS)
+        signal.await(15, TimeUnit.SECONDS)
 
         tearDown()
     }

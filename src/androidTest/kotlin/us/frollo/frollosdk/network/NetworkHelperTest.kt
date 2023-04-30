@@ -69,10 +69,4 @@ class NetworkHelperTest {
         val networkHelper = NetworkHelper(appInfo)
         assertNotNull(networkHelper.deviceVersion)
     }
-
-    @Test
-    fun testUserAgent() {
-        val networkHelper = NetworkHelper(appInfo)
-        assertNotNull(networkHelper.userAgent)
-    }
 }

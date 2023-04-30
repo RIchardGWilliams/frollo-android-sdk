@@ -17,6 +17,7 @@
 package us.frollo.frollosdk.network.api
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -144,8 +145,14 @@ internal interface AggregationAPI {
     @GET(URL_TRANSACTION)
     fun fetchTransaction(@Path("transaction_id") transactionId: Long): Call<TransactionResponse>
 
+    @GET(URL_TRANSACTION)
+    suspend fun fetchTransactionSuspended(@Path("transaction_id") transactionId: Long): Response<TransactionResponse>
+
     @GET(URL_SIMILAR_TRANSACTIONS)
     fun fetchSimilarTransactions(@Path("transaction_id") transactionId: Long, @QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
+
+    @GET(URL_SIMILAR_TRANSACTIONS)
+    suspend fun fetchTransactionsSuspended(@QueryMap queryParams: Map<String, String>): Response<PaginatedResponse<TransactionResponse>>
 
     @PUT(URL_TRANSACTION)
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>

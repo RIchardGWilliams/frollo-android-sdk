@@ -52,7 +52,6 @@ import us.frollo.frollosdk.database.dao.ProviderDao
 import us.frollo.frollosdk.database.dao.ReportAccountBalanceDao
 import us.frollo.frollosdk.database.dao.ServiceOutageDao
 import us.frollo.frollosdk.database.dao.TransactionCategoryDao
-import us.frollo.frollosdk.database.dao.TransactionDao
 import us.frollo.frollosdk.database.dao.TransactionUserTagsDao
 import us.frollo.frollosdk.database.dao.UserDao
 import us.frollo.frollosdk.model.api.messages.MessageResponse
@@ -63,7 +62,6 @@ import us.frollo.frollosdk.model.coredata.aggregation.provideraccounts.ProviderA
 import us.frollo.frollosdk.model.coredata.aggregation.providers.Provider
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TransactionTag
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategory
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
 import us.frollo.frollosdk.model.coredata.appconfiguration.CompanyConfig
 import us.frollo.frollosdk.model.coredata.appconfiguration.FeatureConfig
 import us.frollo.frollosdk.model.coredata.appconfiguration.LinkConfig
@@ -92,7 +90,6 @@ import us.frollo.frollosdk.model.coredata.user.User
         Provider::class,
         ProviderAccount::class,
         Account::class,
-        Transaction::class,
         TransactionCategory::class,
         Merchant::class,
         ReportAccountBalance::class,
@@ -117,7 +114,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         ExternalParty::class,
         DisclosureConsent::class
     ],
-    version = 22, exportSchema = true
+    version = 23, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -128,7 +125,6 @@ abstract class SDKDatabase : RoomDatabase() {
     internal abstract fun providers(): ProviderDao
     internal abstract fun providerAccounts(): ProviderAccountDao
     internal abstract fun accounts(): AccountDao
-    internal abstract fun transactions(): TransactionDao
     internal abstract fun transactionCategories(): TransactionCategoryDao
     internal abstract fun merchants(): MerchantDao
     internal abstract fun reportsAccountBalance(): ReportAccountBalanceDao
@@ -200,7 +196,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_18_19,
                     MIGRATION_19_20,
                     MIGRATION_20_21,
-                    MIGRATION_21_22
+                    MIGRATION_21_22,
+                    MIGRATION_22_23
                 )
                 .build()
         }
@@ -868,6 +865,19 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_amount` TEXT")
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_currency` TEXT")
                 // END - Alter table - account - Add columns p_balance_amount, p_balance_currency, s_balance_amount, s_balance_currency
+            }
+        }
+
+        private val MIGRATION_22_23: Migration = object : Migration(22, 23) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) Drop all transaction caching: WA-4511
+                database.execSQL("DROP TABLE transaction_model")
+                // END - Drop transaction_model
             }
         }
     }
