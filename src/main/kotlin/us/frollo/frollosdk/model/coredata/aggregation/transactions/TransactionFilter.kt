@@ -93,4 +93,27 @@ data class TransactionFilter(
         size?.let { queryMap.put("size", it.toString()) }
         return queryMap
     }
+
+    fun clear() {
+        transactionIds = null
+        accountIds = null
+        budgetCategory = null
+        transactionCategoryIds = null
+        merchantIds = null
+        billId = null
+        goalId = null
+        searchTerm = null
+        minimumAmount = null
+        maximumAmount = null
+        baseType = null
+        tags = null
+        status = null
+        fromDate = null
+        toDate = null
+        transactionIncluded = null
+        accountIncluded = null
+        after = null
+        before = null
+        size = null
+    }
 }

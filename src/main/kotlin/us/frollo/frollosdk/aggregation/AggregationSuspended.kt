@@ -18,8 +18,6 @@ package us.frollo.frollosdk.aggregation
 
 import us.frollo.frollosdk.base.PaginationInfoDatedCursor
 import us.frollo.frollosdk.base.Resource
-import us.frollo.frollosdk.extensions.enqueue
-import us.frollo.frollosdk.extensions.fetchTransactions
 import us.frollo.frollosdk.logging.Log
 import us.frollo.frollosdk.mapping.toTransaction
 import us.frollo.frollosdk.model.api.aggregation.transactions.TransactionResponse
@@ -74,7 +72,7 @@ internal fun Aggregation.handlePaginatedResponseSuspended(paginatedResponse: Pag
         fetchMissingMerchants(merchantIds.toSet())
     }
 
-    paginatedResponse?.data?.let { transactions ->
+    return paginatedResponse?.data?.let { transactions ->
         val firstTransaction = transactions.firstOrNull()
         val lastTransaction = transactions.lastOrNull()
 

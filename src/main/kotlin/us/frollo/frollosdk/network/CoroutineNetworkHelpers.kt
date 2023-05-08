@@ -20,8 +20,6 @@ import us.frollo.frollosdk.mapping.toOAuth2ErrorResponse
  *
  * @param operation The call being made, GET/POST/PUT/DELETE etc
  * @return The resource being returned from operation, errors are handled the same way as
- * @see handleFailure
- * @see NetworkError
  */
 internal suspend fun <T : Any> makeApiCall(operation: suspend () -> Response<T>): Resource<T> {
     var apiResponse: ApiResponse<T>? = null
@@ -34,17 +32,17 @@ internal suspend fun <T : Any> makeApiCall(operation: suspend () -> Response<T>)
             processNetworkResponseError(errorResponseType, apiResponse, null)
         }
     } catch (e: Exception) {
-        processNetworkResponseError(ErrorResponseType.NORMAL, apiResponse!!, e)
+        processNetworkResponseError(ErrorResponseType.NORMAL, apiResponse, e)
     }
 }
 
 internal fun <T> processNetworkResponseError(
     errorResponseType: ErrorResponseType,
-    errorResponse: ApiResponse<T>,
+    errorResponse: ApiResponse<T>?,
     t: Throwable? = null
 ): Resource<T> {
-    val code = errorResponse.code
-    val errorMsg = errorResponse.errorMessage
+    val code = errorResponse?.code
+    val errorMsg = errorResponse?.errorMessage
 
     val oAuth2ErrorResponse = errorMsg?.toOAuth2ErrorResponse()
     val dataError = errorMsg?.toDataError()

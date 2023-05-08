@@ -142,6 +142,9 @@ internal interface AggregationAPI {
     @GET(URL_TRANSACTIONS)
     fun fetchTransactions(@QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
 
+    @GET(URL_TRANSACTIONS)
+    suspend fun fetchTransactionsSuspended(@QueryMap queryParams: Map<String, String>): Response<PaginatedResponse<TransactionResponse>>
+
     @GET(URL_TRANSACTION)
     fun fetchTransaction(@Path("transaction_id") transactionId: Long): Call<TransactionResponse>
 
@@ -150,9 +153,6 @@ internal interface AggregationAPI {
 
     @GET(URL_SIMILAR_TRANSACTIONS)
     fun fetchSimilarTransactions(@Path("transaction_id") transactionId: Long, @QueryMap queryParams: Map<String, String>): Call<PaginatedResponse<TransactionResponse>>
-
-    @GET(URL_SIMILAR_TRANSACTIONS)
-    suspend fun fetchTransactionsSuspended(@QueryMap queryParams: Map<String, String>): Response<PaginatedResponse<TransactionResponse>>
 
     @PUT(URL_TRANSACTION)
     fun updateTransaction(@Path("transaction_id") transactionId: Long, @Body request: TransactionUpdateRequest): Call<TransactionResponse>
