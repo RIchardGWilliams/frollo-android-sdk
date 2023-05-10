@@ -472,12 +472,12 @@ class Bills(network: NetworkService, internal val db: SDKDatabase, private val a
      * @param paid Indicates if the bill payment to b marked as paid/unpaid. true if to be marked as paid. (Optional)
      * @param completion Optional completion handler with optional error if the request fails
      */
-    fun updateBillPayment(billPaymentId: Long, date: String? = null, paid: Boolean? = null, completion: OnFrolloSDKCompletionListener<Result>? = null) {
+    fun updateBillPayment(billPaymentId: Long, transactionId: Long? = null, date: String? = null, paid: Boolean? = null, completion: OnFrolloSDKCompletionListener<Result>? = null) {
         val status = paid?.let {
             if (paid) BillPaymentRequestStatus.PAID else BillPaymentRequestStatus.UNPAID
         }
 
-        val request = BillPaymentUpdateRequest(date = date, status = status)
+        val request = BillPaymentUpdateRequest(date = date, status = status, transactionId = transactionId)
 
         billsAPI.updateBillPayment(billPaymentId, request).enqueue { resource ->
             when (resource.status) {
