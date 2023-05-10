@@ -20,5 +20,6 @@ import com.google.gson.annotations.SerializedName
 
 internal data class BillPaymentUpdateRequest(
     @SerializedName("status") val status: BillPaymentRequestStatus? = null,
-    @SerializedName("date") val date: String? = null // yyyy-MM-dd
+    @SerializedName("date") val date: String? = null, // yyyy-MM-dd
+    @SerializedName("transaction_id") val transactionId: Long? = null
 )
