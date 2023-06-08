@@ -583,7 +583,6 @@ object FrolloSDK {
     private fun refreshPrimary() {
         aggregation.refreshProviderAccounts()
         aggregation.refreshAccounts()
-        aggregation.refreshTransactionsWithPagination()
         consents.refreshConsentsWithPagination()
         userManagement.refreshUser()
         messages.refreshMessagesWithPagination(MessageFilter())

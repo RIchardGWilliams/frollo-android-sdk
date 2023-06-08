@@ -32,7 +32,6 @@ import us.frollo.frollosdk.BaseAndroidTest
 import us.frollo.frollosdk.base.PaginatedResult
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.base.Result
-import us.frollo.frollosdk.base.SimpleSQLiteQueryBuilder
 import us.frollo.frollosdk.error.DataError
 import us.frollo.frollosdk.error.DataErrorSubType
 import us.frollo.frollosdk.error.DataErrorType
@@ -65,11 +64,6 @@ import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionField
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionFilter
 import us.frollo.frollosdk.model.coredata.aggregation.transactions.ExportTransactionType
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionBaseType
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionDescription
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionStatus
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionType
 import us.frollo.frollosdk.model.coredata.contacts.PayIDType
 import us.frollo.frollosdk.model.coredata.payments.NPPServiceIdType
 import us.frollo.frollosdk.model.coredata.payments.PaymentLimitPeriod
@@ -83,7 +77,6 @@ import us.frollo.frollosdk.model.testCardResponseData
 import us.frollo.frollosdk.model.testConsentResponseData
 import us.frollo.frollosdk.model.testGoalPeriodResponseData
 import us.frollo.frollosdk.model.testGoalResponseData
-import us.frollo.frollosdk.model.testLargeTransactionIdsListData
 import us.frollo.frollosdk.model.testMerchantResponseData
 import us.frollo.frollosdk.model.testProviderAccountResponseData
 import us.frollo.frollosdk.model.testProviderResponseData
@@ -97,7 +90,6 @@ import us.frollo.frollosdk.testutils.randomUUID
 import us.frollo.frollosdk.testutils.readStringFromJson
 import us.frollo.frollosdk.testutils.trimmedPath
 import us.frollo.frollosdk.testutils.wait
-import java.math.BigDecimal
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -1108,8 +1100,6 @@ class AggregationTest : BaseAndroidTest() {
         database.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         database.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        database.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
 
         val testObserver = aggregation.fetchAccountWithRelation(accountId = 345).test()
         testObserver.awaitValue()
@@ -1118,10 +1108,6 @@ class AggregationTest : BaseAndroidTest() {
 
         assertEquals(345L, model?.account?.accountId)
         assertEquals(234L, model?.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model?.transactions?.size)
-        assertEquals(456L, model?.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model?.transactions?.get(1)?.transactionId)
-
         tearDown()
     }
 
@@ -1132,8 +1118,6 @@ class AggregationTest : BaseAndroidTest() {
         database.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         database.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        database.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
 
         val testObserver = aggregation.fetchAccountsWithRelation().test()
         testObserver.awaitValue()
@@ -1144,9 +1128,6 @@ class AggregationTest : BaseAndroidTest() {
 
         assertEquals(345L, model?.account?.accountId)
         assertEquals(234L, model?.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model?.transactions?.size)
-        assertEquals(456L, model?.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model?.transactions?.get(1)?.transactionId)
 
         tearDown()
     }
@@ -1158,11 +1139,7 @@ class AggregationTest : BaseAndroidTest() {
         database.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         database.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        database.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 457, accountId = 345).toTransaction())
         database.accounts().insert(testAccountResponseData(accountId = 346, providerAccountId = 234).toAccount())
-        database.transactions().insert(testTransactionResponseData(transactionId = 458, accountId = 346).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 459, accountId = 346).toTransaction())
 
         val testObserver = aggregation.fetchAccountsWithRelation(providerAccountId = 234).test()
         testObserver.awaitValue()
@@ -1173,17 +1150,11 @@ class AggregationTest : BaseAndroidTest() {
 
         assertEquals(345L, model1?.account?.accountId)
         assertEquals(234L, model1?.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model1?.transactions?.size)
-        assertEquals(456L, model1?.transactions?.get(0)?.transactionId)
-        assertEquals(457L, model1?.transactions?.get(1)?.transactionId)
 
         val model2 = testObserver.value().data?.get(1)
 
         assertEquals(346L, model2?.account?.accountId)
         assertEquals(234L, model2?.providerAccount?.providerAccount?.providerAccountId)
-        assertEquals(2, model2?.transactions?.size)
-        assertEquals(458L, model2?.transactions?.get(0)?.transactionId)
-        assertEquals(459L, model2?.transactions?.get(1)?.transactionId)
 
         tearDown()
     }
@@ -1741,296 +1712,13 @@ class AggregationTest : BaseAndroidTest() {
     // Transaction Tests
 
     @Test
-    fun testFetchTransactionByID() {
-        initSetup()
-
-        val data = testTransactionResponseData()
-        val list = mutableListOf(testTransactionResponseData(), data, testTransactionResponseData())
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val testObserver = aggregation.fetchTransaction(data.transactionId).test()
-        testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(data.transactionId, testObserver.value().data?.transactionId)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchTransactionsByFilters() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        database.accounts().insert(testAccountResponseData(accountId = 2149, providerAccountId = 345, included = false).toAccount())
-        database.accounts().insert(testAccountResponseData(accountId = 2150, providerAccountId = 346, included = true).toAccount())
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Success)
-
-            var transactionFilter = TransactionFilter(budgetCategory = BudgetCategory.LIFESTYLE)
-            var testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(30, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(budgetCategory = BudgetCategory.INCOME)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(1, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(baseType = TransactionBaseType.CREDIT)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(9, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(transactionCategoryIds = listOf(77, 102))
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(16, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(accountIds = listOf(2150))
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(26, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(merchantIds = listOf(1603))
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(8, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(minimumAmount = "18.98", maximumAmount = "33.95")
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(9, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(minimumAmount = "55.10")
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(12, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(tags = listOf("travel", "groceries"))
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(4, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(transactionIncluded = false)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(2, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(accountIncluded = false)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(7, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(billId = 1024)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(1, testObserver.value().data?.size)
-
-            transactionFilter = TransactionFilter(goalId = 2048)
-            testObserver = aggregation.fetchTransactions(transactionFilter).test()
-            testObserver.awaitValue()
-            assertEquals(1, testObserver.value().data?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testCacheLogicForTransactionsSingleDay() {
-        initSetup()
-
-        database.transactions().insert(testTransactionResponseData(transactionId = 1, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 2, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 3, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 4, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 5, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 6, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 7, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 8, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 9, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 10, transactionDate = "2019-11-11").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 11, transactionDate = "2019-11-12").toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 12, transactionDate = "2019-11-10").toTransaction())
-
-        val sqlQueryBuilder = SimpleSQLiteQueryBuilder(tableName = "transaction_model")
-
-        val beforeDate = "2019-11-11"
-        val beforeId = 10
-        val dayBeforeFirstDate = "2019-11-10"
-        val beforeSelection = "((transaction_date <= '$dayBeforeFirstDate') OR (transaction_date = '$beforeDate' AND transaction_id <= $beforeId))"
-        sqlQueryBuilder.appendSelection(selection = beforeSelection)
-
-        val afterDate = "2019-11-11"
-        val afterId = 5
-        val dayAfterLastDate = "2019-11-12"
-        val afterSelection = "((transaction_date >= '$dayAfterLastDate') OR (transaction_date = '$afterDate' AND transaction_id >= $afterId))"
-        sqlQueryBuilder.appendSelection(selection = afterSelection)
-
-        val query = sqlQueryBuilder.create()
-
-        val testObserver = aggregation.fetchTransactions(query).test()
-        testObserver.awaitValue()
-        assertEquals(6, testObserver.value().data?.size)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchTransactionsByQuery() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 100)
-        val data2 = testTransactionResponseData(transactionId = 101)
-        val data3 = testTransactionResponseData(transactionId = 102)
-        val data4 = testTransactionResponseData(transactionId = 103)
-        val list = mutableListOf(data1, data2, data3, data4)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val query = SimpleSQLiteQuery("SELECT * FROM transaction_model WHERE transaction_id IN (101,102,103)")
-
-        val testObserver = aggregation.fetchTransactions(query).test()
-        testObserver.awaitValue()
-        assertNotNull(testObserver.value().data)
-        assertEquals(3, testObserver.value().data?.size)
-        assertTrue(testObserver.value().data?.map { it.transactionId }?.toList()?.containsAll(listOf(101L, 102L, 103L)) == true)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchTransactionByIDWithRelation() {
-        initSetup()
-
-        database.transactions().insert(testTransactionResponseData(transactionId = 123, accountId = 234, categoryId = 567, merchantId = 678).toTransaction())
-        database.accounts().insert(testAccountResponseData(accountId = 234, providerAccountId = 345).toAccount())
-        database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 345, providerId = 456).toProviderAccount())
-        database.providers().insert(testProviderResponseData(providerId = 456).toProvider())
-        database.transactionCategories().insert(testTransactionCategoryResponseData(transactionCategoryId = 567).toTransactionCategory())
-        database.merchants().insert(testMerchantResponseData(merchantId = 678).toMerchant())
-
-        val testObserver = aggregation.fetchTransactionWithRelation(transactionId = 123).test()
-        testObserver.awaitValue()
-
-        val model = testObserver.value().data
-
-        assertEquals(123L, model?.transaction?.transactionId)
-        assertEquals(678L, model?.merchant?.merchantId)
-        assertEquals(567L, model?.transactionCategory?.transactionCategoryId)
-        assertEquals(234L, model?.account?.account?.accountId)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchTransactionsByFiltersWithRelation() {
-        initSetup()
-
-        database.transactions().insert(testTransactionResponseData(transactionId = 122, accountId = 234, categoryId = 567, merchantId = 678, userTags = listOf("why", "how")).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 123, accountId = 234, categoryId = 567, merchantId = 678, userTags = listOf("how", "are")).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 124, accountId = 235, categoryId = 567, merchantId = 678, userTags = listOf("why", "are")).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 125, accountId = 235, categoryId = 567, merchantId = 678, userTags = listOf("whyasdas", "areasdasd")).toTransaction())
-        database.accounts().insert(testAccountResponseData(accountId = 234, providerAccountId = 345).toAccount())
-        database.accounts().insert(testAccountResponseData(accountId = 235, providerAccountId = 345).toAccount())
-        database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 345, providerId = 456).toProviderAccount())
-        database.providers().insert(testProviderResponseData(providerId = 456).toProvider())
-        database.transactionCategories().insert(testTransactionCategoryResponseData(transactionCategoryId = 567).toTransactionCategory())
-        database.merchants().insert(testMerchantResponseData(merchantId = 678).toMerchant())
-
-        val tagList = listOf("why", "are")
-        val testObserver = aggregation.fetchTransactionsWithRelation(TransactionFilter(tags = tagList)).test()
-        testObserver.awaitValue()
-
-        val list = testObserver.value().data
-
-        assertTrue(list?.isNotEmpty()!!)
-        assertEquals(3, list.size)
-
-        val model1 = list[0]
-
-        assertEquals(122L, model1.transaction?.transactionId)
-        assertEquals(678L, model1.merchant?.merchantId)
-        assertEquals(567L, model1.transactionCategory?.transactionCategoryId)
-        assertEquals(234L, model1.account?.account?.accountId)
-
-        val model2 = list[1]
-
-        assertEquals(123L, model2.transaction?.transactionId)
-        assertEquals(678L, model2.merchant?.merchantId)
-        assertEquals(567L, model2.transactionCategory?.transactionCategoryId)
-        assertEquals(234L, model2.account?.account?.accountId)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchTransactionsByQueryWithRelation() {
-        initSetup()
-
-        database.transactions().insert(testTransactionResponseData(transactionId = 122, accountId = 234, categoryId = 567, merchantId = 678).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 123, accountId = 234, categoryId = 567, merchantId = 678).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 124, accountId = 235, categoryId = 567, merchantId = 678).toTransaction())
-        database.transactions().insert(testTransactionResponseData(transactionId = 125, accountId = 235, categoryId = 567, merchantId = 678).toTransaction())
-        database.accounts().insert(testAccountResponseData(accountId = 234, providerAccountId = 345).toAccount())
-        database.accounts().insert(testAccountResponseData(accountId = 235, providerAccountId = 345).toAccount())
-        database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 345, providerId = 456).toProviderAccount())
-        database.providers().insert(testProviderResponseData(providerId = 456).toProvider())
-        database.transactionCategories().insert(testTransactionCategoryResponseData(transactionCategoryId = 567).toTransactionCategory())
-        database.merchants().insert(testMerchantResponseData(merchantId = 678).toMerchant())
-
-        val query = SimpleSQLiteQuery("SELECT * FROM transaction_model WHERE account_id = 235")
-
-        val testObserver = aggregation.fetchTransactionsWithRelation(query).test()
-        testObserver.awaitValue()
-
-        assertNotNull(testObserver.value().data)
-        assertEquals(2, testObserver.value().data?.size)
-
-        val model1 = testObserver.value().data?.get(0)
-
-        assertEquals(124L, model1?.transaction?.transactionId)
-        assertEquals(678L, model1?.merchant?.merchantId)
-        assertEquals(567L, model1?.transactionCategory?.transactionCategoryId)
-        assertEquals(235L, model1?.account?.account?.accountId)
-
-        val model2 = testObserver.value().data?.get(1)
-
-        assertEquals(125L, model2?.transaction?.transactionId)
-        assertEquals(678L, model2?.merchant?.merchantId)
-        assertEquals(567L, model2?.transactionCategory?.transactionCategoryId)
-        assertEquals(235L, model2?.account?.account?.accountId)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionByID() {
+    fun testFetchTransaction() {
         initSetup()
 
         val signal = CountDownLatch(1)
 
         val body = readStringFromJson(app, R.raw.transaction_id_194630)
-        mockServer.dispatcher = (
+        mockServer.dispatcher =
             object : Dispatcher() {
                 override fun dispatch(request: RecordedRequest): MockResponse {
                     if (request.trimmedPath == "aggregation/transactions/194630") {
@@ -2041,661 +1729,54 @@ class AggregationTest : BaseAndroidTest() {
                     return MockResponse().setResponseCode(404)
                 }
             }
-            )
 
-        aggregation.refreshTransaction(194630L) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
+        aggregation.fetchTransaction(194630L) { result ->
+            assertEquals(Resource.Status.SUCCESS, result.status)
             assertNull(result.error)
 
-            val testObserver = aggregation.fetchTransaction(194630L).test()
-            testObserver.awaitValue()
-            val model = testObserver.value().data
-            assertNotNull(model)
-            assertEquals(194630L, model?.transactionId)
-            assertEquals("x2p1.02", model?.serviceId)
-            assertEquals(NPPServiceIdType.X2P1, model?.serviceType)
-
+            assertNotNull(result.data)
+            assertEquals(194630L, result.data?.transactionId)
+            assertEquals("x2p1.02", result.data?.serviceId)
+            assertEquals(NPPServiceIdType.X2P1, result.data?.serviceType)
             signal.countDown()
         }
-
         val request = mockServer.takeRequest()
         assertEquals("aggregation/transactions/194630", request.trimmedPath)
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
-    fun testRefreshTransactionByIdFailsIfLoggedOut() {
+    fun testFetchTransactionIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
-        aggregation.refreshTransaction(194630L) { result ->
-            assertEquals(Result.Status.ERROR, result.status)
+        aggregation.fetchTransaction(194630L) { result ->
+            assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
 
             signal.countDown()
         }
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
-    fun testRefreshTransactionsIsCached() {
+    fun testFetchTransactionsByIdsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Success)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(34, models?.size)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(AggregationAPI.URL_TRANSACTIONS, request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsFailsIfLoggedOut() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Error)
-            assertNotNull((result as PaginatedResult.Error).error)
-            assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
-            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testFetchPaginatedTransactions() {
-        initSetup()
-
-        val fromDate = "2019-07-26"
-        val toDate = "2020-01-31"
-        val transactionFilter = TransactionFilter(fromDate = fromDate, toDate = toDate)
-        val requestPath1 = "${AggregationAPI.URL_TRANSACTIONS}?from_date=$fromDate&to_date=$toDate"
-        val requestPath2 = "${AggregationAPI.URL_TRANSACTIONS}?from_date=$fromDate&to_date=$toDate&after=1564138032_160746"
-
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == requestPath1) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(readStringFromJson(app, R.raw.transactions_page_1))
-                    } else if (request.trimmedPath == requestPath2) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(readStringFromJson(app, R.raw.transactions_page_2))
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val data1 = testTransactionResponseData(transactionId = 164438, transactionDate = "2019-11-11", description = TransactionDescription(original = "Updating transaction"))
-        val data2 = testTransactionResponseData(transactionId = 600, transactionDate = "2019-08-12", description = TransactionDescription(original = "Deleting transaction"))
-        val data3 = testTransactionResponseData(transactionId = 500, transactionDate = "2019-06-11", description = TransactionDescription(original = "Ignored transaction"))
-        val list = mutableListOf(data1, data2, data3)
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toTypedArray())
-
-        val signal1 = CountDownLatch(1)
-        aggregation.refreshTransactionsWithPagination(transactionFilter) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNull((result as PaginatedResult.Success).paginationInfo?.before)
-            assertEquals("1564138032_160746", result.paginationInfo?.after)
-            assertEquals(160808L, result.paginationInfo?.afterId)
-            assertEquals("2019-10-31", result.paginationInfo?.afterDate)
-
-            transactionFilter.after = result.paginationInfo?.after
-
-            val testObserver1 = aggregation.fetchTransactions().test()
-            testObserver1.awaitValue()
-            val fetchedTransactions = testObserver1.value().data
-            assertEquals(202, fetchedTransactions?.size)
-
-            val testObserver2 = aggregation.fetchTransaction(160142L).test()
-            testObserver2.awaitValue()
-            val updatedTransaction = testObserver2.value().data
-            assertNotNull(updatedTransaction)
-            assertEquals("BURGER PROJECT SYDNEY AU", updatedTransaction?.description?.original)
-            assertEquals("x2p1.02", updatedTransaction?.serviceId)
-            assertEquals(NPPServiceIdType.X2P1, updatedTransaction?.serviceType)
-
-            signal1.countDown()
-        }
-        signal1.await(3, TimeUnit.SECONDS)
-
-        val signal2 = CountDownLatch(1)
-        aggregation.refreshTransactionsWithPagination(transactionFilter) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertEquals("1564051625_160540", (result as PaginatedResult.Success).paginationInfo?.before)
-            assertEquals(160540L, result.paginationInfo?.beforeId)
-            assertEquals("2019-07-25", result.paginationInfo?.beforeDate)
-            assertNull(result.paginationInfo?.after)
-
-            transactionFilter.after = result.paginationInfo?.after
-
-            val testObserver1 = aggregation.fetchTransactions().test()
-            testObserver1.awaitValue()
-            val fetchedTransactions = testObserver1.value().data
-            assertEquals(fetchedTransactions?.size, 399)
-
-            val testObserver2 = aggregation.fetchTransaction(161135L).test()
-            testObserver2.awaitValue()
-            val transaction = testObserver2.value().data
-            assertNotNull(transaction)
-
-            signal2.countDown()
-        }
-        signal2.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsSameDayPage1() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 1, transactionDate = "2008-08-01")
-        val data2 = testTransactionResponseData(transactionId = 2, transactionDate = "2008-08-01")
-        val data3 = testTransactionResponseData(transactionId = 9, transactionDate = "2008-08-01")
-        val data4 = testTransactionResponseData(transactionId = 10, transactionDate = "2008-08-01")
-        val list = mutableListOf(data1, data2, data3, data4)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_same_day_pagination_1)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(5, models?.size)
-
-            signal.countDown()
-        }
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsSameDayPage2() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 6, transactionDate = "2008-08-01")
-        val data2 = testTransactionResponseData(transactionId = 7, transactionDate = "2008-08-01")
-        val data3 = testTransactionResponseData(transactionId = 8, transactionDate = "2008-08-01")
-        val data4 = testTransactionResponseData(transactionId = 9, transactionDate = "2008-08-01")
-        val data5 = testTransactionResponseData(transactionId = 10, transactionDate = "2008-08-01")
-        val list = mutableListOf(data1, data2, data3, data4, data5)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body2 = readStringFromJson(app, R.raw.transactions_same_day_pagination_2)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body2)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_7")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(6, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsSameDayPage3() {
-        initSetup()
-
-        val data0 = testTransactionResponseData(transactionId = 5, transactionDate = "2008-08-01")
-        val data1 = testTransactionResponseData(transactionId = 6, transactionDate = "2008-08-01")
-        val data2 = testTransactionResponseData(transactionId = 7, transactionDate = "2008-08-01")
-        val data3 = testTransactionResponseData(transactionId = 8, transactionDate = "2008-08-01")
-        val data4 = testTransactionResponseData(transactionId = 9, transactionDate = "2008-08-01")
-        val data5 = testTransactionResponseData(transactionId = 10, transactionDate = "2008-08-01")
-        val list = mutableListOf(data0, data1, data2, data3, data4, data5)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body2 = readStringFromJson(app, R.raw.transactions_same_day_pagination_3)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_4") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body2)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_4")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(10, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsTwoDaysPage1() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 12, transactionDate = "2008-08-03")
-        val data2 = testTransactionResponseData(transactionId = 15, transactionDate = "2008-08-03")
-        val data3 = testTransactionResponseData(transactionId = 14, transactionDate = "2008-08-03")
-        val data4 = testTransactionResponseData(transactionId = 13, transactionDate = "2008-08-02")
-        val list = mutableListOf(data1, data2, data3, data4)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_1)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(4, models?.size)
-
-            signal.countDown()
-        }
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsTwoDaysPage2() {
-        initSetup()
-
-        val data2 = testTransactionResponseData(transactionId = 15, transactionDate = "2008-08-03")
-        val data3 = testTransactionResponseData(transactionId = 14, transactionDate = "2008-08-03")
-
-        val data1 = testTransactionResponseData(transactionId = 12, transactionDate = "2008-08-02")
-        val data4 = testTransactionResponseData(transactionId = 10, transactionDate = "2008-08-02")
-
-        val list = mutableListOf(data1, data2, data3, data4)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_2)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_7")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(6, models?.size)
-
-            signal.countDown()
-        }
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsTwoDaysPage3() {
-        initSetup()
-
-        val data2 = testTransactionResponseData(transactionId = 15, transactionDate = "2008-08-03")
-        val data3 = testTransactionResponseData(transactionId = 14, transactionDate = "2008-08-03")
-
-        val data1 = testTransactionResponseData(transactionId = 12, transactionDate = "2008-08-02")
-        val data4 = testTransactionResponseData(transactionId = 11, transactionDate = "2008-08-02")
-        val data5 = testTransactionResponseData(transactionId = 9, transactionDate = "2008-08-02")
-        val data6 = testTransactionResponseData(transactionId = 8, transactionDate = "2008-08-01")
-
-        val data7 = testTransactionResponseData(transactionId = 5, transactionDate = "2008-08-01")
-
-        val list = mutableListOf(data1, data2, data3, data4, data5, data6, data7)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_two_days_pagination_3)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_7")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(10, models?.size)
-
-            signal.countDown()
-        }
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsNDaysPage1() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 151, transactionDate = "2018-08-31")
-        val data2 = testTransactionResponseData(transactionId = 132, transactionDate = "2018-08-29")
-        val data3 = testTransactionResponseData(transactionId = 131, transactionDate = "2018-08-28")
-        val list = mutableListOf(data1, data2, data3)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_1)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS) {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(3, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsNDaysPage2() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 150, transactionDate = "2018-08-30")
-        val data2 = testTransactionResponseData(transactionId = 149, transactionDate = "2018-08-29")
-        val data3 = testTransactionResponseData(transactionId = 130, transactionDate = "2018-08-28")
-
-        val data4 = testTransactionResponseData(transactionId = 118, transactionDate = "2018-08-20")
-        val data5 = testTransactionResponseData(transactionId = 121, transactionDate = "2018-08-22")
-        val data6 = testTransactionResponseData(transactionId = 118, transactionDate = "2018-08-20")
-        val data7 = testTransactionResponseData(transactionId = 128, transactionDate = "2018-08-25")
-
-        val list = mutableListOf(data1, data2, data3, data4, data5, data6, data7)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_2)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_7")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(6, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsNDaysPage3() {
-        initSetup()
-
-        val data1 = testTransactionResponseData(transactionId = 150, transactionDate = "2018-08-30")
-        val data2 = testTransactionResponseData(transactionId = 149, transactionDate = "2018-08-29")
-        val data3 = testTransactionResponseData(transactionId = 130, transactionDate = "2018-08-28")
-
-        val data4 = testTransactionResponseData(transactionId = 129, transactionDate = "2018-08-25")
-        val data5 = testTransactionResponseData(transactionId = 119, transactionDate = "2018-08-22")
-        val data6 = testTransactionResponseData(transactionId = 117, transactionDate = "2018-08-20")
-
-        val data7 = testTransactionResponseData(transactionId = 128, transactionDate = "2018-08-25")
-
-        val data8 = testTransactionResponseData(transactionId = 103, transactionDate = "2018-08-01")
-        val data9 = testTransactionResponseData(transactionId = 104, transactionDate = "2018-08-10")
-        val data10 = testTransactionResponseData(transactionId = 114, transactionDate = "2018-08-18")
-
-        val list = mutableListOf(data1, data2, data3, data4, data5, data6, data7, data8, data9, data10)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        val signal = CountDownLatch(1)
-        val body = readStringFromJson(app, R.raw.transactions_n_days_pagination_3)
-        mockServer.dispatcher = object : Dispatcher() {
-            override fun dispatch(request: RecordedRequest): MockResponse {
-                if (request.trimmedPath == "${AggregationAPI.URL_TRANSACTIONS}?after=1217548800000_7") {
-                    return MockResponse()
-                        .setResponseCode(200)
-                        .setBody(body)
-                }
-                return MockResponse().setResponseCode(404)
-            }
-        }
-
-        aggregation.refreshTransactionsWithPagination(TransactionFilter(after = "1217548800000_7")) { result ->
-            assertTrue(result is PaginatedResult.Success)
-            assertNotNull((result as PaginatedResult.Success).paginationInfo)
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(11, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsByIds() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val requestPath = "${AggregationAPI.URL_TRANSACTIONS}?transaction_ids=1%2C2%2C3%2C4%2C5"
-        val body = readStringFromJson(app, R.raw.transactions_single_page)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == requestPath) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        aggregation.refreshTransactions(longArrayOf(1, 2, 3, 4, 5)) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(34, models?.size)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        val request = mockServer.takeRequest()
-        assertEquals(requestPath, request.trimmedPath)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRefreshTransactionsByIdsFailsIfLoggedOut() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        clearLoggedInPreferences()
-
-        aggregation.refreshTransactions(longArrayOf(1, 2, 3, 4, 5)) { result ->
-            assertEquals(Result.Status.ERROR, result.status)
+        aggregation.fetchTransactions(longArrayOf(1, 2, 3, 4, 5)) { result ->
+            assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
 
             signal.countDown()
         }
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
@@ -2742,102 +1823,45 @@ class AggregationTest : BaseAndroidTest() {
     @Test
     fun testFetchSimilarTransactionsWithPaginationFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
         aggregation.fetchSimilarTransactionsWithPagination(transactionId = 12345) { resource ->
             assertEquals(Resource.Status.ERROR, resource.status)
             assertNotNull(resource.error)
             assertEquals(DataErrorType.AUTHENTICATION, (resource.error as DataError).type)
-            assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (resource.error as DataError).subType)
-
-            signal.countDown()
-        }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testExcludeTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transaction_id_194630_excluded)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "aggregation/transactions/194630") {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
+            assertEquals(
+                DataErrorSubType.MISSING_ACCESS_TOKEN,
+                (resource.error as DataError).subType
             )
-
-        val transaction = testTransactionResponseData(transactionId = 194630, included = true).toTransaction()
-        database.transactions().insert(transaction)
-
-        aggregation.excludeTransaction(transactionId = 194630, excluded = true, applyToAll = true) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(1, models?.size)
-            assertEquals(194630L, models?.get(0)?.transactionId)
-            assertTrue(models?.get(0)?.included == false)
-
             signal.countDown()
         }
-
-        val request = mockServer.takeRequest()
-        assertEquals("aggregation/transactions/194630", request.trimmedPath)
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
     fun testExcludeTransactionFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
-        val data = testTransactionResponseData(transactionId = 194630)
-        database.transactions().insert(data.toTransaction())
-
-        aggregation.excludeTransaction(transactionId = 194630, excluded = true, applyToAll = true) { result ->
+        aggregation.excludeTransaction(
+            transactionId = 194630, excluded = true, applyToAll = true,
+            budgetCategory = BudgetCategory.ONE_OFF
+        ) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
             signal.countDown()
         }
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
     fun testRecategoriseTransaction() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         val body = readStringFromJson(app, R.raw.transaction_id_194630)
         mockServer.dispatcher = (
             object : Dispatcher() {
@@ -2853,43 +1877,32 @@ class AggregationTest : BaseAndroidTest() {
             )
 
         val transaction = testTransactionResponseData(transactionId = 194630, categoryId = 123).toTransaction()
-        database.transactions().insert(transaction)
-
-        aggregation.recategoriseTransaction(transactionId = 194630, transactionCategoryId = 77, applyToAll = true) { result ->
+        aggregation.reCategoriseTransaction(
+            transaction,
+            transactionCategoryId = 77,
+            applyToAll = true,
+        ) { result ->
             assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(1, models?.size)
-            assertEquals(194630L, models?.get(0)?.transactionId)
-            assertEquals(77L, models?.get(0)?.category?.id)
-
             signal.countDown()
         }
 
         val request = mockServer.takeRequest()
         assertEquals("aggregation/transactions/194630", request.trimmedPath)
-
         signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
     fun testRecategoriseTransactionFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
-        val data = testTransactionResponseData(transactionId = 194630)
-        database.transactions().insert(data.toTransaction())
-
-        aggregation.recategoriseTransaction(transactionId = 194630, transactionCategoryId = 77, applyToAll = true) { result ->
+        val transaction = testTransactionResponseData(transactionId = 194630, categoryId = 123).toTransaction()
+        aggregation.reCategoriseTransaction(
+            transaction,
+            transactionCategoryId = 77,
+            applyToAll = true,
+        ) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
@@ -2897,127 +1910,25 @@ class AggregationTest : BaseAndroidTest() {
 
             signal.countDown()
         }
-
         signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testUpdateTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transaction_id_194630)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "aggregation/transactions/194630") {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val transaction = testTransactionResponseData().toTransaction()
-
-        aggregation.updateTransaction(194630, transaction) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(1, models?.size)
-            assertEquals(194630L, models?.get(0)?.transactionId)
-            assertEquals(939L, models?.get(0)?.accountId)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals("aggregation/transactions/194630", request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
     @Test
     fun testUpdateTransactionFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
-        aggregation.updateTransaction(194630, testTransactionResponseData().toTransaction()) { result ->
+        val transaction = testTransactionResponseData(transactionId = 194630).toTransaction()
+        aggregation.updateTransaction(
+            transaction,
+        ) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
             signal.countDown()
         }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testUpdateTransactionsInBulk() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transactions_update_in_bulk)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTIONS_BULK) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val data1 = testTransactionResponseData(transactionId = 194630).toTransaction()
-        val data2 = testTransactionResponseData(transactionId = 5555560).toTransaction()
-        val data3 = testTransactionResponseData(transactionId = 5555558).toTransaction()
-        database.transactions().insertAll(data1, data2, data3)
-
-        aggregation.updateTransactionsInBulk(
-            transactionIds = testLargeTransactionIdsListData(),
-            newCategoryId = 66,
-            newBudgetCategory = BudgetCategory.LIVING,
-            included = true,
-            createCategoryRule = true,
-            createBudgetCategoryRule = true,
-            createIncludeRule = true
-        ) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(201, models?.size)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(AggregationAPI.URL_TRANSACTIONS_BULK, request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -3027,149 +1938,15 @@ class AggregationTest : BaseAndroidTest() {
     @Test
     fun testUpdateTransactionsInBulkFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
         aggregation.updateTransactionsInBulk(listOf(123L)) { result ->
-            assertEquals(Result.Status.ERROR, result.status)
+            assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
             signal.countDown()
         }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    // Manual Transaction Tests
-    @Test
-    fun testCreateManualTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val body = readStringFromJson(app, R.raw.transaction_manual_id_198430)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "aggregation/transactions") {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val transactionDate = "2016-10-09T00:00:00.000Z"
-        aggregation.createManualTransaction(
-            amount = BigDecimal("1635.44"),
-            currency = "AUD",
-            baseType = TransactionBaseType.CREDIT,
-            transactionStatus = TransactionStatus.POSTED,
-            included = true,
-            description = "0150 Amazon  Santa Ana CA 55.73USD",
-            accountId = 939,
-            payee = "T SMITH",
-            memo = "test",
-            categoryId = 33,
-            budgetCategory = BudgetCategory.INCOME,
-            transactionDate = transactionDate,
-            type = TransactionType.DIRECT_DEBIT
-        ) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(1, models?.size)
-            assertEquals(emptyList<String>(), models?.get(0)?.userTags)
-            assertEquals(198430L, models?.get(0)?.transactionId)
-            assertEquals(939L, models?.get(0)?.accountId)
-            assertEquals(1L, models?.get(0)?.category?.id)
-            assertEquals(BigDecimal("1635.44"), models?.get(0)?.amount?.amount)
-            assertEquals("AUD", models?.get(0)?.amount?.currency)
-            assertEquals(TransactionBaseType.CREDIT, models?.get(0)?.baseType)
-            assertEquals(true, models?.get(0)?.included)
-            assertEquals(transactionDate, models?.get(0)?.transactionDate)
-            assertEquals(transactionDate, models?.get(0)?.postDate)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals("aggregation/transactions", request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-        tearDown()
-    }
-
-    @Test()
-    fun testUpdateManualTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        val transactionId = 198430L
-        val body = readStringFromJson(app, R.raw.transaction_manual_id_198430_update)
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "aggregation/transactions/$transactionId") {
-                        return MockResponse()
-                            .setResponseCode(200)
-                            .setBody(body)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val transactionDate = "2017-10-09T00:00:00.000Z"
-        aggregation.updateManualTransaction(
-            transactionId = transactionId,
-            userDescription = "Updated manual description",
-            categoryId = 33,
-            included = true,
-            includeApplyAll = true,
-            budgetCategory = BudgetCategory.INCOME,
-            memo = "Updated memo",
-            budgetApplyAll = true,
-        ) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransactions().test()
-            testObserver.awaitValue()
-            val models = testObserver.value().data
-            assertNotNull(models)
-            assertEquals(1, models?.size)
-            assertEquals(emptyList<String>(), models?.get(0)?.userTags)
-            assertEquals(transactionId, models?.get(0)?.transactionId)
-            assertEquals(939L, models?.get(0)?.accountId)
-            assertEquals(1L, models?.get(0)?.category?.id)
-            assertEquals(BigDecimal("1636.44"), models?.get(0)?.amount?.amount)
-            assertEquals("AUD", models?.get(0)?.amount?.currency)
-            assertEquals(TransactionBaseType.CREDIT, models?.get(0)?.baseType)
-            assertEquals(true, models?.get(0)?.included)
-            assertEquals("Updated memo", models?.get(0)?.memo)
-            assertEquals(transactionDate, models?.get(0)?.transactionDate)
-            assertEquals(transactionDate, models?.get(0)?.postDate)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals("aggregation/transactions/$transactionId", request.trimmedPath)
-
         signal.await(3, TimeUnit.SECONDS)
         tearDown()
     }
@@ -3177,11 +1954,8 @@ class AggregationTest : BaseAndroidTest() {
     @Test
     fun testUpdateManualTransactionFailsIfLoggedOut() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         clearLoggedInPreferences()
-
         val transactionId = 198430L
         val transactionDate = "2017-10-09T00:00:00.000Z"
         aggregation.updateManualTransaction(
@@ -3194,54 +1968,12 @@ class AggregationTest : BaseAndroidTest() {
             included = true,
             recategoriseAll = false,
         ) { result ->
-            assertEquals(Result.Status.ERROR, result.status)
+            assertEquals(Resource.Status.ERROR, result.status)
             assertNotNull(result.error)
             assertEquals(DataErrorType.AUTHENTICATION, (result.error as DataError).type)
             assertEquals(DataErrorSubType.MISSING_ACCESS_TOKEN, (result.error as DataError).subType)
-
             signal.countDown()
         }
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testDeleteManualTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-        val transactionId = 54321L
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == "aggregation/transactions/$transactionId") {
-                        return MockResponse()
-                            .setResponseCode(204)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val data = testTransactionResponseData(transactionId = transactionId)
-        database.transactions().insert(data.toTransaction())
-
-        aggregation.deleteManualTransaction(transactionId) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver = aggregation.fetchTransaction(transactionId).test()
-            testObserver.awaitValue()
-            val model = testObserver.value().data
-            assertNull(model)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals("aggregation/transactions/54321", request.trimmedPath)
 
         signal.await(3, TimeUnit.SECONDS)
 
@@ -3524,57 +2256,6 @@ class AggregationTest : BaseAndroidTest() {
     }
 
     @Test
-    fun testAddTagsToTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_TAGS_BULK) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val data1 = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo"))
-        val data2 = testTransactionResponseData(transactionId = 6789, userTags = listOf("tagone", "tagthree", "tagfive"))
-
-        val list = mutableListOf(data1, data2)
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        aggregation.createTagsInBulk(transactionIds = listOf(12345, 6789), tags = listOf("tagone", "tagfour")) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver1 = aggregation.fetchTransaction(transactionId = 12345).test()
-            testObserver1.awaitValue()
-            val model1 = testObserver1.value().data
-            assertNotNull(model1)
-            assertEquals(3, model1?.userTags?.size)
-
-            val testObserver2 = aggregation.fetchTransaction(transactionId = 6789).test()
-            testObserver2.awaitValue()
-            val model2 = testObserver2.value().data
-            assertNotNull(model2)
-            assertEquals(4, model2?.userTags?.size)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(AggregationAPI.URL_TRANSACTION_TAGS_BULK, request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
     fun testAddTagsToTransactionFailsIfLoggedOut() {
         initSetup()
 
@@ -3599,9 +2280,7 @@ class AggregationTest : BaseAndroidTest() {
     @Test
     fun testAddTagsToTransactionFailsIfEmptyTags() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         aggregation.createTagsInBulk(transactionIds = listOf(12345), tags = listOf()) { result ->
             assertEquals(Result.Status.ERROR, result.status)
             assertNotNull(result.error)
@@ -3610,61 +2289,7 @@ class AggregationTest : BaseAndroidTest() {
 
             signal.countDown()
         }
-
         signal.await(3, TimeUnit.SECONDS)
-
-        tearDown()
-    }
-
-    @Test
-    fun testRemoveTagsFromTransaction() {
-        initSetup()
-
-        val signal = CountDownLatch(1)
-
-        mockServer.dispatcher = (
-            object : Dispatcher() {
-                override fun dispatch(request: RecordedRequest): MockResponse {
-                    if (request.trimmedPath == AggregationAPI.URL_TRANSACTION_TAGS_BULK) {
-                        return MockResponse()
-                            .setResponseCode(200)
-                    }
-                    return MockResponse().setResponseCode(404)
-                }
-            }
-            )
-
-        val data1 = testTransactionResponseData(transactionId = 12345, userTags = listOf("tagone", "tagtwo", "tagsix"))
-        val data2 = testTransactionResponseData(transactionId = 6789, userTags = listOf("tagone", "tagthree"))
-        val list = mutableListOf(data1, data2)
-
-        database.transactions().insertAll(*list.map { it.toTransaction() }.toList().toTypedArray())
-
-        aggregation.deleteTagsInBulk(transactionIds = listOf(12345, 6789), tags = listOf("tagone", "tagtwo", "tagthree", "tagfour")) { result ->
-            assertEquals(Result.Status.SUCCESS, result.status)
-            assertNull(result.error)
-
-            val testObserver1 = aggregation.fetchTransaction(transactionId = 12345).test()
-            testObserver1.awaitValue()
-            val model1 = testObserver1.value().data
-            assertNotNull(model1)
-            assertEquals(1, model1?.userTags?.size)
-            assertEquals("tagsix", model1?.userTags?.get(0).toString())
-
-            val testObserver2 = aggregation.fetchTransaction(transactionId = 6789).test()
-            testObserver2.awaitValue()
-            val model2 = testObserver2.value().data
-            assertNotNull(model2)
-            assertEquals(0, model2?.userTags?.size)
-
-            signal.countDown()
-        }
-
-        val request = mockServer.takeRequest()
-        assertEquals(AggregationAPI.URL_TRANSACTION_TAGS_BULK, request.trimmedPath)
-
-        signal.await(3, TimeUnit.SECONDS)
-
         tearDown()
     }
 
@@ -4419,9 +3044,7 @@ class AggregationTest : BaseAndroidTest() {
     @Test
     fun testLinkingRemoveCachedCascade() {
         initSetup()
-
         val signal = CountDownLatch(1)
-
         val body = readStringFromJson(app, R.raw.providers_valid)
         mockServer.dispatcher = (
             object : Dispatcher() {
@@ -4439,7 +3062,6 @@ class AggregationTest : BaseAndroidTest() {
         database.providers().insert(testProviderResponseData(providerId = 123).toProvider())
         database.providerAccounts().insert(testProviderAccountResponseData(providerAccountId = 234, providerId = 123).toProviderAccount())
         database.accounts().insert(testAccountResponseData(accountId = 345, providerAccountId = 234).toAccount())
-        database.transactions().insert(testTransactionResponseData(transactionId = 456, accountId = 345).toTransaction())
         database.goals().insert(testGoalResponseData(goalId = 789, accountId = 345).toGoal())
         database.goalPeriods().insert(testGoalPeriodResponseData(goalPeriodId = 1012, goalId = 789).toGoalPeriod())
         database.cards().insert(testCardResponseData(cardId = 819, accountId = 345).toCard())
@@ -4455,10 +3077,6 @@ class AggregationTest : BaseAndroidTest() {
         val testObserver3 = aggregation.fetchAccount(accountId = 345).test()
         testObserver3.awaitValue()
         assertEquals(345L, testObserver3.value().data?.accountId)
-
-        val testObserver4 = aggregation.fetchTransaction(transactionId = 456).test()
-        testObserver4.awaitValue()
-        assertEquals(456L, testObserver4.value().data?.transactionId)
 
         val testObserver10 = goals.fetchGoal(goalId = 789).test()
         testObserver10.awaitValue()
@@ -4493,10 +3111,6 @@ class AggregationTest : BaseAndroidTest() {
             val testObserver8 = aggregation.fetchAccount(accountId = 345).test()
             testObserver8.awaitValue()
             assertNull(testObserver8.value().data)
-
-            val testObserver9 = aggregation.fetchTransaction(transactionId = 456).test()
-            testObserver9.awaitValue()
-            assertNull(testObserver9.value().data)
 
             val testObserver12 = goals.fetchGoal(goalId = 789).test()
             testObserver12.awaitValue()

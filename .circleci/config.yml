@@ -1,0 +1,66 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+# Use a package of configuration called an orb.
+orbs:
+  jira: circleci/jira@1.2.2
+  slack: circleci/slack@4.0.2
+
+aliases:
+  - &bundle_install
+      name: Install Gems via Bundler
+      command: bundle install --path gems
+  - &restore_gradle_cache
+      name: Restore gradle cache
+      key: jars-{{ checksum "build.gradle" }}-{{ checksum  "build.gradle" }}
+  - &save_gradle_cache
+      key: jars-{{ checksum "build.gradle" }}-{{ checksum  "build.gradle" }}
+      paths:
+        - ~/.gradle
+  - &gradle_dependencies
+      name: Install gradle dependencies
+      command: ./gradlew androidDependencies
+
+jobs:
+  test:
+    working_directory: ~/code
+    docker:
+      - image: cimg/android:2023.04
+    parallelism: 3
+    environment:
+      JVM_OPTS: -Xmx6000m
+      GRADLE_OPTS: -Xmx6000m -XX:+HeapDumpOnOutOfMemoryError -Dorg.gradle.daemon=false
+    resource_class: large
+    steps:
+      - checkout
+      - restore_cache: *restore_gradle_cache
+      - run: *gradle_dependencies
+      - save_cache: *save_gradle_cache
+      - run:
+          name: Run tests
+          command: ./gradlew clean --no-daemon --stacktrace test
+      - store_artifacts: # for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
+          path: build/reports
+          destination: reports
+      - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+          path: build/test-results
+      - slack/notify:
+          event: fail
+          channel: ci-android
+          template: basic_fail_1
+
+# Orchestrate or schedule a set of jobs
+workflows:
+  build-feature:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - develop
+                - /feature\/.*/
+          context:
+            - android-context
+            - jira
+            - slack
+          post-steps:
+            - jira/notify
