@@ -68,6 +68,10 @@ internal interface BillDao {
     fun loadWithRelation(billId: Long): LiveData<BillRelation?>
 
     @androidx.room.Transaction
+    @Query("SELECT * FROM bill WHERE bill_id = :billId")
+    suspend fun loadWithRelationSuspended(billId: Long): BillRelation?
+
+    @androidx.room.Transaction
     @RawQuery(observedEntities = [BillRelation::class])
     fun loadByQueryWithRelation(queryStr: SupportSQLiteQuery): LiveData<List<BillRelation>>
 

@@ -100,6 +100,9 @@ internal interface TransactionDao {
     @RawQuery(observedEntities = [Transaction::class])
     fun loadByQueryWithRelation(queryStr: SupportSQLiteQuery): LiveData<List<TransactionRelation>>
 
+    @RawQuery(observedEntities = [Transaction::class])
+    suspend fun loadByQueryWithRelationSuspended(queryStr: SupportSQLiteQuery): List<TransactionRelation>
+
     /**
      * RxJava Return Types
      */
