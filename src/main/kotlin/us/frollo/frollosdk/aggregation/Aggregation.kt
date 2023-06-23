@@ -1066,6 +1066,11 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
             Resource.success(models)
         }
 
+    suspend fun fetchTransactionsWithRelationSuspended(transactionFilter: TransactionFilter? = null): Resource<List<TransactionRelation>> {
+        val models = db.transactions().loadByQueryWithRelationSuspended(sqlForTransactions(transactionFilter))
+        return Resource.success(models)
+    }
+
     /**
      * Advanced method to fetch transactions by SQL query from the cache with other associated data.
      *

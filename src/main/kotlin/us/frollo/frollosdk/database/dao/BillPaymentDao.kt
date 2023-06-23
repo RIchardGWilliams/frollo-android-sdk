@@ -88,6 +88,9 @@ internal interface BillPaymentDao {
     @RawQuery(observedEntities = [BillPaymentRelation::class])
     fun loadByQueryWithRelation(queryStr: SupportSQLiteQuery): LiveData<List<BillPaymentRelation>>
 
+    @androidx.room.Transaction
+    @RawQuery(observedEntities = [BillPaymentRelation::class])
+    suspend fun loadByQueryWithRelationSuspended(queryStr: SupportSQLiteQuery): List<BillPaymentRelation>
     /**
      * RxJava Return Types
      */
