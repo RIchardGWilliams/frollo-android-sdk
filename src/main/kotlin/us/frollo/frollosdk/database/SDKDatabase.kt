@@ -117,7 +117,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         ExternalParty::class,
         DisclosureConsent::class
     ],
-    version = 22, exportSchema = true
+    version = 23, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -200,7 +200,9 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_18_19,
                     MIGRATION_19_20,
                     MIGRATION_20_21,
-                    MIGRATION_21_22
+                    MIGRATION_21_22,
+                    MIGRATION_22_23
+
                 )
                 .build()
         }
@@ -868,6 +870,14 @@ abstract class SDKDatabase : RoomDatabase() {
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_amount` TEXT")
                 database.execSQL("ALTER TABLE `account` ADD COLUMN `s_balance_currency` TEXT")
                 // END - Alter table - account - Add columns p_balance_amount, p_balance_currency, s_balance_amount, s_balance_currency
+            }
+        }
+
+        private val MIGRATION_22_23: Migration = object : Migration(22, 23) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // New changes in this migration:
+                // 1) Alter table - bill_payment - Add column "transaction_id" to link back to transactions
+                database.execSQL("ALTER TABLE `bill_payment` ADD COLUMN `transaction_id` INTEGER")
             }
         }
     }

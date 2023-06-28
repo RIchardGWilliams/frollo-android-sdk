@@ -30,5 +30,6 @@ internal data class BillPaymentResponse(
     @SerializedName("payment_status") val paymentStatus: BillPaymentStatus,
     @SerializedName("frequency") val frequency: BillFrequency,
     @SerializedName("amount") val amount: BigDecimal,
-    @SerializedName("unpayable") val unpayable: Boolean
+    @SerializedName("unpayable") val unpayable: Boolean,
+    @SerializedName("transaction_id") val transactionId: Long?
 )
