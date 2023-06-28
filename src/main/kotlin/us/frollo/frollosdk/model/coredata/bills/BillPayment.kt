@@ -64,7 +64,10 @@ data class BillPayment(
     @ColumnInfo(name = "amount") val amount: BigDecimal,
 
     /** Indicates if the bill payment can be marked as unpaid */
-    @ColumnInfo(name = "unpayable") val unpayable: Boolean
+    @ColumnInfo(name = "unpayable") val unpayable: Boolean,
+
+    /** The associated transaction id */
+    @ColumnInfo(name = "transaction_id") val transactionId: Long?
 
 ) : IAdapterModel {
 
