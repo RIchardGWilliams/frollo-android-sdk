@@ -83,6 +83,7 @@ internal fun testBillPaymentResponseData(
         paymentStatus = paymentStatus ?: BillPaymentStatus.values()[Random.nextInt(BillPaymentStatus.values().size)],
         date = date ?: "2018-12-01",
         merchantId = randomNumber().toLong(),
-        unpayable = randomBoolean()
+        unpayable = randomBoolean(),
+        transactionId = 0L
     )
 }

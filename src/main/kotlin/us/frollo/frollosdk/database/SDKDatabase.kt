@@ -114,7 +114,7 @@ import us.frollo.frollosdk.model.coredata.user.User
         ExternalParty::class,
         DisclosureConsent::class
     ],
-    version = 23, exportSchema = true
+    version = 24, exportSchema = true
 )
 
 @TypeConverters(Converters::class)
@@ -197,7 +197,8 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_19_20,
                     MIGRATION_20_21,
                     MIGRATION_21_22,
-                    MIGRATION_22_23
+                    MIGRATION_22_23,
+                    MIGRATION_23_24
                 )
                 .build()
         }
@@ -875,7 +876,19 @@ abstract class SDKDatabase : RoomDatabase() {
                 // https://frollo.atlassian.net/browse/WA-3067
 
                 // New changes in this migration:
-                // 1) Drop all transaction caching: WA-4511
+                // 1) Alter table - bill_payment - Add column "transaction_id" to link back to transactions
+                database.execSQL("ALTER TABLE `bill_payment` ADD COLUMN `transaction_id` INTEGER")
+            }
+        }
+
+        private val MIGRATION_23_24: Migration = object : Migration(23, 24) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // WARNING: DO NOT USE "BEGIN TRANSACTION" & "COMMIT" as on latest room version
+                // looks like it does it by default. If we add these we will see the error stated in
+                // https://frollo.atlassian.net/browse/WA-3067
+
+                // New changes in this migration:
+                // 1) Drop all transaction caching: WA-4771
                 database.execSQL("DROP TABLE transaction_model")
                 // END - Drop transaction_model
             }

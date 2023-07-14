@@ -32,7 +32,7 @@ android {
         minSdkVersion 28 // Android 9.0 (Pie)
         targetSdkVersion 33
         versionCode 1
-        versionName "3.23.0"
+        versionName "3.24.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Clear existing data for package using 'pm clear'
@@ -150,6 +150,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation "androidx.room:room-runtime:2.4.3"
     implementation 'androidx.room:room-rxjava2:2.4.3'
+    implementation 'androidx.room:room-ktx:2.4.3'
     kapt "androidx.room:room-compiler:2.4.3"
 
     // AndroidX

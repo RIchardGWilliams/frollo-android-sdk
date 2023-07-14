@@ -122,6 +122,10 @@ class Bills(network: NetworkService, internal val db: SDKDatabase, private val a
             Resource.success(model)
         }
 
+    suspend fun fetchBillWithRelationSuspended(billId: Long): Resource<BillRelation> {
+        return Resource.success(db.bills().loadWithRelationSuspended(billId))
+    }
+
     /**
      * Fetch bills from the cache along with other associated data.
      *
@@ -407,6 +411,22 @@ class Bills(network: NetworkService, internal val db: SDKDatabase, private val a
         Transformations.map(db.billPayments().loadByQueryWithRelation(sqlForBillPayments(billId, fromDate, toDate, frequency, paymentStatus))) { models ->
             Resource.success(models)
         }
+
+    /**
+     * @see fetchBillPaymentsWithRelation
+     */
+    suspend fun fetchBillPaymentsWithRelationSuspended(
+        billId: Long? = null,
+        fromDate: String? = null,
+        toDate: String? = null,
+        frequency: BillFrequency? = null,
+        paymentStatus: BillPaymentStatus? = null
+    ): Resource<List<BillPaymentRelation>> {
+        val results = db.billPayments().loadByQueryWithRelationSuspended(
+            sqlForBillPayments(billId, fromDate, toDate, frequency, paymentStatus)
+        )
+        return Resource.success(results)
+    }
 
     /**
      * Advanced method to fetch bill payments by SQL query from the cache with associated data

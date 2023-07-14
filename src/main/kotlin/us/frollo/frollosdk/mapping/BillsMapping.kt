@@ -51,5 +51,6 @@ internal fun BillPaymentResponse.toBillPayment(): BillPayment =
         paymentStatus = paymentStatus,
         frequency = frequency,
         amount = amount,
-        unpayable = unpayable
+        unpayable = unpayable,
+        transactionId = transactionId
     )
