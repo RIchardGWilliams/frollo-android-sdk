@@ -2520,4 +2520,15 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
             db.cards().deleteMany(cardIds)
         }
     }
+
+    /**
+     * Removes the supplied transaction id(s). There is no return type.
+     * This is expected to be used for minor transaction refreshes (e.g. only 1 or 2 max) to support
+     * WA-4612
+     * TODO: This will be deprecated completely in WA-4711
+     * @param transactionIds List of transactionIds to remove from DB
+     */
+    suspend fun clearTransactionCacheSuspended(transactionIds: List<Long>) {
+        db.transactions().deleteManySuspended(transactionIds.toLongArray())
+    }
 }
