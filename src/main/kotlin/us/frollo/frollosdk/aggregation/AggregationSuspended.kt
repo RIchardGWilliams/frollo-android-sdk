@@ -16,6 +16,7 @@
 
 package us.frollo.frollosdk.aggregation
 
+import kotlinx.coroutines.runBlocking
 import us.frollo.frollosdk.base.PaginationInfoDatedCursor
 import us.frollo.frollosdk.base.Resource
 import us.frollo.frollosdk.logging.Log
@@ -105,7 +106,9 @@ internal fun Aggregation.handlePaginatedResponseSuspended(paginatedResponse: Pag
     val merchantIds = paginatedResponse?.data?.map { tx -> tx.merchant.id }
     if (merchantIds != null) {
         // TODO: Have to check the implications of running this async inside coroutine
-        fetchMissingMerchants(merchantIds.toSet())
+        runBlocking {
+            fetchMissingMerchants(merchantIds.toSet())
+        }
     }
 
     return paginatedResponse?.data?.let { transactions ->

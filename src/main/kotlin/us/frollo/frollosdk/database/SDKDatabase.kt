@@ -203,6 +203,7 @@ abstract class SDKDatabase : RoomDatabase() {
                 .build()
         }
 
+
         // Copy-paste of auto-generated SQLs from room schema json file
         // located in sandbox code after building under frollo-android-sdk/schemas/$version.json
 
