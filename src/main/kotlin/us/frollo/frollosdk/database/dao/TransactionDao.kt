@@ -142,4 +142,13 @@ internal interface TransactionDao {
 
     @RawQuery(observedEntities = [Transaction::class])
     fun loadByQueryWithRelationRx(queryStr: SupportSQLiteQuery): Observable<List<TransactionRelation>>
+
+    /**
+     * Deletes the supplied transaction id(s). There is no return.
+     * This is expected to be used for minor transaction refreshes (e.g. only 1 or 2 max)
+     * TODO: This will be deprecated completely in WA-4711
+     * @param transactionIds List of transactionIds to remove from DB
+     */
+    @Query("DELETE FROM transaction_model WHERE transaction_id IN (:transactionIds)")
+    suspend fun deleteManySuspended(transactionIds: LongArray)
 }
