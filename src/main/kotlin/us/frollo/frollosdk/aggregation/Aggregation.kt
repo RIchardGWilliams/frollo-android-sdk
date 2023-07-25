@@ -1002,29 +1002,6 @@ class Aggregation(network: NetworkService, internal val db: SDKDatabase, localBr
     }
 
     /**
-     * Find transactions from the host
-     *
-     * @param transactionFilter [TransactionFilter] object to filter transactions
-     * @param completion Optional completion handler with optional error if the request fails else pagination data is success
-     */
-    fun fetchTransactions(
-        transactionFilter: TransactionFilter? = null,
-        completion: OnFrolloSDKCompletionListener<Resource<PaginatedDatedCursorResponse<Transaction>>>
-    ) {
-        aggregationAPI.fetchTransactions(transactionFilter).enqueue { resource ->
-            when (resource.status) {
-                Resource.Status.SUCCESS -> {
-                    handlePaginatedResponse(resource.data, completion)
-                }
-                Resource.Status.ERROR -> {
-                    Log.e("$TAG#fetchTransactions", resource.error?.localizedDescription)
-                    completion.invoke(Resource.error(resource.error))
-                }
-            }
-        }
-    }
-
-    /**
      * Find transactions from the host based on supplied ids
      *
      * @param transactionIds [LongArray] the array of ids to find
