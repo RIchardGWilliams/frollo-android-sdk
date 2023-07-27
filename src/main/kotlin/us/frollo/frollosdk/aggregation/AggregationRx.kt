@@ -25,7 +25,6 @@ import us.frollo.frollosdk.extensions.sqlForMerchants
 import us.frollo.frollosdk.extensions.sqlForProviderAccounts
 import us.frollo.frollosdk.extensions.sqlForProviders
 import us.frollo.frollosdk.extensions.sqlForTransactionCategories
-import us.frollo.frollosdk.extensions.sqlForTransactions
 import us.frollo.frollosdk.extensions.sqlForUserTags
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.Account
 import us.frollo.frollosdk.model.coredata.aggregation.accounts.AccountClassification
@@ -45,9 +44,6 @@ import us.frollo.frollosdk.model.coredata.aggregation.tags.TagsSortType
 import us.frollo.frollosdk.model.coredata.aggregation.tags.TransactionTag
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategory
 import us.frollo.frollosdk.model.coredata.aggregation.transactioncategories.TransactionCategoryType
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.Transaction
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionFilter
-import us.frollo.frollosdk.model.coredata.aggregation.transactions.TransactionRelation
 import us.frollo.frollosdk.model.coredata.cdr.CDRConfiguration
 import us.frollo.frollosdk.model.coredata.cdr.Consent
 import us.frollo.frollosdk.model.coredata.cdr.ConsentRelation
@@ -347,78 +343,6 @@ fun Aggregation.fetchAccountsWithRelationRx(
  */
 fun Aggregation.fetchAccountsWithRelationRx(query: SimpleSQLiteQuery): Observable<List<AccountRelation>> {
     return db.accounts().loadByQueryWithRelationRx(query)
-}
-
-// Transaction
-
-/**
- * Fetch transaction by ID from the cache
- *
- * @param transactionId Unique ID of the transaction to fetch
- *
- * @return Rx Observable object of Transaction which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionRx(transactionId: Long): Observable<Transaction?> {
-    return db.transactions().loadRx(transactionId)
-}
-
-/**
- * Fetch transactions from the cache
- *
- * @param transactionFilter [TransactionFilter] object to apply filters (Optional)
- *
- * @return Rx Observable object of List<Transaction> which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionsRx(transactionFilter: TransactionFilter? = null): Observable<List<Transaction>> {
-    return db.transactions().loadByQueryRx(sqlForTransactions(transactionFilter))
-}
-
-/**
- * Advanced method to fetch transactions by SQL query from the cache
- *
- * @param query SimpleSQLiteQuery: Select query which fetches transactions from the cache
- *
- * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
- *
- * @return Rx Observable object of List<Transaction> which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionsRx(query: SimpleSQLiteQuery): Observable<List<Transaction>> {
-    return db.transactions().loadByQueryRx(query)
-}
-
-/**
- * Fetch transaction by ID from the cache along with other associated data.
- *
- * @param transactionId Unique transaction ID to fetch
- *
- * @return Rx Observable object of TransactionRelation which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionWithRelationRx(transactionId: Long): Observable<TransactionRelation?> {
-    return db.transactions().loadWithRelationRx(transactionId)
-}
-
-/**
- * Fetch transactions from the cache along with other associated data
- *
- * @param transactionFilter [TransactionFilter] object to apply filters (Optional)
- *
- * @return Rx Observable object of List<Transaction> which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionsWithRelationRx(transactionFilter: TransactionFilter? = null): Observable<List<TransactionRelation>> {
-    return db.transactions().loadByQueryWithRelationRx(sqlForTransactions(transactionFilter))
-}
-
-/**
- * Advanced method to fetch transactions by SQL query from the cache with other associated data.
- *
- * @param query SimpleSQLiteQuery: Select query which fetches transactions from the cache
- *
- * Note: Please check [SimpleSQLiteQueryBuilder] to build custom SQL queries
- *
- * @return Rx Observable object of List<TransactionRelation> which can be observed using an Observer for future changes as well.
- */
-fun Aggregation.fetchTransactionsWithRelationRx(query: SimpleSQLiteQuery): Observable<List<TransactionRelation>> {
-    return db.transactions().loadByQueryWithRelationRx(query)
 }
 
 // Transaction User Tags
