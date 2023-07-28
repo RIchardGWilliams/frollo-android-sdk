@@ -43,7 +43,7 @@ internal class NetworkAuthenticator(private val network: NetworkService) : Authe
 
         var newRequest: Request? = null
 
-        response?.clonedBodyString?.let { body ->
+        response.clonedBodyString?.let { body ->
             val apiError = APIError(response.code, body)
 
             when (apiError.type) {

@@ -49,17 +49,11 @@ internal class NetworkHelper(private val appInfo: AppInfo) {
     internal val deviceVersion: String
         get() = "Android${Build.VERSION.RELEASE}"
 
-    // "us.frollo.frollosdk|SDK1.0.0|B777|Android8.1.0|API2.0"
-    @Deprecated("Not needed anymore by the Host on v2 APIs")
-    internal val userAgent: String
-        get() = "${BuildConfig.LIBRARY_PACKAGE_NAME}|SDK${BuildConfig.SDK_VERSION_NAME}|B${BuildConfig.SDK_VERSION_CODE}|Android${Build.VERSION.RELEASE}|API$API_VERSION"
-
     internal fun addAdditionalHeaders(builder: Request.Builder, sessionId: String? = null) {
         builder.removeHeader(HEADER_API_VERSION).addHeader(HEADER_API_VERSION, API_VERSION)
         builder.removeHeader(HEADER_BUNDLE_ID).addHeader(HEADER_BUNDLE_ID, bundleId)
         builder.removeHeader(HEADER_DEVICE_VERSION).addHeader(HEADER_DEVICE_VERSION, deviceVersion)
         builder.removeHeader(HEADER_SOFTWARE_VERSION).addHeader(HEADER_SOFTWARE_VERSION, softwareVersion)
-        builder.removeHeader(HEADER_USER_AGENT).addHeader(HEADER_USER_AGENT, userAgent)
         sessionId?.let {
             builder.removeHeader(HEADER_SESSION_ID).addHeader(HEADER_SESSION_ID, it)
         }
