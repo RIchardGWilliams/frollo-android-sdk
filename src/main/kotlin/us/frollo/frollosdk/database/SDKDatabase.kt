@@ -198,7 +198,6 @@ abstract class SDKDatabase : RoomDatabase() {
                     MIGRATION_20_21,
                     MIGRATION_21_22,
                     MIGRATION_22_23,
-                    MIGRATION_22_23,
                     MIGRATION_23_24
                 )
                 .build()
@@ -890,6 +889,10 @@ abstract class SDKDatabase : RoomDatabase() {
 
                 // New changes in this migration:
                 // 1) Drop all transaction caching: WA-4771
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_transaction_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_account_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_category_id`")
+                database.execSQL("DROP INDEX IF EXISTS `index_transaction_model_merchant_id`")
                 database.execSQL("DROP TABLE transaction_model")
                 // END - Drop transaction_model
             }
