@@ -1,5 +1,17 @@
 ## Changelog
 
+### 3.25.0
+
+#### Changes
+- Drop transaction_model table
+- Added support for suspended functions for DB and Network calls
+
+### 3.24.0
+
+#### Changes
+- Added support for suspended functions for DB calls (bills)
+- Added column for transaction_id on bill_payment table
+
 ### 3.20.0
 
 #### Changes
