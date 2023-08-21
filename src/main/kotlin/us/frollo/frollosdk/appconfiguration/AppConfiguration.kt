@@ -26,7 +26,7 @@ class AppConfiguration(network: NetworkService, internal val db: SDKDatabase) {
         private const val TAG = "AppConfiguration"
     }
 
-    private val appConfigAPI: AppConfigurationAPI = network.createExternalNoAuth(AppConfigurationAPI::class.java)
+    internal val appConfigAPI: AppConfigurationAPI = network.createExternalNoAuth(AppConfigurationAPI::class.java)
 
     /**
      * Fetch company config from the cache

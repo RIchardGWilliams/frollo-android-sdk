@@ -16,21 +16,38 @@ internal interface LinkConfigDao {
     @Query("SELECT * FROM link_config")
     fun load(): LiveData<List<LinkConfig>>
 
+    @Query("SELECT * FROM link_config")
+    suspend fun loadSuspended(): List<LinkConfig>
+
     @RawQuery(observedEntities = [LinkConfig::class])
     fun loadByQuery(queryStr: SupportSQLiteQuery): LiveData<List<LinkConfig>>
+
+    @RawQuery(observedEntities = [LinkConfig::class])
+    suspend fun loadByQuerySuspended(queryStr: SupportSQLiteQuery): List<LinkConfig>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg models: LinkConfig): LongArray
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllSuspended(vararg models: LinkConfig): LongArray
+
     @Query("SELECT `key` FROM link_config WHERE `key` NOT IN (:apiKeys)")
     fun getStaleKeys(apiKeys: Array<String>): List<String>
+
+    @Query("SELECT `key` FROM link_config WHERE `key` NOT IN (:apiKeys)")
+    suspend fun getStaleKeysSuspended(apiKeys: Array<String>): List<String>
 
     @Query("DELETE FROM link_config WHERE `key` IN (:keys)")
     fun deleteMany(keys: Array<String>)
 
+    @Query("DELETE FROM link_config WHERE `key` IN (:keys)")
+    suspend fun deleteManySuspended(keys: Array<String>)
+
     @Query("DELETE FROM link_config")
     fun clear()
 
+    @Query("DELETE FROM link_config")
+    suspend fun clearSuspended()
     /**
      * RxJava Return Types
      */
