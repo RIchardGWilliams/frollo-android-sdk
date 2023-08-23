@@ -31,6 +31,9 @@ internal interface UserDao {
     @Query("SELECT * FROM user LIMIT 1")
     fun load(): LiveData<User?>
 
+    @Query("SELECT * FROM user LIMIT 1")
+    suspend fun loadSuspended(): User?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(model: User): Long
 
