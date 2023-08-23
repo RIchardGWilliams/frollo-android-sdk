@@ -95,6 +95,8 @@ class UserManagement(
             Resource.success(it)
         }
 
+    suspend fun fetchUserSuspended(): User? = db.users().loadSuspended()
+
     /**
      * Fetch the first available user model from the cache along with other associated data.
      *
